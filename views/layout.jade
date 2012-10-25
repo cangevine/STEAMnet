@@ -1,7 +1,19 @@
 doctype 5
 html
-  head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
-  body
-    block content
+	head
+		title= title
+		link(rel='stylesheet', href='/stylesheets/style.css')
+	body
+		header
+			nav
+				ul
+					li
+						a(href="/sparks") Sparks
+					li
+						a(href="/projects") Projects
+					li
+						a(href="/") Home
+		section#content
+			block content
+		footer
+			p It's more fun to be a pirate than to be in the navy.
