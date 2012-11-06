@@ -7,7 +7,9 @@ var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
   , http = require('http')
-  , path = require('path');
+  , path = require('path')
+  , mongoose = require('mongoose')
+  , db = mongoose.connect('mongodb://localhost/STEAMdb');
 
 var app = express();
 
@@ -30,6 +32,7 @@ app.configure('development', function(){
 app.get('/', routes.index);
 app.get('/sparks', routes.sparks)
 app.get('/projects', routes.projects);
+app.get('/threads', routes.threads);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
