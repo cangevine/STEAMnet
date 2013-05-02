@@ -1,4 +1,13 @@
 Steamnet::Application.routes.draw do
+  resources :tag_linkers
+
+
+  resources :tags
+
+
+  resources :comments
+
+
   resources :sparks
 
 

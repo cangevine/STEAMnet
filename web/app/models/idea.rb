@@ -12,4 +12,6 @@ class Idea < ActiveRecord::Base
   attr_accessible :description
   has_and_belongs_to_many :sparks
   has_and_belongs_to_many :users
+  has_many :comments, :as => :commentable
+  has_many :tag_linkers, :as => :tagable
 end
