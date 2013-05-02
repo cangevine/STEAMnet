@@ -14,4 +14,5 @@ class User < ActiveRecord::Base
   attr_accessible :email, :name, :password_hash
   has_and_belongs_to_many :ideas
   has_and_belongs_to_many :sparks
+  has_many :comments
 end

@@ -10,7 +10,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130501134631) do
+ActiveRecord::Schema.define(:version => 20130501165501) do
+
+  create_table "comments", :force => true do |t|
+    t.text     "comment_text"
+    t.integer  "user_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+    t.integer  "commentable_id"
+    t.string   "commentable_type"
+  end
 
   create_table "ideas", :force => true do |t|
     t.text     "description"
@@ -40,6 +49,20 @@ ActiveRecord::Schema.define(:version => 20130501134631) do
   create_table "sparks_users", :id => false, :force => true do |t|
     t.integer "spark_id"
     t.integer "user_id"
+  end
+
+  create_table "tag_linkers", :force => true do |t|
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.integer  "tagable_id"
+    t.string   "tagable_type"
+    t.integer  "tag_id"
+  end
+
+  create_table "tags", :force => true do |t|
+    t.text     "tag_text"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "users", :force => true do |t|
