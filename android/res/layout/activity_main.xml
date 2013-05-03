@@ -1,0 +1,50 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity" >
+
+    <fragment
+        android:id="@+id/fragment1"
+        android:name="org.friendscentral.steamnet.IndexGridActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/fragment4" />
+
+    <fragment
+        android:id="@+id/fragment4"
+        android:name="org.friendscentral.steamnet.IdeaBucket"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        tools:layout="@layout/spark_wizard" />
+
+    <fragment
+        android:id="@+id/fragment2"
+        android:name="org.friendscentral.steamnet.SparkWizard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/fragment3"
+        android:layout_alignLeft="@+id/fragment4"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/fragment4"
+        tools:layout="@layout/filter_settings" />
+
+    <fragment
+        android:id="@+id/fragment3"
+        android:name="org.friendscentral.steamnet.FilterSettings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        tools:layout="@layout/idea_bucket" />
+
+</RelativeLayout>
