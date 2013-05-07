@@ -12,13 +12,16 @@
         layout="@layout/index_grid" />
 
     <LinearLayout
+        android:id="@+id/Hideable_things"
         android:layout_width="318dp"
         android:layout_height="match_parent"
         android:orientation="vertical" >
 
+        <!-- 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="0dp"
+            android:layout_weight="1" >
 
             <Button
                 android:id="@+id/Forward_button"
@@ -31,25 +34,36 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Reverse" />
+
+            <Button
+                android:id="@+id/Change_weights"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Change weights" />
             
         </LinearLayout>
-        
-        <include 
-            android:id="@+id/SparkWizard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            layout="@layout/spark_wizard" />
+        -->
+            
+        <LinearLayout
+	        android:id="@+id/WizardSection"
+	        android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+	        android:orientation="vertical" >
+	    </LinearLayout>
         
         <include 
             android:id="@+id/FilterSettings"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="3"
             layout="@layout/filter_settings" />
 
 		<include 
             android:id="@+id/IdeaBucket"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             layout="@layout/idea_bucket" />
 
     </LinearLayout>

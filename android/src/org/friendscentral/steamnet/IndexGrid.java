@@ -29,12 +29,12 @@ public class IndexGrid {
 			new SimpleSpark("In a basket!", R.drawable.sample_6), 
 	};
 	
-	public void initIndexGrid(GridView g, Context c, boolean reversed) {
+	public void initIndexGrid(GridView g, Context c) {
 		//Use setter methods:
 		gridview = g;
     	context = c;
     	
-    	gridview.setAdapter(new ImageAdapter(gridview.getContext(), sparks, reversed));
+    	gridview.setAdapter(new ImageAdapter(gridview.getContext(), sparks));
     	Log.v("indexGrid", "Just called initIndexGrid! Success!");
 	}
 	

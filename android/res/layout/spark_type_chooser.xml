@@ -9,10 +9,11 @@
         android:layout_height="wrap_content" >
 
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/Inspiration_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/spark_button_inspiration" />
+            android:text="@string/spark_button_inspiration"
+            android:onClick="openInspirationWizard" />
 
         <Button
             android:id="@+id/button2"
@@ -26,14 +27,5 @@
             android:layout_height="wrap_content"
             android:text="@string/spark_button_problem" />
     </LinearLayout>
-
-    <EditText
-        android:id="@+id/editText1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.20"
-        android:ems="10"
-        android:inputType="textMultiLine" >
-    </EditText>
 
 </LinearLayout>

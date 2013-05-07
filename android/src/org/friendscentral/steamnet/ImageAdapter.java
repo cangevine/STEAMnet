@@ -10,24 +10,16 @@ import android.widget.ImageView;
 public class ImageAdapter extends BaseAdapter {
     private Context mContext;
 
-    public ImageAdapter(Context c, SimpleSpark[] s, boolean reversed) {
+    public ImageAdapter(Context c, SimpleSpark[] s) {
         mContext = c;
         mThumbIds = new Integer[s.length];
-        initSparks(s, reversed);
+        initSparks(s);
     }
     
-    public void initSparks(SimpleSpark[] s, boolean reversed) {
-    	if (!reversed) {
-	    	for (int i = 0; i < s.length; i++) {
-	    		mThumbIds[i] = s[i].getId();
-	    	}
-    	} else {
-    		int q = 0;
-    		for (int i = s.length - 1; i >= 0; i--) {
-	    		mThumbIds[q] = s[i].getId();
-	    		q++;
-	    	}
-    	}
+    public void initSparks(SimpleSpark[] s) {
+	    for (int i = 0; i < s.length; i++) {
+	    	mThumbIds[i] = s[i].getId();
+	    }
     }
 
     public int getCount() {
