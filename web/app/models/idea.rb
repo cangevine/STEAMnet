@@ -13,5 +13,6 @@ class Idea < ActiveRecord::Base
   has_and_belongs_to_many :sparks
   has_and_belongs_to_many :users
   has_many :comments, :as => :commentable
+  has_many :tags, :through => :tag_linkers
   has_many :tag_linkers, :as => :tagable
 end
