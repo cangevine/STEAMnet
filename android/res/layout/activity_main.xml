@@ -1,50 +1,57 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:id="@+id/MainLayout"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity" >
+    tools:context=".MainActivity">
 
-    <fragment
-        android:id="@+id/fragment1"
-        android:name="org.friendscentral.steamnet.IndexGridActivity"
-        android:layout_width="wrap_content"
+    <include
+        android:id="@+id/IndexGrid"
+        android:layout_width="920dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/fragment4" />
+        layout="@layout/index_grid" />
 
-    <fragment
-        android:id="@+id/fragment4"
-        android:name="org.friendscentral.steamnet.IdeaBucket"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        tools:layout="@layout/spark_wizard" />
+    <LinearLayout
+        android:layout_width="318dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
 
-    <fragment
-        android:id="@+id/fragment2"
-        android:name="org.friendscentral.steamnet.SparkWizard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/fragment3"
-        android:layout_alignLeft="@+id/fragment4"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/fragment4"
-        tools:layout="@layout/filter_settings" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
 
-    <fragment
-        android:id="@+id/fragment3"
-        android:name="org.friendscentral.steamnet.FilterSettings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        tools:layout="@layout/idea_bucket" />
+            <Button
+                android:id="@+id/Forward_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Forward" />
 
-</RelativeLayout>
+            <Button
+                android:id="@+id/Reverse_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reverse" />
+            
+        </LinearLayout>
+        
+        <include 
+            android:id="@+id/SparkWizard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/spark_wizard" />
+        
+        <include 
+            android:id="@+id/FilterSettings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/filter_settings" />
+
+		<include 
+            android:id="@+id/IdeaBucket"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/idea_bucket" />
+
+    </LinearLayout>
+
+</LinearLayout>
