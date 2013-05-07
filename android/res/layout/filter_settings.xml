@@ -37,8 +37,6 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/filter_settings_search_hashtag_hint" >
-
-        <requestFocus />
     </EditText>
 
     <TextView
@@ -72,6 +70,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/filter_settings_sort_options_relevant" />
+
     </RadioGroup>
 
 </LinearLayout>
