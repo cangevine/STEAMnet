@@ -26,14 +26,16 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Picture"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:onClick="openContentEntry" />
 
             <Button
                 android:id="@+id/video_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Video"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:onClick="openContentEntry" />
         </TableRow>
 
         <TableRow
@@ -46,14 +48,16 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Plain Text" />
+                android:text="Plain Text"
+                android:onClick="openContentEntry" />
 
             <Button
                 android:id="@+id/code_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Code Snippet" />
+                android:text="Code Snippet"
+                android:onClick="openContentEntry" />
         </TableRow>
 
         <TableRow
@@ -66,14 +70,16 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Audio" />
+                android:text="Audio"
+                android:onClick="openContentEntry" />
 
             <Button
                 android:id="@+id/link_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Link" />
+                android:text="Link"
+                android:onClick="openContentEntry" />
         </TableRow>
 
         <TableRow
@@ -82,7 +88,7 @@
             android:layout_height="wrap_content" >
 
             <Button
-                android:id="@+id/cancel_inspiration_wizard_button"
+                android:id="@+id/cancel_content_type_chooser_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

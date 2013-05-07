@@ -12,7 +12,7 @@
         layout="@layout/index_grid" />
 
     <LinearLayout
-        android:id="@+id/Hideable_things"
+        android:id="@+id/Sidebar"
         android:layout_width="318dp"
         android:layout_height="match_parent"
         android:orientation="vertical" >

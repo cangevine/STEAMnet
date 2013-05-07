@@ -18,8 +18,6 @@ import android.widget.LinearLayout;
 public class MainActivity extends Activity {
 
     static final String EXTRA_MESSAGE = null;
-	private static final int INVISIBLE = 4;
-	private static final int GONE = 8;
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +63,7 @@ public class MainActivity extends Activity {
 	
 	//Methods for the Wizard Fragments:
 		//Very similar, could probably be consolidated
-	public void openInspirationWizard(View v) {
+	public void openContentTypeChooser(View v) {
 		updateWeights(5, 3, 1);
 		
 		FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -83,7 +81,19 @@ public class MainActivity extends Activity {
 		ft.addToBackStack(null);
 		ft.commit();
 	}
-
+	public void openContentEntry(View v) {
+		updateWeights(5, 3, 1);
+		
+		FragmentTransaction ft = getFragmentManager().beginTransaction();
+		ContentEntry ce = new ContentEntry();
+		ft.replace(R.id.WizardSection, ce);
+		ft.addToBackStack(null);
+		ft.commit();
+	}
+	public void submitSpark(View v) {
+		revertWizard(v);
+	}
+	
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
