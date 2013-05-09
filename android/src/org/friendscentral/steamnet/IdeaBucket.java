@@ -37,7 +37,11 @@ public class IdeaBucket {
 			for (int i = pos; i < imageViews.length - 1; i++) {
 				imageViews[i].setImageDrawable(imageViews[i + 1].getDrawable());
 			}
-			imageViews[3].setImageResource(0);
+			//imageViews[3].setImageResource(0);
+			/*
+			 * Go through, and if the resource is 0, make it invisible.
+			 * Set the resource to some virtually blank 1px image?
+			 */
 		}
 	}
 	
