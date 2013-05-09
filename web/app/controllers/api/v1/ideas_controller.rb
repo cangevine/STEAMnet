@@ -41,9 +41,23 @@ class Api::V1::IdeasController < ApplicationController
   # POST /ideas.json
   def create
     @idea = Idea.new(params[:idea])
-
+    @idea.save
+    
+    tags = params[:tags].split(",")
+    
+    tags.each do |tag_name|
+      tag = Tag.where(:tag_text => tag_name).first
+      
+      if(tag)
+        @tag.ideas << @idea
+      else
+        tag = @idea.tags.build(:tag_text => tag_name)
+        tag.save
+      end
+    end
+    
     respond_to do |format|
-      if @idea.save
+      if @idea.new_record?
         format.html { redirect_to @idea, :notice => 'Idea was successfully created.' }
         format.json { render :json => @idea, :status => :created, :location => @idea }
       else
