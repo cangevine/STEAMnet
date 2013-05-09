@@ -22,30 +22,32 @@ public final class R {
     }
     public static final class drawable {
         public static final int ic_launcher=0x7f020000;
-        public static final int sample_0=0x7f020001;
-        public static final int sample_1=0x7f020002;
-        public static final int sample_2=0x7f020003;
-        public static final int sample_3=0x7f020004;
-        public static final int sample_4=0x7f020005;
-        public static final int sample_5=0x7f020006;
-        public static final int sample_6=0x7f020007;
-        public static final int sample_7=0x7f020008;
+        public static final int idea_bucket_drop_background=0x7f020001;
+        public static final int sample_0=0x7f020002;
+        public static final int sample_1=0x7f020003;
+        public static final int sample_2=0x7f020004;
+        public static final int sample_3=0x7f020005;
+        public static final int sample_4=0x7f020006;
+        public static final int sample_5=0x7f020007;
+        public static final int sample_6=0x7f020008;
+        public static final int sample_7=0x7f020009;
     }
     public static final class id {
         public static final int FilterSettings=0x7f080007;
         public static final int IdeaBucket=0x7f080008;
+        public static final int IdeaBucketLayout=0x7f080021;
         public static final int IndexGrid=0x7f080004;
-        public static final int Inspiration_button=0x7f080023;
+        public static final int Inspiration_button=0x7f080029;
         public static final int LinearLayout1=0x7f080000;
         public static final int MainLayout=0x7f080003;
         public static final int Sidebar=0x7f080005;
-        public static final int SparkGrid=0x7f080022;
+        public static final int SparkGrid=0x7f080028;
         public static final int WizardSection=0x7f080006;
-        public static final int action_settings=0x7f080026;
+        public static final int action_settings=0x7f08002e;
         public static final int audio_button=0x7f080015;
         public static final int back_content_entry_button=0x7f08000b;
-        public static final int button2=0x7f080024;
-        public static final int button3=0x7f080025;
+        public static final int button2=0x7f08002a;
+        public static final int button3=0x7f08002b;
         public static final int cancel_content_entry_button=0x7f08000c;
         public static final int cancel_content_type_chooser_button=0x7f080018;
         public static final int checkBox1=0x7f080019;
@@ -53,7 +55,10 @@ public final class R {
         public static final int code_button=0x7f080013;
         public static final int content_entry_form=0x7f08000a;
         public static final int editText1=0x7f08001b;
-        public static final int ignite_button=0x7f080021;
+        public static final int first_image=0x7f080023;
+        public static final int fourth_image=0x7f080026;
+        public static final int idea_bucket_linear=0x7f080022;
+        public static final int ignite_button=0x7f080027;
         public static final int link_button=0x7f080016;
         public static final int message=0x7f080002;
         public static final int pic=0x7f080001;
@@ -62,6 +67,7 @@ public final class R {
         public static final int radio1=0x7f08001f;
         public static final int radio2=0x7f080020;
         public static final int radioGroup1=0x7f08001d;
+        public static final int second_image=0x7f080024;
         public static final int submit_content_entry_button=0x7f08000d;
         public static final int tableRow1=0x7f08000e;
         public static final int tableRow2=0x7f080011;
@@ -70,6 +76,9 @@ public final class R {
         public static final int textView1=0x7f080009;
         public static final int textView2=0x7f08001c;
         public static final int text_button=0x7f080012;
+        public static final int third_image=0x7f080025;
+        public static final int trashCan=0x7f08002c;
+        public static final int trashCanTextView=0x7f08002d;
         public static final int video_button=0x7f080010;
     }
     public static final class layout {
@@ -82,6 +91,7 @@ public final class R {
         public static final int index_grid=0x7f030006;
         public static final int social_placeholder=0x7f030007;
         public static final int spark_type_chooser=0x7f030008;
+        public static final int trash_can_fragment=0x7f030009;
     }
     public static final class menu {
         public static final int detail=0x7f070000;
