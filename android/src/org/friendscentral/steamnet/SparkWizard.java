@@ -1,5 +1,9 @@
 package org.friendscentral.steamnet;
 
+import org.friendscentral.steamnet.SparkWizardFragments.ContentEntry;
+import org.friendscentral.steamnet.SparkWizardFragments.ContentTypeChooser;
+import org.friendscentral.steamnet.SparkWizardFragments.SparkTypeChooser;
+
 import android.app.ActionBar.LayoutParams;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;

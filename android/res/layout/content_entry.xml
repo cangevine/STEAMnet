@@ -32,7 +32,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="openContentTypeChooser"
+            android:tag="openContentTypeChooser"
+            android:onClick="updateWizard"
             android:text="Back" />
         
         <Button
@@ -40,7 +41,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="revertWizard"
+            android:tag="revertWizard"
+            android:onClick="updateWizard"
             android:text="Cancel" />
 
         <Button
@@ -48,7 +50,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="submitSpark"
+            android:tag="submitSpark"
+            android:onClick="updateWizard"
             android:text="Submit" />
 
     </LinearLayout>

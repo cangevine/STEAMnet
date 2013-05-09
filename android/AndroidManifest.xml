@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="org.friendscentral.steamnet.MainActivity"
+            android:name="org.friendscentral.steamnet.Activities.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="org.friendscentral.steamnet.DetailActivity"
+            android:name="org.friendscentral.steamnet.Activities.DetailActivity"
             android:label="@string/title_activity_detail" >
         </activity>
     </application>
