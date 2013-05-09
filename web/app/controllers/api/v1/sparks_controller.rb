@@ -1,4 +1,4 @@
-class SparksController < ApplicationController
+class Api::V1::SparksController < ApplicationController
   # GET /sparks
   # GET /sparks.json
   def index

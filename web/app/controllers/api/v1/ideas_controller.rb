@@ -1,4 +1,4 @@
-class IdeasController < ApplicationController
+class Api::V1::IdeasController < ApplicationController
   # GET /ideas
   # GET /ideas.json
   def index
