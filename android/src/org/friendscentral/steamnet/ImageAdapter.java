@@ -9,11 +9,30 @@ import android.widget.ImageView;
 
 public class ImageAdapter extends BaseAdapter {
     private Context mContext;
+    private Integer[] mThumbIds;
+    private int image_size;
 
-    public ImageAdapter(Context c, SimpleSpark[] s) {
+    public ImageAdapter(Context c, SimpleSpark[] s, int size) {
         mContext = c;
         mThumbIds = new Integer[s.length];
+        image_size = size;
         initSparks(s);
+    }
+    
+    // create a new ImageView for each item referenced by the Adapter
+    public View getView(int position, View convertView, ViewGroup parent) {
+        ImageView imageView;
+        if (convertView == null) {  // if it's not recycled, initialize some attributes
+            imageView = new ImageView(mContext);
+            imageView.setLayoutParams(new GridView.LayoutParams(image_size, image_size));
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            imageView.setPadding(8, 8, 8, 8);
+        } else {
+            imageView = (ImageView) convertView;
+        }
+
+        imageView.setImageResource(mThumbIds[position]);
+        return imageView;
     }
     
     public void initSparks(SimpleSpark[] s) {
@@ -37,26 +56,33 @@ public class ImageAdapter extends BaseAdapter {
     public Integer[] getIds() {
     	return mThumbIds;
     }
-
-    // create a new ImageView for each item referenced by the Adapter
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ImageView imageView;
-        if (convertView == null) {  // if it's not recycled, initialize some attributes
-            imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(200, 200));
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            imageView.setPadding(8, 8, 8, 8);
-        } else {
-            imageView = (ImageView) convertView;
-        }
-
-        imageView.setImageResource(mThumbIds[position]);
-        return imageView;
+    
+    public void setIds(Integer[] n) {
+    	mThumbIds = n;
     }
-
-    // references to our images
-    private Integer[] mThumbIds;/* = {
-            R.drawable.sample_2, R.drawable.sample_3,
-            R.drawable.sample_4, R.drawable.sample_5
-    };*/
+    
+    public void removeAtPosition(int pos) {
+    	if (getIds().length >= 1) {
+	    	Integer[] newSet = new Integer[getIds().length - 1];
+	    	for (int i = 0; i < pos; i++) {
+	    		newSet[i] = getIds()[i];
+	    	}
+	    	for (int i = pos; i < getIds().length - 1; i++) {
+	    		newSet[i] = getIds()[i + 1];
+	    	}
+	    	setIds(newSet);
+    	}
+    }
+    
+    public void addAtPosition(int id, int pos) {
+    	Integer[] newSet = new Integer[getIds().length - 1];
+    	for (int i = 0; i < pos; i++) {
+    		newSet[i] = getIds()[i];
+    	}
+    	newSet[pos] = id;
+    	for (int i = pos + 1; i < getIds().length; i++) {
+    		newSet[i] = getIds()[i - 1];
+    	}
+    	setIds(newSet);
+    }
 }
