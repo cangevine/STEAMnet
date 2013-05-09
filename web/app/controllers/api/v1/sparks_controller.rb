@@ -41,9 +41,23 @@ class Api::V1::SparksController < ApplicationController
   # POST /sparks.json
   def create
     @spark = Spark.new(params[:spark])
-
+    @spark.save
+    
+    tags = params[:tags].split(",")
+    
+    tags.each do |tag_name|
+      tag = Tag.where(:tag_text => tag_name).first
+      
+      if(tag)
+        tag.sparks << @spark
+      else
+        tag = @spark.tags.build(:tag_text => tag_name)
+        tag.save
+      end
+    end
+    
     respond_to do |format|
-      if @spark.save
+      if @spark.new_record?
         format.html { redirect_to @spark, :notice => 'Spark was successfully created.' }
         format.json { render :json => @spark, :status => :created, :location => @spark }
       else
@@ -57,7 +71,7 @@ class Api::V1::SparksController < ApplicationController
   # PUT /sparks/1.json
   def update
     @spark = Spark.find(params[:id])
-
+    
     respond_to do |format|
       if @spark.update_attributes(params[:spark])
         format.html { redirect_to @spark, :notice => 'Spark was successfully updated.' }
