@@ -49,7 +49,7 @@ class Api::V1::IdeasController < ApplicationController
       tag = Tag.where(:tag_text => tag_name).first
       
       if(tag)
-        @tag.ideas << @idea
+        tag.ideas << @idea
       else
         tag = @idea.tags.build(:tag_text => tag_name)
         tag.save
