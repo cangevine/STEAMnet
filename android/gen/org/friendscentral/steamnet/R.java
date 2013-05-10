@@ -21,16 +21,20 @@ public final class R {
         public static final int activity_vertical_margin=0x7f040001;
     }
     public static final class drawable {
-        public static final int ic_launcher=0x7f020000;
-        public static final int idea_bucket_drop_background=0x7f020001;
-        public static final int sample_0=0x7f020002;
-        public static final int sample_1=0x7f020003;
-        public static final int sample_2=0x7f020004;
-        public static final int sample_3=0x7f020005;
-        public static final int sample_4=0x7f020006;
-        public static final int sample_5=0x7f020007;
-        public static final int sample_6=0x7f020008;
-        public static final int sample_7=0x7f020009;
+        public static final int bucket_placeholder=0x7f020000;
+        public static final int ic_launcher=0x7f020001;
+        public static final int idea_bucket_drop_background=0x7f020002;
+        public static final int inspiration_button_source=0x7f020003;
+        public static final int problem_button_source=0x7f020004;
+        public static final int sample_0=0x7f020005;
+        public static final int sample_1=0x7f020006;
+        public static final int sample_2=0x7f020007;
+        public static final int sample_3=0x7f020008;
+        public static final int sample_4=0x7f020009;
+        public static final int sample_5=0x7f02000a;
+        public static final int sample_6=0x7f02000b;
+        public static final int sample_7=0x7f02000c;
+        public static final int what_if_button_source=0x7f02000d;
     }
     public static final class id {
         public static final int FilterSettings=0x7f080007;
@@ -40,14 +44,14 @@ public final class R {
         public static final int Inspiration_button=0x7f080029;
         public static final int LinearLayout1=0x7f080000;
         public static final int MainLayout=0x7f080003;
+        public static final int Problem_button=0x7f08002b;
         public static final int Sidebar=0x7f080005;
         public static final int SparkGrid=0x7f080028;
+        public static final int What_if_button=0x7f08002a;
         public static final int WizardSection=0x7f080006;
         public static final int action_settings=0x7f08002e;
         public static final int audio_button=0x7f080015;
         public static final int back_content_entry_button=0x7f08000b;
-        public static final int button2=0x7f08002a;
-        public static final int button3=0x7f08002b;
         public static final int cancel_content_entry_button=0x7f08000c;
         public static final int cancel_content_type_chooser_button=0x7f080018;
         public static final int checkBox1=0x7f080019;

@@ -1,4 +1,6 @@
-package org.friendscentral.steamnet;
+package org.friendscentral.steamnet.SparkWizardFragments;
+
+import org.friendscentral.steamnet.R;
 
 import android.app.Fragment;
 import android.os.Bundle;
