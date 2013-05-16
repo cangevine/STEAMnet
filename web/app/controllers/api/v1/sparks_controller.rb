@@ -43,16 +43,18 @@ class Api::V1::SparksController < ApplicationController
     @spark = Spark.new(params[:spark])
     @spark.save
     
-    tags = params[:tags].split(",")
-    
-    tags.each do |tag_name|
-      tag = Tag.where(:tag_text => tag_name).first
+    if(params[:tags])
+      tags = params[:tags].split(",")
       
-      if(tag)
-        tag.sparks << @spark
-      else
-        tag = @spark.tags.build(:tag_text => tag_name)
-        tag.save
+      tags.each do |tag_name|
+        tag = Tag.where(:tag_text => tag_name).first
+        
+        if(tag)
+          tag.sparks << @spark
+        else
+          tag = @spark.tags.build(:tag_text => tag_name)
+          tag.save
+        end
       end
     end
     
