@@ -58,13 +58,18 @@ class Api::V1::SparksController < ApplicationController
       end
     end
     
+    user = User.find(:name => params[:username])
+    user.sparks << @spark
+    
     respond_to do |format|
       if @spark.new_record?
         format.html { redirect_to @spark, :notice => 'Spark was successfully created.' }
         format.json { render :json => @spark, :status => :created, :location => @spark }
+        #format.xml { render :xml => @spark, :status => :created, :location => @spark }
       else
         format.html { render :action => "new" }
         format.json { render :json => @spark.errors, :status => :unprocessable_entity }
+        #format.xml { render :xml => @spark.errors, :status => :unprocessable_entity }
       end
     end
   end
