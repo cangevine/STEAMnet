@@ -43,18 +43,23 @@ class Api::V1::IdeasController < ApplicationController
     @idea = Idea.new(params[:idea])
     @idea.save
     
-    tags = params[:tags].split(",")
-    
-    tags.each do |tag_name|
-      tag = Tag.where(:tag_text => tag_name).first
+    if(params[:tags])
+      tags = params[:tags].split(",")
       
-      if(tag)
-        tag.ideas << @idea
-      else
-        tag = @idea.tags.build(:tag_text => tag_name)
-        tag.save
+      tags.each do |tag_name|
+        tag = Tag.where(:tag_text => tag_name).first
+        
+        if(tag)
+          tag.ideas << @idea
+        else
+          tag = @idea.tags.build(:tag_text => tag_name)
+          tag.save
+        end
       end
     end
+    
+    user = User.find(:name => params[:username])
+    user.ideas << @idea
     
     respond_to do |format|
       if @idea.new_record?
