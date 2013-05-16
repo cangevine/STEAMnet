@@ -59,7 +59,7 @@ class Api::V1::IdeasController < ApplicationController
           end
         end
         
-        user = User.find(:name => params[:username])
+        user = User.find_by_name(params[:username])
         user.ideas << @idea
         
         format.html { redirect_to @idea, :notice => 'Idea was successfully created.' }

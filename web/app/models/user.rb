@@ -11,7 +11,9 @@
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :email, :name, :password_hash
+  attr_accessible :email, :name, :password
+  
+  has_secure_password
   
   has_and_belongs_to_many :ideas
   has_and_belongs_to_many :sparks
@@ -19,5 +21,9 @@ class User < ActiveRecord::Base
   
   validates :email, :presence => true, :format => { :with => /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/, :message => "Must be a valid email address." }
   validates :name, :presence => true
-  # validates :password_hash, :presence => true
+  validates :password, :presence => { :on => :create }
+  
+  def as_json(options={})
+    super(:only => [:email, :name], :include => [:ideas, :sparks])
+  end
 end

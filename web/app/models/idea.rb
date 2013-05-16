@@ -16,4 +16,8 @@ class Idea < ActiveRecord::Base
   has_many :comments, :as => :commentable
   has_many :tags, :through => :tag_linkers
   has_many :tag_linkers, :as => :tagable
+  
+  def as_json(options={})
+    super(:include => [:sparks, :tags, :comments, :users])
+  end
 end
