@@ -20,23 +20,7 @@ class Api::V1::SparksController < ApplicationController
       format.json { render :json => @spark }
     end
   end
-
-  # GET /sparks/new
-  # GET /sparks/new.json
-  def new
-    @spark = Spark.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render :json => @spark }
-    end
-  end
-
-  # GET /sparks/1/edit
-  def edit
-    @spark = Spark.find(params[:id])
-  end
-
+  
   # POST /sparks
   # POST /sparks.json
   def create

@@ -20,23 +20,7 @@ class Api::V1::IdeasController < ApplicationController
       format.json { render :json => @idea }
     end
   end
-
-  # GET /ideas/new
-  # GET /ideas/new.json
-  def new
-    @idea = Idea.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render :json => @idea }
-    end
-  end
-
-  # GET /ideas/1/edit
-  def edit
-    @idea = Idea.find(params[:id])
-  end
-
+  
   # POST /ideas
   # POST /ideas.json
   def create
