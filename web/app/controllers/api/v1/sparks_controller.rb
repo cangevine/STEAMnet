@@ -50,25 +50,23 @@ class Api::V1::SparksController < ApplicationController
           tags.each do |tag_name|
             tag = Tag.where(:tag_text => tag_name).first
             
-            if(tag)
-              tag.sparks << @spark
-            else
-              tag = @spark.tags.build(:tag_text => tag_name)
+            unless(tag)
+              tag = Tag.new(:tag_text => tag_name)
               tag.save
             end
+            
+            tag.sparks << @idea
           end
         end
         
-        user = User.find(:name => params[:username])
+        user = User.find_by_name(params[:username])
         user.sparks << @spark
         
         format.html { redirect_to @spark, :notice => 'Spark was successfully created.' }
         format.json { render :json => @spark, :status => :created, :location => @spark }
-        #format.xml { render :xml => @spark, :status => :created, :location => @spark }
       else
         format.html { render :action => "new" }
         format.json { render :json => @spark.errors, :status => :unprocessable_entity }
-        #format.xml { render :xml => @spark.errors, :status => :unprocessable_entity }
       end
     end
   end

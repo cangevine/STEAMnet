@@ -24,4 +24,8 @@ class Spark < ActiveRecord::Base
   # validates :content_hash, :presence => true
   validates :content_type, :presence => true
   validates :spark_type, :presence => true
+  
+  def as_json(options={})
+    super(:include => [:tags, :comments, :users])
+  end
 end

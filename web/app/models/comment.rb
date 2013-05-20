@@ -18,4 +18,8 @@ class Comment < ActiveRecord::Base
   belongs_to :commentable, :polymorphic => true
   
   validates :comment_text, :presence => true
+  
+  def as_json(options={})
+    super(:include => [:user, :commentable])
+  end
 end
