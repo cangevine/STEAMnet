@@ -50,11 +50,23 @@ class Api::V1::IdeasController < ApplicationController
           tags.each do |tag_name|
             tag = Tag.where(:tag_text => tag_name).first
             
-            if(tag)
-              tag.ideas << @idea
-            else
-              tag = @idea.tags.build(:tag_text => tag_name)
+            unless(tag)
+              tag = Tag.new(:tag_text => tag_name)
               tag.save
+            end
+            
+            tag.ideas << @idea
+          end
+        end
+        
+        if(params[:sparks])
+          sparks = params[:sparks].split(",")
+          
+          sparks.each do |spark_id|
+            spark = Spark.find(spark_id.to_i)
+            
+            if(spark)
+              @idea.sparks << spark
             end
           end
         end
