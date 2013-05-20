@@ -7,9 +7,8 @@
 
 <p>
   <b>User:</b>
-  <%= @comment.user_id %>
+  <%= @comment.user.name %>
 </p>
 
 
-<%= link_to 'Edit', edit_comment_path(@comment) %> |
-<%= link_to 'Back', comments_path %>
+<%= link_to 'Back', api_v1_comments_path %>

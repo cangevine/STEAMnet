@@ -16,4 +16,8 @@ class Tag < ActiveRecord::Base
   has_many :tag_linkers
   
   validates :tag_text, :presence => true
+  
+  def as_json(options={})
+    super(:include => [:sparks, :ideas])
+  end
 end
