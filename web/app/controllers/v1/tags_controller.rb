@@ -1,4 +1,4 @@
-class Api::V1::TagsController < ApplicationController
+class V1::TagsController < ApplicationController
   # GET /tags
   # GET /tags.json
   def index

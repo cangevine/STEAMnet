@@ -1,4 +1,4 @@
-class Api::V1::CommentsController < ApplicationController
+class V1::CommentsController < ApplicationController
   # GET /comments
   # GET /comments.json
   def index
@@ -29,7 +29,7 @@ class Api::V1::CommentsController < ApplicationController
     respond_to do |format|
       if @comment.save
         format.html { redirect_to @comment, :notice => 'Comment was successfully created.' }
-        format.json { render :json => @comment, :status => :created, :location => ["api", "v1", @comment] }
+        format.json { render :json => @comment, :status => :created, :location => ["v1", @comment] }
       else
         format.html { render :action => "new" }
         format.json { render :json => @comment.errors, :status => :unprocessable_entity }

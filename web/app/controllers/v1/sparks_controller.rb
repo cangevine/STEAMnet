@@ -1,4 +1,4 @@
-class Api::V1::SparksController < ApplicationController
+class V1::SparksController < ApplicationController
   # GET /sparks
   # GET /sparks.json
   def index
@@ -47,7 +47,7 @@ class Api::V1::SparksController < ApplicationController
         user.sparks << @spark
         
         format.html { redirect_to @spark, :notice => 'Spark was successfully created.' }
-        format.json { render :json => @spark, :status => :created, :location => ["api", "v1", @spark] }
+        format.json { render :json => @spark, :status => :created, :location => ["v1", @spark] }
       else
         format.html { render :action => "new" }
         format.json { render :json => @spark.errors, :status => :unprocessable_entity }
