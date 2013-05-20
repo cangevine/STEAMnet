@@ -24,6 +24,6 @@ class User < ActiveRecord::Base
   validates :password, :presence => { :on => :create }
   
   def as_json(options={})
-    super(:only => [:email, :name], :include => [:ideas, :sparks])
+    super(:only => [:created_at, :updated_at, :email, :name], :include => [:ideas, :sparks])
   end
 end

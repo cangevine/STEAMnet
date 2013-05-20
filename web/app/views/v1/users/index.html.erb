@@ -14,8 +14,8 @@
   <tr>
     <td><%= user.name %></td>
     <td><%= user.email %></td>
-    <td><%= link_to 'Show', ["api", "v1", user] %></td>
-    <td><%= link_to 'Destroy', ["api", "v1", user], :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>
+    <td><%= link_to 'Show', ["v1", user] %></td>
+    <td><%= link_to 'Destroy', ["v1", user], :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>

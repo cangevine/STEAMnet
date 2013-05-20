@@ -13,8 +13,8 @@
   <tr>
     <td><%= comment.comment_text %></td>
     <td><%= comment.user.name %></td>
-    <td><%= link_to 'Show', ["api", "v1", comment] %></td>
-    <td><%= link_to 'Destroy', ["api", "v1", idea], :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>
+    <td><%= link_to 'Show', ["v1", comment] %></td>
+    <td><%= link_to 'Destroy', ["v1", comment], :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>
