@@ -63,7 +63,7 @@ class Api::V1::SparksController < ApplicationController
         user.sparks << @spark
         
         format.html { redirect_to @spark, :notice => 'Spark was successfully created.' }
-        format.json { render :json => @spark, :status => :created, :location => @spark }
+        format.json { render :json => @spark, :status => :created, :location => ["api", "v1", @spark] }
       else
         format.html { render :action => "new" }
         format.json { render :json => @spark.errors, :status => :unprocessable_entity }

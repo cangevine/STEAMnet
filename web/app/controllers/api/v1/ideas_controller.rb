@@ -75,7 +75,7 @@ class Api::V1::IdeasController < ApplicationController
         user.ideas << @idea
         
         format.html { redirect_to @idea, :notice => 'Idea was successfully created.' }
-        format.json { render :json => @idea, :status => :created, :location => @idea }
+        format.json { render :json => @idea, :status => :created, :location => ["api", "v1", @idea] }
       else
         format.html { render :action => "new" }
         format.json { render :json => @idea.errors, :status => :unprocessable_entity }
