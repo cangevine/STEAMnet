@@ -1,6 +1,6 @@
 Steamnet::Application.routes.draw do
   
-  namespace :api do
+  scope "api" do
     
     namespace :v1 do
       

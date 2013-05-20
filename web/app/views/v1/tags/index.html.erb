@@ -11,8 +11,8 @@
 <% @tags.each do |tag| %>
   <tr>
     <td><%= tag.tag_text %></td>
-    <td><%= link_to 'Show', ["api", "v1", tag] %></td>
-    <td><%= link_to 'Destroy', ["api", "v1", tag], :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>
+    <td><%= link_to 'Show', ["v1", tag] %></td>
+    <td><%= link_to 'Destroy', ["v1", tag], :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>
