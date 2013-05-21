@@ -27,42 +27,48 @@ class V1::IdeasController < ApplicationController
     @idea = Idea.new(params[:idea])
     
     respond_to do |format|
-      if @idea.save
-        if(params[:tags])
-          tags = params[:tags].split(",")
-          
-          tags.each do |tag_name|
-            tag = Tag.where(:tag_text => tag_name).first
+      user = User.find_by_name(params[:username])
+      
+      if user
+        if @idea.save
+          if(params[:tags])
+            tags = params[:tags].split(",")
             
-            unless(tag)
-              tag = Tag.new(:tag_text => tag_name)
-              tag.save
-            end
-            
-            tag.ideas << @idea
-          end
-        end
-        
-        if(params[:sparks])
-          sparks = params[:sparks].split(",")
-          
-          sparks.each do |spark_id|
-            spark = Spark.find(spark_id.to_i)
-            
-            if(spark)
-              @idea.sparks << spark
+            tags.each do |tag_name|
+              tag = Tag.where(:tag_text => tag_name).first
+              
+              unless(tag)
+                tag = Tag.new(:tag_text => tag_name)
+                tag.save
+              end
+              
+              tag.ideas << @idea
             end
           end
+          
+          if(params[:sparks])
+            sparks = params[:sparks].split(",")
+            
+            sparks.each do |spark_id|
+              spark = Spark.find(spark_id.to_i)
+              
+              if(spark)
+                @idea.sparks << spark
+              end
+            end
+          end
+          
+          user.ideas << @idea
+          
+          format.html { redirect_to @idea, :notice => 'Idea was successfully created.' }
+          format.json { render :json => @idea, :status => :created, :location => ["v1", @idea] }
+        else
+          format.html { render :action => "new" }
+          format.json { render :json => @idea.errors, :status => :unprocessable_entity }
         end
-        
-        user = User.find_by_name(params[:username])
-        user.ideas << @idea
-        
-        format.html { redirect_to @idea, :notice => 'Idea was successfully created.' }
-        format.json { render :json => @idea, :status => :created, :location => ["v1", @idea] }
       else
         format.html { render :action => "new" }
-        format.json { render :json => @idea.errors, :status => :unprocessable_entity }
+        format.json { render :json => @idea.errors, :status => :unauthorized }
       end
     end
   end

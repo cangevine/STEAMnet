@@ -27,12 +27,21 @@ class V1::CommentsController < ApplicationController
     @comment = Comment.new(params[:comment])
 
     respond_to do |format|
-      if @comment.save
-        format.html { redirect_to @comment, :notice => 'Comment was successfully created.' }
-        format.json { render :json => @comment, :status => :created, :location => ["v1", @comment] }
+      user = User.find_by_name(params[:username])
+      
+      if user
+        if @comment.save
+          @comment.user = user
+          
+          format.html { redirect_to @comment, :notice => 'Comment was successfully created.' }
+          format.json { render :json => @comment, :status => :created, :location => ["v1", @comment] }
+        else
+          format.html { render :action => "new" }
+          format.json { render :json => @comment.errors, :status => :unprocessable_entity }
+        end
       else
         format.html { render :action => "new" }
-        format.json { render :json => @comment.errors, :status => :unprocessable_entity }
+        format.json { render :json => @comment.errors, :status => :unauthorized }
       end
     end
   end

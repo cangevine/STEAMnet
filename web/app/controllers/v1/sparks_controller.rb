@@ -27,30 +27,36 @@ class V1::SparksController < ApplicationController
     @spark = Spark.new(params[:spark])
     
     respond_to do |format|
-      if @spark.save
-        if(params[:tags])
-          tags = params[:tags].split(",")
-          
-          tags.each do |tag_name|
-            tag = Tag.where(:tag_text => tag_name).first
+      user = User.find_by_name(params[:username])
+      
+      if user
+        if @spark.save
+          if(params[:tags])
+            tags = params[:tags].split(",")
             
-            unless(tag)
-              tag = Tag.new(:tag_text => tag_name)
-              tag.save
+            tags.each do |tag_name|
+              tag = Tag.where(:tag_text => tag_name).first
+              
+              unless(tag)
+                tag = Tag.new(:tag_text => tag_name)
+                tag.save
+              end
+              
+              tag.sparks << @idea
             end
-            
-            tag.sparks << @idea
           end
+          
+          user.sparks << @spark
+        
+          format.html { redirect_to @spark, :notice => 'Spark was successfully created.' }
+          format.json { render :json => @spark, :status => :created, :location => ["v1", @spark] }
+        else
+          format.html { render :action => "new" }
+          format.json { render :json => @spark.errors, :status => :unprocessable_entity }
         end
-        
-        user = User.find_by_name(params[:username])
-        user.sparks << @spark
-        
-        format.html { redirect_to @spark, :notice => 'Spark was successfully created.' }
-        format.json { render :json => @spark, :status => :created, :location => ["v1", @spark] }
       else
         format.html { render :action => "new" }
-        format.json { render :json => @spark.errors, :status => :unprocessable_entity }
+        format.json { render :json => @spark.errors, :status => :unauthorized }
       end
     end
   end
