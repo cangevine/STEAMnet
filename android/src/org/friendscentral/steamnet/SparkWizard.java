@@ -4,6 +4,7 @@ import org.friendscentral.steamnet.SparkWizardFragments.ContentEntry;
 import org.friendscentral.steamnet.SparkWizardFragments.ContentTypeChooser;
 import org.friendscentral.steamnet.SparkWizardFragments.SparkTypeChooser;
 
+import APIHandlers.RetrieveDataTask;
 import android.app.ActionBar.LayoutParams;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -51,7 +52,9 @@ public class SparkWizard {
 		ft.commit();
 	}
 	
-	public void submitSpark(View v) {
+	public void submitSpark(View v, Spark s) {
+		RetrieveDataTask task = new RetrieveDataTask(s.getSparkType(), s.getContentType(), s.getContent(), s.getUser(), s.getTags());
+		
 		revertWizard(v);
 	}
 	

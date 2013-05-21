@@ -1,4 +1,4 @@
-class TagLinkersController < ApplicationController
+class Api::V1::TagLinkersController < ApplicationController
   # GET /tag_linkers
   # GET /tag_linkers.json
   def index

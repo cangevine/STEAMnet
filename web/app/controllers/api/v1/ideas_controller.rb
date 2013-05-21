@@ -1,4 +1,4 @@
-class IdeasController < ApplicationController
+class Api::V1::IdeasController < ApplicationController
   # GET /ideas
   # GET /ideas.json
   def index
@@ -41,9 +41,28 @@ class IdeasController < ApplicationController
   # POST /ideas.json
   def create
     @idea = Idea.new(params[:idea])
-
+    @idea.save
+    
+    if(params[:tags])
+      tags = params[:tags].split(",")
+      
+      tags.each do |tag_name|
+        tag = Tag.where(:tag_text => tag_name).first
+        
+        if(tag)
+          tag.ideas << @idea
+        else
+          tag = @idea.tags.build(:tag_text => tag_name)
+          tag.save
+        end
+      end
+    end
+    
+    user = User.find(:name => params[:username])
+    user.ideas << @idea
+    
     respond_to do |format|
-      if @idea.save
+      if @idea.new_record?
         format.html { redirect_to @idea, :notice => 'Idea was successfully created.' }
         format.json { render :json => @idea, :status => :created, :location => @idea }
       else

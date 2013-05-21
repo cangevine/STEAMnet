@@ -1,4 +1,4 @@
-class SparksController < ApplicationController
+class Api::V1::SparksController < ApplicationController
   # GET /sparks
   # GET /sparks.json
   def index
@@ -41,14 +41,34 @@ class SparksController < ApplicationController
   # POST /sparks.json
   def create
     @spark = Spark.new(params[:spark])
-
+    
     respond_to do |format|
       if @spark.save
+        if(params[:tags])
+          tags = params[:tags].split(",")
+          
+          tags.each do |tag_name|
+            tag = Tag.where(:tag_text => tag_name).first
+            
+            if(tag)
+              tag.sparks << @spark
+            else
+              tag = @spark.tags.build(:tag_text => tag_name)
+              tag.save
+            end
+          end
+        end
+        
+        user = User.find(:name => params[:username])
+        user.sparks << @spark
+        
         format.html { redirect_to @spark, :notice => 'Spark was successfully created.' }
         format.json { render :json => @spark, :status => :created, :location => @spark }
+        #format.xml { render :xml => @spark, :status => :created, :location => @spark }
       else
         format.html { render :action => "new" }
         format.json { render :json => @spark.errors, :status => :unprocessable_entity }
+        #format.xml { render :xml => @spark.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -57,7 +77,7 @@ class SparksController < ApplicationController
   # PUT /sparks/1.json
   def update
     @spark = Spark.find(params[:id])
-
+    
     respond_to do |format|
       if @spark.update_attributes(params[:spark])
         format.html { redirect_to @spark, :notice => 'Spark was successfully updated.' }

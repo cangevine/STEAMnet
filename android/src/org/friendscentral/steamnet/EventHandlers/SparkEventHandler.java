@@ -42,6 +42,7 @@ public class SparkEventHandler {
 		Bundle b = new Bundle();
 		b.putString("Name", s.getName());
 		b.putInt("Id", s.getId());
+		b.putString("Type", s.getType());
     	Intent intent = new Intent(context, DetailActivity.class);
     	intent.putExtra(EXTRA_MESSAGE, b);
     	context.startActivity(intent);
