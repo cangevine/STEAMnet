@@ -47,6 +47,7 @@ public class IdeaBucketEventHandler {
     	
     	@Override
     	public boolean onLongClick(View view) {
+    		
     		ClipData data = ClipData.newPlainText("", "");
 	        DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
 	        view.startDrag(data, shadowBuilder, view, 0);
