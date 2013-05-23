@@ -1,18 +1,18 @@
 Steamnet::Application.routes.draw do
   
-  namespace :api do
+  scope "api" do
     
     namespace :v1 do
       
-      resources :tags
+      resources :tags, :only => [:index, :show,]
       
-      resources :comments
+      resources :comments, :except => [:new, :edit]
       
-      resources :sparks
+      resources :sparks, :except => [:new, :edit]
       
-      resources :users
+      resources :users, :except => [:new, :edit]
       
-      resources :ideas
+      resources :ideas, :except => [:new, :edit]
       
     end
     
