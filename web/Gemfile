@@ -15,8 +15,10 @@ end
 
 gem 'jquery-rails'
 
-group :development do
+group :development, :test do
 	gem 'sqlite3'
+	
+	gem 'rspec-rails'
 end
 
 group :production do
