@@ -18,6 +18,7 @@ gem 'jquery-rails'
 group :development do
 	gem 'sqlite3'
 	gem 'annotate-models'
+	gem 'rspec-rails'
 end
 
 group :test do
