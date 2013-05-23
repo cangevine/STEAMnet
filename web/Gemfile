@@ -15,15 +15,11 @@ end
 
 gem 'jquery-rails'
 
-group :development do
+group :development, :test do
 	gem 'sqlite3'
 	gem 'annotate-models'
 	gem 'rspec-rails'
-end
-
-group :test do
-  gem 'rspec-rails'
-  gem 'fuubar'
+	gem 'fuubar'
   gem 'factory_girl_rails'
   gem 'webrat'
 end
