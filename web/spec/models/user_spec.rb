@@ -96,23 +96,102 @@ describe User do
     
   end
   
-  describe "spark associations" do
+  describe "spark association" do
     
     before(:each) do
+      @user = User.create(@attr)
       
+      @s1 = FactoryGirl.create(:spark)
+      @s2 = FactoryGirl.create(:spark, :content => "Inspiration spark, yo.")
+      
+      @s1.users << @user
+      @s2.users << @user
+    end
+    
+    it "has a sparks attribute" do
+      @user.should respond_to(:sparks)
+    end
+    
+    it "has the right sparks" do
+      @user.sparks.should == [@s1, @s2]
+    end
+    
+    it "doesn't destroy associated sparks" do
+      @user.destroy
+      [@s1, @s2].each do |s|
+        Spark.find_by_id(s.id).should_not be_nil
+      end
     end
     
   end
   
-  describe "idea associations" do
+  describe "idea association" do
     
+    before(:each) do
+      @user = User.create(@attr)
+      
+      @i1 = FactoryGirl.create(:idea)
+      @i2 = FactoryGirl.create(:idea, :description => "Some idea.")
+      
+      @i1.users << @user
+      @i2.users << @user
+    end
     
+    it "has an ideas attribute" do
+      @user.should respond_to(:ideas)
+    end
+    
+    it "has the right ideass" do
+      @user.ideas.should == [@i1, @i2]
+    end
+    
+    it "doesn't destroy associated ideas" do
+      @user.destroy
+      [@i1, @i2].each do |i|
+        Idea.find_by_id(i.id).should_not be_nil
+      end
+    end
     
   end
   
-  describe "comment associations" do
+  describe "comment association" do
     
+    before(:each) do
+      @user = User.create(@attr)
+      
+      @s = FactoryGirl.create(:spark)
+      @i = FactoryGirl.create(:idea)
+      
+      @s.users << @user
+      @i.users << @user
+      
+      @c1 = FactoryGirl.create(:comment)
+      @c2 = FactoryGirl.create(:comment, :comment_text => "Some comment.")
+      
+      @c1.commentable = @s
+      @c2.commentable = @i
+      
+      @c1.user = @user
+      @c2.user = @user
+      
+      @c1.save
+      @c2.save
+    end
     
+    it "has an comments attribute" do
+      @user.should respond_to(:comments)
+    end
+    
+    it "has the right comments" do
+      @user.comments.should == [@c1, @c2]
+    end
+    
+    it "doesn't destroy associated comments" do
+      @user.destroy
+      [@c1, @c2].each do |c|
+        Comment.find_by_id(c.id).should_not be_nil
+      end
+    end
     
   end
   

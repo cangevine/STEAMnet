@@ -14,7 +14,6 @@ FactoryGirl.define do
   
   factory :idea do |p|
     p.description "Kittens, yo"
-    # p.association :section
   end
   
   factory :tag do |c|
@@ -23,7 +22,6 @@ FactoryGirl.define do
   
   factory :comment do |c|
     c.comment_text  "Proin quis tortor orci. Etiam at risus et justo."
-    c.association   :user
   end
   
   sequence :email do |n|
