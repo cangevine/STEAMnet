@@ -102,7 +102,7 @@ describe User do
       @user = User.create(@attr)
       
       @s1 = FactoryGirl.create(:spark)
-      @s2 = FactoryGirl.create(:spark, :content => "Inspiration spark, yo.")
+      @s2 = FactoryGirl.create(:spark)
       
       @s1.users << @user
       @s2.users << @user
@@ -131,7 +131,7 @@ describe User do
       @user = User.create(@attr)
       
       @i1 = FactoryGirl.create(:idea)
-      @i2 = FactoryGirl.create(:idea, :description => "Some idea.")
+      @i2 = FactoryGirl.create(:idea)
       
       @i1.users << @user
       @i2.users << @user
@@ -141,7 +141,7 @@ describe User do
       @user.should respond_to(:ideas)
     end
     
-    it "has the right ideass" do
+    it "has the right ideas" do
       @user.ideas.should == [@i1, @i2]
     end
     
@@ -166,7 +166,7 @@ describe User do
       @i.users << @user
       
       @c1 = FactoryGirl.create(:comment)
-      @c2 = FactoryGirl.create(:comment, :comment_text => "Some comment.")
+      @c2 = FactoryGirl.create(:comment)
       
       @c1.commentable = @s
       @c2.commentable = @i
