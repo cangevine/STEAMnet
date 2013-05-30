@@ -17,7 +17,7 @@ gem 'jquery-rails'
 
 group :development, :test do
 	gem 'sqlite3'
-	gem 'annotate-models'
+	gem 'annotate'
 	gem 'rspec-rails'
 	gem 'fuubar'
   gem 'factory_girl_rails'
