@@ -2,7 +2,11 @@ class V1::IdeasController < ApplicationController
   # GET /ideas
   # GET /ideas.json
   def index
-    @ideas = Idea.all
+    if params[:limit]
+      @ideas = Idea.order("id DESC").limit(params[:limit])
+    else
+      @ideas = Idea.order("id DESC")
+    end
 
     respond_to do |format|
       format.html # index.html.erb

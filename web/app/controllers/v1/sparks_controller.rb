@@ -2,8 +2,12 @@ class V1::SparksController < ApplicationController
   # GET /sparks
   # GET /sparks.json
   def index
-    @sparks = Spark.all
-
+    if params[:limit]
+      @sparks = Spark.order("id DESC").limit(params[:limit])
+    else
+      @sparks = Spark.order("id DESC")
+    end
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render :json => @sparks }

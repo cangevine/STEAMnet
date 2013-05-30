@@ -28,7 +28,8 @@ GEM
     activesupport (3.2.13)
       i18n (= 0.6.1)
       multi_json (~> 1.0)
-    annotate-models (1.0.4)
+    annotate (2.5.0)
+      rake
     arel (3.0.2)
     bcrypt-ruby (3.0.1)
     builder (3.0.4)
@@ -128,7 +129,7 @@ GEM
     tzinfo (0.3.37)
     uglifier (2.1.1)
       execjs (>= 0.3.0)
-      multi_json (>= 1.0.2, ~> 1.0)
+      multi_json (~> 1.0, >= 1.0.2)
     webrat (0.7.3)
       nokogiri (>= 1.2.0)
       rack (>= 1.0)
@@ -138,7 +139,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  annotate-models
+  annotate
   bcrypt-ruby (~> 3.0.0)
   coffee-rails (~> 3.2.1)
   factory_girl_rails
