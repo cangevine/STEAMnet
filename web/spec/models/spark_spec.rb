@@ -51,11 +51,20 @@ describe Spark do
   
   describe "content hash" do
     
-    it "should hash content after saving" do
+    it "hashes content after saving" do
       spark = Spark.new(@attr)
       spark.save
       
       spark.content_hash.should_not be_blank
+    end
+    
+    it "requires a unique hash" do
+      spark = Spark.new(@attr)
+      spark.save
+      
+      spark2 = Spark.new(@attr)
+      spark2.spark_type = "P"
+      spark2.should_not be_valid
     end
     
   end
