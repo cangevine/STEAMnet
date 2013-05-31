@@ -11,6 +11,8 @@
 #  updated_at   :datetime         not null
 #
 
+require 'digest/sha1'
+
 class Spark < ActiveRecord::Base
   attr_accessible :content, :content_hash, :content_type, :spark_type
   
@@ -22,9 +24,10 @@ class Spark < ActiveRecord::Base
   
   validates :content_type, :presence => true
   validates :content, :presence => true
+  validates :content_hash, :presence => true, :uniqueness => true
   validates :spark_type, :presence => true
   
-  before_save :hash_content
+  before_validation :hash_content
   
   def as_json(options={})
     super(:include => [:tags, :comments, :users])
@@ -33,7 +36,7 @@ class Spark < ActiveRecord::Base
   private
   
     def hash_content
-      self.content_hash = content + "_hashed"
+      self.content_hash = Digest::SHA1.hexdigest(self.content_type+"-"+self.content)
     end
     
 end
