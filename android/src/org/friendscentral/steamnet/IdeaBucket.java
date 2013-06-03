@@ -2,6 +2,7 @@ package org.friendscentral.steamnet;
 
 import java.util.ArrayList;
 
+import BaseClasses.Spark;
 import android.content.Context;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -9,13 +10,13 @@ import android.widget.LinearLayout;
 public class IdeaBucket {
 	LinearLayout layout;
 	Context context;
-	ArrayList<SimpleSpark> sparks;
+	ArrayList<Spark> sparks;
 	ImageView[] imageViews;
 	
 	public void initIdeaGrid(LinearLayout l, Context c) {
 		layout = l;
 		context = c;
-		sparks = new ArrayList<SimpleSpark>(4);
+		sparks = new ArrayList<Spark>(4);
 		
 		imageViews = new ImageView[4];
 		imageViews[0] =	(ImageView) layout.findViewById(R.id.first_image);
@@ -24,7 +25,7 @@ public class IdeaBucket {
 		imageViews[3] = (ImageView) layout.findViewById(R.id.fourth_image);
 	}
 	
-	public void addSpark(SimpleSpark ss) {
+	public void addSpark(Spark ss) {
 		if (sparks.size() < 4) {
 			sparks.add(ss);
 			imageViews[sparks.size() - 1].setImageResource(ss.getId());
