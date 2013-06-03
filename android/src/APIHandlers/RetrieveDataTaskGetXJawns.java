@@ -16,6 +16,7 @@ import org.json.JSONObject;
 import com.json.parsers.JSONParser;
 import com.squareup.okhttp.OkHttpClient;
 
+import BaseClasses.Jawn;
 import BaseClasses.Spark;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -80,12 +81,12 @@ public class RetrieveDataTaskGetXJawns {
         	Log.d(TAG, "=> "+data);
         	try {
         		Log.v("REPORT", "WE WILL BEGIN TO PARSE THE DATA, SIR!");
-				Spark[] sparks = parseData(data);
+				Jawn[] jawns = parseData(data);
 				
-				JawnAdapter a = new JawnAdapter(gridView.getContext(), sparks, 200);
+				JawnAdapter a = new JawnAdapter(gridView.getContext(), jawns, 200);
 				Log.v("REPORT", "WE HAVE ACCESSED THE JAWNADAPTER AND ARE PROCEEDING AS PLANNED, SIR!");
 				indexGrid.setAdapter(a);
-				indexGrid.setSparks(sparks);
+				indexGrid.setJawns(jawns);
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -95,7 +96,7 @@ public class RetrieveDataTaskGetXJawns {
         //PARSE DATA
         
 		@SuppressWarnings("unused")
-		Spark[] parseData(String data) throws JSONException {
+		Jawn[] parseData(String data) throws JSONException {
 			Log.v("REPORT", "WE ARE PARSING THE DATA, SIR!");
         	final String ID = "id";
         	final String SPARK_TYPE = "spark_type";
@@ -106,14 +107,14 @@ public class RetrieveDataTaskGetXJawns {
         	JSONParser jParser = new JSONParser();
         	 
         	// getting JSON string from URL
-        	JSONArray sparks = new JSONArray(data);
+        	JSONArray jawns = new JSONArray(data);
         	
-        	ArrayList<Spark> sparkArrayList = new ArrayList<Spark>();
+        	ArrayList<Jawn> jawnArrayList = new ArrayList<Jawn>();
         	
         	try {        	     
         	    // looping through All Contacts
-        	    for(int i = 0; i < sparks.length(); i++){
-        	        JSONObject s = sparks.getJSONObject(i);
+        	    for(int i = 0; i < jawns.length(); i++){
+        	        JSONObject s = jawns.getJSONObject(i);
         	         
         	        // Storing each json item in variable
         	        String id = s.getString(ID);
@@ -122,13 +123,13 @@ public class RetrieveDataTaskGetXJawns {
         	        String content = s.getString(CONTENT);
         	        String createdAt = s.getString(CREATED_AT);
         	        
-        	        sparkArrayList.add(new Spark(Integer.parseInt(id), sparkType.charAt(0), contentType.charAt(0), content, createdAt));
+        	        jawnArrayList.add(new Spark(Integer.parseInt(id), sparkType.charAt(0), contentType.charAt(0), content, createdAt));
         	    }
-        	    Spark[] sparkArray = new Spark[sparkArrayList.size()];
-        	    for(int i = 0; i < sparkArrayList.size(); i++){
-        	    	sparkArray[i] = sparkArrayList.get(i);
+        	    Jawn[] jawnArray = new Jawn[jawnArrayList.size()];
+        	    for(int i = 0; i < jawnArrayList.size(); i++){
+        	    	jawnArray[i] = jawnArrayList.get(i);
         	    }
-        	    return sparkArray;
+        	    return jawnArray;
         	} catch (JSONException e) {
         	    e.printStackTrace();
         	}
