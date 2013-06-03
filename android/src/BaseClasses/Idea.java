@@ -9,7 +9,7 @@ import java.util.ArrayList;
  *
  */
 @SuppressWarnings("serial")
-public class Idea implements Serializable{
+public class Idea extends Jawn implements Serializable{
 	int id;
 	String description;
 	ArrayList<String> tags;
@@ -99,5 +99,9 @@ public class Idea implements Serializable{
 	
 	public String getUsername(){
 		return username;
+	}
+	
+	public String getType(){
+		return "idea";
 	}
 }
