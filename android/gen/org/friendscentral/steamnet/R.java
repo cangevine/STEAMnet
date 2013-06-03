@@ -21,20 +21,42 @@ public final class R {
         public static final int activity_vertical_margin=0x7f040001;
     }
     public static final class drawable {
-        public static final int bucket_placeholder=0x7f020000;
-        public static final int ic_launcher=0x7f020001;
-        public static final int idea_bucket_drop_background=0x7f020002;
-        public static final int inspiration_button_source=0x7f020003;
-        public static final int problem_button_source=0x7f020004;
-        public static final int sample_0=0x7f020005;
-        public static final int sample_1=0x7f020006;
-        public static final int sample_2=0x7f020007;
-        public static final int sample_3=0x7f020008;
-        public static final int sample_4=0x7f020009;
-        public static final int sample_5=0x7f02000a;
-        public static final int sample_6=0x7f02000b;
-        public static final int sample_7=0x7f02000c;
-        public static final int what_if_button_source=0x7f02000d;
+        public static final int btn_blue_audio=0x7f020000;
+        public static final int btn_blue_code=0x7f020001;
+        public static final int btn_blue_link=0x7f020002;
+        public static final int btn_blue_picture=0x7f020003;
+        public static final int btn_blue_text=0x7f020004;
+        public static final int btn_blue_video=0x7f020005;
+        public static final int btn_green_audio=0x7f020006;
+        public static final int btn_green_code=0x7f020007;
+        public static final int btn_green_link=0x7f020008;
+        public static final int btn_green_picture=0x7f020009;
+        public static final int btn_green_text=0x7f02000a;
+        public static final int btn_green_video=0x7f02000b;
+        public static final int btn_inspiration=0x7f02000c;
+        public static final int btn_problem=0x7f02000d;
+        public static final int btn_red_audio=0x7f02000e;
+        public static final int btn_red_code=0x7f02000f;
+        public static final int btn_red_link=0x7f020010;
+        public static final int btn_red_picture=0x7f020011;
+        public static final int btn_red_text=0x7f020012;
+        public static final int btn_red_video=0x7f020013;
+        public static final int btn_what_if=0x7f020014;
+        public static final int bucket_placeholder=0x7f020015;
+        public static final int ic_launcher=0x7f020016;
+        public static final int idea_bucket_drop_background=0x7f020017;
+        public static final int inspiration_button_source=0x7f020018;
+        public static final int problem_button_source=0x7f020019;
+        public static final int sample_0=0x7f02001a;
+        public static final int sample_1=0x7f02001b;
+        public static final int sample_2=0x7f02001c;
+        public static final int sample_3=0x7f02001d;
+        public static final int sample_4=0x7f02001e;
+        public static final int sample_5=0x7f02001f;
+        public static final int sample_6=0x7f020020;
+        public static final int sample_7=0x7f020021;
+        public static final int video_spark_placeholder=0x7f020022;
+        public static final int what_if_button_source=0x7f020023;
     }
     public static final class id {
         public static final int CreatorTextView=0x7f080005;

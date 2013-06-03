@@ -1,39 +1,27 @@
 package org.friendscentral.steamnet;
 
-
-public class Spark extends Jawn {
+public class Idea extends Jawn {
 	String id;
-	char spark_type;
-	char content_type;
+	String title;
 	String content;
 	String createdAt;
 	String updatedAt;
 	
+	int[] sparkIds;
+	
 	String[] tags;
 	String user;
-	
-	public Spark(char s, String u) {
-		spark_type = s;
+
+	public Idea(int[] s, String u) {
+		sparkIds = s;
 		
 		//No idea how to do user stuff
 		user = u;
 	}
 	
-	public void setContentType(char c) {
-		content_type = c;
-	}
-	
 	public void setContent(String c, String[] t) {
 		content = c;
 		tags = t;
-	}
-	
-	public char getSparkType() {
-		return spark_type;
-	}
-	
-	public char getContentType() {
-		return content_type;
 	}
 	
 	public String getContent() {
@@ -54,9 +42,14 @@ public class Spark extends Jawn {
 		 */
 		return createdAt;
 	}
-
+	
+	public int[] getSparkArray() {
+		return sparkIds;
+	}
+	
 	@Override
 	public char getType() {
-		return "S".charAt(0);
+		return "I".charAt(0);
 	}
+
 }

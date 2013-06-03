@@ -2,6 +2,7 @@ package org.friendscentral.steamnet.Activities;
 
 import org.friendscentral.steamnet.IdeaBucket;
 import org.friendscentral.steamnet.IndexGrid;
+import org.friendscentral.steamnet.Jawn;
 import org.friendscentral.steamnet.R;
 import org.friendscentral.steamnet.Spark;
 import org.friendscentral.steamnet.SparkWizard;
@@ -65,7 +66,19 @@ public class MainActivity extends Activity {
     	final View indexGridLayout = findViewById(R.id.IndexGrid);
     	gridview = (GridView) indexGridLayout.findViewById(R.id.SparkGrid);
     	indexGrid = new IndexGrid();
-    	indexGrid.initIndexGrid(gridview, MainActivity.this);
+    	
+    	/*
+    	 * HERE
+    	 * RIGHT HERE
+    	 * LOOK
+    	 * HERE
+    	 * Ok there needs to be an API call here to get the Jawns
+    	 * 
+    	 * Until then, Jawns will be a blank array
+    	 */
+    	Jawn[] j = new Jawn[0];
+    	
+    	indexGrid.initIndexGrid(j, gridview, MainActivity.this);
     }
     
     public void initIdeaBucket() {
