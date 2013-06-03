@@ -1,7 +1,3 @@
-/*
- * This is pretty antiquated. Use the SparkAdapter
- */
-
 package org.friendscentral.steamnet;
 
 import android.content.Context;

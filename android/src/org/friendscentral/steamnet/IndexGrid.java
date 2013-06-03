@@ -7,7 +7,7 @@ import android.widget.GridView;
 public class IndexGrid {
 	GridView gridview;
 	Context context;
-	JawnAdapter adapter;
+	ImageAdapter adapter;
 	
 	private SimpleSpark[] sparks = {
 			new SimpleSpark("Laying down!", R.drawable.sample_1, "Picture"),
@@ -30,11 +30,11 @@ public class IndexGrid {
 			new SimpleSpark("In a basket!", R.drawable.sample_6, "Picture"), 
 	};
 	
-	public void initIndexGrid(Jawn[] j, GridView g, Context c) {
+	public void initIndexGrid(GridView g, Context c) {
 		//Use setter methods:
 		gridview = g;
     	context = c;
-    	adapter = new JawnAdapter(gridview.getContext(), j, 200);
+    	adapter = new ImageAdapter(gridview.getContext(), sparks, 200);
     	
     	gridview.setAdapter(adapter);
     	Log.v("indexGrid", "Just called initIndexGrid! Success!");
@@ -44,7 +44,7 @@ public class IndexGrid {
 		return sparks;
 	}
 	
-	public JawnAdapter getAdapter() {
+	public ImageAdapter getAdapter() {
 		return adapter;
 	}
 	

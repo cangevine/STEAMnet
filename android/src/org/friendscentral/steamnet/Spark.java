@@ -1,7 +1,7 @@
 package org.friendscentral.steamnet;
 
 
-public class Spark extends Jawn {
+public class Spark {
 	String id;
 	char spark_type;
 	char content_type;
@@ -46,17 +46,5 @@ public class Spark extends Jawn {
 	
 	public String getUser() {
 		return user;
-	}
-	
-	public String getDate() {
-		/*
-		 * Some math to see if the createdAt or updatedAt was more recent
-		 */
-		return createdAt;
-	}
-
-	@Override
-	public char getType() {
-		return "S".charAt(0);
 	}
 }
