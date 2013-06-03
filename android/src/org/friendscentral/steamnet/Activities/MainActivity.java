@@ -14,6 +14,7 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
@@ -86,6 +87,7 @@ public class MainActivity extends Activity {
 		char sparkType = "Q".charAt(0);
 		char contentType = "T".charAt(0);
 		String content;
+		Log.d("openContentTypeChooser", tag);
 		if (tag.equals("openContentTypeChooser")) {
 			
 			if (v.getId() == R.id.Inspiration_button) {
