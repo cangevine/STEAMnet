@@ -107,7 +107,7 @@ public class Spark extends Jawn implements Serializable{
 		}
 	}
 	
-	public String getType(){
-		return "spark";
+	public char getType(){
+		return "S".charAt(0);
 	}
 }
