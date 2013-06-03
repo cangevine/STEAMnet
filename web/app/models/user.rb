@@ -2,12 +2,12 @@
 #
 # Table name: users
 #
-#  id            :integer          not null, primary key
-#  name          :string(255)
-#  password_hash :text
-#  email         :string(255)
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
+#  id              :integer          not null, primary key
+#  name            :string(255)
+#  password_digest :text
+#  email           :string(255)
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
 #
 
 class User < ActiveRecord::Base
@@ -19,8 +19,8 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :sparks
   has_many :comments
   
-  validates :email, :presence => true, :format => { :with => /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/, :message => "Must be a valid email address." }
-  validates :name, :presence => true
+  validates :email, :presence => true, :format => { :with => /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/, :message => "Must be a valid email address." }, :uniqueness => { :case_sensitive => false }
+  validates :name, :presence => true, :uniqueness => { :case_sensitive => false }
   validates :password, :presence => { :on => :create }
   
   def as_json(options={})
