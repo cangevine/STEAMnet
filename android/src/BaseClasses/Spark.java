@@ -9,7 +9,7 @@ import java.io.Serializable;
  */
 
 @SuppressWarnings("serial")
-public class Spark implements Serializable{
+public class Spark extends Jawn implements Serializable{
 	int id;
 	char sparkType;
 	char contentType;
@@ -105,5 +105,9 @@ public class Spark implements Serializable{
 		} else {
 			return null;
 		}
+	}
+	
+	public String getType(){
+		return "spark";
 	}
 }
