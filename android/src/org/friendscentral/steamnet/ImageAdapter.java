@@ -1,5 +1,6 @@
 package org.friendscentral.steamnet;
 
+import BaseClasses.Spark;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +13,11 @@ public class ImageAdapter extends BaseAdapter {
     private Integer[] mThumbIds;
     private int image_size;
 
-    public ImageAdapter(Context c, SimpleSpark[] s, int size) {
+    public ImageAdapter(Context c, Spark[] sparks, int size) {
         mContext = c;
-        mThumbIds = new Integer[s.length];
+        mThumbIds = new Integer[sparks.length];
         image_size = size;
-        initSparks(s);
+        initSparks(sparks);
     }
     
     // create a new ImageView for each item referenced by the Adapter
@@ -35,9 +36,9 @@ public class ImageAdapter extends BaseAdapter {
         return imageView;
     }
     
-    public void initSparks(SimpleSpark[] s) {
-	    for (int i = 0; i < s.length; i++) {
-	    	mThumbIds[i] = s[i].getId();
+    public void initSparks(Spark[] sparks) {
+	    for (int i = 0; i < sparks.length; i++) {
+	    	mThumbIds[i] = sparks[i].getId();
 	    }
     }
 

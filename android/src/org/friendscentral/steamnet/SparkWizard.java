@@ -4,13 +4,16 @@ import org.friendscentral.steamnet.SparkWizardFragments.ContentEntry;
 import org.friendscentral.steamnet.SparkWizardFragments.ContentTypeChooser;
 import org.friendscentral.steamnet.SparkWizardFragments.SparkTypeChooser;
 
-import APIHandlers.RetrieveDataTask;
+import APIHandlers.RetrieveDataTaskPostSpark;
+import BaseClasses.Spark;
 import android.app.ActionBar.LayoutParams;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.test.suitebuilder.annotation.Suppress;
 import android.view.View;
+import android.widget.GridView;
 import android.widget.LinearLayout;
-
+@SuppressWarnings("unused")
 public class SparkWizard {
 	LinearLayout mainLayout;
 	FragmentManager fm;
@@ -52,8 +55,8 @@ public class SparkWizard {
 		ft.commit();
 	}
 	
-	public void submitSpark(View v, Spark s) {
-		RetrieveDataTask task = new RetrieveDataTask(s.getSparkType(), s.getContentType(), s.getContent(), s.getUser(), s.getTags());
+	public void submitSpark(View v, Spark s, GridView g, IndexGrid i) {
+		RetrieveDataTaskPostSpark task = new RetrieveDataTaskPostSpark(s.getSparkType(), s.getContentType(), s.getContent(), g, i);
 		
 		revertWizard(v);
 	}
