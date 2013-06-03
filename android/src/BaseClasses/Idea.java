@@ -101,7 +101,7 @@ public class Idea extends Jawn implements Serializable{
 		return username;
 	}
 	
-	public String getType(){
-		return "idea";
+	public char getType(){
+		return "I".charAt(0);
 	}
 }

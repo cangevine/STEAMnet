@@ -10,7 +10,9 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+/*
+ * THIS NEEDS TO BE CHANGED TO TAKE JAWNS INSTEAD OF SPARKS, AND METHODS LIKE initSparks AND setSparks NEED TO BE CHANGED ACCORDINGLY
+ */
 public class JawnAdapter extends BaseAdapter {
     private Context mContext;
     private Integer[] mThumbIds;
