@@ -1,51 +1,67 @@
 package org.friendscentral.steamnet;
 
+import java.util.ArrayList;
+
+import APIHandlers.RetrieveDataTaskGetXSparks;
+import BaseClasses.Spark;
+
 import android.content.Context;
 import android.util.Log;
 import android.widget.GridView;
 
+/**
+ * 
+ * @author sambeckley 
+ * @author aqeelphillips
+ * 
+ */
 public class IndexGrid {
 	GridView gridview;
 	Context context;
 	JawnAdapter adapter;
 	
-	private SimpleSpark[] sparks = {
-			new SimpleSpark("Laying down!", R.drawable.sample_1, "Picture"),
-			new SimpleSpark("In a coat!", R.drawable.sample_2, "Picture"), 
-			new SimpleSpark("In a basket!", R.drawable.sample_6, "Picture"), 
-			new SimpleSpark("Laying down!", R.drawable.sample_1, "Picture"),
-			new SimpleSpark("In a coat!", R.drawable.sample_2, "Picture"), 
-			new SimpleSpark("In a basket!", R.drawable.sample_6, "Picture"), 
-			new SimpleSpark("Laying down!", R.drawable.sample_1, "Picture"),
-			new SimpleSpark("In a coat!", R.drawable.sample_2, "Picture"), 
-			new SimpleSpark("In a basket!", R.drawable.sample_6, "Picture"), 
-			new SimpleSpark("Laying down!", R.drawable.sample_1, "Picture"),
-			new SimpleSpark("In a coat!", R.drawable.sample_2, "Picture"), 
-			new SimpleSpark("In a basket!", R.drawable.sample_6, "Picture"), 
-			new SimpleSpark("Laying down!", R.drawable.sample_1, "Picture"),
-			new SimpleSpark("In a coat!", R.drawable.sample_2, "Picture"), 
-			new SimpleSpark("In a basket!", R.drawable.sample_6, "Picture"), 
-			new SimpleSpark("Laying down!", R.drawable.sample_1, "Picture"),
-			new SimpleSpark("In a coat!", R.drawable.sample_2, "Picture"), 
-			new SimpleSpark("In a basket!", R.drawable.sample_6, "Picture"), 
-	};
+	private Spark[] sparks;
 	
-	public void initIndexGrid(Jawn[] j, GridView g, Context c) {
+	public void initIndexGrid(GridView g, Context c) {
 		//Use setter methods:
 		gridview = g;
     	context = c;
-    	adapter = new JawnAdapter(gridview.getContext(), j, 200);
+    	@SuppressWarnings("unused")
+    	RetrieveDataTaskGetXSparks task = new RetrieveDataTaskGetXSparks(15, gridview, this);
     	
-    	gridview.setAdapter(adapter);
     	Log.v("indexGrid", "Just called initIndexGrid! Success!");
 	}
 	
-	public SimpleSpark[] getSparks() {
+	public Spark[] getSparks() {
 		return sparks;
 	}
 	
 	public JawnAdapter getAdapter() {
 		return adapter;
 	}
+	
+	public void setAdapter(JawnAdapter j){
+		adapter = j;
+		gridview.setAdapter(adapter);
+	}
+	
+	public void setSparks(Spark[] s){
+		sparks = s;
+	}
+	
+	public void addSpark(Spark s){
+    	ArrayList<Spark> sparksArrayList = new ArrayList<Spark>();
+    	for(int i = 0; i < sparks.length; i++){
+    		sparksArrayList.add(sparks[i]);
+    	}
+    	sparksArrayList.add(s);
+    	Spark[] newSparks = new Spark[sparksArrayList.size()];
+    	for(int i = 0; i < sparksArrayList.size(); i++){
+    		newSparks[i] = sparksArrayList.get(i);
+    	}
+    	sparks = newSparks;
+    	adapter.setSparks(newSparks);
+    	adapter.getView((sparks.length - 1), null, null);
+    }
 	
 }

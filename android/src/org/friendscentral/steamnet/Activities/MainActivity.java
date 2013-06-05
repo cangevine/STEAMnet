@@ -2,25 +2,25 @@ package org.friendscentral.steamnet.Activities;
 
 import org.friendscentral.steamnet.IdeaBucket;
 import org.friendscentral.steamnet.IndexGrid;
-import org.friendscentral.steamnet.Jawn;
 import org.friendscentral.steamnet.R;
-import org.friendscentral.steamnet.Spark;
 import org.friendscentral.steamnet.SparkWizard;
 import org.friendscentral.steamnet.EventHandlers.IdeaBucketEventHandler;
 import org.friendscentral.steamnet.EventHandlers.SparkEventHandler;
 import org.friendscentral.steamnet.SparkWizardFragments.SparkTypeChooser;
 
-import APIHandlers.RetrieveDataTask;
+import BaseClasses.Spark;
 import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
 	Spark newSpark;
@@ -33,7 +33,7 @@ public class MainActivity extends Activity {
     
     IdeaBucket ideaBucket;
     LinearLayout mainLayout;
-    GridView gridview;
+    GridView gridView;
     IndexGrid indexGrid;
 
 	@Override
@@ -58,27 +58,15 @@ public class MainActivity extends Activity {
         
 
 		sparkWizard = new SparkWizard(mainLayout, getFragmentManager());
-		sparkEventHandler = new SparkEventHandler(MainActivity.this, mainLayout, ideaBucket, gridview, indexGrid);
+		sparkEventHandler = new SparkEventHandler(MainActivity.this, mainLayout, ideaBucket, gridView, indexGrid);
 		bucketHandler = new IdeaBucketEventHandler(MainActivity.this, ideaBucket, mainLayout, getFragmentManager());
     }
     
     public void initializeIndexGridLayout() {
     	final View indexGridLayout = findViewById(R.id.IndexGrid);
-    	gridview = (GridView) indexGridLayout.findViewById(R.id.SparkGrid);
+    	gridView = (GridView) indexGridLayout.findViewById(R.id.SparkGrid);
     	indexGrid = new IndexGrid();
-    	
-    	/*
-    	 * HERE
-    	 * RIGHT HERE
-    	 * LOOK
-    	 * HERE
-    	 * Ok there needs to be an API call here to get the Jawns
-    	 * 
-    	 * Until then, Jawns will be a blank array
-    	 */
-    	Jawn[] j = new Jawn[0];
-    	
-    	indexGrid.initIndexGrid(j, gridview, MainActivity.this);
+    	indexGrid.initIndexGrid(gridView, MainActivity.this);
     }
     
     public void initIdeaBucket() {
@@ -96,10 +84,11 @@ public class MainActivity extends Activity {
 	
 	public void updateWizard(View v) {
 		String tag = (String) v.getTag();
+		char sparkType = "Q".charAt(0);
+		char contentType = "T".charAt(0);
+		String content;
+		Log.d("openContentTypeChooser", tag);
 		if (tag.equals("openContentTypeChooser")) {
-			
-			char sparkType = 0;
-			String user = "Placeholder_admin_dude";
 			
 			if (v.getId() == R.id.Inspiration_button) {
 				sparkType = "I".charAt(0);
@@ -108,9 +97,7 @@ public class MainActivity extends Activity {
 			} else if (v.getId() == R.id.Problem_button) {
 				sparkType = "P".charAt(0);
 			}
-			
-			newSpark = new Spark(sparkType, user);
-			
+						
 			sparkWizard.openContentTypeChooser(v);
 			
 		} else if (tag.equals("revertWizard")) {
@@ -119,8 +106,6 @@ public class MainActivity extends Activity {
 			newSpark = null;
 			
 		} else if (tag.equals("openContentEntry")) {
-			
-			char contentType = 0;
 			
 			if (v.getId() == R.id.picture_button) {
 				contentType = "P".charAt(0);
@@ -135,22 +120,21 @@ public class MainActivity extends Activity {
 			} else if (v.getId() == R.id.link_button) {
 				contentType = "L".charAt(0);
 			}
-			
-			newSpark.setContentType(contentType);
-			
+						
 			sparkWizard.openContentEntry(v);
 			
 		} else if (tag.equals("submitSpark")) {
 			
-			EditText entryForm = (EditText) findViewById(R.id.content_entry_form);
-			String content = entryForm.getText().toString();
-			
+			findViewById(R.id.content_entry_form);
 			EditText tagsForm = (EditText) findViewById(R.id.tag_entry_form);
-			String[] tags = tagsForm.getText().toString().split(", ");
+			tagsForm.getText().toString().split(", ");
 			
-			newSpark.setContent(content, tags);
+			TextView sparkContentView = (TextView) findViewById(R.id.content_entry_form);
+			content = sparkContentView.getText().toString();
 			
-			sparkWizard.submitSpark(v, newSpark);
+			
+			newSpark = new Spark(sparkType, contentType, content);
+			sparkWizard.submitSpark(v, newSpark, gridView, indexGrid);
 			
 			newSpark = null;
 			

@@ -3,13 +3,13 @@ package org.friendscentral.steamnet.EventHandlers;
 import org.friendscentral.steamnet.IdeaBucket;
 import org.friendscentral.steamnet.IndexGrid;
 import org.friendscentral.steamnet.R;
-import org.friendscentral.steamnet.SimpleSpark;
 import org.friendscentral.steamnet.Activities.DetailActivity;
+
+import BaseClasses.Spark;
 
 import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.DragEvent;
 import android.view.View;
 import android.view.View.DragShadowBuilder;
@@ -38,13 +38,16 @@ public class SparkEventHandler {
 		initializeIndexGridLayout();
 	}
 	
-	public void openDetailView(SimpleSpark s) {
-		Bundle b = new Bundle();
-		b.putString("Name", s.getName());
+	public void openDetailView(Spark s) {
+		/*Bundle b = new Bundle();
+		b.putString("Content", s.getContent());
 		b.putInt("Id", s.getId());
-		b.putString("Type", s.getType());
+		b.putString("SparkType", s.getSparkTypeString());
+		b.putString("ContentType", s.getContentTypeString());
+		b.putString("CreatedAt", s.getCreatedAt());*/
     	Intent intent = new Intent(context, DetailActivity.class);
-    	intent.putExtra(EXTRA_MESSAGE, b);
+    	//intent.putExtra(EXTRA_MESSAGE, b);
+    	intent.putExtra("spark", s);
     	context.startActivity(intent);
     }
     
