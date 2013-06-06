@@ -9,6 +9,8 @@ import java.util.ArrayList;
 
 import org.friendscentral.steamnet.IndexGrid;
 import org.friendscentral.steamnet.JawnAdapter;
+import org.friendscentral.steamnet.BaseClasses.Jawn;
+import org.friendscentral.steamnet.BaseClasses.Spark;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,8 +18,6 @@ import org.json.JSONObject;
 import com.json.parsers.JSONParser;
 import com.squareup.okhttp.OkHttpClient;
 
-import BaseClasses.Jawn;
-import BaseClasses.Spark;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.GridView;
@@ -112,7 +112,7 @@ public class RetrieveDataTaskGetXJawns {
         	ArrayList<Jawn> jawnArrayList = new ArrayList<Jawn>();
         	
         	try {        	     
-        	    // looping through All Contacts
+        	    // looping through All Jawns
         	    for(int i = 0; i < jawns.length(); i++){
         	        JSONObject s = jawns.getJSONObject(i);
         	         
