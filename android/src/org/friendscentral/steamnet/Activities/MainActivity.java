@@ -4,11 +4,11 @@ import org.friendscentral.steamnet.IdeaBucket;
 import org.friendscentral.steamnet.IndexGrid;
 import org.friendscentral.steamnet.R;
 import org.friendscentral.steamnet.SparkWizard;
+import org.friendscentral.steamnet.BaseClasses.Spark;
 import org.friendscentral.steamnet.EventHandlers.IdeaBucketEventHandler;
 import org.friendscentral.steamnet.EventHandlers.SparkEventHandler;
 import org.friendscentral.steamnet.SparkWizardFragments.SparkTypeChooser;
 
-import BaseClasses.Spark;
 import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.app.FragmentManager;

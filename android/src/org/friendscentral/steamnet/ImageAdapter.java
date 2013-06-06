@@ -1,6 +1,7 @@
 package org.friendscentral.steamnet;
 
-import BaseClasses.Spark;
+import org.friendscentral.steamnet.BaseClasses.Spark;
+
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;

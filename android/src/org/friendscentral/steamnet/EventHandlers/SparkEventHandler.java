@@ -4,8 +4,8 @@ import org.friendscentral.steamnet.IdeaBucket;
 import org.friendscentral.steamnet.IndexGrid;
 import org.friendscentral.steamnet.R;
 import org.friendscentral.steamnet.Activities.DetailActivity;
+import org.friendscentral.steamnet.BaseClasses.Spark;
 
-import BaseClasses.Spark;
 
 import android.content.ClipData;
 import android.content.Context;
@@ -54,7 +54,7 @@ public class SparkEventHandler {
     public void initializeIndexGridLayout() {
     	gridview.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                openDetailView(indexGrid.getSparks()[position]);
+                openDetailView(indexGrid.getJawnAt(position)); //NEED POLYMORPHIC openDetailView
             }
         });
     	
@@ -103,7 +103,7 @@ public class SparkEventHandler {
 		      		 * (currently fixed by making the dropzone of the bucket the entire sidebar)
 		      		 */
 		      		
-		      		ideaBucket.addSpark(indexGridContext.getSparks()[pos]);
+		      		ideaBucket.addSpark(indexGridContext.getJawnAt(pos).getSelfSpark());
 		    		break;
 		      	case DragEvent.ACTION_DRAG_ENDED:
 		      		//nothing

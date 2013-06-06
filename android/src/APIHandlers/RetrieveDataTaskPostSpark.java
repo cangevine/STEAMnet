@@ -8,15 +8,18 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+
 import org.friendscentral.steamnet.IndexGrid;
 import org.friendscentral.steamnet.JawnAdapter;
+import org.friendscentral.steamnet.BaseClasses.Spark;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.json.parsers.JSONParser;
 import com.squareup.okhttp.OkHttpClient;
 
-import BaseClasses.Spark;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.GridView;
@@ -91,7 +94,7 @@ public class RetrieveDataTaskPostSpark {
 	    	Log.d(TAG, "=> "+data);
 	    	try {
 				Spark newSpark = parseData(data);
-				indexGrid.addSpark(newSpark);
+				indexGrid.addJawn(newSpark);
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -99,29 +102,58 @@ public class RetrieveDataTaskPostSpark {
 	    }
 	    
 	    Spark parseData(String data) throws JSONException {
-			Log.v("REPORT", "WE ARE PARSING THE DATA, SIR!");
+			Log.v("TEST", "BEGGINING TO PARSE DATA");
         	final String ID = "id";
         	final String SPARK_TYPE = "spark_type";
         	final String CONTENT_TYPE = "content_type";
         	final String CONTENT = "content";
         	final String CREATED_AT = "created_at";
+        	final String UPDATED_AT = "updated_at";
+        	final String USERS = "users";
+        	final String USER = "user";
+        	final String USERNAME = "name";
         	// Creating JSON Parser instance
         	JSONParser jParser = new JSONParser();
         	 
         	// getting JSON string from URL
-        	JSONObject s = new JSONObject(data);
-        	
-        	try {        	      
+        	JSONObject json = new JSONObject(data);
+        	 
+        	try {
+				// Storing each json item in variable
+				String id = json.getString(ID);
+				String sparkType = json.getString(SPARK_TYPE);
+				String contentType = json.getString(CONTENT_TYPE);
+				String content = json.getString(CONTENT);
+				String createdAt = json.getString(CREATED_AT);
+				String firstUser = "";
+				
+				//Getting Array of Users
+        	    JSONArray usersJSON = json.getJSONArray(USERS);
+        	     
+        	    // looping through All Users
+        	    ArrayList<Integer> usersArrayList = new ArrayList<Integer>();
+        	    int count = 0;
+        	    for(int i = 0; i < usersJSON.length(); i++){
+        	        JSONObject u = usersJSON.getJSONObject(i);
         	        // Storing each json item in variable
-        	        String id = s.getString(ID);
-        	        String sparkType = s.getString(SPARK_TYPE);
-        	        String contentType = s.getString(CONTENT_TYPE);
-        	        String content = s.getString(CONTENT);
-        	        String createdAt = s.getString(CREATED_AT);
-        	        
-        	        return new Spark(Integer.parseInt(id), sparkType.charAt(0), contentType.charAt(0), content, createdAt);
+        	        if(count == 0){
+        	        	count++;
+        	        	firstUser = u.getString(USERNAME);
+        	        }
+        	        int userID = u.getInt(ID);
+        	        usersArrayList.add(userID);
+        	    }
+        	    int[] usersArray = new int[usersArrayList.size()];
+        	    for(int q = 0; q < usersArrayList.size(); q++){
+        	    	usersArray[q] = usersArrayList.get(q);
+        	    }
         	    
+        	    String[] createdAts = new String[1];
+        	    createdAts[0] = createdAt;
         	    
+				Spark newSpark = new Spark(Integer.parseInt(id), sparkType.charAt(0), contentType.charAt(0), content, createdAts, usersArray, firstUser);
+				Log.v("TEST", newSpark.toString());
+				return newSpark;
         	} catch (JSONException e) {
         	    e.printStackTrace();
         	}

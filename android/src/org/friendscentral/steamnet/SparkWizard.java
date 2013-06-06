@@ -1,11 +1,11 @@
 package org.friendscentral.steamnet;
 
+import org.friendscentral.steamnet.BaseClasses.Spark;
 import org.friendscentral.steamnet.SparkWizardFragments.ContentEntry;
 import org.friendscentral.steamnet.SparkWizardFragments.ContentTypeChooser;
 import org.friendscentral.steamnet.SparkWizardFragments.SparkTypeChooser;
 
 import APIHandlers.RetrieveDataTaskPostSpark;
-import BaseClasses.Spark;
 import android.app.ActionBar.LayoutParams;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;

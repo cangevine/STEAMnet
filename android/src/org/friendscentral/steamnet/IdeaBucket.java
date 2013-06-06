@@ -2,7 +2,8 @@ package org.friendscentral.steamnet;
 
 import java.util.ArrayList;
 
-import BaseClasses.Spark;
+import org.friendscentral.steamnet.BaseClasses.Spark;
+
 import android.content.Context;
 import android.widget.ImageView;
 import android.widget.LinearLayout;

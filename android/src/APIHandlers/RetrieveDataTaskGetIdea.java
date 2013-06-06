@@ -7,6 +7,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
+import org.friendscentral.steamnet.BaseClasses.Idea;
+import org.friendscentral.steamnet.BaseClasses.Spark;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,8 +16,6 @@ import org.json.JSONObject;
 import com.json.parsers.JSONParser;
 import com.squareup.okhttp.OkHttpClient;
 
-import BaseClasses.Idea;
-import BaseClasses.Spark;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -82,43 +82,75 @@ public class RetrieveDataTaskGetIdea {
         	final String TAGS = "tags";
         	final String SPARKS = "sparks";
         	final String USER = "username";
-        	//Sparks
+        	//Sparks (currently unused)
         	final String SPARK_TYPE = "spark_type";
         	final String CONTENT_TYPE = "content_type";
         	final String CONTENT = "content";
         	final String CREATED_AT = "created_at";
-        	final String UPDATED_AT = "updated_at";
+        	final String CREATED_ATS = "created_ats";
+        	final String USERS = "users";
+        	final String USERNAME = "name";
         	// Creating JSON Parser instance
         	JSONParser jParser = new JSONParser();
         	 
         	// getting JSON string from URL
         	JSONObject json = new JSONObject(data);
         	 
-        	JSONArray sparksJSON = null;
+        	JSONArray ideasJSON = null;
         	
         	try {
-        		ArrayList<Spark> sparkList = new ArrayList<Spark>();
         	    // Getting Idea parameters
         		int id = json.getInt(ID);
     	        String description = json.getString(DESCRIPTION);
     	        String tags = json.getString(TAGS);
-    	        String user = json.getString(USER);
     	        
     	        //Getting Array of Sparks
-        	    sparksJSON = json.getJSONArray(SPARKS);
+        	    ideasJSON = json.getJSONArray(SPARKS);
         	     
         	    // looping through All Sparks
-        	    for(int i = 0; i < sparksJSON.length(); i++){
-        	        JSONObject s = sparksJSON.getJSONObject(i);
+        	    int[] sparkIds = new int[10];
+        	    for(int i = 0; i < ideasJSON.length(); i++){
+        	        JSONObject s = ideasJSON.getJSONObject(i);
         	        // Storing each json item in variable
         	        int sparkId = s.getInt(ID);
-        	        String sparkType = s.getString(SPARK_TYPE);
-    				String contentType = s.getString(CONTENT_TYPE);
-    				String content = s.getString(CONTENT);
-    				String createdAt = s.getString(CREATED_AT);
-        	        sparkList.add(new Spark(id, sparkType.charAt(0), contentType.charAt(0), content, createdAt));
+        	        sparkIds[i] = sparkId;
         	    }
-        	Idea newIdea = new Idea(id, description, tags, sparkList, user);
+        	    
+        	    String firstUser = "";
+        	    //Getting Array of Users
+        	    JSONArray usersJSON = json.getJSONArray(USERS);
+        	    
+        	    //looping through all Users
+        	    int[] userIds = new int[10];
+        	    int count = 0;
+        	    for(int q = 0; q < usersJSON.length(); q++){
+        	    	JSONObject u = usersJSON.getJSONObject(q);
+        	    	if(count == 0){
+        	    		firstUser = u.getString(USERNAME);
+        	    		count++;
+        	    	}
+        	    	userIds[q] = u.getInt(ID);
+        	    }
+        	    
+        	    //Getting Array of Created Ats
+        	    JSONArray createdAtsJSON = json.getJSONArray(CREATED_ATS);
+        	    
+        	    //Looping through All Created Ats
+        	    String[] createdAts = new String[10];
+        	    String firstCreatedAt = "";
+        	    int counter = 0;
+        	    for(int i = 0; i < ideasJSON.length(); i++){
+        	        JSONObject s = createdAtsJSON.getJSONObject(i);
+        	        // Storing each json item in variable
+        	        if(counter == 0){
+        	        	firstCreatedAt = s.getString(CREATED_AT);
+        	        	counter++;
+        	        }
+        	        String createdAt = s.getString(CREATED_AT);
+        	        createdAts[i] = createdAt;
+        	    }
+        	    
+        	Idea newIdea = new Idea(id, description, tags, sparkIds, userIds, firstUser, createdAts, firstCreatedAt);
         	/*
         	 * PUT SOME FUNCTION HERE TO PASS newIdea BACK TO THE MAIN THREAD
         	 */
