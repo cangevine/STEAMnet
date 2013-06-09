@@ -5,14 +5,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
+import org.friendscentral.steamnet.BaseClasses.Spark;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.json.parsers.JSONParser;
 import com.squareup.okhttp.OkHttpClient;
 
-import BaseClasses.Spark;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -24,7 +26,7 @@ public class RetrieveDataTaskGetSpark {
 	char spark_type;
 	char content_type;
 	String content;
-	String user;
+	String[] users;
 	String[] tags;
 	String tagsString;
 	
@@ -73,7 +75,11 @@ public class RetrieveDataTaskGetSpark {
         	Log.d(TAG, "=> "+data);
         	try {
         		Log.v("TEST", "GONNA PARSE ME SOME DATA");
-				parseData(data);
+				Spark newSpark = parseData(data);
+				//call some function in main thread to pass over newSpark
+				//LOOK HERE
+				//ITS RIGHT HERE
+				//REALLY!
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -83,14 +89,18 @@ public class RetrieveDataTaskGetSpark {
 	     * @param data - String
 	     * @throws JSONException
 	     */
-	    void parseData(String data) throws JSONException {
+	    Spark parseData(String data) throws JSONException {
 			Log.v("TEST", "BEGGINING TO PARSE DATA");
         	final String ID = "id";
         	final String SPARK_TYPE = "spark_type";
         	final String CONTENT_TYPE = "content_type";
         	final String CONTENT = "content";
         	final String CREATED_AT = "created_at";
+        	final String CREATED_ATS = "created_ats";
         	final String UPDATED_AT = "updated_at";
+        	final String USERS = "users";
+        	final String USER = "user";
+        	final String USERNAME = "name";
         	// Creating JSON Parser instance
         	JSONParser jParser = new JSONParser();
         	 
@@ -103,18 +113,53 @@ public class RetrieveDataTaskGetSpark {
 				String sparkType = json.getString(SPARK_TYPE);
 				String contentType = json.getString(CONTENT_TYPE);
 				String content = json.getString(CONTENT);
-				String createdAt = json.getString(CREATED_AT);
-				String updatedAt = json.getString(UPDATED_AT);
+				String firstUser = "";
 				
-				Spark newSpark = new Spark(Integer.parseInt(id), sparkType.charAt(0), contentType.charAt(0), content, createdAt);
-				//call some function in main thread to pass over newSpark
-				//LOOK HERE
-				//ITS RIGHT HERE
-				//REALLY!
-				Log.v("TEST", content);
+				//Getting Array of Users
+        	    JSONArray usersJSON = json.getJSONArray(USERS);
+        	     
+        	    // looping through All Users
+        	    ArrayList<Integer> usersArrayList = new ArrayList<Integer>();
+        	    int count = 0;
+        	    for(int i = 0; i < usersJSON.length(); i++){
+        	        JSONObject u = usersJSON.getJSONObject(i);
+        
+        	        // Storing each json item in variable
+        	        if(count == 0){
+        	        	count++;
+        	        	firstUser = u.getString(USERNAME);
+        	        }
+        	        int userID = u.getInt(ID);
+        	        usersArrayList.add(userID);
+        	    }
+        	    int[] usersArray = new int[usersArrayList.size()];
+        	    for(int q = 0; q < usersArrayList.size(); q++){
+        	    	usersArray[q] = usersArrayList.get(q);
+        	    }
+        	    
+        	    //Getting Array of Created Ats
+        	    JSONArray createdAtsJSON = json.getJSONArray(CREATED_ATS);
+        	    String[] createdAts = new String[10];
+        	    String firstCreatedAt = "";
+        	    int counter = 0;
+        	    for(int c = 0; c < json.length(); c++){
+        	        JSONObject s = createdAtsJSON.getJSONObject(c);
+        	        // Storing each json item in variable
+        	        if(counter == 0){
+        	        	firstCreatedAt = s.getString(CREATED_AT);
+        	        	counter++;
+        	        }
+        	        String createdAt = s.getString(CREATED_AT);
+        	        createdAts[c] = createdAt;
+        	    }
+        	    
+				Spark newSpark = new Spark(Integer.parseInt(id), sparkType.charAt(0), contentType.charAt(0), content, createdAts, firstCreatedAt, usersArray, firstUser);
+				Log.v("TEST", newSpark.toString());
+				return newSpark;
         	} catch (JSONException e) {
         	    e.printStackTrace();
         	}
+        	return null;
         }
 	    
 	    //THIS METHOD COPY/PASTED FROM WEBSITE

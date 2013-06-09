@@ -1,8 +1,8 @@
 package org.friendscentral.steamnet.Activities;
 
 import org.friendscentral.steamnet.R;
+import org.friendscentral.steamnet.BaseClasses.Spark;
 
-import BaseClasses.Spark;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

@@ -2,8 +2,8 @@ package org.friendscentral.steamnet;
 
 import java.util.ArrayList;
 
+import org.friendscentral.steamnet.BaseClasses.Jawn;
 import APIHandlers.RetrieveDataTaskGetXSparks;
-import BaseClasses.Spark;
 
 import android.content.Context;
 import android.util.Log;
@@ -20,7 +20,7 @@ public class IndexGrid {
 	Context context;
 	JawnAdapter adapter;
 	
-	private Spark[] sparks;
+	private Jawn[] jawns;
 	
 	public void initIndexGrid(GridView g, Context c) {
 		//Use setter methods:
@@ -32,8 +32,8 @@ public class IndexGrid {
     	Log.v("indexGrid", "Just called initIndexGrid! Success!");
 	}
 	
-	public Spark[] getSparks() {
-		return sparks;
+	public Jawn[] getJawns() {
+		return jawns;
 	}
 	
 	public JawnAdapter getAdapter() {
@@ -45,23 +45,27 @@ public class IndexGrid {
 		gridview.setAdapter(adapter);
 	}
 	
-	public void setSparks(Spark[] s){
-		sparks = s;
+	public void setJawns(Jawn[] j){
+		jawns = j;
 	}
 	
-	public void addSpark(Spark s){
-    	ArrayList<Spark> sparksArrayList = new ArrayList<Spark>();
-    	for(int i = 0; i < sparks.length; i++){
-    		sparksArrayList.add(sparks[i]);
+	public Jawn getJawnAt(int pos){
+		return jawns[pos];
+	}
+	
+	public void addJawn(Jawn j){
+    	ArrayList<Jawn> jawnsArrayList = new ArrayList<Jawn>();
+    	for(int i = 0; i < jawns.length; i++){
+    		jawnsArrayList.add(jawns[i]);
     	}
-    	sparksArrayList.add(s);
-    	Spark[] newSparks = new Spark[sparksArrayList.size()];
-    	for(int i = 0; i < sparksArrayList.size(); i++){
-    		newSparks[i] = sparksArrayList.get(i);
+    	jawnsArrayList.add(j);
+    	Jawn[] newJawns = new Jawn[jawnsArrayList.size()];
+    	for(int i = 0; i < jawnsArrayList.size(); i++){
+    		newJawns[i] = jawnsArrayList.get(i);
     	}
-    	sparks = newSparks;
-    	adapter.setSparks(newSparks);
-    	adapter.getView((sparks.length - 1), null, null);
+    	jawns = newJawns;
+    	adapter.setJawns(newJawns);
+    	adapter.getView((jawns.length - 1), null, null);
     }
 	
 }

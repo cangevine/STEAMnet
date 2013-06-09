@@ -9,6 +9,8 @@ import java.util.ArrayList;
 
 import org.friendscentral.steamnet.IndexGrid;
 import org.friendscentral.steamnet.JawnAdapter;
+import org.friendscentral.steamnet.BaseClasses.Jawn;
+import org.friendscentral.steamnet.BaseClasses.Spark;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,7 +18,6 @@ import org.json.JSONObject;
 import com.json.parsers.JSONParser;
 import com.squareup.okhttp.OkHttpClient;
 
-import BaseClasses.Spark;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.GridView;
@@ -80,12 +81,12 @@ public class RetrieveDataTaskGetXSparks {
         	Log.d(TAG, "=> "+data);
         	try {
         		Log.v("REPORT", "WE WILL BEGIN TO PARSE THE DATA, SIR!");
-				Spark[] sparks = parseData(data);
+				Jawn[] sparks = parseData(data);
 				
 				JawnAdapter a = new JawnAdapter(gridView.getContext(), sparks, 200);
 				Log.v("REPORT", "WE HAVE ACCESSED THE JAWNADAPTER AND ARE PROCEEDING AS PLANNED, SIR!");
 				indexGrid.setAdapter(a);
-				indexGrid.setSparks(sparks);
+				indexGrid.setJawns(sparks);
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -102,6 +103,8 @@ public class RetrieveDataTaskGetXSparks {
         	final String CONTENT_TYPE = "content_type";
         	final String CONTENT = "content";
         	final String CREATED_AT = "created_at";
+        	final String USERS = "users";
+        	final String USERNAME = "name";
         	// Creating JSON Parser instance
         	JSONParser jParser = new JSONParser();
         	 
@@ -111,19 +114,41 @@ public class RetrieveDataTaskGetXSparks {
         	ArrayList<Spark> sparkArrayList = new ArrayList<Spark>();
         	
         	try {        	     
-        	    // looping through All Contacts
-        	    for(int i = 0; i < sparks.length(); i++){
-        	        JSONObject s = sparks.getJSONObject(i);
-        	         
-        	        // Storing each json item in variable
-        	        String id = s.getString(ID);
-        	        String sparkType = s.getString(SPARK_TYPE);
-        	        String contentType = s.getString(CONTENT_TYPE);
-        	        String content = s.getString(CONTENT);
-        	        String createdAt = s.getString(CREATED_AT);
+        		for(int i = 0; i < sparks.length(); i++){// Storing each json item in variable
+        			JSONObject json = sparks.getJSONObject(i);
+					String id = json.getString(ID);
+					String sparkType = json.getString(SPARK_TYPE);
+					String contentType = json.getString(CONTENT_TYPE);
+					String content = json.getString(CONTENT);
+					String createdAt = json.getString(CREATED_AT);
+					String firstUser = "";
+					//Getting Array of Users
+	        	    JSONArray usersJSON = json.getJSONArray(USERS);
+	        	     
+	        	    // looping through All Users
+	        	    ArrayList<Integer> usersArrayList = new ArrayList<Integer>();
+	        	    int count = 0;
+	        	    for(int q = 0; q < usersJSON.length(); q++){
+	        	        JSONObject u = usersJSON.getJSONObject(i);
+	        	        // Storing each json item in variable
+	        	        if(count == 0){
+	        	        	count++;
+	        	        	firstUser = u.getString(USERNAME);
+	        	        }
+	        	        int userID = u.getInt(ID);
+	        	        usersArrayList.add(userID);
+	        	    }
+	        	    int[] usersArray = new int[usersArrayList.size()];
+	        	    for(int q = 0; q < usersArrayList.size(); q++){
+	        	    	usersArray[q] = usersArrayList.get(q);
+	        	    }
+	        	    
+	        	    String[] createdAts = new String[1];
+	        	    createdAts[0] = createdAt;
+	        	    
+					sparkArrayList.add(new Spark(Integer.parseInt(id), sparkType.charAt(0), contentType.charAt(0), content, createdAts, usersArray, firstUser));
+        		}
         	        
-        	        sparkArrayList.add(new Spark(Integer.parseInt(id), sparkType.charAt(0), contentType.charAt(0), content, createdAt));
-        	    }
         	    Spark[] sparkArray = new Spark[sparkArrayList.size()];
         	    for(int i = 0; i < sparkArrayList.size(); i++){
         	    	sparkArray[i] = sparkArrayList.get(i);
