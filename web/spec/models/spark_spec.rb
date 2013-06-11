@@ -164,45 +164,33 @@ describe Spark do
     
   end
   
-  # describe "tag association" do
-  #     
-  #     before(:each) do
-  #       @user = User.create(@attr)
-  #       
-  #       @s = FactoryGirl.create(:spark)
-  #       @i = FactoryGirl.create(:idea)
-  #       
-  #       @s.users << @user
-  #       @i.users << @user
-  #       
-  #       @c1 = FactoryGirl.create(:comment)
-  #       @c2 = FactoryGirl.create(:comment, :comment_text => "Some comment.")
-  #       
-  #       @c1.commentable = @s
-  #       @c2.commentable = @i
-  #       
-  #       @c1.user = @user
-  #       @c2.user = @user
-  #       
-  #       @c1.save
-  #       @c2.save
-  #     end
-  #     
-  #     it "has an comments attribute" do
-  #       @user.should respond_to(:comments)
-  #     end
-  #     
-  #     it "has the right comments" do
-  #       @user.comments.should == [@c1, @c2]
-  #     end
-  #     
-  #     it "doesn't destroy associated comments" do
-  #       @user.destroy
-  #       [@c1, @c2].each do |c|
-  #         Comment.find_by_id(c.id).should_not be_nil
-  #       end
-  #     end
-  #     
-  #   end
+  describe "tag association" do
+      
+      before(:each) do
+        @spark = FactoryGirl.create(:spark)
+        
+        @t1 = FactoryGirl.create(:tag)
+        @t2 = FactoryGirl.create(:tag)
+        
+        @t1.sparks << @spark
+        @t2.sparks << @spark
+      end
+      
+      it "has a tags attribute" do
+        @spark.should respond_to(:tags)
+      end
+      
+      it "has the right tags" do
+        @spark.tags.should == [@t1, @t2]
+      end
+      
+      it "doesn't destroy associated tags" do
+        @spark.destroy
+        [@t1, @t2].each do |t|
+          Tag.find_by_id(t.id).should_not be_nil
+        end
+      end
+      
+    end
   
 end
