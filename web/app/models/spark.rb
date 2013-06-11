@@ -30,7 +30,9 @@ class Spark < ActiveRecord::Base
   before_validation :hash_content
   
   def as_json(options={})
-    super(:include => [:tags, :comments, :users])
+    json = super(:include => [:tags, :comments, :users])
+    json[:jawn_type] = "spark"
+    return json
   end
   
   private

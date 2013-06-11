@@ -18,6 +18,8 @@ class Idea < ActiveRecord::Base
   has_many :tag_linkers, :as => :tagable
   
   def as_json(options={})
-    super(:include => [:sparks, :tags, :comments, :users])
+    json = super(:include => [:sparks, :tags, :comments, :users])
+    json[:jawn_type] = "idea"
+    return json
   end
 end
