@@ -4,7 +4,7 @@ Steamnet::Application.routes.draw do
     
     namespace :v1 do
       
-      resources :tags, :only => [:index, :show,]
+      resources :tags, :only => [:index, :show]
       resources :comments, :except => [:new, :edit]
       resources :sparks, :except => [:new, :edit]
       resources :users, :except => [:new, :edit]
@@ -19,7 +19,7 @@ Steamnet::Application.routes.draw do
 end
 
 #== Route Map
-# Generated on 30 May 2013 17:54
+# Generated on 11 Jun 2013 14:55
 #
 #      v1_tag GET    /api/v1/tags/:id(.:format)     v1/tags#show
 # v1_comments GET    /api/v1/comments(.:format)     v1/comments#index
