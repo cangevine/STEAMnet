@@ -74,31 +74,19 @@ class V1::SparksController < ApplicationController
     end
   end
 
-  # PUT /sparks/1
-  # PUT /sparks/1.json
-  def update
-    @spark = Spark.find(params[:id])
-    
-    respond_to do |format|
-      if @spark.update_attributes(params[:spark])
-        format.html { redirect_to @spark, :notice => 'Spark was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render :action => "edit" }
-        format.json { render :json => @spark.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
   # DELETE /sparks/1
   # DELETE /sparks/1.json
   def destroy
     @spark = Spark.find(params[:id])
-    @spark.destroy
-
-    respond_to do |format|
-      format.html { redirect_to sparks_url }
-      format.json { head :no_content }
+    user = User.find_by_name(params[:username])
+    
+    if @spark && user && @spark.users.include?(user)
+      @spark.users.delete(user)
+      
+      respond_to do |format|
+        format.html { redirect_to sparks_url }
+        format.json { render :json => @spark, :status => :ok }
+      end
     end
   end
 end

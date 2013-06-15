@@ -163,11 +163,12 @@ describe V1::SparksController do
     
     it "removes the user from the spark" do
       delete :destroy, :id => @spark, :format => 'json', :username => @user.name
-      @spark.users.should_not include(@user)
+      @spark.users.include?(@user).should_not be_true
     end
     
     it "returns the spark" do
       delete :destroy, :id => @spark, :format => 'json', :username => @user.name
+      @spark = Spark.find_by_id(@spark.id) # used to force @spark to reload its attributes
       response.body.should == @spark.to_json
     end
     
