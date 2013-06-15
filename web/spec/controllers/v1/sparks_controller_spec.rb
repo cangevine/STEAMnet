@@ -141,4 +141,36 @@ describe V1::SparksController do
     
   end
   
+  describe "DELETE 'destroy'" do
+    
+    before(:each) do
+      @spark = FactoryGirl.create(:spark)
+      @user = FactoryGirl.create(:user)
+      
+      @spark.users << @user
+    end
+    
+    it "is successful" do
+      delete :destroy, :id => @spark, :format => 'json', :username => @user.name
+      response.should be_success
+    end
+    
+    it "doesn't destroy the spark" do
+      expect {
+        delete :destroy, :id => @spark, :format => 'json', :username => @user.name
+      }.not_to change { Spark.count }
+    end
+    
+    it "removes the user from the spark" do
+      delete :destroy, :id => @spark, :format => 'json', :username => @user.name
+      @spark.users.should_not include(@user)
+    end
+    
+    it "returns the spark" do
+      delete :destroy, :id => @spark, :format => 'json', :username => @user.name
+      response.body.should == @spark.to_json
+    end
+    
+  end
+  
 end
