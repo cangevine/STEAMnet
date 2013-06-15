@@ -35,6 +35,10 @@ class Spark < ActiveRecord::Base
     return json
   end
   
+  def duplicate?
+    return (self.errors.to_hash.length == 1) && (self.errors.to_hash.keys[0] == :content_hash)
+  end
+  
   private
   
     def hash_content

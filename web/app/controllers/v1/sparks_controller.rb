@@ -54,6 +54,15 @@ class V1::SparksController < ApplicationController
         
           format.html { redirect_to @spark, :notice => 'Spark was successfully created.' }
           format.json { render :json => @spark, :status => :created, :location => ["v1", @spark] }
+        elsif @spark.duplicate?
+          @spark = Spark.find_by_content_hash(@spark.content_hash)
+          
+          unless(@spark.users.include?(user))
+            @spark.users << user
+          end
+          
+          format.html { render :action => "new" }
+          format.json { render :json => @spark, :status => :accepted }
         else
           format.html { render :action => "new" }
           format.json { render :json => @spark.errors, :status => :unprocessable_entity }

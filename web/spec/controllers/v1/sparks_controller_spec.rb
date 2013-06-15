@@ -68,7 +68,7 @@ describe V1::SparksController do
         response.should be_success
       end
     
-      it "should create the spark" do
+      it "shouldn't create the spark" do
         expect {
           post :create, :spark => @attr, :format => 'json', :username => @user.name
         }.to change { Spark.count }.by(1)
@@ -88,7 +88,26 @@ describe V1::SparksController do
       
     end
     
-    describe "for an existing spark spark" do
+    describe "for a new invalid spark" do
+      
+      before(:each) do
+        @attr[:content_type] = ""
+      end
+      
+      it "isn't successful" do
+        post :create, :spark => @attr, :format => 'json', :username => @user.name
+        response.should_not be_success
+      end
+    
+      it "shouldn't create the spark" do
+        expect {
+          post :create, :spark => @attr, :format => 'json', :username => @user.name
+        }.not_to change { Spark.count }
+      end
+      
+    end
+    
+    describe "for an existing spark" do
       
       before(:each) do
         @spark = Spark.create(@attr)
