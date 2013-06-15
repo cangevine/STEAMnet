@@ -6,7 +6,7 @@ Steamnet::Application.routes.draw do
       
       resources :tags, :only => [:index, :show]
       resources :comments, :except => [:new, :edit]
-      resources :sparks, :except => [:new, :edit]
+      resources :sparks, :except => [:new, :edit, :update]
       resources :users, :except => [:new, :edit]
       resources :ideas, :except => [:new, :edit]
       
@@ -19,7 +19,7 @@ Steamnet::Application.routes.draw do
 end
 
 #== Route Map
-# Generated on 11 Jun 2013 14:55
+# Generated on 15 Jun 2013 13:59
 #
 #      v1_tag GET    /api/v1/tags/:id(.:format)     v1/tags#show
 # v1_comments GET    /api/v1/comments(.:format)     v1/comments#index
@@ -30,7 +30,6 @@ end
 #   v1_sparks GET    /api/v1/sparks(.:format)       v1/sparks#index
 #             POST   /api/v1/sparks(.:format)       v1/sparks#create
 #    v1_spark GET    /api/v1/sparks/:id(.:format)   v1/sparks#show
-#             PUT    /api/v1/sparks/:id(.:format)   v1/sparks#update
 #             DELETE /api/v1/sparks/:id(.:format)   v1/sparks#destroy
 #    v1_users GET    /api/v1/users(.:format)        v1/users#index
 #             POST   /api/v1/users(.:format)        v1/users#create

@@ -27,15 +27,6 @@ describe "routes for Sparks" do
     )
   end
   
-  it "routes put /api/v1/sparks/:id.json to Sparks controller" do
-    { :put => "/api/v1/sparks/1.json" }.should route_to(
-      :controller => "v1/sparks",
-      :action => "update",
-      :id => "1",
-      :format => "json"
-    )
-  end
-  
   it "routes delete /api/v1/sparks/:id.json to Sparks controller" do
     { :delete => "/api/v1/sparks/1.json" }.should route_to(
       :controller => "v1/sparks",
