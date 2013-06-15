@@ -62,7 +62,7 @@ class V1::SparksController < ApplicationController
           end
           
           format.html { render :action => "new" }
-          format.json { render :json => @spark, :status => :accepted }
+          format.json { render :json => @spark, :status => :ok }
         else
           format.html { render :action => "new" }
           format.json { render :json => @spark.errors, :status => :unprocessable_entity }
