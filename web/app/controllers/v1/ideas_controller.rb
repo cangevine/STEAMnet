@@ -34,61 +34,54 @@ class V1::IdeasController < ApplicationController
       user = User.find_by_name(params[:username])
       
       if user
-        if @idea.save
-          if(params[:tags])
-            tags = params[:tags].split(",")
-            
-            tags.each do |tag_name|
-              tag = Tag.where(:tag_text => tag_name).first
-              
-              unless(tag)
-                tag = Tag.new(:tag_text => tag_name)
-                tag.save
-              end
-              
-              tag.ideas << @idea
+        if params[:sparks]
+          spark_ids = params[:sparks].split(",")
+          sparks = []
+        
+          sparks_exist = false
+
+          spark_ids.each do |spark_id|
+            if s = Spark.find_by_id(spark_id.to_i)
+              sparks_exist = true
+              sparks << s
             end
           end
-          
-          if(params[:sparks])
-            sparks = params[:sparks].split(",")
+        
+          if sparks_exist && @idea.save
+            if(params[:tags])
+              tags = params[:tags].split(",")
             
-            sparks.each do |spark_id|
-              spark = Spark.find(spark_id.to_i)
+              tags.each do |tag_name|
+                tag = Tag.where(:tag_text => tag_name).first
               
-              if(spark)
-                @idea.sparks << spark
+                unless(tag)
+                  tag = Tag.new(:tag_text => tag_name)
+                  tag.save
+                end
+              
+                tag.ideas << @idea
               end
             end
+          
+            sparks.each do |spark|
+              @idea.sparks << spark
+            end
+          
+            user.ideas << @idea
+            
+            format.html { redirect_to @idea, :notice => 'Idea was successfully created.' }
+            format.json { render :json => @idea, :status => :created, :location => ["v1", @idea] }
+          else # Either no valid sparks were passed or the idea didn't save
+            format.html { render :action => "new" }
+            format.json { render :json => @idea.errors, :status => :unprocessable_entity }
           end
-          
-          user.ideas << @idea
-          
-          format.html { redirect_to @idea, :notice => 'Idea was successfully created.' }
-          format.json { render :json => @idea, :status => :created, :location => ["v1", @idea] }
-        else
+        else # No sparks passed in
           format.html { render :action => "new" }
           format.json { render :json => @idea.errors, :status => :unprocessable_entity }
         end
-      else
+      else # User doesn't exist or wasn't passed in
         format.html { render :action => "new" }
         format.json { render :json => @idea.errors, :status => :unauthorized }
-      end
-    end
-  end
-
-  # PUT /ideas/1
-  # PUT /ideas/1.json
-  def update
-    @idea = Idea.find(params[:id])
-
-    respond_to do |format|
-      if @idea.update_attributes(params[:idea])
-        format.html { redirect_to @idea, :notice => 'Idea was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render :action => "edit" }
-        format.json { render :json => @idea.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -97,11 +90,15 @@ class V1::IdeasController < ApplicationController
   # DELETE /ideas/1.json
   def destroy
     @idea = Idea.find(params[:id])
-    @idea.destroy
-
-    respond_to do |format|
-      format.html { redirect_to ideas_url }
-      format.json { head :no_content }
+    user = User.find_by_name(params[:username])
+    
+    if @idea && user && @idea.users.include?(user)
+      @idea.users.delete(user)
+      
+      respond_to do |format|
+        format.html { redirect_to ideas_url }
+        format.json { render :json => @idea, :status => :ok }
+      end
     end
   end
 end

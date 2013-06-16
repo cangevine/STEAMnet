@@ -68,7 +68,7 @@ describe V1::SparksController do
         response.should be_success
       end
     
-      it "shouldn't create the spark" do
+      it "should create the spark" do
         expect {
           post :create, :spark => @attr, :format => 'json', :username => @user.name
         }.to change { Spark.count }.by(1)
@@ -76,14 +76,14 @@ describe V1::SparksController do
       
       it "should add the user to the spark" do
         post :create, :spark => @attr, :format => 'json', :username => @user.name
-        spark = Spark.last
-        spark.users.should == [@user]
+        @spark = Spark.last
+        @spark.users.should == [@user]
       end
       
       it "should return the spark" do
         post :create, :spark => @attr, :format => 'json', :username => @user.name
-        spark = Spark.last
-        response.body.should == spark.to_json
+        @spark = Spark.last
+        response.body.should == @spark.to_json
       end
       
     end

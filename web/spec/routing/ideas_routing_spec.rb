@@ -27,15 +27,6 @@ describe "routes for Ideas" do
     )
   end
   
-  it "routes put /api/v1/ideas/:id.json to Ideas controller" do
-    { :put => "/api/v1/ideas/1.json" }.should route_to(
-      :controller => "v1/ideas",
-      :action => "update",
-      :id => "1",
-      :format => "json"
-    )
-  end
-  
   it "routes delete /api/v1/ideas/:id.json to Ideas controller" do
     { :delete => "/api/v1/ideas/1.json" }.should route_to(
       :controller => "v1/ideas",
