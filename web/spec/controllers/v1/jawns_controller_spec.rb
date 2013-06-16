@@ -22,6 +22,8 @@ describe V1::JawnsController do
       end
       
       @jawns.reverse!
+      @ideas.reverse!
+      @sparks.reverse!
     end
     
     it "is successful" do
@@ -48,7 +50,7 @@ describe V1::JawnsController do
       
       it "filters ideas with a limit correctly" do
         get :index, :format => 'json', :filter => "ideas", :limit => 3
-        response.body.should == @ideas.take(10).to_json
+        response.body.should == @ideas.take(3).to_json
       end
       
     end
@@ -62,7 +64,7 @@ describe V1::JawnsController do
       
       it "filters sparks with a limit correctly" do
         get :index, :format => 'json', :filter => "sparks", :limit => 3
-        response.body.should == @sparks.take(10).to_json
+        response.body.should == @sparks.take(3).to_json
       end
       
     end
