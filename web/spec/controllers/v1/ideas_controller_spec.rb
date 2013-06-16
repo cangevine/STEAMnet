@@ -58,7 +58,6 @@ describe V1::IdeasController do
       @s2 = FactoryGirl.create(:spark)
       
       @sparks = [@s1,@s2].map(&:id).join(",")
-      puts @sparks
       
       @attr = {
         :description  => "I"
@@ -108,6 +107,21 @@ describe V1::IdeasController do
       it "shouldn't create the idea" do
         expect {
           post :create, :idea => @attr, :format => 'json', :username => @user.name
+        }.not_to change { Idea.count }
+      end
+      
+    end
+    
+    describe "for an idea with invalid sparks" do
+      
+      it "isn't successful" do
+        post :create, :idea => @attr, :format => 'json', :username => @user.name, :sparks => "100,150"
+        response.should_not be_success
+      end
+    
+      it "shouldn't create the idea" do
+        expect {
+          post :create, :idea => @attr, :format => 'json', :username => @user.name, :sparks => "100,150"
         }.not_to change { Idea.count }
       end
       
