@@ -19,7 +19,7 @@ describe Spark do
     @attr = {
       :spark_type   => "I",
       :content_type => "L",
-      :content      => "http://google.com/",
+      :content      => "http://google.com/"
     }
   end
   
