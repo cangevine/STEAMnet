@@ -8,7 +8,7 @@ Steamnet::Application.routes.draw do
       resources :comments, :except => [:new, :edit]
       resources :sparks, :except => [:new, :edit, :update]
       resources :users, :except => [:new, :edit]
-      resources :ideas, :except => [:new, :edit]
+      resources :ideas, :except => [:new, :edit, :update]
       
       get "jawns" => "jawns#index"
       
@@ -19,7 +19,7 @@ Steamnet::Application.routes.draw do
 end
 
 #== Route Map
-# Generated on 15 Jun 2013 13:59
+# Generated on 16 Jun 2013 11:41
 #
 #      v1_tag GET    /api/v1/tags/:id(.:format)     v1/tags#show
 # v1_comments GET    /api/v1/comments(.:format)     v1/comments#index
@@ -39,6 +39,5 @@ end
 #    v1_ideas GET    /api/v1/ideas(.:format)        v1/ideas#index
 #             POST   /api/v1/ideas(.:format)        v1/ideas#create
 #     v1_idea GET    /api/v1/ideas/:id(.:format)    v1/ideas#show
-#             PUT    /api/v1/ideas/:id(.:format)    v1/ideas#update
 #             DELETE /api/v1/ideas/:id(.:format)    v1/ideas#destroy
 #    v1_jawns GET    /api/v1/jawns(.:format)        v1/jawns#index
