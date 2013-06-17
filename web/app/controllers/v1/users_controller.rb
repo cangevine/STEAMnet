@@ -13,7 +13,7 @@ class V1::UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    @user = User.find(params[:id])
+    @user = User.find_by_name(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -40,7 +40,7 @@ class V1::UsersController < ApplicationController
   # PUT /users/1
   # PUT /users/1.json
   def update
-    @user = User.find(params[:id])
+    @user = User.find_by_name(params[:id])
 
     respond_to do |format|
       if @user.update_attributes(params[:user])
@@ -56,7 +56,7 @@ class V1::UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
-    @user = User.find(params[:id])
+    @user = User.find_by_name(params[:id])
     @user.destroy
 
     respond_to do |format|

@@ -11,6 +11,10 @@
 #
 
 class User < ActiveRecord::Base
+  def to_param
+    name
+  end
+  
   attr_accessible :email, :name, :password
   
   has_secure_password
