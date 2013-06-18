@@ -16,6 +16,7 @@ RSpec.configure do |config|
   # config.mock_with :flexmock
   # config.mock_with :rr
   config.mock_with :rspec
+  config.before(:all) { @auth_token = "0577a090fea6e735f471d349b14456ea34924b00" }
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false

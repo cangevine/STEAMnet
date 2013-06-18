@@ -6,7 +6,9 @@ class ApplicationController < ActionController::Base
   private
     
     def verify_security_token
-
+      # unless Digest::SHA1.hexdigest(params[:token]) == "639bab0291d34056baee0ebd1664f516ccb67efd" # Digest::SHA1.hexdigest("0577a090fea6e735f471d349b14456ea34924b00")
+      #   head :unauthorized
+      # end
     end
     
     def authenticate

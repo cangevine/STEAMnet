@@ -13,12 +13,12 @@ describe V1::UsersController do
     end
     
     it "is successful" do
-      get :index, :format => 'json'
+      get :index, :format => 'json', :token => @auth_token
       response.should be_success
     end
     
     it "returns the correct users" do
-      get :index, :format => 'json'
+      get :index, :format => 'json', :token => @auth_token
       response.body.should == @users.to_json
     end
     
@@ -31,12 +31,12 @@ describe V1::UsersController do
     end
     
     it "is successful" do
-      get :show, :id => @user, :format => 'json'
+      get :show, :id => @user, :format => 'json', :token => @auth_token
       response.should be_success
     end
     
     it "returns the correct user" do
-      get :show, :id => @user, :format => 'json'
+      get :show, :id => @user, :format => 'json', :token => @auth_token
       response.body.should == @user.to_json
     end
     
@@ -55,18 +55,18 @@ describe V1::UsersController do
     describe "for a new valid user" do
       
       it "is successful" do
-        post :create, :user => @attr, :format => 'json'
+        post :create, :user => @attr, :format => 'json', :token => @auth_token
         response.should be_success
       end
     
       it "should create the user" do
         expect {
-          post :create, :user => @attr, :format => 'json'
+          post :create, :user => @attr, :format => 'json', :token => @auth_token
         }.to change { User.count }.by(1)
       end
       
       it "should return the user" do
-        post :create, :user => @attr, :format => 'json'
+        post :create, :user => @attr, :format => 'json', :token => @auth_token
         response.body.should == User.find_by_name(@attr[:name]).to_json
       end
       
@@ -79,13 +79,13 @@ describe V1::UsersController do
       end
       
       it "isn't successful" do
-        post :create, :user => @attr, :format => 'json'
+        post :create, :user => @attr, :format => 'json', :token => @auth_token
         response.should_not be_success
       end
     
       it "shouldn't create the user" do
         expect {
-          post :create, :user => @attr, :format => 'json'
+          post :create, :user => @attr, :format => 'json', :token => @auth_token
         }.not_to change { User.count }
       end
       
@@ -105,12 +105,12 @@ describe V1::UsersController do
     end
     
     it "is successful" do
-      put :update, :id => @user, :user => @attr, :format => 'json'
+      put :update, :id => @user, :user => @attr, :format => 'json', :token => @auth_token
       response.should be_success
     end
     
     it "updates the user" do
-      put :update, :id => @user, :user => @attr, :format => 'json'
+      put :update, :id => @user, :user => @attr, :format => 'json', :token => @auth_token
       @user = User.find_by_id(@user.id)
       @user.name.should == @attr[:name]
       @user.email.should == @attr[:email]
@@ -125,13 +125,13 @@ describe V1::UsersController do
     end
     
     it "is successful" do
-      delete :destroy, :id => @user, :format => 'json'
+      delete :destroy, :id => @user, :format => 'json', :token => @auth_token
       response.should be_success
     end
     
     it "destroys the user" do
       expect {
-        delete :destroy, :id => @user, :format => 'json'
+        delete :destroy, :id => @user, :format => 'json', :token => @auth_token
       }.to change { User.count }.by(-1)
     end
     
