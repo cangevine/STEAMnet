@@ -168,7 +168,7 @@ describe V1::SparksController do
     
     it "returns the spark" do
       delete :destroy, :id => @spark, :format => 'json', :username => @user.name, :token => @auth_token
-      @spark = Spark.find_by_id(@spark.id) # used to force @spark to reload its attributes
+      @spark.reload
       response.body.should == @spark.to_json
     end
     

@@ -111,7 +111,7 @@ describe V1::UsersController do
     
     it "updates the user" do
       put :update, :id => @user, :user => @attr, :format => 'json', :token => @auth_token
-      @user = User.find_by_id(@user.id)
+      @user.reload
       @user.name.should == @attr[:name]
       @user.email.should == @attr[:email]
     end

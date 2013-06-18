@@ -83,8 +83,9 @@ class V1::IdeasController < ApplicationController
   def destroy
     @idea = Idea.find(params[:id])
     
-    if @idea && @idea.users.include?(@user)
-      @idea.users.delete(@user)
+    if @idea && (@idea.user == @user)
+      @idea.user = nil
+      @idea.save
       
       respond_to do |format|
         format.json { render :json => @idea, :status => :ok }

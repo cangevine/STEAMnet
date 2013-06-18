@@ -80,7 +80,7 @@ describe V1::IdeasController do
       it "should add the user to the idea" do
         post :create, :idea => @attr, :format => 'json', :username => @user.name, :sparks => @sparks, :token => @auth_token
         @idea = Idea.last
-        @idea.users.should == [@user]
+        @idea.user.should == @user
       end
       
       it "should add the sparks to the idea" do
@@ -142,7 +142,8 @@ describe V1::IdeasController do
       @idea.sparks << @s1
       @idea.sparks << @s2
       
-      @idea.users << @user
+      @idea.user = @user
+      @idea.save
     end
     
     it "is successful" do
@@ -158,12 +159,13 @@ describe V1::IdeasController do
     
     it "removes the user from the idea" do
       delete :destroy, :id => @idea, :format => 'json', :username => @user.name, :token => @auth_token
-      @idea.users.include?(@user).should_not be_true
+      @idea.reload
+      @idea.user.should be_nil
     end
     
     it "returns the idea" do
       delete :destroy, :id => @idea, :format => 'json', :username => @user.name, :token => @auth_token
-      @idea = Idea.find_by_id(@idea.id) # used to force @spark to reload its attributes
+      @idea.reload
       response.body.should == @idea.to_json
     end
     
