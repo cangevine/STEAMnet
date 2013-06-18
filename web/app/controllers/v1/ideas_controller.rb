@@ -87,7 +87,6 @@ class V1::IdeasController < ApplicationController
       @idea.users.delete(@user)
       
       respond_to do |format|
-        format.html { redirect_to ideas_url }
         format.json { render :json => @idea, :status => :ok }
       end
     end
