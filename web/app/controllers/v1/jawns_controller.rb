@@ -1,6 +1,7 @@
 class V1::JawnsController < ApplicationController
   
-  # GET /jawns
+  respond_to :json
+  
   # GET /jawns.json
   def index
     if params[:filter] == "sparks"
@@ -29,9 +30,7 @@ class V1::JawnsController < ApplicationController
       end
     end
     
-    respond_to do |format|
-      format.json { render :json => @jawns }
-    end
+    respond_with @jawns
   end
   
 end
