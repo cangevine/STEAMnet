@@ -54,7 +54,8 @@ public class SparkEventHandler {
     public void initializeIndexGridLayout() {
     	gridview.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                openDetailView(indexGrid.getJawnAt(position)); //NEED POLYMORPHIC openDetailView
+               // TODO: 
+            	// openDetailView(indexGrid.getJawnAt(position)); //NEED POLYMORPHIC openDetailView
             }
         });
     	
