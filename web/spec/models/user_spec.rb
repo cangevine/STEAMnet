@@ -145,8 +145,11 @@ describe User do
       @i1 = FactoryGirl.create(:idea)
       @i2 = FactoryGirl.create(:idea)
       
-      @i1.users << @user
-      @i2.users << @user
+      @i1.user = @user
+      @i2.user = @user
+      
+      @i1.save
+      @i2.save
     end
     
     it "has an ideas attribute" do
@@ -173,9 +176,6 @@ describe User do
       
       @s = FactoryGirl.create(:spark)
       @i = FactoryGirl.create(:idea)
-      
-      @s.users << @user
-      @i.users << @user
       
       @c1 = FactoryGirl.create(:comment)
       @c2 = FactoryGirl.create(:comment)

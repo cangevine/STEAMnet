@@ -11,12 +11,16 @@
 #
 
 class User < ActiveRecord::Base
+  def to_param
+    name
+  end
+  
   attr_accessible :email, :name, :password
   
   has_secure_password
   
-  has_and_belongs_to_many :ideas
   has_and_belongs_to_many :sparks
+  has_many :ideas
   has_many :comments
   
   validates :email, :presence => true, :format => { :with => /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/, :message => "Must be a valid email address." }, :uniqueness => { :case_sensitive => false }

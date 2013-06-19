@@ -6,6 +6,7 @@
 #  description :text
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  user_id     :integer
 #
 
 require 'spec_helper'
@@ -56,26 +57,22 @@ describe Idea do
     before(:each) do
       @idea = Idea.create(@attr)
       
-      @u1 = FactoryGirl.create(:user)
-      @u2 = FactoryGirl.create(:user)
-      
-      @u1.ideas << @idea
-      @u2.ideas << @idea
+      @user = FactoryGirl.create(:user)
+            
+      @user.ideas << @idea
     end
     
-    it "has a users attribute" do
-      @idea.should respond_to(:users)
+    it "has a user attribute" do
+      @idea.should respond_to(:user)
     end
     
-    it "has the right users" do
-      @idea.users.should == [@u1, @u2]
+    it "has the right user" do
+      @idea.user.should == @user
     end
     
     it "doesn't destroy associated users" do
       @idea.destroy
-      [@u1, @u2].each do |u|
-        User.find_by_id(u.id).should_not be_nil
-      end
+      User.find_by_id(@user.id).should_not be_nil
     end
     
   end

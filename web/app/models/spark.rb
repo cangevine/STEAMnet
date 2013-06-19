@@ -42,7 +42,9 @@ class Spark < ActiveRecord::Base
   private
   
     def hash_content
-      self.content_hash = Digest::SHA1.hexdigest(self.content_type+"-"+self.content)
+      if (self.content && self.content_type)
+        self.content_hash = Digest::SHA1.hexdigest(self.content_type+"-"+self.content)
+      end
     end
     
 end
