@@ -1,5 +1,7 @@
 class V1::CommentsController < ApplicationController
-  # GET /comments
+  
+  before_filter :authenticate, :only => [:create, :update, :destroy]
+  
   # GET /comments.json
   def index
     @comments = Comment.all
@@ -9,8 +11,7 @@ class V1::CommentsController < ApplicationController
       format.json { render :json => @comments }
     end
   end
-
-  # GET /comments/1
+  
   # GET /comments/1.json
   def show
     @comment = Comment.find(params[:id])
@@ -21,32 +22,23 @@ class V1::CommentsController < ApplicationController
     end
   end
   
-  # POST /comments
   # POST /comments.json
   def create
     @comment = Comment.new(params[:comment])
 
     respond_to do |format|
-      user = User.find_by_name(params[:username])
-      
-      if user
-        if @comment.save
-          @comment.user = user
-          
-          format.html { redirect_to @comment, :notice => 'Comment was successfully created.' }
-          format.json { render :json => @comment, :status => :created, :location => ["v1", @comment] }
-        else
-          format.html { render :action => "new" }
-          format.json { render :json => @comment.errors, :status => :unprocessable_entity }
-        end
+      if @comment.save
+        @comment.user = @user
+        
+        format.html { redirect_to @comment, :notice => 'Comment was successfully created.' }
+        format.json { render :json => @comment, :status => :created, :location => ["v1", @comment] }
       else
         format.html { render :action => "new" }
-        format.json { render :json => @comment.errors, :status => :unauthorized }
+        format.json { render :json => @comment.errors, :status => :unprocessable_entity }
       end
     end
   end
-
-  # PUT /comments/1
+  
   # PUT /comments/1.json
   def update
     @comment = Comment.find(params[:id])
@@ -61,8 +53,7 @@ class V1::CommentsController < ApplicationController
       end
     end
   end
-
-  # DELETE /comments/1
+  
   # DELETE /comments/1.json
   def destroy
     @comment = Comment.find(params[:id])
