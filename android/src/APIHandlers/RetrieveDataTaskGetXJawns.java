@@ -100,6 +100,7 @@ public class RetrieveDataTaskGetXJawns {
 		Jawn[] parseData(String data) throws JSONException {
 			Log.v("REPORT", "WE ARE PARSING THE DATA, SIR!");
 			final String ID = "id";
+			final String JAWN_TYPE = "jawn_type";
         	final String SPARK_TYPE = "spark_type";
         	final String CONTENT_TYPE = "content_type";
         	final String CONTENT = "content";
@@ -126,7 +127,7 @@ public class RetrieveDataTaskGetXJawns {
         	        JSONObject j = jawns.getJSONObject(i);
         	        
         	        //checking to see if the Jawn is a Spark or an Idea
-        	        if(/*ITS A SPARK*/){
+        	        if(j.getString(JAWN_TYPE).equals("spark")){
         	        	// Storing each json item in variable
         				String id = j.getString(ID);
         				String sparkType = j.getString(SPARK_TYPE);

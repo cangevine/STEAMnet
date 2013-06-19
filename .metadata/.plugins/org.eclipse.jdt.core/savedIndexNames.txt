@@ -1,0 +1,1 @@
+INDEX VERSION 1.126+/Users/Colin/Code/STEAMnet/.metadata/.plugins/org.eclipse.jdt.core
