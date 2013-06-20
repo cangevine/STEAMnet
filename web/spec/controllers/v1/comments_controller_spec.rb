@@ -161,13 +161,13 @@ describe V1::CommentsController do
       
       it "should associate the user and the comment" do
         post :create, :spark_id => @spark, :comment => @attr, :username => @user.name, :format => 'json', :token => @auth_token
-        comment = Comment.last
+        comment = Comment.find_by_comment_text(@attr[:comment_text])
         comment.user.should == @user
       end
       
       it "should associate the spark and the comment" do
         post :create, :spark_id => @spark, :comment => @attr, :username => @user.name, :format => 'json', :token => @auth_token
-        comment = Comment.last
+        comment = Comment.find_by_comment_text(@attr[:comment_text])
         comment.commentable.should == @spark
       end
       
@@ -219,6 +219,7 @@ describe V1::CommentsController do
       
       before(:each) do
         @comment.commentable = @spark
+        @comment.save
       end
       
       describe "with the correct user" do
@@ -244,7 +245,7 @@ describe V1::CommentsController do
         
         it "isn't successful" do
           delete :destroy, :spark_id => @spark, :id => @comment, :username => @wrong_user.name, :format => 'json', :token => @auth_token
-          response.should be_success
+          response.should_not be_success
         end
 
         it "doesn't destroy the comment" do
@@ -261,6 +262,7 @@ describe V1::CommentsController do
       
       before(:each) do
         @comment.commentable = @idea
+        @comment.save
       end
       
       describe "with the correct user" do
@@ -286,7 +288,7 @@ describe V1::CommentsController do
         
         it "isn't successful" do
           delete :destroy, :idea_id => @idea, :id => @comment, :username => @wrong_user.name, :format => 'json', :token => @auth_token
-          response.should be_success
+          response.should_not be_success
         end
 
         it "doesn't destroy the comment" do
