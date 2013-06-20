@@ -5,10 +5,14 @@ Steamnet::Application.routes.draw do
     namespace :v1 do
       
       resources :tags, :only => [:index, :show]
-      resources :comments, :except => [:new, :edit]
-      resources :sparks, :except => [:new, :edit, :update]
+      # resources :comments, :except => [:new, :edit]
+      resources :sparks, :except => [:new, :edit, :update] do
+        resources :comments, :except => [:new, :edit, :update]
+      end
       resources :users, :except => [:new, :edit]
-      resources :ideas, :except => [:new, :edit, :update]
+      resources :ideas, :except => [:new, :edit, :update] do
+        resources :comments, :except => [:new, :edit, :update]
+      end
       
       get "jawns" => "jawns#index"
       

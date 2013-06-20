@@ -20,4 +20,5 @@ class V1::TagsController < ApplicationController
       format.json { render :json => @tag }
     end
   end
+  
 end
