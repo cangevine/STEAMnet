@@ -1,67 +1,67 @@
 class V1::CommentsController < ApplicationController
   
+  respond_to :json
+  before_filter :find_jawn
+  before_filter :find_comment, :only => [:show, :destroy]
   before_filter :authenticate, :only => [:create, :update, :destroy]
   
   # GET /comments.json
   def index
-    @comments = Comment.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render :json => @comments }
-    end
+    respond_with @jawn.comments
   end
   
   # GET /comments/1.json
   def show
-    @comment = Comment.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render :json => @comment }
-    end
+    respond_with @comment
   end
   
   # POST /comments.json
   def create
     @comment = Comment.new(params[:comment])
-
-    respond_to do |format|
-      if @comment.save
-        @comment.user = @user
-        
-        format.html { redirect_to @comment, :notice => 'Comment was successfully created.' }
-        format.json { render :json => @comment, :status => :created, :location => ["v1", @comment] }
-      else
-        format.html { render :action => "new" }
-        format.json { render :json => @comment.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-  
-  # PUT /comments/1.json
-  def update
-    @comment = Comment.find(params[:id])
-
-    respond_to do |format|
-      if @comment.update_attributes(params[:comment])
-        format.html { redirect_to @comment, :notice => 'Comment was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render :action => "edit" }
-        format.json { render :json => @comment.errors, :status => :unprocessable_entity }
-      end
-    end
+    @comment.commentable = @jawn
+    @comment.user = @user
+    
+    @comment.save
+    
+    respond_with @comment, :location => ["v1", @jawn, @comment]
   end
   
   # DELETE /comments/1.json
   def destroy
-    @comment = Comment.find(params[:id])
-    @comment.destroy
-
-    respond_to do |format|
-      format.html { redirect_to comments_url }
-      format.json { head :no_content }
+    if @comment.user == @user
+      @comment.destroy
+      head :no_content
+    else
+      head :unauthorized
     end
   end
+  
+  private
+  
+    def find_jawn
+      if params[:spark_id]
+        @jawn = Spark.find(params[:spark_id].to_i)
+      elsif params[:idea_id]
+        @jawn = Idea.find(params[:idea_id].to_i)
+      end
+      
+      unless @jawn
+        hash = { :error => "No jawn with specified id found." }
+        respond_to do |format|
+          format.json { render :json => hash, :status => :unauthorized }
+        end
+      end
+    end
+    
+    def find_comment
+      begin
+        @comment = @jawn.comments.find(params[:id])
+      rescue ActiveRecord::RecordNotFound
+        hash = { :error => "Invalid comment id for jawn." }
+        respond_to do |format|
+          format.json { render :json => hash, :status => :unauthorized }
+        end
+      end
+    end
+  
 end
