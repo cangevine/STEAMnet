@@ -4,15 +4,13 @@ Steamnet::Application.routes.draw do
     
     namespace :v1 do
       
-      resources :tags, :only => [:index, :show]
-      # resources :comments, :except => [:new, :edit]
-      resources :sparks, :except => [:new, :edit, :update] do
+      resources :ideas, :sparks, :except => [:new, :edit, :update] do
         resources :comments, :except => [:new, :edit, :update]
       end
+      
       resources :users, :except => [:new, :edit]
-      resources :ideas, :except => [:new, :edit, :update] do
-        resources :comments, :except => [:new, :edit, :update]
-      end
+      
+      resources :tags, :only => [:index, :show]
       
       get "jawns" => "jawns#index"
       
@@ -23,9 +21,15 @@ Steamnet::Application.routes.draw do
 end
 
 #== Route Map
-# Generated on 20 Jun 2013 15:31
+# Generated on 20 Jun 2013 19:42
 #
-#            v1_tag GET    /api/v1/tags/:id(.:format)                      v1/tags#show
+#                   POST   /api/v1/ideas/:idea_id/comments(.:format)       v1/comments#create
+#   v1_idea_comment GET    /api/v1/ideas/:idea_id/comments/:id(.:format)   v1/comments#show
+#                   DELETE /api/v1/ideas/:idea_id/comments/:id(.:format)   v1/comments#destroy
+#          v1_ideas GET    /api/v1/ideas(.:format)                         v1/ideas#index
+#                   POST   /api/v1/ideas(.:format)                         v1/ideas#create
+#           v1_idea GET    /api/v1/ideas/:id(.:format)                     v1/ideas#show
+#                   DELETE /api/v1/ideas/:id(.:format)                     v1/ideas#destroy
 # v1_spark_comments GET    /api/v1/sparks/:spark_id/comments(.:format)     v1/comments#index
 #                   POST   /api/v1/sparks/:spark_id/comments(.:format)     v1/comments#create
 #  v1_spark_comment GET    /api/v1/sparks/:spark_id/comments/:id(.:format) v1/comments#show
@@ -39,12 +43,6 @@ end
 #           v1_user GET    /api/v1/users/:id(.:format)                     v1/users#show
 #                   PUT    /api/v1/users/:id(.:format)                     v1/users#update
 #                   DELETE /api/v1/users/:id(.:format)                     v1/users#destroy
-#  v1_idea_comments GET    /api/v1/ideas/:idea_id/comments(.:format)       v1/comments#index
-#                   POST   /api/v1/ideas/:idea_id/comments(.:format)       v1/comments#create
-#   v1_idea_comment GET    /api/v1/ideas/:idea_id/comments/:id(.:format)   v1/comments#show
-#                   DELETE /api/v1/ideas/:idea_id/comments/:id(.:format)   v1/comments#destroy
-#          v1_ideas GET    /api/v1/ideas(.:format)                         v1/ideas#index
-#                   POST   /api/v1/ideas(.:format)                         v1/ideas#create
-#           v1_idea GET    /api/v1/ideas/:id(.:format)                     v1/ideas#show
-#                   DELETE /api/v1/ideas/:id(.:format)                     v1/ideas#destroy
+#           v1_tags GET    /api/v1/tags(.:format)                          v1/tags#index
+#            v1_tag GET    /api/v1/tags/:id(.:format)                      v1/tags#show
 #          v1_jawns GET    /api/v1/jawns(.:format)                         v1/jawns#index

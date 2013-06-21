@@ -3,7 +3,7 @@ class ChangeIdeasAndUsersRelationship < ActiveRecord::Migration
     add_column :ideas, :user_id, :integer
     
     Idea.all.each do |idea|
-      user = idea.users.first
+      user = User.find_by_sql(["SELECT users.* FROM users INNER JOIN ideas_users ON users.id = ideas_users.user_id WHERE ideas_users.idea_id = ?", idea.id]).first
       
       if user
         idea.user = user
@@ -24,7 +24,7 @@ class ChangeIdeasAndUsersRelationship < ActiveRecord::Migration
       user = idea.user
       
       if user
-        idea.users << user
+        ActiveRecord::Base.connection.execute("INSERT INTO ideas_users (idea_id, user_id) VALUES (#{idea.id}, #{user.id})")
       end
     end
     
