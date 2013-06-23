@@ -50,6 +50,23 @@ describe User do
       user2.should_not be_valid
     end
     
+    it "accepts valid usernames" do
+      names = %w[max max_luzuriaga max5 some_user_96]
+      names.each do |a|
+        user = User.new(@attr.merge(:name => a))
+        user.should be_valid
+      end
+    end
+    
+    it "rejects invalid usernames" do
+      names = %w[@some,thing #yoloswag max:awesome]
+      names.push "hello world"
+      names.each do |a|
+        user = User.new(@attr.merge(:name => a))
+        user.should_not be_valid
+      end
+    end
+    
     it "requires unique emails" do
       user1 = User.new(@attr)
       user1.save
