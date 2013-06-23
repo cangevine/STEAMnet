@@ -3,7 +3,7 @@
 # Table name: tags
 #
 #  id         :integer          not null, primary key
-#  tag_text   :text
+#  tag_text   :string(255)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
