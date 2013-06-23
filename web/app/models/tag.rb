@@ -15,7 +15,7 @@ class Tag < ActiveRecord::Base
   has_many :ideas, :through => :tag_linkers, :source => :tagable, :source_type => "Idea"
   has_many :tag_linkers
   
-  validates :tag_text, :presence => true, :format => { :with => /^[A-Za-z\d_]+$/, :message => "must be alphanumerical." }, :uniqueness => { :case_sensitive => true }
+  validates :tag_text, :presence => true, :format => { :with => /^[A-Za-z\d_-]+$/, :message => "must be alphanumerical." }, :uniqueness => { :case_sensitive => true }
   
   def as_json(options={})
     super(:include => [:sparks, :ideas])

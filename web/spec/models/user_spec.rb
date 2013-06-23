@@ -51,7 +51,7 @@ describe User do
     end
     
     it "accepts valid usernames" do
-      names = %w[max max_luzuriaga max5 some_user_96]
+      names = %w[max max_luzuriaga max5 some_user_96 some-user]
       names.each do |a|
         user = User.new(@attr.merge(:name => a))
         user.should be_valid

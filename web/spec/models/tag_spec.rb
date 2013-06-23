@@ -41,7 +41,7 @@ describe Tag do
     end
     
     it "accepts valid tag text" do
-      tags = %w[purple red_heart nintendo64]
+      tags = %w[purple red_heart nintendo64 some-tag]
       tags.each do |a|
         tag = Tag.new(@attr.merge(:tag_text => a))
         tag.should be_valid
