@@ -115,32 +115,32 @@ describe Idea do
   end
   
   describe "tag association" do
+    
+    before(:each) do
+      @idea = FactoryGirl.create(:idea)
       
-      before(:each) do
-        @idea = FactoryGirl.create(:idea)
-        
-        @t1 = FactoryGirl.create(:tag)
-        @t2 = FactoryGirl.create(:tag)
-        
-        @t1.ideas << @idea
-        @t2.ideas << @idea
-      end
+      @t1 = FactoryGirl.create(:tag)
+      @t2 = FactoryGirl.create(:tag)
       
-      it "has a tags attribute" do
-        @idea.should respond_to(:tags)
-      end
-      
-      it "has the right tags" do
-        @idea.tags.should == [@t1, @t2]
-      end
-      
-      it "doesn't destroy associated tags" do
-        @idea.destroy
-        [@t1, @t2].each do |t|
-          Tag.find_by_id(t.id).should_not be_nil
-        end
-      end
-      
+      @t1.ideas << @idea
+      @t2.ideas << @idea
     end
+    
+    it "has a tags attribute" do
+      @idea.should respond_to(:tags)
+    end
+    
+    it "has the right tags" do
+      @idea.tags.should == [@t1, @t2]
+    end
+    
+    it "doesn't destroy associated tags" do
+      @idea.destroy
+      [@t1, @t2].each do |t|
+        Tag.find_by_id(t.id).should_not be_nil
+      end
+    end
+    
+  end
   
 end
