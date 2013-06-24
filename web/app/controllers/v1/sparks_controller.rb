@@ -26,20 +26,7 @@ class V1::SparksController < ApplicationController
     @spark = Spark.new(params[:spark])
         
     if @spark.save
-      if(params[:tags])
-        tags = params[:tags].split(",")
-        
-        tags.each do |tag_name|
-          tag = Tag.where(:tag_text => tag_name).first
-          
-          unless(tag)
-            tag = Tag.new(:tag_text => tag_name)
-            tag.save
-          end
-          
-          tag.sparks << @idea
-        end
-      end
+      add_tags_to @spark
       
       @user.sparks << @spark
     elsif @spark.duplicate?

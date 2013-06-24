@@ -23,8 +23,8 @@ class User < ActiveRecord::Base
   has_many :ideas
   has_many :comments
   
-  validates :email, :presence => true, :format => { :with => /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/, :message => "Must be a valid email address." }, :uniqueness => { :case_sensitive => false }
-  validates :name, :presence => true, :uniqueness => { :case_sensitive => false }
+  validates :email, :presence => true, :format => { :with => /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/, :message => "must be a valid email address." }, :uniqueness => { :case_sensitive => false }
+  validates :name, :presence => true, :format => { :with => /^[A-Za-z\d_-]+$/, :message => "must be alphanumerical." }, :uniqueness => { :case_sensitive => false }
   validates :password, :presence => { :on => :create }
   
   def as_json(options={})

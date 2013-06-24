@@ -89,6 +89,33 @@ describe V1::IdeasController do
         @idea.sparks.should == [@s1, @s2]
       end
       
+      it "should add tags to the spark" do
+        t1 = FactoryGirl.create(:tag)
+        t2 = FactoryGirl.create(:tag)
+        t3 = FactoryGirl.create(:tag)
+        
+        tags = [t1,t2,t3].map(&:tag_text).join(",")
+        
+        post :create, :idea => @attr, :format => 'json', :username => @user.name, :sparks => @sparks, :tags => tags, :token => @auth_token
+        
+        @idea = Idea.last
+        @idea.tags.should == [t1,t2,t3]
+      end
+      
+      it "should create new tags" do
+        t1 = "foo"
+        t2 = "bar"
+        t3 = "purple"
+        
+        tags = [t1,t2,t3].join(",")
+        
+        post :create, :idea => @attr, :format => 'json', :username => @user.name, :sparks => @sparks, :tags => tags, :token => @auth_token
+        
+        [t1,t2,t3].each do |t|
+          Tag.find_by_tag_text(t).should_not be_nil
+        end
+      end
+      
       it "should return the idea" do
         post :create, :idea => @attr, :format => 'json', :username => @user.name, :sparks => @sparks, :token => @auth_token
         @idea = Idea.last
