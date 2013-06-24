@@ -11,10 +11,10 @@ describe "routes for Tags" do
   end
   
   it "routes get /api/v1/tags/:id.json to Tags controller" do
-    { :get => "/api/v1/tags/1.json" }.should route_to(
+    { :get => "/api/v1/tags/foobar.json" }.should route_to(
       :controller => "v1/tags",
       :action => "show",
-      :id => "1",
+      :id => "foobar",
       :format => "json"
     )
   end

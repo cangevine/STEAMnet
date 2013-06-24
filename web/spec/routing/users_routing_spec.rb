@@ -19,28 +19,28 @@ describe "routes for Users" do
   end
   
   it "routes get /api/v1/users/:id.json to Users controller" do
-    { :get => "/api/v1/users/1.json" }.should route_to(
+    { :get => "/api/v1/users/max.json" }.should route_to(
       :controller => "v1/users",
       :action => "show",
-      :id => "1",
+      :id => "max",
       :format => "json"
     )
   end
   
   it "routes put /api/v1/users/:id.json to Users controller" do
-    { :put => "/api/v1/users/1.json" }.should route_to(
+    { :put => "/api/v1/users/max.json" }.should route_to(
       :controller => "v1/users",
       :action => "update",
-      :id => "1",
+      :id => "max",
       :format => "json"
     )
   end
   
   it "routes delete /api/v1/users/:id.json to Users controller" do
-    { :delete => "/api/v1/users/1.json" }.should route_to(
+    { :delete => "/api/v1/users/max.json" }.should route_to(
       :controller => "v1/users",
       :action => "destroy",
-      :id => "1",
+      :id => "max",
       :format => "json"
     )
   end

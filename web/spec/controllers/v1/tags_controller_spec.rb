@@ -31,12 +31,12 @@ describe V1::TagsController do
     end
     
     it "is successful" do
-      get :show, :id => @tag, :format => 'json', :token => @auth_token
+      get :show, :id => @tag.tag_text, :format => 'json', :token => @auth_token
       response.should be_success
     end
     
     it "returns the correct tag" do
-      get :show, :id => @tag, :format => 'json', :token => @auth_token
+      get :show, :id => @tag.tag_text, :format => 'json', :token => @auth_token
       response.body.should == @tag.to_json
     end
     
