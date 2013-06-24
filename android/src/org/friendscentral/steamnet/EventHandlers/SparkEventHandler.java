@@ -4,6 +4,7 @@ import org.friendscentral.steamnet.IdeaBucket;
 import org.friendscentral.steamnet.IndexGrid;
 import org.friendscentral.steamnet.R;
 import org.friendscentral.steamnet.Activities.DetailActivity;
+import org.friendscentral.steamnet.BaseClasses.Jawn;
 import org.friendscentral.steamnet.BaseClasses.Spark;
 
 
@@ -38,17 +39,14 @@ public class SparkEventHandler {
 		initializeIndexGridLayout();
 	}
 	
-	public void openDetailView(Spark s) {
-		/*Bundle b = new Bundle();
-		b.putString("Content", s.getContent());
-		b.putInt("Id", s.getId());
-		b.putString("SparkType", s.getSparkTypeString());
-		b.putString("ContentType", s.getContentTypeString());
-		b.putString("CreatedAt", s.getCreatedAt());*/
-    	Intent intent = new Intent(context, DetailActivity.class);
-    	//intent.putExtra(EXTRA_MESSAGE, b);
-    	intent.putExtra("spark", s);
-    	context.startActivity(intent);
+	public void openDetailView(Jawn j) {
+		if(j.getSelfIdea() == null){
+	    	Intent intent = new Intent(context, DetailActivity.class);
+	    	//intent.putExtra(EXTRA_MESSAGE, b);
+	    	Spark s = j.getSelfSpark();
+	    	intent.putExtra("spark", s);
+	    	context.startActivity(intent);
+		}
     }
     
     public void initializeIndexGridLayout() {

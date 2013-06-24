@@ -182,4 +182,8 @@ public class Spark extends Jawn implements Serializable{
 		return createdAts[0];
 	}
 	
+	public String toString(){
+		return content;
+	}
+	
 }
