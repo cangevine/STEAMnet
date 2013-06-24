@@ -40,7 +40,7 @@ public class RetrieveDataTaskGetXSparks {
 	
 	public RetrieveDataTaskGetXSparks(int lim, GridView g, IndexGrid i) {
 		
-		Log.v("REPORT", "THE TASK IS BEGGINING, SIR!");
+		Log.v("REPORT", "GET X SPARKS IS BEGGINING, SIR!");
 		OkHTTPTask task = new OkHTTPTask(g, i);
 		task.execute("http://steamnet.herokuapp.com/api/v1/sparks.json?limit="+lim);
 		
@@ -78,11 +78,11 @@ public class RetrieveDataTaskGetXSparks {
 
         protected void onPostExecute(String data) {
         	Log.v("REPORT", "WE HAVE MOVED INTO THE POST EXECUTE PHASE, SIR!");
-        	Log.d(TAG, "=> "+data);
         	try {
         		Log.v("REPORT", "WE WILL BEGIN TO PARSE THE DATA, SIR!");
 				Jawn[] sparks = parseData(data);
-				
+				Log.v("REPORT", "WE HAVE FINISHED PARSING THE DATA, SIR!");
+				Log.d("SPARKS", sparks.toString());
 				JawnAdapter a = new JawnAdapter(gridView.getContext(), sparks, 200);
 				Log.v("REPORT", "WE HAVE ACCESSED THE JAWNADAPTER AND ARE PROCEEDING AS PLANNED, SIR!");
 				indexGrid.setAdapter(a);
@@ -112,7 +112,7 @@ public class RetrieveDataTaskGetXSparks {
         	JSONArray sparks = new JSONArray(data);
         	
         	ArrayList<Spark> sparkArrayList = new ArrayList<Spark>();
-        	
+        	Log.v("LENGTH", Integer.toString(sparks.length()));
         	try {        	     
         		for(int i = 0; i < sparks.length(); i++){// Storing each json item in variable
         			JSONObject json = sparks.getJSONObject(i);
@@ -126,9 +126,9 @@ public class RetrieveDataTaskGetXSparks {
 	        	    JSONArray usersJSON = json.getJSONArray(USERS);
 	        	     
 	        	    // looping through All Users
-	        	    ArrayList<Integer> usersArrayList = new ArrayList<Integer>();
-	        	    int count = 0;
-	        	    for(int q = 0; q < usersJSON.length(); q++){
+	        	    //ArrayList<Integer> usersArrayList = new ArrayList<Integer>();
+	        	    //int count = 0;
+	        	    /*for(int q = 0; q < usersJSON.length(); q++){
 	        	        JSONObject u = usersJSON.getJSONObject(i);
 	        	        // Storing each json item in variable
 	        	        if(count == 0){
@@ -137,18 +137,19 @@ public class RetrieveDataTaskGetXSparks {
 	        	        }
 	        	        int userID = u.getInt(ID);
 	        	        usersArrayList.add(userID);
-	        	    }
-	        	    int[] usersArray = new int[usersArrayList.size()];
-	        	    for(int q = 0; q < usersArrayList.size(); q++){
+	        	    }*/
+	        	    int[] usersArray = new int[1];
+	        	    usersArray[0] = 1;
+	        	    /*for(int q = 0; q < usersArrayList.size(); q++){
 	        	    	usersArray[q] = usersArrayList.get(q);
-	        	    }
+	        	    }*/
 	        	    
 	        	    String[] createdAts = new String[1];
 	        	    createdAts[0] = createdAt;
 	        	    
 					sparkArrayList.add(new Spark(Integer.parseInt(id), sparkType.charAt(0), contentType.charAt(0), content, createdAts, usersArray, firstUser));
         		}
-        	        
+        	    Log.v("ARRAY", sparkArrayList.toString());
         	    Spark[] sparkArray = new Spark[sparkArrayList.size()];
         	    for(int i = 0; i < sparkArrayList.size(); i++){
         	    	sparkArray[i] = sparkArrayList.get(i);

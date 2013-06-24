@@ -126,7 +126,7 @@ public class RetrieveDataTaskGetXJawns {
         	        JSONObject j = jawns.getJSONObject(i);
         	        
         	        //checking to see if the Jawn is a Spark or an Idea
-        	        if(/*ITS A SPARK*/){
+        	        if(/*ITS A SPARK*/true == false){
         	        	// Storing each json item in variable
         				String id = j.getString(ID);
         				String sparkType = j.getString(SPARK_TYPE);
