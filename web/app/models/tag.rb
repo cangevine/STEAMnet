@@ -9,6 +9,10 @@
 #
 
 class Tag < ActiveRecord::Base
+  def to_param
+    tag_text
+  end
+  
   attr_accessible :tag_text
   
   has_many :sparks, :through => :tag_linkers, :source => :tagable, :source_type => "Spark"
