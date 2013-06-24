@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130618232537) do
+ActiveRecord::Schema.define(:version => 20130623163343) do
 
   create_table "comments", :force => true do |t|
     t.text     "comment_text"
@@ -57,7 +57,7 @@ ActiveRecord::Schema.define(:version => 20130618232537) do
   end
 
   create_table "tags", :force => true do |t|
-    t.text     "tag_text"
+    t.string   "tag_text"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

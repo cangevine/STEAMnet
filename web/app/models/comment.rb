@@ -20,6 +20,6 @@ class Comment < ActiveRecord::Base
   validates :comment_text, :presence => true
   
   def as_json(options={})
-    super(:include => [:user, :commentable])
+    super(:include => [:user])
   end
 end

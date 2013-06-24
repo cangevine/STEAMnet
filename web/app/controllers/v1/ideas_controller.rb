@@ -40,20 +40,7 @@ class V1::IdeasController < ApplicationController
       
       if sparks_exist
         if @idea.save
-          if(params[:tags])
-            tags = params[:tags].split(",")
-
-            tags.each do |tag_name|
-              tag = Tag.where(:tag_text => tag_name).first
-
-              unless(tag)
-                tag = Tag.new(:tag_text => tag_name)
-                tag.save
-              end
-
-              tag.ideas << @idea
-            end
-          end
+          add_tags_to @idea
 
           sparks.each do |spark|
             @idea.sparks << spark

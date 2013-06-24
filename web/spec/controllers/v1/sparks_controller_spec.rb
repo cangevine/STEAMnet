@@ -80,6 +80,33 @@ describe V1::SparksController do
         @spark.users.should == [@user]
       end
       
+      it "should add tags to the spark" do
+        t1 = FactoryGirl.create(:tag)
+        t2 = FactoryGirl.create(:tag)
+        t3 = FactoryGirl.create(:tag)
+        
+        tags = [t1,t2,t3].map(&:tag_text).join(",")
+        
+        post :create, :spark => @attr, :format => 'json', :username => @user.name, :tags => tags, :token => @auth_token
+        
+        @spark = Spark.last
+        @spark.tags.should == [t1,t2,t3]
+      end
+      
+      it "should create new tags" do
+        t1 = "foo"
+        t2 = "bar"
+        t3 = "purple"
+        
+        tags = [t1,t2,t3].join(",")
+        
+        post :create, :spark => @attr, :format => 'json', :username => @user.name, :tags => tags, :token => @auth_token
+        
+        [t1,t2,t3].each do |t|
+          Tag.find_by_tag_text(t).should_not be_nil
+        end
+      end
+      
       it "should return the spark" do
         post :create, :spark => @attr, :format => 'json', :username => @user.name, :token => @auth_token
         @spark = Spark.last
