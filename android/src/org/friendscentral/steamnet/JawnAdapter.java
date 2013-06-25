@@ -5,6 +5,7 @@ import org.friendscentral.steamnet.BaseClasses.Jawn;
 import org.friendscentral.steamnet.BaseClasses.Spark;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -27,7 +28,8 @@ public class JawnAdapter extends BaseAdapter {
      */
     public JawnAdapter(Context c, Jawn[] j, int size) {
         mContext = c;
-        //mThumbIds = new Integer[s.length];
+        Log.v("LENGTH", Integer.toString(j.length));
+        mThumbIds = new Integer[j.length];
         image_size = size;
         //initSparks(s);
         jawns = j;
