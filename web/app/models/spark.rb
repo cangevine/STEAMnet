@@ -3,8 +3,8 @@
 # Table name: sparks
 #
 #  id           :integer          not null, primary key
-#  spark_type   :string(255)
-#  content_type :string(255)
+#  spark_type   :string(1)
+#  content_type :string(1)
 #  content      :text
 #  content_hash :string(255)
 #  created_at   :datetime         not null
@@ -22,10 +22,10 @@ class Spark < ActiveRecord::Base
   has_many :tags, :through => :tag_linkers
   has_many :tag_linkers, :as => :tagable
   
-  validates :content_type, :presence => true
+  validates :content_type, :presence => true, :format => { :with => /^[LVCTPA]$/, :message => "must be a valid content type" }
   validates :content, :presence => true
   validates :content_hash, :presence => true, :uniqueness => true
-  validates :spark_type, :presence => true
+  validates :spark_type, :presence => true, :format => { :with => /^[WIP]$/, :message => "must be a valid spark type" }
   
   before_validation :hash_content
   
