@@ -23,8 +23,6 @@ public class DetailActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_detail);
 		
-		LinearLayout sparkData = (LinearLayout) findViewById(R.id.SparkData);
-		
 		Intent intent = getIntent();
 		Spark spark = (Spark) intent.getSerializableExtra("spark");	
 		String content = spark.getContent();
