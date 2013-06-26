@@ -46,9 +46,10 @@ describe V1::UsersController do
     
     before(:each) do
       @attr = {
-        :name     => "max",
-        :email    => "max@luzuriaga.com",
-        :password => "password"
+        :name                   => "max",
+        :email                  => "max@luzuriaga.com",
+        :password               => "password",
+        :password_confirmation  => "password"
       }
     end
     
@@ -67,7 +68,7 @@ describe V1::UsersController do
       
       it "should return the user" do
         post :create, :user => @attr, :format => 'json', :token => @auth_token
-        response.body.should == User.find_by_name(@attr[:name]).to_json
+        response.body.should == User.find_by(name: @attr[:name]).to_json
       end
       
     end

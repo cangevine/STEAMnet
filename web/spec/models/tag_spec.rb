@@ -82,7 +82,7 @@ describe Tag do
     it "doesn't destroy associated sparks" do
       @tag.destroy
       [@s1, @s2].each do |s|
-        Spark.find_by_id(s.id).should_not be_nil
+        Spark.find_by(id: s.id).should_not be_nil
       end
     end
     
@@ -111,7 +111,7 @@ describe Tag do
     it "doesn't destroy associated ideas" do
       @tag.destroy
       [@i1, @i2].each do |i|
-        Idea.find_by_id(i.id).should_not be_nil
+        Idea.find_by(id: i.id).should_not be_nil
       end
     end
     

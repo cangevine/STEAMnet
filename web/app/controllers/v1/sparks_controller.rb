@@ -32,7 +32,7 @@ class V1::SparksController < ApplicationController
     elsif @spark.duplicate?
       # TODO: Handle the different spark_types provided by multiple users
       
-      @spark = Spark.find_by_content_hash(@spark.content_hash)
+      @spark = Spark.find_by(content_hash: @spark.content_hash)
       
       unless(@spark.users.include?(@user))
         @spark.users << @user

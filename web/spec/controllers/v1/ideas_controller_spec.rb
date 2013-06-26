@@ -89,6 +89,12 @@ describe V1::IdeasController do
         @idea.sparks.should == [@s1, @s2]
       end
       
+      it "should ignore invalid sparks" do
+        post :create, :idea => @attr, :format => 'json', :username => @user.name, :sparks => @sparks + ",100", :token => @auth_token
+        @idea = Idea.last
+        @idea.sparks.should == [@s1, @s2]
+      end
+      
       it "should add tags to the spark" do
         t1 = FactoryGirl.create(:tag)
         t2 = FactoryGirl.create(:tag)
@@ -112,7 +118,7 @@ describe V1::IdeasController do
         post :create, :idea => @attr, :format => 'json', :username => @user.name, :sparks => @sparks, :tags => tags, :token => @auth_token
         
         [t1,t2,t3].each do |t|
-          Tag.find_by_tag_text(t).should_not be_nil
+          Tag.find_by(tag_text: t).should_not be_nil
         end
       end
       

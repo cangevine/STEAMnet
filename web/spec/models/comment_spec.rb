@@ -55,7 +55,7 @@ describe Comment do
     
     it "doesn't destroy associated users" do
       @comment.destroy
-      User.find_by_id(@user.id).should_not be_nil
+      User.find_by(id: @user.id).should_not be_nil
     end
     
   end
@@ -99,7 +99,7 @@ describe Comment do
       @comment.save
       
       @comment.destroy
-      Spark.find_by_id(@spark.id).should_not be_nil
+      Spark.find_by(id: @spark.id).should_not be_nil
     end
     
   end

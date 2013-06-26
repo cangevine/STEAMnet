@@ -16,9 +16,10 @@ describe User do
   
   before(:each) do
     @attr = {
-      :name     => "max",
-      :email    => "max@example.com",
-      :password => "testpassword",
+      :name                   => "max",
+      :email                  => "max@example.com",
+      :password               => "testpassword",
+      :password_confirmation  => "testpassword"
     }
   end
   
@@ -100,8 +101,17 @@ describe User do
     describe "validation" do
       
       it "requires a password" do
-        user = User.new(@attr)
-        user.password = ""
+        user = User.new(@attr.merge(:password => ""))
+        user.should_not be_valid
+      end
+      
+      it "requires a password_confirmation" do
+        user = User.new(@attr.merge(:password_confirmation => ""))
+        user.should_not be_valid
+      end
+      
+      it "requires password_confirmation to match password" do
+        user = User.new(@attr.merge(:password_confirmation => "someotherpassword"))
         user.should_not be_valid
       end
       
@@ -148,7 +158,7 @@ describe User do
     it "doesn't destroy associated sparks" do
       @user.destroy
       [@s1, @s2].each do |s|
-        Spark.find_by_id(s.id).should_not be_nil
+        Spark.find_by(id: s.id).should_not be_nil
       end
     end
     
@@ -180,7 +190,7 @@ describe User do
     it "doesn't destroy associated ideas" do
       @user.destroy
       [@i1, @i2].each do |i|
-        Idea.find_by_id(i.id).should_not be_nil
+        Idea.find_by(id: i.id).should_not be_nil
       end
     end
     
@@ -218,7 +228,7 @@ describe User do
     it "doesn't destroy associated comments" do
       @user.destroy
       [@c1, @c2].each do |c|
-        Comment.find_by_id(c.id).should_not be_nil
+        Comment.find_by(id: c.id).should_not be_nil
       end
     end
     

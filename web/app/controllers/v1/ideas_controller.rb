@@ -32,7 +32,7 @@ class V1::IdeasController < ApplicationController
       sparks_exist = false
 
       spark_ids.each do |spark_id|
-        if s = Spark.find_by_id(spark_id.to_i)
+        if s = Spark.find_by(id: spark_id.to_i)
           sparks_exist = true
           sparks << s
         end

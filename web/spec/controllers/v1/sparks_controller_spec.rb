@@ -103,7 +103,7 @@ describe V1::SparksController do
         post :create, :spark => @attr, :format => 'json', :username => @user.name, :tags => tags, :token => @auth_token
         
         [t1,t2,t3].each do |t|
-          Tag.find_by_tag_text(t).should_not be_nil
+          Tag.find_by(tag_text: t).should_not be_nil
         end
       end
       

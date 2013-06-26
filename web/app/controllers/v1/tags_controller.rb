@@ -11,7 +11,7 @@ class V1::TagsController < ApplicationController
 
   # GET /tags/1.json
   def show
-    @tag = Tag.find_by_tag_text(params[:id])
+    @tag = Tag.find_by(tag_text: params[:id])
     
     respond_with @tag
   end

@@ -54,14 +54,7 @@ class V1::CommentsController < ApplicationController
     end
     
     def find_comment
-      begin
-        @comment = @jawn.comments.find(params[:id])
-      rescue ActiveRecord::RecordNotFound
-        hash = { :error => "Invalid comment id for jawn." }
-        respond_to do |format|
-          format.json { render :json => hash, :status => :unauthorized }
-        end
-      end
+      @comment = @jawn.comments.find(params[:id])
     end
   
 end
