@@ -120,7 +120,7 @@ public class JawnAdapter extends BaseAdapter {
 		        
 	    		contentView = layout;
 	    		
-	    	} else if (con == "T".charAt(0)) {
+	    	} else if (con == "T".charAt(0) /* DIRTY FIX!!!! */ || con == "Q".charAt(0) || con == "P".charAt(0)) {
 	    		
 	    		TextView textview;
 		        textview = new TextView(mContext);
@@ -205,7 +205,8 @@ public class JawnAdapter extends BaseAdapter {
 		    	v = sparkInfo;
 	    	} else {
 	    		TextView t = new TextView(mContext);
-	    		t.setText("Error with thisun");
+	    		t.setText("Error with this one");
+	    		Log.v("Content Type", String.valueOf(spark.getContentType()));
 	    		v = t;
 	    	}
 	    	
