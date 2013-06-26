@@ -23,7 +23,7 @@ class V1::SparksController < ApplicationController
   
   # POST /sparks.json
   def create
-    @spark = Spark.new(params[:spark])
+    @spark = Spark.new(spark_params)
         
     if @spark.save
       add_tags_to @spark
@@ -54,5 +54,11 @@ class V1::SparksController < ApplicationController
       end
     end
   end
+  
+  private
+  
+    def spark_params
+      params.require(:spark).permit(:content, :content_hash, :content_type, :spark_type)
+    end
   
 end

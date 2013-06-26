@@ -17,7 +17,7 @@ class V1::CommentsController < ApplicationController
   
   # POST /comments.json
   def create
-    @comment = Comment.new(params[:comment])
+    @comment = Comment.new(comment_params)
     @comment.commentable = @jawn
     @comment.user = @user
     
@@ -37,7 +37,11 @@ class V1::CommentsController < ApplicationController
   end
   
   private
-  
+    
+    def comment_params
+      params.require(:comment).permit(:comment_text)
+    end
+    
     def find_jawn
       if params[:spark_id]
         @jawn = Spark.find(params[:spark_id].to_i)

@@ -13,8 +13,6 @@ class Tag < ActiveRecord::Base
     tag_text
   end
   
-  attr_accessible :tag_text
-  
   has_many :sparks, :through => :tag_linkers, :source => :tagable, :source_type => "Spark"
   has_many :ideas, :through => :tag_linkers, :source => :tagable, :source_type => "Idea"
   has_many :tag_linkers

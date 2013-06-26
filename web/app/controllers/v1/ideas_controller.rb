@@ -23,7 +23,7 @@ class V1::IdeasController < ApplicationController
   
   # POST /ideas.json
   def create
-    @idea = Idea.new(params[:idea])
+    @idea = Idea.new(idea_params)
     
     if params[:sparks]
       spark_ids = params[:sparks].split(",")
@@ -79,4 +79,11 @@ class V1::IdeasController < ApplicationController
       end
     end
   end
+  
+  private
+  
+    def idea_params
+      params.require(:idea).permit(:description)
+    end
+  
 end

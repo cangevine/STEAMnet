@@ -10,8 +10,6 @@
 #
 
 class Idea < ActiveRecord::Base
-  attr_accessible :description
-  
   belongs_to :user
   has_and_belongs_to_many :sparks
   has_many :comments, :as => :commentable, :dependent => :destroy

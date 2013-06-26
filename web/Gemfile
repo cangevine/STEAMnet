@@ -5,11 +5,6 @@ gem 'rails', '4.0.0'
 gem 'sqlite3'
 gem 'json'
 
-gem 'protected_attributes'
-gem 'rails-observers'
-gem 'actionpack-page_caching'
-gem 'actionpack-action_caching'
-
 gem 'faker'
 
 gem 'annotate'
