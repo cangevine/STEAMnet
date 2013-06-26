@@ -3,8 +3,8 @@
 # Table name: sparks
 #
 #  id           :integer          not null, primary key
-#  spark_type   :string(255)
-#  content_type :string(255)
+#  spark_type   :string(1)
+#  content_type :string(1)
 #  content      :text
 #  content_hash :string(255)
 #  created_at   :datetime         not null
