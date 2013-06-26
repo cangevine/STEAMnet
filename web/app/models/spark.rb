@@ -22,7 +22,7 @@ class Spark < ActiveRecord::Base
   has_many :tags, :through => :tag_linkers
   has_many :tag_linkers, :as => :tagable
   
-  validates :content_type, :presence => true, :format => { :with => /^[LVCTPAV]$/, :message => "must be a valid content type" }
+  validates :content_type, :presence => true, :format => { :with => /^[LVCTPA]$/, :message => "must be a valid content type" }
   validates :content, :presence => true
   validates :content_hash, :presence => true, :uniqueness => true
   validates :spark_type, :presence => true, :format => { :with => /^[WIP]$/, :message => "must be a valid spark type" }

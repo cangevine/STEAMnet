@@ -58,7 +58,7 @@ describe Spark do
     end
     
     it "accepts valid content types" do
-      types = %w[L V C T P A V]
+      types = %w[L V C T P A]
       types.each do |t|
         spark = Spark.new(@attr.merge(:content_type => t))
         spark.should be_valid
