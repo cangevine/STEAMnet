@@ -3,8 +3,8 @@
 # Table name: sparks
 #
 #  id           :integer          not null, primary key
-#  spark_type   :string(255)
-#  content_type :string(255)
+#  spark_type   :string(1)
+#  content_type :string(1)
 #  content      :text
 #  content_hash :string(255)
 #  created_at   :datetime         not null
@@ -35,10 +35,42 @@ describe Spark do
       spark.should_not be_valid
     end
     
+    it "accepts valid spark types" do
+      types = %w[W I P]
+      types.each do |t|
+        spark = Spark.new(@attr.merge(:spark_type => t))
+        spark.should be_valid
+      end
+    end
+    
+    it "rejects invalid spark types" do
+      types = %w[w i p some_type L l V v C c T t A a V v whatever]
+      types.each do |t|
+        spark = Spark.new(@attr.merge(:spark_type => t))
+        spark.should_not be_valid
+      end
+    end
+    
     it "requires a content type" do
       spark = Spark.new(@attr)
       spark.content_type = ""
       spark.should_not be_valid
+    end
+    
+    it "accepts valid content types" do
+      types = %w[L V C T P A]
+      types.each do |t|
+        spark = Spark.new(@attr.merge(:content_type => t))
+        spark.should be_valid
+      end
+    end
+    
+    it "rejects invalid content types" do
+      types = %w[l v c t p a v W w I i some_type whatever]
+      types.each do |t|
+        spark = Spark.new(@attr.merge(:content_type => t))
+        spark.should_not be_valid
+      end
     end
     
     it "requires content" do

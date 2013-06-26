@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130623163343) do
+ActiveRecord::Schema.define(:version => 20130626185414) do
 
   create_table "comments", :force => true do |t|
     t.text     "comment_text"
@@ -35,12 +35,12 @@ ActiveRecord::Schema.define(:version => 20130623163343) do
   end
 
   create_table "sparks", :force => true do |t|
-    t.string   "spark_type"
-    t.string   "content_type"
+    t.string   "spark_type",   :limit => 1
+    t.string   "content_type", :limit => 1
     t.text     "content"
     t.string   "content_hash"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
   end
 
   create_table "sparks_users", :id => false, :force => true do |t|
