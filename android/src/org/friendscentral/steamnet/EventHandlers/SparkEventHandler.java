@@ -4,6 +4,7 @@ import org.friendscentral.steamnet.IdeaBucket;
 import org.friendscentral.steamnet.IndexGrid;
 import org.friendscentral.steamnet.R;
 import org.friendscentral.steamnet.Activities.DetailActivity;
+import org.friendscentral.steamnet.Activities.SparkDetailActivity;
 import org.friendscentral.steamnet.BaseClasses.Jawn;
 import org.friendscentral.steamnet.BaseClasses.Spark;
 
@@ -41,7 +42,7 @@ public class SparkEventHandler {
 	
 	public void openDetailView(Jawn j) {
 		if(j.getSelfIdea() == null){
-	    	Intent intent = new Intent(context, DetailActivity.class);
+	    	Intent intent = new Intent(context, SparkDetailActivity.class);
 	    	//intent.putExtra(EXTRA_MESSAGE, b);
 	    	Spark s = j.getSelfSpark();
 	    	intent.putExtra("spark", s);
