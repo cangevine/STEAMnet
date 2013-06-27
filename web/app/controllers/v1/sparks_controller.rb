@@ -1,7 +1,7 @@
 class V1::SparksController < ApplicationController
   
   respond_to :json
-  before_filter :authenticate, :only => [:create, :destroy]
+  before_action :authenticate, :only => [:create, :destroy]
   
   # GET /sparks.json
   def index

@@ -1,9 +1,9 @@
 class V1::CommentsController < ApplicationController
   
   respond_to :json
-  before_filter :find_jawn
-  before_filter :find_comment, :only => [:show, :destroy]
-  before_filter :authenticate, :only => [:create, :update, :destroy]
+  before_action :find_jawn
+  before_action :find_comment, :only => [:show, :destroy]
+  before_action :authenticate, :only => [:create, :update, :destroy]
   
   # GET /comments.json
   def index

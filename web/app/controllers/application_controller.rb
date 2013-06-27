@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   
   protect_from_forgery
   
-  before_filter :verify_security_token
+  before_action :verify_security_token
   
   private
     
