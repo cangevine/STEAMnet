@@ -24,6 +24,8 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity {
 	Spark newSpark;
+	char sparkType = "I".charAt(0);
+	char contentType = "T".charAt(0);
 
     static final String EXTRA_MESSAGE = null;
     
@@ -77,7 +79,7 @@ public class MainActivity extends Activity {
     	ideaBucket = new IdeaBucket();
         View ideaBucketLayout = findViewById(R.id.IdeaBucket);
     	LinearLayout ideaGrid = (LinearLayout) ideaBucketLayout.findViewById(R.id.idea_bucket_linear);
-        ideaBucket.initIdeaGrid(ideaGrid, MainActivity.this);
+        ideaBucket.initIdeaGrid(ideaGrid, MainActivity.this, (LinearLayout) findViewById(R.id.MainLayout));
     }
     
     public void updateWeights(float sp, float fs, float ib) {
@@ -88,8 +90,7 @@ public class MainActivity extends Activity {
 	
 	public void updateWizard(View v) {
 		String tag = (String) v.getTag();
-		char sparkType = "Q".charAt(0);
-		char contentType = "T".charAt(0);
+		
 		String content;
 		Log.d("openContentTypeChooser", tag);
 		if (tag.equals("openContentTypeChooser")) {
