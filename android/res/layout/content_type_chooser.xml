@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Inspiration - Choose type:"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/picture_button"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:background="@drawable/btn_green_picture"
+                android:layout_weight="1"
+                android:tag="openContentEntry"
+                android:onClick="updateWizard" />
+
+            <Button
+                android:id="@+id/video_button"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:background="@drawable/btn_green_video"
+                android:layout_weight="1"
+                android:tag="openContentEntry"
+                android:onClick="updateWizard" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/text_button"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:background="@drawable/btn_green_text"
+                android:layout_weight="1"
+                android:tag="openContentEntry"
+                android:onClick="updateWizard" />
+
+            <Button
+                android:id="@+id/code_button"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:background="@drawable/btn_green_code"
+                android:layout_weight="1"
+                android:tag="openContentEntry"
+                android:onClick="updateWizard" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/audio_button"
+                android:layout_width="0dp"
+               	android:layout_height="70dp"
+                android:background="@drawable/btn_green_audio"
+                android:layout_weight="1"
+                android:tag="openContentEntry"
+                android:onClick="updateWizard" />
+
+            <Button
+                android:id="@+id/link_button"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:background="@drawable/btn_green_link"
+                android:layout_weight="1"
+                android:tag="openContentEntry"
+                android:onClick="updateWizard" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/cancel_content_type_chooser_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:tag="revertWizard"
+                android:onClick="updateWizard"
+                android:text="Cancel" />
+        </TableRow>
+
+    </TableLayout>
+
+</LinearLayout>
