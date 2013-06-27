@@ -16,6 +16,7 @@ import android.view.DragEvent;
 import android.view.View;
 import android.view.View.DragShadowBuilder;
 import android.view.View.OnDragListener;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -61,8 +62,10 @@ public class SparkEventHandler {
 			public boolean onItemLongClick(AdapterView<?> adapterView, View view,
 					int pos, long id) {
 				ClipData data = ClipData.newPlainText("", "");
-		        DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
-		        view.startDrag(data, shadowBuilder, view, 0);
+				LinearLayout spark = (LinearLayout) view;
+				View sparkContent = ((LinearLayout) spark.getChildAt(0)).getChildAt(1);
+		        DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(sparkContent);
+		        view.startDrag(data, shadowBuilder, sparkContent, 0);
 		        
 		        SparkDragListener sdl = new SparkDragListener();
 		        sdl.setPos(pos);

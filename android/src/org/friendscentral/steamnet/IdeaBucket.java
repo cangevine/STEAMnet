@@ -29,7 +29,21 @@ public class IdeaBucket {
 	public void addSpark(Spark ss) {
 		if (sparks.size() < 4) {
 			sparks.add(ss);
-			imageViews[sparks.size() - 1].setImageResource(ss.getId());
+			int resource = 0;
+			if (ss.getContentType() == "P".charAt(0)) {
+				resource = R.drawable.symbol_image;
+			} else if (ss.getContentType() == "V".charAt(0)) {
+				resource = R.drawable.symbol_video;
+			} else  if (ss.getContentType() == "L".charAt(0)) {
+				resource = R.drawable.symbol_link;
+			} else if (ss.getContentType() == "A".charAt(0)) {
+				resource = R.drawable.symbol_link;
+			} else if (ss.getContentType() == "T".charAt(0)) {
+				resource = R.drawable.btn_green_text;
+			} else if (ss.getContentType() == "C".charAt(0)) {
+				resource = R.drawable.btn_green_code;
+			}
+			imageViews[sparks.size() - 1].setImageResource(resource);
 		}
 	}
 	

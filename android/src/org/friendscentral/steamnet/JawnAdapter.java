@@ -5,15 +5,18 @@ import org.friendscentral.steamnet.BaseClasses.Jawn;
 import org.friendscentral.steamnet.BaseClasses.Spark;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.shapes.Shape;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 public class JawnAdapter extends BaseAdapter {
@@ -46,20 +49,25 @@ public class JawnAdapter extends BaseAdapter {
 	    	View contentView = null;
 	    	LinearLayout sparkInfo = new LinearLayout(mContext);
 	    	sparkInfo.setOrientation(VERTICAL);
+	    	sparkInfo.setBackgroundColor(Color.WHITE);
 	    	
 	    	//Prelim stuff for the spark:
 	    	LinearLayout layout = new LinearLayout(mContext);
-    		layout.setPadding(8, 8, 8, 8);
     		layout.setOrientation(VERTICAL);
 	    	
-	    	TextView header;
-	        header = new TextView(mContext);
-	        header.setTextSize(20);
+    		LinearLayout header = new LinearLayout(mContext);
+	    	TextView headerTitle;
+	        headerTitle = new TextView(mContext);
+	        headerTitle.setTextSize(20);
+	        headerTitle.setWidth(0);
+	        LayoutParams titleParams = new TableRow.LayoutParams(0, LayoutParams.WRAP_CONTENT, 9f);
+	        headerTitle.setLayoutParams(titleParams);
+	        header.addView(headerTitle);
+	        
+	        layout.addView(header);
 	    	
 	    	if (con == "P".charAt(0)) {
-		        header.setText("Picture");
-		        
-	    		layout.addView(header);
+		        headerTitle.setText("Picture");
 	    		
 		        ImageView imageView;
 		        imageView = new ImageView(mContext);
@@ -78,8 +86,7 @@ public class JawnAdapter extends BaseAdapter {
 		        contentView = layout;
 		        
 	    	} else if (con == "V".charAt(0)) {
-		        header.setText("Video");
-	    		layout.addView(header);
+		        headerTitle.setText("Video");
 	    		
 	    		/*
 	    		 * Normally within an app, embedded Youtube videos either begin playing or launch the Youtube app on click
@@ -107,26 +114,21 @@ public class JawnAdapter extends BaseAdapter {
 	    		/*
 	    		 * Audio is pretty much the same deal as the Video.
 	    		 * It's a little different in that most of the soundcloud generated thumbnails are gonna be pretty similar.
-	    		 * For that reason, this view is actually a layout, housing the Title of the spark and the thumbnail
-	    		 */
-	    		
-	    		/*
+	    		 * 
 	    		 * First make the title:
 	    		 * Uncomment this and clean it up once it's working:
 	    		 * String audioTitle = soundcloudAPI.getTrackTitle();
-	    		 * header.setText("Audio: "+audioTitle, 0, Math.min(audioTitle.length(), 100);
+	    		 * headerTitle.setText("Audio: "+audioTitle, 0, Math.min(audioTitle.length(), 100);
 	    		 */
 	    		String audioTitle = "unknown";
-		        header.setText("Audio: "+audioTitle);
-		        
-	    		layout.addView(header);
+		        headerTitle.setText("Audio: "+audioTitle);
 	    		
 	    		/*
 	    		 * Then add the thumbnail:
 	    		 */
 	    		ImageView imageView;
 		        imageView = new ImageView(mContext);
-		        imageView.setLayoutParams(new GridView.LayoutParams(image_size - 50, image_size - 50));
+		        imageView.setLayoutParams(new GridView.LayoutParams(image_size, image_size));
 		        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 		        imageView.setPadding(8, 8, 8, 8);
 		        	
@@ -139,8 +141,7 @@ public class JawnAdapter extends BaseAdapter {
 	    		contentView = layout;
 	    		
 	    	} else if (con == "T".charAt(0) /* DIRTY FIX!!!! */ || con == "Q".charAt(0) || con == "P".charAt(0)) {
-	    		header.setText("Text");
-	    		layout.addView(header);
+	    		headerTitle.setText("Text");
 	    		
 	    		TextView textview;
 		        textview = new TextView(mContext);
@@ -156,8 +157,7 @@ public class JawnAdapter extends BaseAdapter {
 	    		contentView = layout;
 	    		
 	    	} else if (con == "C".charAt(0)) {
-	    		header.setText("Code snippet");
-	    		layout.addView(header);
+	    		headerTitle.setText("Code snippet");
 	    		
 	    		/*
 	    		 * At the moment, code snippets are handled just like text. Eventually they will make use of Github 
@@ -188,16 +188,14 @@ public class JawnAdapter extends BaseAdapter {
 	    		 * Get the page title
 	    		 * something like "Wikipedia - Kittens"
 	    		 */
-	    		header.setText("Link");
-	    		
-	    		layout.addView(header);
+	    		headerTitle.setText("Link");
 	    		
 	    		/*
 	    		 * Then add the thumbnail:
 	    		 */
 	    		ImageView imageView;
 		        imageView = new ImageView(mContext);
-		        imageView.setLayoutParams(new GridView.LayoutParams(image_size - 50, image_size - 50));
+		        imageView.setLayoutParams(new GridView.LayoutParams(image_size, image_size));
 		        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 		        imageView.setPadding(8, 8, 8, 8);
 		        /*
@@ -211,8 +209,10 @@ public class JawnAdapter extends BaseAdapter {
 	    	}
 	    	
 	    	if (contentView != null) {
+	    		//Attach content:
 		    	sparkInfo.addView(contentView);
 		    	
+		    	//Attach user info:
 		    	String user = "by ";
 		    	if (!spark.getUser().equals("")) {
 		    		user += spark.getUser();
@@ -221,15 +221,28 @@ public class JawnAdapter extends BaseAdapter {
 		    	}
 		    	TextView userInfo = new TextView(mContext);
 		    	userInfo.setText(user);
-
-		    	
 		    	sparkInfo.addView(userInfo);
 		    	
+		    	//Attach date info:
 		    	String date = spark.getDate();
 		    	TextView dateInfo = new TextView(mContext);
 		    	dateInfo.setText(date);
-		    	
 		    	sparkInfo.addView(dateInfo);
+		    	
+		    	//Attach ribbon:
+		    	ImageView ribbon = new ImageView(mContext);
+		    	LayoutParams ribbonParams = new TableRow.LayoutParams(0, LayoutParams.WRAP_CONTENT, 1f);
+		        ribbon.setLayoutParams(ribbonParams);
+		    	char sparkType = spark.getSparkType();
+		    	if (sparkType == "W".charAt(0)) {
+		    		ribbon.setImageResource(R.drawable.ribbon_whatif);
+		    	} else if (sparkType == "P".charAt(0)) {
+		    		ribbon.setImageResource(R.drawable.ribbon_problem);
+		    	} else if (sparkType == "I".charAt(0)) {
+		    		ribbon.setImageResource(R.drawable.ribbon_inspiration);
+		    	}
+		    	header.addView(ribbon);
+		    	
 		    	v = sparkInfo;
 	    	} else {
 	    		TextView t = new TextView(mContext);

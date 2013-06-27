@@ -34,7 +34,7 @@ public class IdeaBucketEventHandler {
         	IdeaBucketSparkListener newSparkListener = new IdeaBucketSparkListener();
         	newSparkListener.setPos(i);
         	
-        	ImageView v = ideaBucket.getImageViews()[i];
+        	View v = ideaBucket.getImageViews()[i];
         	v.setOnLongClickListener(null);
         	v.setOnTouchListener(null);
         	
