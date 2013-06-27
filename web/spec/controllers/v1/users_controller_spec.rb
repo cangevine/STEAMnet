@@ -106,12 +106,12 @@ describe V1::UsersController do
     end
     
     it "is successful" do
-      put :update, :id => @user, :user => @attr, :format => 'json', :token => @auth_token
+      patch :update, :id => @user, :user => @attr, :format => 'json', :token => @auth_token
       response.should be_success
     end
     
     it "updates the user" do
-      put :update, :id => @user, :user => @attr, :format => 'json', :token => @auth_token
+      patch :update, :id => @user, :user => @attr, :format => 'json', :token => @auth_token
       @user.reload
       @user.name.should == @attr[:name]
       @user.email.should == @attr[:email]
