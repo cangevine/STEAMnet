@@ -26,6 +26,9 @@ public class IndexGrid {
 		//Use setter methods:
 		gridview = g;
     	context = c;
+    	
+    	gridview.setAdapter(new SpinnerAdapter(context));
+    	
     	@SuppressWarnings("unused")
     	RetrieveDataTaskGetXSparks task = new RetrieveDataTaskGetXSparks(15, gridview, this);
     	
