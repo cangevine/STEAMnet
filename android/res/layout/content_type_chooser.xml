@@ -24,8 +24,8 @@
             <Button
                 android:id="@+id/picture_button"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Picture"
+                android:layout_height="70dp"
+                android:background="@drawable/btn_green_picture"
                 android:layout_weight="1"
                 android:tag="openContentEntry"
                 android:onClick="updateWizard" />
@@ -33,8 +33,8 @@
             <Button
                 android:id="@+id/video_button"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Video"
+                android:layout_height="70dp"
+                android:background="@drawable/btn_green_video"
                 android:layout_weight="1"
                 android:tag="openContentEntry"
                 android:onClick="updateWizard" />
@@ -48,18 +48,18 @@
             <Button
                 android:id="@+id/text_button"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="70dp"
+                android:background="@drawable/btn_green_text"
                 android:layout_weight="1"
-                android:text="Plain Text"
                 android:tag="openContentEntry"
                 android:onClick="updateWizard" />
 
             <Button
                 android:id="@+id/code_button"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="70dp"
+                android:background="@drawable/btn_green_code"
                 android:layout_weight="1"
-                android:text="Code Snippet"
                 android:tag="openContentEntry"
                 android:onClick="updateWizard" />
         </TableRow>
@@ -72,18 +72,18 @@
             <Button
                 android:id="@+id/audio_button"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+               	android:layout_height="70dp"
+                android:background="@drawable/btn_green_audio"
                 android:layout_weight="1"
-                android:text="Audio"
                 android:tag="openContentEntry"
                 android:onClick="updateWizard" />
 
             <Button
                 android:id="@+id/link_button"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="70dp"
+                android:background="@drawable/btn_green_link"
                 android:layout_weight="1"
-                android:text="Link"
                 android:tag="openContentEntry"
                 android:onClick="updateWizard" />
         </TableRow>

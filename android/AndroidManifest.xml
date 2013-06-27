@@ -29,7 +29,7 @@
         </activity>
         <activity
             android:name="org.friendscentral.steamnet.Activities.SparkDetailActivity"
-            android:label="title_spark_activity_detail" >
+            android:label="Spark Detail" >
         </activity>
     </application>
 
