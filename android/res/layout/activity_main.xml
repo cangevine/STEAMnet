@@ -22,6 +22,13 @@
         android:layout_width="318dp"
         android:layout_height="match_parent"
         android:orientation="vertical" >
+        
+        <ImageView
+	        android:id="@+id/border"
+	        android:layout_width="318dp"
+	        android:layout_height="wrap_content"
+	        android:src="@drawable/sidebar_header"
+	        />
             
         <LinearLayout
 	        android:id="@+id/WizardSection"
