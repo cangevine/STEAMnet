@@ -7,6 +7,9 @@
 	<classpathentry exported="true" kind="lib" path="libs/jackson-core-2.2.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/okhttp-1.0.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/quick-json-1.0.2.3.jar"/>
+<<<<<<< HEAD
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+=======
+>>>>>>> upstream/master
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

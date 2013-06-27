@@ -16,6 +16,10 @@ import android.widget.TextView;
 
 public class JawnAdapter extends BaseAdapter {
     private Context mContext;
+<<<<<<< HEAD
+=======
+    private Integer[] mThumbIds;
+>>>>>>> upstream/master
     private Jawn[] jawns;
     private int image_size;
 
@@ -28,6 +32,10 @@ public class JawnAdapter extends BaseAdapter {
     public JawnAdapter(Context c, Jawn[] j, int size) {
         mContext = c;
         Log.v("LENGTH", Integer.toString(j.length));
+<<<<<<< HEAD
+=======
+        mThumbIds = new Integer[j.length];
+>>>>>>> upstream/master
         image_size = size;
         //initSparks(s);
         jawns = j;
@@ -46,10 +54,21 @@ public class JawnAdapter extends BaseAdapter {
 	    	if (con == "I".charAt(0)) {
 	    		
 		        ImageView imageView;
+<<<<<<< HEAD
 		        imageView = new ImageView(mContext);
 		        imageView.setLayoutParams(new GridView.LayoutParams(image_size, image_size));
 		        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 		        imageView.setPadding(8, 8, 8, 8);
+=======
+		        if (convertView == null) {  // if it's not recycled, initialize some attributes
+		            imageView = new ImageView(mContext);
+		            imageView.setLayoutParams(new GridView.LayoutParams(image_size, image_size));
+		            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+		            imageView.setPadding(8, 8, 8, 8);
+		        } else {
+		            imageView = (ImageView) convertView;
+		        }
+>>>>>>> upstream/master
 		        /*
 		         * This part needs to be updated with the imgur API
 		         * Something like imageView.setImageResource(imgurAPI.getImage())
@@ -68,10 +87,21 @@ public class JawnAdapter extends BaseAdapter {
 	    		 */
 	    		
 		        ImageView imageView;
+<<<<<<< HEAD
 		        imageView = new ImageView(mContext);
 		        imageView.setLayoutParams(new GridView.LayoutParams(image_size, image_size));
 		        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 		        imageView.setPadding(8, 8, 8, 8);
+=======
+		        if (convertView == null) {  // if it's not recycled, initialize some attributes
+		            imageView = new ImageView(mContext);
+		            imageView.setLayoutParams(new GridView.LayoutParams(image_size, image_size));
+		            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+		            imageView.setPadding(8, 8, 8, 8);
+		        } else {
+		            imageView = (ImageView) convertView;
+		        }
+>>>>>>> upstream/master
 		        /*
 		         * This part needs to be updated with the youtube API
 		         * Something like setImageResource(youtubeAPI.getThumbnail())
@@ -92,6 +122,7 @@ public class JawnAdapter extends BaseAdapter {
 	    		 * First make the title:
 	    		 */
 	    		TextView title;
+<<<<<<< HEAD
 		        title = new TextView(mContext);
 		        title.setLayoutParams(new GridView.LayoutParams(50, image_size));
 		        title.setPadding(8, 8, 8, 8);
@@ -102,16 +133,41 @@ public class JawnAdapter extends BaseAdapter {
 	    		 * title.setText(audioTitle, 0, Math.min(audioTitle.length(), 100);
 	    		 */
 	    		
+=======
+	    		if (convertView == null) {  // if it's not recycled, initialize some attributes
+		            title = new TextView(mContext);
+		            title.setLayoutParams(new GridView.LayoutParams(50, image_size));
+		            title.setPadding(8, 8, 8, 8);
+		        } else {
+		            title = (TextView) convertView;
+		        }
+	    		
+	    		/*
+	    		 * Uncomment this once it's working:
+	    		 */
+	    		//title.setText(soundcloudAPI.getTrackTitle, 0, 200);
+>>>>>>> upstream/master
 	    		layout.addView(title);
 	    		
 	    		/*
 	    		 * Then add the thumbnail:
 	    		 */
 	    		ImageView imageView;
+<<<<<<< HEAD
 		        imageView = new ImageView(mContext);
 		        imageView.setLayoutParams(new GridView.LayoutParams(image_size - 50, image_size - 50));
 		        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 		        imageView.setPadding(8, 8, 8, 8);
+=======
+		        if (convertView == null) {
+		            imageView = new ImageView(mContext);
+		            imageView.setLayoutParams(new GridView.LayoutParams(image_size - 50, image_size - 50));
+		            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+		            imageView.setPadding(8, 8, 8, 8);
+		        } else {
+		            imageView = (ImageView) convertView;
+		        }
+>>>>>>> upstream/master
 		        /*
 	    		 * Placeholder until Soundcloud API is working
 	    		 */
@@ -120,6 +176,7 @@ public class JawnAdapter extends BaseAdapter {
 		        
 	    		contentView = layout;
 	    		
+<<<<<<< HEAD
 	    	} else if (con == "T".charAt(0) /* DIRTY FIX!!!! */ || con == "Q".charAt(0) || con == "P".charAt(0)) {
 	    		
 	    		TextView textview;
@@ -129,6 +186,20 @@ public class JawnAdapter extends BaseAdapter {
 	    		
 	    		String content = spark.getContent();
 	    		textview.setText(content.toCharArray(), 0, Math.min(200, (content.length() - 1)));
+=======
+	    	} else if (con == "T".charAt(0)) {
+	    		
+	    		TextView textview;
+	    		if (convertView == null) {  // if it's not recycled, initialize some attributes
+		            textview = new TextView(mContext);
+		            textview.setLayoutParams(new GridView.LayoutParams(image_size, image_size));
+		            textview.setPadding(8, 8, 8, 8);
+		        } else {
+		            textview = (TextView) convertView;
+		        }
+	    		
+	    		textview.setText(spark.getContent().toCharArray(), 0, 200);
+>>>>>>> upstream/master
 	    		contentView = textview;
 	    		
 	    	} else if (con == "C".charAt(0)) {
@@ -137,12 +208,24 @@ public class JawnAdapter extends BaseAdapter {
 	    		 * At the moment, code snippets are handled just like text. Eventually they will make use of Github 
 	    		 */
 	    		TextView textview;
+<<<<<<< HEAD
 		        textview = new TextView(mContext);
 		        textview.setLayoutParams(new GridView.LayoutParams(image_size, image_size));
 		        textview.setPadding(8, 8, 8, 8);
 	    		
 	    		String content = spark.getContent();
 	    		textview.setText(content.toCharArray(), 0, Math.min(200, (content.length() - 1)));
+=======
+	    		if (convertView == null) {  // if it's not recycled, initialize some attributes
+		            textview = new TextView(mContext);
+		            textview.setLayoutParams(new GridView.LayoutParams(image_size, image_size));
+		            textview.setPadding(8, 8, 8, 8);
+		        } else {
+		            textview = (TextView) convertView;
+		        }
+	    		
+	    		textview.setText(spark.getContent().toCharArray(), 0, 200);
+>>>>>>> upstream/master
 	    		contentView = textview;
 	    		
 	    	} else if (con == "L".charAt(0)) {
@@ -159,9 +242,19 @@ public class JawnAdapter extends BaseAdapter {
 	    		 * First make the title:
 	    		 */
 	    		TextView title;
+<<<<<<< HEAD
 		        title = new TextView(mContext);
 		        title.setLayoutParams(new GridView.LayoutParams(50, image_size));
 		        title.setPadding(8, 8, 8, 8);
+=======
+	    		if (convertView == null) {  // if it's not recycled, initialize some attributes
+		            title = new TextView(mContext);
+		            title.setLayoutParams(new GridView.LayoutParams(50, image_size));
+		            title.setPadding(8, 8, 8, 8);
+		        } else {
+		            title = (TextView) convertView;
+		        }
+>>>>>>> upstream/master
 	    		
 	    		/*
 	    		 * Get the page title
@@ -174,10 +267,21 @@ public class JawnAdapter extends BaseAdapter {
 	    		 * Then add the thumbnail:
 	    		 */
 	    		ImageView imageView;
+<<<<<<< HEAD
 		        imageView = new ImageView(mContext);
 		        imageView.setLayoutParams(new GridView.LayoutParams(image_size - 50, image_size - 50));
 		        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 		        imageView.setPadding(8, 8, 8, 8);
+=======
+		        if (convertView == null) {
+		            imageView = new ImageView(mContext);
+		            imageView.setLayoutParams(new GridView.LayoutParams(image_size - 50, image_size - 50));
+		            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+		            imageView.setPadding(8, 8, 8, 8);
+		        } else {
+		            imageView = (ImageView) convertView;
+		        }
+>>>>>>> upstream/master
 		        /*
 	    		 * This is what will be set to the favicon or the screenshot:
 	    		 */
@@ -188,6 +292,7 @@ public class JawnAdapter extends BaseAdapter {
 	    		
 	    	}
 	    	
+<<<<<<< HEAD
 	    	if (contentView != null) {
 		    	sparkInfo.addView(contentView);
 		    	
@@ -209,6 +314,23 @@ public class JawnAdapter extends BaseAdapter {
 	    		Log.v("Content Type", String.valueOf(spark.getContentType()));
 	    		v = t;
 	    	}
+=======
+	    	sparkInfo.addView(contentView);
+	    	
+	    	String user = "by "+spark.getUser();
+	    	TextView userInfo = new TextView(mContext);
+	    	userInfo.setText(user.toCharArray(), 0, 50);
+	    	
+	    	sparkInfo.addView(userInfo);
+	    	
+	    	String date = spark.getDate();
+	    	TextView dateInfo = new TextView(mContext);
+	    	dateInfo.setText(date);
+	    	
+	    	sparkInfo.addView(dateInfo);
+	    	
+	    	v = sparkInfo;
+>>>>>>> upstream/master
 	    	
     	} else if (getJawns()[position].getType() == "I".charAt(0)) {
     		Idea idea = getJawnAt(position).getSelfIdea();
@@ -219,12 +341,20 @@ public class JawnAdapter extends BaseAdapter {
 	    	int numSparks = idea.getSparkIds().length;
 	    	String num = ""+numSparks;
 	    	TextView numInfo = new TextView(mContext);
+<<<<<<< HEAD
 	    	numInfo.setText(num.toCharArray(), 0, num.length() - 1);
+=======
+	    	numInfo.setText(num.toCharArray(), 0, 3);
+>>>>>>> upstream/master
 	    	ideaInfo.addView(numInfo);
     		
     		String user = "by "+idea.getUser();
 	    	TextView userInfo = new TextView(mContext);
+<<<<<<< HEAD
 	    	userInfo.setText(user.toCharArray(), 0, user.length() - 1);
+=======
+	    	userInfo.setText(user.toCharArray(), 0, 50);
+>>>>>>> upstream/master
 	    	ideaInfo.addView(userInfo);
 	    	
 	    	String date = idea.getCreatedAt();
@@ -237,9 +367,21 @@ public class JawnAdapter extends BaseAdapter {
     	
     	return v;
     }
+<<<<<<< HEAD
 
     public int getCount() {
         return jawns.length;
+=======
+    
+    /* public void initSparks(Spark[] s) {
+	    for (int i = 0; i < s.length; i++) {
+	    	mThumbIds[i] = s[i].getId();
+	    }
+    } */
+
+    public int getCount() {
+        return mThumbIds.length;
+>>>>>>> upstream/master
     }
 
     public Object getItem(int position) {
@@ -249,6 +391,17 @@ public class JawnAdapter extends BaseAdapter {
     public long getItemId(int position) {
         return 0;
     }
+<<<<<<< HEAD
+=======
+  
+    public Integer[] getIds() {
+    	return mThumbIds;
+    }
+    
+    public void setIds(Integer[] n) {
+    	mThumbIds = n;
+    }
+>>>>>>> upstream/master
     
     public Jawn[] getJawns() {
     	return jawns;
