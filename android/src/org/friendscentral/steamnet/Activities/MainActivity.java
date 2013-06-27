@@ -42,6 +42,10 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         mainLayout = (LinearLayout) findViewById(R.id.MainLayout);
         
+        //Fixes autofocus problem:
+        findViewById(R.id.DummyFocus).setFocusableInTouchMode(true);
+        findViewById(R.id.DummyFocus).requestFocus();
+        
         //Initialize the Wizard Fragment:
         FragmentManager fm = getFragmentManager();
 		FragmentTransaction ft = fm.beginTransaction();

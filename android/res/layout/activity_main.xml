@@ -5,6 +5,12 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <TextView
+        android:id="@+id/DummyFocus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+    
     <include
         android:id="@+id/IndexGrid"
         android:layout_width="920dp"
