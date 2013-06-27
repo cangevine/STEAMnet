@@ -26,19 +26,11 @@
                 android:orientation="vertical" >
 
                 <TextView
-<<<<<<< HEAD
                     android:id="@+id/CreatorTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
                     android:text="Sparked by --unknown--"
-=======
-                    android:id="@+id/SparkTitleTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:text="SPARK TITLE"
->>>>>>> upstream/master
                     android:textAppearance="?android:attr/textAppearanceLarge" />
 
                 <TextView
@@ -46,7 +38,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:text="Spark Type - Content Type" />
+                    android:text="Spark Type - Content Type"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
 
             </LinearLayout>
 
@@ -65,19 +58,11 @@
                     android:text="Date Created" />
 
                 <TextView
-<<<<<<< HEAD
                     android:id="@+id/TagsTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
                     android:text="Tags list" />
-=======
-                    android:id="@+id/CreatorTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:text="Creator User" />
->>>>>>> upstream/master
 
             </LinearLayout>
 
@@ -88,7 +73,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:padding="50dp" >
+            android:padding="50dp"
+            android:orientation="vertical" >
             
         </LinearLayout>
 
