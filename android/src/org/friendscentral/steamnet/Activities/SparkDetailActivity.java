@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -79,6 +80,13 @@ public class SparkDetailActivity extends Activity {
 			imgview.setImageResource(R.drawable.symbol_image);
 			imgview.setMaxHeight(400);
 			imgview.setMaxWidth(400);
+			
+			TextView contentView = new TextView(this);
+			contentView.setTextSize(20);
+			contentView.setText(content);
+			contentView.setGravity(Gravity.CENTER_HORIZONTAL);
+			
+			sparkData.addView(contentView);
 			sparkData.addView(imgview);
 		} else if (contentType.equals("V")) {
 			ImageView videoview = new ImageView(this);
@@ -89,19 +97,30 @@ public class SparkDetailActivity extends Activity {
 			videoview.setImageResource(R.drawable.symbol_video);
 			videoview.setMaxHeight(400);
 			videoview.setMaxWidth(400);
+			
+			TextView contentView = new TextView(this);
+			contentView.setTextSize(20);
+			contentView.setText(content);
+			contentView.setGravity(Gravity.CENTER_HORIZONTAL);
+			
+			sparkData.addView(contentView);
 			sparkData.addView(videoview);
 		} else if (contentType.equals("A")) {
 			/*
 			 * NEEDS TO UPDATED WITH SOUNDCLOUD API. RIGHT NOW JUST FILLED IN WITH GENERIC PICTURE
 			 */
-			TextView title = new TextView(this);
-			title.setText(content);
-			sparkData.addView(title);
 			
 			ImageView audioview = new ImageView(this);
 			audioview.setImageResource(R.drawable.symbol_link);
 			audioview.setMaxHeight(400);
 			audioview.setMaxWidth(400);
+			
+			TextView contentView = new TextView(this);
+			contentView.setTextSize(20);
+			contentView.setText(content);
+			contentView.setGravity(Gravity.CENTER_HORIZONTAL);
+			
+			sparkData.addView(contentView);
 			sparkData.addView(audioview);
 		} else if (contentType.equals("C")) {
 			/*
