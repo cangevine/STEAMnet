@@ -20,7 +20,8 @@ public class SpinnerAdapter extends BaseAdapter {
 	// create a new ImageView for each item referenced by the Adapter
     public View getView(int position, View convertView, ViewGroup parent) {
     	LinearLayout l = new LinearLayout(context);
-    	l.setPadding(100, 100, 100, 100);
+    	l.setMinimumHeight(250);
+    	l.setMinimumWidth(150);
     	ProgressBar s = new ProgressBar(context);
     	l.setGravity(Gravity.CENTER);
     	l.addView(s);

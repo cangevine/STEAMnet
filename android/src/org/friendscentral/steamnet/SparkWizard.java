@@ -36,7 +36,7 @@ public class SparkWizard {
 	}
 	
 	public void revertWizard(View v) {
-		updateWeights(1, 3, 1); 
+		updateWeights(2, 4, 2); 
 		
 		SparkTypeChooser stc = new SparkTypeChooser();
 		FragmentTransaction ft = fm.beginTransaction();

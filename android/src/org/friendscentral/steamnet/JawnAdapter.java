@@ -19,11 +19,15 @@ import android.widget.LinearLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class JawnAdapter extends BaseAdapter {
     private static final int VERTICAL = 1;
 	private Context mContext;
     private Jawn[] jawns;
     private int image_size;
+    
 
     /**
      * 
@@ -331,5 +335,24 @@ public class JawnAdapter extends BaseAdapter {
     		newSet[i] = getJawns()[i - 1];
     	}
     	setJawns(newSet);
+    }
+    
+    public void shuffleJawns(Jawn[] arr) {
+    	ArrayList<Jawn> ls = new ArrayList<Jawn>();
+		for (int i = 0; i < arr.length; i++ ){
+			ls.add(arr[i]);
+		}
+		Jawn[] res = new Jawn[arr.length];
+		double randNum;
+		int randInd;
+		int q = 0;
+		while (ls.size() != 0) {
+			randNum = Math.random()*ls.size();
+			randInd = (int)Math.floor(randNum);
+			res[q] = ls.get(randInd);
+			ls.remove(randInd);
+			q++;
+		}
+		setJawns(res);
     }
 }
