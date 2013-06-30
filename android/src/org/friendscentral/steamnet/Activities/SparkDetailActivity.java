@@ -1,6 +1,8 @@
 package org.friendscentral.steamnet.Activities;
 
+import org.friendscentral.steamnet.CommentAdapter;
 import org.friendscentral.steamnet.R;
+import org.friendscentral.steamnet.BaseClasses.Comment;
 import org.friendscentral.steamnet.BaseClasses.Spark;
 
 import android.app.Activity;
@@ -11,8 +13,8 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class SparkDetailActivity extends Activity {
 
@@ -25,6 +27,7 @@ public class SparkDetailActivity extends Activity {
 	String contentType;
 	String creator;
 	String[] tags;
+	Comment[] comments;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,7 @@ public class SparkDetailActivity extends Activity {
 		contentType = spark.getContentTypeString();
 		creator = spark.getUser();
 		tags = spark.getTags();
+		comments = spark.getComments();
 		
 		if(createdAt == null){
 			createdAt = "Date unknown";
@@ -60,6 +64,7 @@ public class SparkDetailActivity extends Activity {
 		fillSparkData();
 		fillSparkTypes();
 		fillTags();
+		fillComments();
 	}
 	
 	public void fillSparkData() {
@@ -188,6 +193,14 @@ public class SparkDetailActivity extends Activity {
 			tagString = "No tags";
 		}
 		sparkTags.setText(tagString);
+	}
+	
+	public void fillComments() {
+		ListView commentSection = (ListView) findViewById(R.id.CommentList);
+		
+		//CommentAdapter commentAdapter = new CommentAdapter(this, comments);
+		CommentAdapter commentAdapter = new CommentAdapter(this, comments);
+		commentSection.setAdapter(commentAdapter);
 	}
 
 	@Override
