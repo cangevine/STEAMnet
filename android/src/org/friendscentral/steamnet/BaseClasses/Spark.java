@@ -162,6 +162,10 @@ public class Spark extends Jawn implements Serializable{
 		return "S".charAt(0);
 	}
 	
+	public String[] getTags() {
+		return tags;
+	}
+	
 	/**
 	 * 
 	 * @return The first User - Presumably the first person to Spark the Spark

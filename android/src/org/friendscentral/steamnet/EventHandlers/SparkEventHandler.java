@@ -4,6 +4,7 @@ import org.friendscentral.steamnet.IdeaBucket;
 import org.friendscentral.steamnet.IndexGrid;
 import org.friendscentral.steamnet.R;
 import org.friendscentral.steamnet.Activities.DetailActivity;
+import org.friendscentral.steamnet.Activities.SparkDetailActivity;
 import org.friendscentral.steamnet.BaseClasses.Jawn;
 import org.friendscentral.steamnet.BaseClasses.Spark;
 
@@ -11,10 +12,13 @@ import org.friendscentral.steamnet.BaseClasses.Spark;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.DragEvent;
 import android.view.View;
 import android.view.View.DragShadowBuilder;
 import android.view.View.OnDragListener;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -41,7 +45,7 @@ public class SparkEventHandler {
 	
 	public void openDetailView(Jawn j) {
 		if(j.getSelfIdea() == null){
-	    	Intent intent = new Intent(context, DetailActivity.class);
+	    	Intent intent = new Intent(context, SparkDetailActivity.class);
 	    	//intent.putExtra(EXTRA_MESSAGE, b);
 	    	Spark s = j.getSelfSpark();
 	    	intent.putExtra("spark", s);
@@ -60,8 +64,13 @@ public class SparkEventHandler {
 			public boolean onItemLongClick(AdapterView<?> adapterView, View view,
 					int pos, long id) {
 				ClipData data = ClipData.newPlainText("", "");
-		        DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
-		        view.startDrag(data, shadowBuilder, view, 0);
+				LinearLayout spark = (LinearLayout) view;
+				View sparkContent = ((LinearLayout) spark.getChildAt(0)).getChildAt(1);
+				if (sparkContent.getClass().getName().equals("android.widget.TextView")) {
+					sparkContent.setBackgroundColor(Color.WHITE);
+				}
+		        DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(sparkContent);
+		        view.startDrag(data, shadowBuilder, sparkContent, 0);
 		        
 		        SparkDragListener sdl = new SparkDragListener();
 		        sdl.setPos(pos);

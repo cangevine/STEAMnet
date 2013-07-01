@@ -26,11 +26,11 @@
                 android:orientation="vertical" >
 
                 <TextView
-                    android:id="@+id/SparkTitleTextView"
+                    android:id="@+id/CreatorTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:text="SPARK TITLE"
+                    android:text="Sparked by --unknown--"
                     android:textAppearance="?android:attr/textAppearanceLarge" />
 
                 <TextView
@@ -38,7 +38,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:text="Spark Type - Content Type" />
+                    android:text="Spark Type - Content Type"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
 
             </LinearLayout>
 
@@ -57,11 +58,11 @@
                     android:text="Date Created" />
 
                 <TextView
-                    android:id="@+id/CreatorTextView"
+                    android:id="@+id/TagsTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:text="Creator User" />
+                    android:text="Tags list" />
 
             </LinearLayout>
 
@@ -72,7 +73,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:padding="50dp" >
+            android:padding="50dp"
+            android:orientation="vertical" >
             
         </LinearLayout>
 
