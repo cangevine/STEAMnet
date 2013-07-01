@@ -1,9 +1,9 @@
 class V1::CommentsController < ApplicationController
   
   respond_to :json
-  before_filter :find_jawn
-  before_filter :find_comment, :only => [:show, :destroy]
-  before_filter :authenticate, :only => [:create, :update, :destroy]
+  before_action :find_jawn
+  before_action :find_comment, :only => [:show, :destroy]
+  before_action :authenticate, :only => [:create, :update, :destroy]
   
   # GET /comments.json
   def index
@@ -17,7 +17,7 @@ class V1::CommentsController < ApplicationController
   
   # POST /comments.json
   def create
-    @comment = Comment.new(params[:comment])
+    @comment = Comment.new(comment_params)
     @comment.commentable = @jawn
     @comment.user = @user
     
@@ -37,7 +37,11 @@ class V1::CommentsController < ApplicationController
   end
   
   private
-  
+    
+    def comment_params
+      params.require(:comment).permit(:comment_text)
+    end
+    
     def find_jawn
       if params[:spark_id]
         @jawn = Spark.find(params[:spark_id].to_i)
@@ -54,14 +58,7 @@ class V1::CommentsController < ApplicationController
     end
     
     def find_comment
-      begin
-        @comment = @jawn.comments.find(params[:id])
-      rescue ActiveRecord::RecordNotFound
-        hash = { :error => "Invalid comment id for jawn." }
-        respond_to do |format|
-          format.json { render :json => hash, :status => :unauthorized }
-        end
-      end
+      @comment = @jawn.comments.find(params[:id])
     end
   
 end

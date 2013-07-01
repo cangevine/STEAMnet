@@ -11,14 +11,14 @@ class V1::UsersController < ApplicationController
   
   # GET /users/1.json
   def show
-    @user = User.find_by_name(params[:id])
+    @user = User.find_by(name: params[:id])
 
     respond_with @user
   end
   
   # POST /users.json
   def create
-    @user = User.new(params[:user])
+    @user = User.new(user_params)
     @user.save
     
     respond_with @user, :location => ["v1", @user]
@@ -26,18 +26,24 @@ class V1::UsersController < ApplicationController
   
   # PUT /users/1.json
   def update
-    @user = User.find_by_name(params[:id])
-    @user.update_attributes(params[:user])
+    @user = User.find_by(name: params[:id])
+    @user.update_attributes(user_params)
     
     respond_with @user, :stautus => :ok
   end
   
   # DELETE /users/1.json
   def destroy
-    @user = User.find_by_name(params[:id])
+    @user = User.find_by(name: params[:id])
     @user.destroy
     
     head :no_content
   end
+  
+  private
+  
+    def user_params
+      params.require(:user).permit(:email, :name, :password, :password_confirmation)
+    end
   
 end

@@ -124,7 +124,7 @@ describe Spark do
     it "doesn't destroy associated ideas" do
       @spark.destroy
       [@i1, @i2].each do |i|
-        Idea.find_by_id(i.id).should_not be_nil
+        Idea.find_by(id: i.id).should_not be_nil
       end
     end
     
@@ -153,7 +153,7 @@ describe Spark do
     it "doesn't destroy associated users" do
       @spark.destroy
       [@u1, @u2].each do |u|
-        User.find_by_id(u.id).should_not be_nil
+        User.find_by(id: u.id).should_not be_nil
       end
     end
     
@@ -190,7 +190,7 @@ describe Spark do
     it "does destroy associated comments" do
       @spark.destroy
       [@c1, @c2].each do |c|
-        Comment.find_by_id(c.id).should be_nil
+        Comment.find_by(id: c.id).should be_nil
       end
     end
     
@@ -219,7 +219,7 @@ describe Spark do
       it "doesn't destroy associated tags" do
         @spark.destroy
         [@t1, @t2].each do |t|
-          Tag.find_by_id(t.id).should_not be_nil
+          Tag.find_by(id: t.id).should_not be_nil
         end
       end
       

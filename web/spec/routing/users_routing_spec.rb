@@ -27,8 +27,8 @@ describe "routes for Users" do
     )
   end
   
-  it "routes put /api/v1/users/:id.json to Users controller" do
-    { :put => "/api/v1/users/max.json" }.should route_to(
+  it "routes patch /api/v1/users/:id.json to Users controller" do
+    { :patch => "/api/v1/users/max.json" }.should route_to(
       :controller => "v1/users",
       :action => "update",
       :id => "max",

@@ -1,7 +1,7 @@
 class V1::SparksController < ApplicationController
   
   respond_to :json
-  before_filter :authenticate, :only => [:create, :destroy]
+  before_action :authenticate, :only => [:create, :destroy]
   
   # GET /sparks.json
   def index
@@ -23,7 +23,7 @@ class V1::SparksController < ApplicationController
   
   # POST /sparks.json
   def create
-    @spark = Spark.new(params[:spark])
+    @spark = Spark.new(spark_params)
         
     if @spark.save
       add_tags_to @spark
@@ -32,7 +32,7 @@ class V1::SparksController < ApplicationController
     elsif @spark.duplicate?
       # TODO: Handle the different spark_types provided by multiple users
       
-      @spark = Spark.find_by_content_hash(@spark.content_hash)
+      @spark = Spark.find_by(content_hash: @spark.content_hash)
       
       unless(@spark.users.include?(@user))
         @spark.users << @user
@@ -54,5 +54,11 @@ class V1::SparksController < ApplicationController
       end
     end
   end
+  
+  private
+  
+    def spark_params
+      params.require(:spark).permit(:content, :content_hash, :content_type, :spark_type)
+    end
   
 end

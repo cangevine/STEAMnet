@@ -21,8 +21,9 @@ Steamnet::Application.routes.draw do
 end
 
 #== Route Map
-# Generated on 20 Jun 2013 19:42
+# Generated on 26 Jun 2013 20:37
 #
+#  v1_idea_comments GET    /api/v1/ideas/:idea_id/comments(.:format)       v1/comments#index
 #                   POST   /api/v1/ideas/:idea_id/comments(.:format)       v1/comments#create
 #   v1_idea_comment GET    /api/v1/ideas/:idea_id/comments/:id(.:format)   v1/comments#show
 #                   DELETE /api/v1/ideas/:idea_id/comments/:id(.:format)   v1/comments#destroy
@@ -41,6 +42,7 @@ end
 #          v1_users GET    /api/v1/users(.:format)                         v1/users#index
 #                   POST   /api/v1/users(.:format)                         v1/users#create
 #           v1_user GET    /api/v1/users/:id(.:format)                     v1/users#show
+#                   PATCH  /api/v1/users/:id(.:format)                     v1/users#update
 #                   PUT    /api/v1/users/:id(.:format)                     v1/users#update
 #                   DELETE /api/v1/users/:id(.:format)                     v1/users#destroy
 #           v1_tags GET    /api/v1/tags(.:format)                          v1/tags#index

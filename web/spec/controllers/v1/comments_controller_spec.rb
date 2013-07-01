@@ -79,54 +79,28 @@ describe V1::CommentsController do
     
     describe "on a Spark" do
       
-      describe "with a valid comment id" do
-        
-        it "is successful" do
-          get :show, :spark_id => @spark, :id => @spark_comment, :format => 'json', :token => @auth_token
-          response.should be_success
-        end
-
-        it "returns the correct comment" do
-          get :show, :spark_id => @spark, :id => @spark_comment, :format => 'json', :token => @auth_token
-          response.body.should == @spark_comment.to_json
-        end
-        
+      it "is successful" do
+        get :show, :spark_id => @spark, :id => @spark_comment, :format => 'json', :token => @auth_token
+        response.should be_success
       end
-      
-      describe "with an invalid comment id" do
-        
-        it "isn't successful" do
-          get :show, :spark_id => @spark, :id => @idea_comment, :format => 'json', :token => @auth_token
-          response.should_not be_success
-        end
-        
+
+      it "returns the correct comment" do
+        get :show, :spark_id => @spark, :id => @spark_comment, :format => 'json', :token => @auth_token
+        response.body.should == @spark_comment.to_json
       end
       
     end
     
     describe "on an Idea" do
       
-      describe "with a valid comment id" do
-        
-        it "is successful" do
-          get :show, :idea_id => @idea, :id => @idea_comment, :format => 'json', :token => @auth_token
-          response.should be_success
-        end
-
-        it "returns the correct comment" do
-          get :show, :idea_id => @idea, :id => @idea_comment, :format => 'json', :token => @auth_token
-          response.body.should == @idea_comment.to_json
-        end
-        
+      it "is successful" do
+        get :show, :idea_id => @idea, :id => @idea_comment, :format => 'json', :token => @auth_token
+        response.should be_success
       end
-      
-      describe "with an invalid comment id" do
-        
-        it "isn't successful" do
-          get :show, :idea_id => @idea, :id => @spark_comment, :format => 'json', :token => @auth_token
-          response.should_not be_success
-        end
-        
+
+      it "returns the correct comment" do
+        get :show, :idea_id => @idea, :id => @idea_comment, :format => 'json', :token => @auth_token
+        response.body.should == @idea_comment.to_json
       end
       
     end
@@ -161,13 +135,13 @@ describe V1::CommentsController do
       
       it "should associate the user and the comment" do
         post :create, :spark_id => @spark, :comment => @attr, :username => @user.name, :format => 'json', :token => @auth_token
-        comment = Comment.find_by_comment_text(@attr[:comment_text])
+        comment = Comment.find_by(comment_text: @attr[:comment_text])
         comment.user.should == @user
       end
       
       it "should associate the spark and the comment" do
         post :create, :spark_id => @spark, :comment => @attr, :username => @user.name, :format => 'json', :token => @auth_token
-        comment = Comment.find_by_comment_text(@attr[:comment_text])
+        comment = Comment.find_by(comment_text: @attr[:comment_text])
         comment.commentable.should == @spark
       end
       

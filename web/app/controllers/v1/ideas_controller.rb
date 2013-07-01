@@ -1,7 +1,7 @@
 class V1::IdeasController < ApplicationController
   
   respond_to :json
-  before_filter :authenticate, :only => [:create, :destroy]
+  before_action :authenticate, :only => [:create, :destroy]
   
   # GET /ideas.json
   def index
@@ -23,7 +23,7 @@ class V1::IdeasController < ApplicationController
   
   # POST /ideas.json
   def create
-    @idea = Idea.new(params[:idea])
+    @idea = Idea.new(idea_params)
     
     if params[:sparks]
       spark_ids = params[:sparks].split(",")
@@ -32,7 +32,7 @@ class V1::IdeasController < ApplicationController
       sparks_exist = false
 
       spark_ids.each do |spark_id|
-        if s = Spark.find_by_id(spark_id.to_i)
+        if s = Spark.find_by(id: spark_id.to_i)
           sparks_exist = true
           sparks << s
         end
@@ -79,4 +79,11 @@ class V1::IdeasController < ApplicationController
       end
     end
   end
+  
+  private
+  
+    def idea_params
+      params.require(:idea).permit(:description)
+    end
+  
 end

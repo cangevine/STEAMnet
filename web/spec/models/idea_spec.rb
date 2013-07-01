@@ -46,7 +46,7 @@ describe Idea do
     it "doesn't destroy associated sparks" do
       @idea.destroy
       [@s1, @s2].each do |s|
-        Spark.find_by_id(s.id).should_not be_nil
+        Spark.find_by(id: s.id).should_not be_nil
       end
     end
     
@@ -72,7 +72,7 @@ describe Idea do
     
     it "doesn't destroy associated users" do
       @idea.destroy
-      User.find_by_id(@user.id).should_not be_nil
+      User.find_by(id: @user.id).should_not be_nil
     end
     
   end
@@ -108,7 +108,7 @@ describe Idea do
     it "does destroy associated comments" do
       @idea.destroy
       [@c1, @c2].each do |c|
-        Comment.find_by_id(c.id).should be_nil
+        Comment.find_by(id: c.id).should be_nil
       end
     end
     
@@ -137,7 +137,7 @@ describe Idea do
     it "doesn't destroy associated tags" do
       @idea.destroy
       [@t1, @t2].each do |t|
-        Tag.find_by_id(t.id).should_not be_nil
+        Tag.find_by(id: t.id).should_not be_nil
       end
     end
     

@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   
   protect_from_forgery
   
-  before_filter :verify_security_token
+  before_action :verify_security_token
   
   private
     
@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
     end
     
     def authenticate
-      @user = User.find_by_name(params[:username])
+      @user = User.find_by(name: params[:username])
       
       if(!@user)
         hash = { :error => "Invalid username." }
@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
         tags = params[:tags].split(",")
 
         tags.each do |tag_name|
-          tag = Tag.find_or_create_by_tag_text(tag_name)
+          tag = Tag.find_or_create_by(tag_text: tag_name)
 
           jawn.tags << tag
         end

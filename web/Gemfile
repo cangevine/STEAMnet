@@ -1,34 +1,22 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.13'
+gem 'rails', '4.0.0'
+
+gem 'sqlite3'
 gem 'json'
 
-group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
+gem 'faker'
 
-  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  # gem 'therubyracer', :platforms => :ruby
-
-  gem 'uglifier', '>= 1.0.3'
-end
-
-gem 'jquery-rails'
-
-group :development, :test do
-	gem 'sqlite3'
-	gem 'annotate'
-	gem 'rspec-rails'
-	gem 'fuubar'
-  gem 'factory_girl_rails'
-  gem 'webrat'
-end
+gem 'annotate'
+gem 'rspec-rails'
+gem 'fuubar'
+gem 'factory_girl_rails'
+gem 'webrat'
 
 group :production do
 	gem 'pg'
   gem 'faker'
 end
-
 
 # To use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~> 3.0.0'

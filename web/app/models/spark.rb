@@ -14,18 +14,16 @@
 require 'digest/sha1'
 
 class Spark < ActiveRecord::Base
-  attr_accessible :content, :content_hash, :content_type, :spark_type
-  
   has_and_belongs_to_many :ideas
   has_and_belongs_to_many :users
   has_many :comments, :as => :commentable, :dependent => :destroy
   has_many :tags, :through => :tag_linkers
   has_many :tag_linkers, :as => :tagable
   
-  validates :content_type, :presence => true, :format => { :with => /^[LVCTPA]$/, :message => "must be a valid content type" }
+  validates :content_type, :presence => true, :format => { :with => /\A[LVCTPA]\z/, :message => "must be a valid content type" }
   validates :content, :presence => true
   validates :content_hash, :presence => true, :uniqueness => true
-  validates :spark_type, :presence => true, :format => { :with => /^[WIP]$/, :message => "must be a valid spark type" }
+  validates :spark_type, :presence => true, :format => { :with => /\A[WIP]\z/, :message => "must be a valid spark type" }
   
   before_validation :hash_content
   
