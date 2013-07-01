@@ -1,0 +1,22 @@
+<h1>Listing comments</h1>
+
+<table>
+  <tr>
+    <th>Comment text</th>
+    <th>User</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @comments.each do |comment| %>
+  <tr>
+    <td><%= comment.comment_text %></td>
+    <td><%= comment.user.name %></td>
+    <td><%= link_to 'Show', ["v1", comment] %></td>
+    <td><%= link_to 'Destroy', ["v1", comment], :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
