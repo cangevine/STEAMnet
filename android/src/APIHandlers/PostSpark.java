@@ -35,6 +35,14 @@ public class PostSpark {
 	IndexGrid indexGrid;
 	JawnAdapter adapter;
 	
+	/**
+	 * @param (char, char, String, GridView, IndexGrid)
+	 * @param st
+	 * @param ct
+	 * @param c
+	 * @param g
+	 * @param i
+	 */
 	public PostSpark(char st, char ct, String c, GridView g, IndexGrid i) {
 		spark_type = st;
 		content_type = ct;
@@ -44,14 +52,16 @@ public class PostSpark {
 		adapter = indexGrid.getAdapter();
 		
 		tagsString = "";
-		/*if(tags != null){
-			for (int i = 0; i < tags.length; i++) {
-				tagsString += tags[i];
-				if (i != tags.length - 1) {
+		if(tags != null){
+			for (int w = 0; w < tags.length; w++) {
+				tagsString += tags[w];
+				if (w != tags.length - 1) {
 					tagsString += ",";
 				}
 			}
-		}*/
+		}
+		
+		Log.v("TAGS", tagsString);
 		
 		OkHTTPTask task = new OkHTTPTask();
 		task.execute("http://steamnet.herokuapp.com/api/v1/sparks.json");
