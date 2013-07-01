@@ -32,6 +32,10 @@
             android:name="org.friendscentral.steamnet.Activities.SparkDetailActivity"
             android:label="Spark Detail" >
         </activity>
+        <activity
+            android:name="org.friendscentral.steamnet.Activities.IdeaDetailActivity"
+            android:label="Idea Detail" >
+        </activity>
     </application>
 
 </manifest>

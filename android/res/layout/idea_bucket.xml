@@ -5,57 +5,118 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Drag sparks here to create an Idea" />
-
     <LinearLayout
-        android:id="@+id/idea_bucket_linear"
-        android:layout_width="wrap_content"
+        android:id="@+id/bucketFrag"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="30dp"
-        android:gravity="center" >
+        android:orientation="vertical"
+        android:visibility="visible" >
 
-        <ImageView
-            android:id="@+id/first_image"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_margin="3dp"
-            android:adjustViewBounds="true" >
-        </ImageView>
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Drag sparks here to create an Idea" />
 
-        <ImageView
-            android:id="@+id/second_image"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_margin="3dp"
-            android:adjustViewBounds="true" >
-        </ImageView>
+        <LinearLayout
+            android:id="@+id/idea_bucket_linear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="30dp" >
 
-        <ImageView
-            android:id="@+id/third_image"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_margin="3dp"
-            android:adjustViewBounds="true" >
-        </ImageView>
+            <ImageView
+                android:id="@+id/first_image"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_margin="3dp"
+                android:adjustViewBounds="true" />
 
-        <ImageView
-            android:id="@+id/fourth_image"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_margin="3dp"
-            android:adjustViewBounds="true" >
-        </ImageView>
+            <ImageView
+                android:id="@+id/second_image"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_margin="3dp"
+                android:adjustViewBounds="true" />
+
+            <ImageView
+                android:id="@+id/third_image"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_margin="3dp"
+                android:adjustViewBounds="true" />
+
+            <ImageView
+                android:id="@+id/fourth_image"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_margin="3dp"
+                android:adjustViewBounds="true" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/ignite_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:enabled="false"
+            android:text="@string/ignite_button" />
+
     </LinearLayout>
 
-    <Button
-        android:id="@+id/ignite_button"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/submitFrag"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/ignite_button" />
+        android:orientation="vertical"
+        android:visibility="gone" >
+        
+        <TextView
+        	android:id="@+id/textView1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Enter some information about your new Idea:"
+	        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <EditText
+            android:id="@+id/ideaDescription"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:hint="A description for the Idea"
+            android:ems="10"
+            android:inputType="textMultiLine" >
+        </EditText>
+
+        <EditText
+            android:id="@+id/ideaTags"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:hint="Add tags, separated by commas"
+            android:ems="10" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
+
+            <Button
+                android:id="@+id/IdeaSubmitButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Submit Idea!" />
+
+            <Button
+                android:id="@+id/IdeaCancelButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Cancel" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

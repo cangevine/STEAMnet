@@ -3,22 +3,20 @@ package org.friendscentral.steamnet.EventHandlers;
 import org.friendscentral.steamnet.IdeaBucket;
 import org.friendscentral.steamnet.IndexGrid;
 import org.friendscentral.steamnet.R;
-import org.friendscentral.steamnet.Activities.DetailActivity;
+import org.friendscentral.steamnet.Activities.IdeaDetailActivity;
 import org.friendscentral.steamnet.Activities.SparkDetailActivity;
+import org.friendscentral.steamnet.BaseClasses.Idea;
 import org.friendscentral.steamnet.BaseClasses.Jawn;
 import org.friendscentral.steamnet.BaseClasses.Spark;
-
 
 import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.DragEvent;
 import android.view.View;
 import android.view.View.DragShadowBuilder;
 import android.view.View.OnDragListener;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -44,11 +42,17 @@ public class SparkEventHandler {
 	}
 	
 	public void openDetailView(Jawn j) {
-		if(j.getSelfIdea() == null){
+		if(j.getType() == 'S'){
 	    	Intent intent = new Intent(context, SparkDetailActivity.class);
 	    	//intent.putExtra(EXTRA_MESSAGE, b);
 	    	Spark s = j.getSelfSpark();
 	    	intent.putExtra("spark", s);
+	    	context.startActivity(intent);
+		} else if(j.getType() == 'I'){
+	    	Intent intent = new Intent(context, IdeaDetailActivity.class);
+	    	//intent.putExtra(EXTRA_MESSAGE, b);
+	    	Idea i = j.getSelfIdea();
+	    	intent.putExtra("idea", i);
 	    	context.startActivity(intent);
 		}
     }
@@ -63,22 +67,25 @@ public class SparkEventHandler {
     	gridview.setOnItemLongClickListener(new OnItemLongClickListener() {
 			public boolean onItemLongClick(AdapterView<?> adapterView, View view,
 					int pos, long id) {
-				ClipData data = ClipData.newPlainText("", "");
-				LinearLayout spark = (LinearLayout) view;
-				View sparkContent = ((LinearLayout) spark.getChildAt(0)).getChildAt(1);
-				if (sparkContent.getClass().getName().equals("android.widget.TextView")) {
-					sparkContent.setBackgroundColor(Color.WHITE);
+				if (indexGrid.getAdapter().getJawnAt(pos).getType() == 'S') {
+					ClipData data = ClipData.newPlainText("", "");
+					LinearLayout spark = (LinearLayout) view;
+					View sparkContent = ((LinearLayout) spark.getChildAt(0)).getChildAt(1);
+					if (sparkContent.getClass().getName().equals("android.widget.TextView")) {
+						sparkContent.setBackgroundColor(Color.WHITE);
+					}
+			        DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(sparkContent);
+			        view.startDrag(data, shadowBuilder, sparkContent, 0);
+			        
+			        SparkDragListener sdl = new SparkDragListener();
+			        sdl.setPos(pos);
+			        sdl.setIndexGridContext(indexGrid);
+			        
+			        mainLayout.findViewById(R.id.Sidebar).setOnDragListener(sdl);
+			        
+					return true;
 				}
-		        DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(sparkContent);
-		        view.startDrag(data, shadowBuilder, sparkContent, 0);
-		        
-		        SparkDragListener sdl = new SparkDragListener();
-		        sdl.setPos(pos);
-		        sdl.setIndexGridContext(indexGrid);
-		        
-		        mainLayout.findViewById(R.id.Sidebar).setOnDragListener(sdl);
-		        
-				return true;
+				return false;
 			}
     	});
 

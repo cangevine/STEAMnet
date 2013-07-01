@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import org.friendscentral.steamnet.IndexGrid;
 import org.friendscentral.steamnet.JawnAdapter;
+import org.friendscentral.steamnet.BaseClasses.Comment;
 import org.friendscentral.steamnet.BaseClasses.Jawn;
 import org.friendscentral.steamnet.BaseClasses.Spark;
 import org.json.JSONArray;
@@ -105,6 +106,8 @@ public class RetrieveDataTaskGetXSparks {
         	final String CREATED_AT = "created_at";
         	final String USERS = "users";
         	final String USERNAME = "name";
+        	final String COMMENTS = "comments";
+        	final String COMMENT_TEXT = "comment_text";
         	// Creating JSON Parser instance
         	JSONParser jParser = new JSONParser();
         	 
@@ -129,7 +132,7 @@ public class RetrieveDataTaskGetXSparks {
 	        	    //ArrayList<Integer> usersArrayList = new ArrayList<Integer>();
 	        	    //int count = 0;
 	        	    /*for(int q = 0; q < usersJSON.length(); q++){
-	        	        JSONObject u = usersJSON.getJSONObject(i);
+	        	        JSONObject u = usersJSON.getJSONObject(q);
 	        	        // Storing each json item in variable
 	        	        if(count == 0){
 	        	        	count++;
@@ -146,8 +149,35 @@ public class RetrieveDataTaskGetXSparks {
 	        	    
 	        	    String[] createdAts = new String[1];
 	        	    createdAts[0] = createdAt;
+	        	    //******************
 	        	    
-					sparkArrayList.add(new Spark(Integer.parseInt(id), sparkType.charAt(0), contentType.charAt(0), content, createdAts, usersArray, firstUser));
+	        	    
+	        	    JSONArray commentsJSON = json.getJSONArray(COMMENTS);
+	        	    
+	        	    ArrayList<Comment> commentsArrayList = new ArrayList<Comment>();
+	        	    for(int k = 0; k < commentsJSON.length(); k++){
+	        	    	JSONObject c = commentsJSON.getJSONObject(k);
+	        	    	String commentText = c.getString(COMMENT_TEXT);
+	        	    	
+	        	    	/*
+	        	    	 * 0 as a substitute for the real user id
+	        	    	 * int commentUser = json.getString(COMMENT_USER);
+	        	    	 * or something
+	        	    	 */
+	        	    	
+	        	    	commentsArrayList.add(new Comment(0, commentText));
+	        	    }
+	        	    
+	        	    Comment[] commentArray = new Comment[commentsArrayList.size()];
+	        	    for(int j = 0; j < commentsArrayList.size(); j++){
+	        	    	commentArray[j] = commentsArrayList.get(j);
+	        	    }
+	        	    
+	        	    
+	        	    //*****************************************
+	        	    Spark newSpark = new Spark(Integer.parseInt(id), sparkType.charAt(0), contentType.charAt(0), content, createdAts, usersArray, firstUser);
+	        	    newSpark.setComments(commentArray);
+					sparkArrayList.add(newSpark);
         		}
         	    Log.v("ARRAY", sparkArrayList.toString());
         	    Spark[] sparkArray = new Spark[sparkArrayList.size()];

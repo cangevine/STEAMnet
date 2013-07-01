@@ -73,7 +73,7 @@ public class MainActivity extends Activity {
     	final View indexGridLayout = findViewById(R.id.IndexGrid);
     	gridView = (GridView) indexGridLayout.findViewById(R.id.SparkGrid);
     	indexGrid = new IndexGrid();
-    	indexGrid.initIndexGrid(gridView, MainActivity.this);
+    	indexGrid.initIndexGrid(gridView, MainActivity.this, false);
     }
     
     public void initIdeaBucket() {
@@ -149,6 +149,7 @@ public class MainActivity extends Activity {
 	
 	public void randomizeJawns(View v) {
 		String className = indexGrid.getAdapter().getClass().getName(); 
+		// TODO Conditional throws an error if it's NOT  the JawnAdapter
 		if (className.equals("org.friendscentral.steamnet.JawnAdapter")) {
 			JawnAdapter ja = indexGrid.getAdapter();
 			ja.shuffleJawns(indexGrid.getJawns());
@@ -157,7 +158,7 @@ public class MainActivity extends Activity {
 	}
 	
 	public void sortRecent(View v) {
-		indexGrid.initIndexGrid(gridView, MainActivity.this);
+		indexGrid.initIndexGrid(gridView, MainActivity.this, false);
 	}
 	
 	

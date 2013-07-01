@@ -1,13 +1,13 @@
 package org.friendscentral.steamnet;
 
+import java.util.ArrayList;
+
 import org.friendscentral.steamnet.BaseClasses.Idea;
 import org.friendscentral.steamnet.BaseClasses.Jawn;
 import org.friendscentral.steamnet.BaseClasses.Spark;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.shapes.Shape;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,15 +19,10 @@ import android.widget.LinearLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 public class JawnAdapter extends BaseAdapter {
-    private static final int VERTICAL = 1;
 	private Context mContext;
     private Jawn[] jawns;
     private int image_size;
-    
 
     /**
      * 
@@ -46,19 +41,18 @@ public class JawnAdapter extends BaseAdapter {
 	// create a new ImageView for each item referenced by the Adapter
     public View getView(int position, View convertView, ViewGroup parent) {
     	View v = null;
-    	//									== 'S'
-    	if (getJawnAt(position).getType() == "S".charAt(0)) {
+    	if (getJawnAt(position).getType() == 'S') {
 	    	Spark spark = getJawnAt(position).getSelfSpark();
 	    	char con = spark.getContentType();
 	    	View contentView = null;
 	    	LinearLayout sparkInfo = new LinearLayout(mContext);
-	    	sparkInfo.setOrientation(VERTICAL);
+	    	sparkInfo.setOrientation(LinearLayout.VERTICAL);
 	    	sparkInfo.setBackgroundColor(Color.WHITE);
 	    	sparkInfo.setPadding(8, 8, 8, 8);
 	    	
 	    	//Prelim stuff for the spark:
 	    	LinearLayout layout = new LinearLayout(mContext);
-    		layout.setOrientation(VERTICAL);
+    		layout.setOrientation(LinearLayout.VERTICAL);
 	    	
     		LinearLayout header = new LinearLayout(mContext);
 	    	TextView headerTitle;
@@ -260,29 +254,76 @@ public class JawnAdapter extends BaseAdapter {
 	    		v = t;
 	    	}
 	    	
-    	} else if (getJawns()[position].getType() == "I".charAt(0)) {
+    	} else if (getJawns()[position].getType() == 'I') {
     		Idea idea = getJawnAt(position).getSelfIdea();
-	    	@SuppressWarnings("unused")
-			View contentView = null;
+	    	char con = idea.getType();
+	    	View contentView = null;
 	    	LinearLayout ideaInfo = new LinearLayout(mContext);
+	    	ideaInfo.setOrientation(LinearLayout.VERTICAL);
+	    	ideaInfo.setBackgroundColor(Color.WHITE);
+	    	ideaInfo.setPadding(8, 8, 8, 8);
 	    	
-	    	int numSparks = idea.getSparkIds().length;
-	    	String num = ""+numSparks;
-	    	TextView numInfo = new TextView(mContext);
-	    	numInfo.setText(num.toCharArray(), 0, num.length());
-	    	ideaInfo.addView(numInfo);
-    		
-    		String user = "by "+idea.getUser();
-	    	TextView userInfo = new TextView(mContext);
-	    	userInfo.setText(user.toCharArray(), 0, user.length());
-	    	ideaInfo.addView(userInfo);
+	    	//Prelim stuff for the spark:
+	    	LinearLayout layout = new LinearLayout(mContext);
+    		layout.setOrientation(LinearLayout.VERTICAL);
 	    	
-	    	String date = idea.getCreatedAt();
-	    	TextView dateInfo = new TextView(mContext);
-	    	dateInfo.setText(date);
-	    	ideaInfo.addView(dateInfo);
+    		LinearLayout header = new LinearLayout(mContext);
+	    	TextView headerTitle;
+	        headerTitle = new TextView(mContext);
+	        headerTitle.setTextSize(20);
+	        headerTitle.setWidth(0);
+	        LayoutParams titleParams = new TableRow.LayoutParams(0, LayoutParams.WRAP_CONTENT, 9f);
+	        headerTitle.setLayoutParams(titleParams);
+	        header.addView(headerTitle);
+	        
+	        layout.addView(header);
+	        headerTitle.setText("Idea");
     		
-	    	v = ideaInfo;
+	        ImageView imageView;
+	        imageView = new ImageView(mContext);
+	        imageView.setLayoutParams(new GridView.LayoutParams(image_size, image_size));
+	        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+	        
+	        Log.v("Amount of sparks", String.valueOf(idea.getSparkIds().length));
+	        if (idea.getSparkIds().length == 1) {
+	        	imageView.setImageResource(R.drawable.symbol_idea_1);
+	        } else if (idea.getSparkIds().length == 2) {
+	        	imageView.setImageResource(R.drawable.symbol_idea_2);
+	        } else  if (idea.getSparkIds().length == 3) {
+	        	imageView.setImageResource(R.drawable.symbol_idea_3);
+	        } else if (idea.getSparkIds().length == 4) {
+	        	imageView.setImageResource(R.drawable.symbol_idea_4);
+	        } else {
+	        	imageView.setImageResource(R.drawable.symbol_image);
+	        }
+	        
+	        layout.addView(imageView);
+	        
+	        contentView = layout;
+	        
+	        //Attach content
+			ideaInfo.addView(contentView);
+			
+			//Attach user info:
+			TextView userInfo = new TextView(mContext);
+			int userID = idea.getUser();
+			String user = "";
+			if (userID == 0 || userID == 1) {
+				user = "an unknown user";
+			}
+			userInfo.setText("By "+user);
+			ideaInfo.addView(userInfo);
+			
+			//Attach date info:
+			// TODO GETCREATEDAT IS NULL
+			String date = idea.getCreatedAt();
+			String a = "a";
+			Log.v("Date", a+date);
+			TextView dateInfo = new TextView(mContext);
+			dateInfo.setText(date);
+			ideaInfo.addView(dateInfo);
+			
+			v = ideaInfo;
     	}
     	
     	return v;
@@ -292,11 +333,23 @@ public class JawnAdapter extends BaseAdapter {
         return jawns.length;
     }
 
-    public Object getItem(int position) {
-        return null;
+    public Jawn getItem(int position) {
+    	if (position < jawns.length) {
+    		return jawns[position];
+    	}
+    	return null;
     }
 
     public long getItemId(int position) {
+        if (position < 4) {
+        	return 0;
+        } else if (position < 8) {
+        	return 1;
+        } else if (position < 12) {
+        	return 2;
+        } else if (position < 16) {
+        	return 3;
+        }
         return 0;
     }
     

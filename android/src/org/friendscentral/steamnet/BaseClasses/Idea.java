@@ -18,6 +18,7 @@ public class Idea extends Jawn implements Serializable{
 	int[] userIds;
 	String[] createdAts;
 	String firstCreatedAt;
+	Comment[] comments;
 	
 	/**
 	 * @param (int, String, String[], int[], int[], String)
@@ -28,13 +29,15 @@ public class Idea extends Jawn implements Serializable{
 	 * @param int[] - user IDs
 	 * @param String - firstUser
 	 */
-	public Idea(int i, String d, String[] t, int[] s, int[] u, String fu) {
+	public Idea(int i, String d, String[] t, int[] s, int[] u, String fu, String fca, Comment[] c) {
 		id = i;
 		description = d;
 		tags = t;
 		sparkIds = s;
 		userIds = u;
 		firstUser = fu;
+		firstCreatedAt = fca;
+		comments = c;
 	}
 	
 	/**
@@ -154,7 +157,7 @@ public class Idea extends Jawn implements Serializable{
 	}
 	
 	public char getType(){
-		return "I".charAt(0);
+		return 'I';
 	}
 	
 	/**
@@ -183,5 +186,13 @@ public class Idea extends Jawn implements Serializable{
 	
 	public String[] getCreatedAts(){
 		return createdAts;
+	}
+	
+	public String toString(){
+		return description;
+	}
+	
+	public Comment[] getComments() {
+		return comments;
 	}
 }

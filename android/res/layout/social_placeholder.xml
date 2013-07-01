@@ -3,12 +3,20 @@
     android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="bottom"
     android:orientation="vertical" >
+    
+    <TextView
+        android:id="@+id/DummyFocusSparkDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
 
     <TextView
         android:id="@+id/CommentsHeader"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:paddingBottom="10dp"
         android:paddingTop="10dp"
         android:text="Comments on this Spark:"
@@ -17,7 +25,33 @@
     <ListView
         android:id="@+id/CommentList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="0dp"
+        android:layout_weight="6" >
     </ListView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:gravity="bottom"
+        android:orientation="vertical" >
+
+        <EditText
+            android:id="@+id/CommentEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Submit a new comment"
+            android:inputType="textMultiLine" >
+        </EditText>
+
+        <Button
+            android:id="@+id/CommentSubmitButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="submitComment"
+            android:text="Submit" />
+
+    </LinearLayout>
 
 </LinearLayout>

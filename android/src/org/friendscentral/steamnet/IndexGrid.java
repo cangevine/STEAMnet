@@ -3,8 +3,8 @@ package org.friendscentral.steamnet;
 import java.util.ArrayList;
 
 import org.friendscentral.steamnet.BaseClasses.Jawn;
-import APIHandlers.RetrieveDataTaskGetXSparks;
 
+import APIHandlers.RetrieveDataTaskGetXJawns;
 import android.content.Context;
 import android.util.Log;
 import android.widget.GridView;
@@ -22,15 +22,17 @@ public class IndexGrid {
 	
 	private Jawn[] jawns;
 	
-	public void initIndexGrid(GridView g, Context c) {
+	public void initIndexGrid(GridView g, Context c, boolean isIdeaDetailActivity) {
 		//Use setter methods:
 		gridview = g;
     	context = c;
     	
-    	gridview.setAdapter(new SpinnerAdapter(context));
+    	if (!isIdeaDetailActivity) {
+    		gridview.setAdapter(new SpinnerAdapter(context));
     	
-    	@SuppressWarnings("unused")
-    	RetrieveDataTaskGetXSparks task = new RetrieveDataTaskGetXSparks(15, gridview, this);
+    		@SuppressWarnings("unused")
+    		RetrieveDataTaskGetXJawns task = new RetrieveDataTaskGetXJawns(16, gridview, this);
+    	}
     	
     	Log.v("indexGrid", "Just called initIndexGrid! Success!");
 	}

@@ -7,16 +7,20 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
+import org.friendscentral.steamnet.IndexGrid;
+import org.friendscentral.steamnet.JawnAdapter;
+import org.friendscentral.steamnet.BaseClasses.Jawn;
 import org.friendscentral.steamnet.BaseClasses.Spark;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.json.parsers.JSONParser;
-import com.squareup.okhttp.OkHttpClient;
-
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.GridView;
+
+import com.json.parsers.JSONParser;
+import com.squareup.okhttp.OkHttpClient;
 
 /**
  * @author Sam Beckley
@@ -30,21 +34,18 @@ public class RetrieveDataTaskGetSpark {
 	String[] tags;
 	String tagsString;
 	
+	GridView gridview;
+	IndexGrid indexgrid;
+	
 	/**
 	 * @param id - int, ID of the Spark you want to get
 	 */
 	
-	public RetrieveDataTaskGetSpark(int id) {
+	public RetrieveDataTaskGetSpark(int id, GridView g, IndexGrid i) {
+		gridview = g;
+		indexgrid = i;
 		
-		tagsString = "";
-		for (int i = 0; i < tags.length; i++) {
-			tagsString += tags[i];
-			if (i != tags.length - 1) {
-				tagsString += ",";
-			}
-		}
-		
-		OkHTTPTask task = new OkHTTPTask();
+		OkHTTPTask task = new OkHTTPTask(g, i);
 		task.execute("http://steamnet.herokuapp.com/api/v1/sparks/"+id+".json");
 	}
 	
@@ -52,8 +53,15 @@ public class RetrieveDataTaskGetSpark {
 	
 		String TAG = "RetreiveDataTask";
 		
-	    OkHttpClient client = new OkHttpClient();
+		OkHttpClient client;
+		GridView gridView;
+		IndexGrid indexGrid;
 		
+		public OkHTTPTask(GridView g, IndexGrid i){
+			client = new OkHttpClient();
+			gridView = g;
+			indexGrid = i;
+		}
 	    
 		private Exception exception;
 	    
@@ -80,6 +88,18 @@ public class RetrieveDataTaskGetSpark {
 				//LOOK HERE
 				//ITS RIGHT HERE
 				//REALLY!
+				Log.v("LOOK HERE", "Still working");
+				JawnAdapter j = indexGrid.getAdapter();
+				Log.v("LOOK HERE", "And still working!");
+				//Log.v("LOOK HERE", String.valueOf(j.getCount()));
+				Jawn[] jawns = j.getJawns();
+				Jawn[] newJawns = new Jawn[jawns.length + 1];
+				for (int i = 0; i < jawns.length; i++) {
+					newJawns[i] = jawns[i];
+				}
+				newJawns[jawns.length] = newSpark; 
+				j.setJawns(newJawns);
+				Log.v("LOOK RIGHT HERE", String.valueOf(j.getJawns().length));
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -96,7 +116,6 @@ public class RetrieveDataTaskGetSpark {
         	final String CONTENT_TYPE = "content_type";
         	final String CONTENT = "content";
         	final String CREATED_AT = "created_at";
-        	final String CREATED_ATS = "created_ats";
         	final String UPDATED_AT = "updated_at";
         	final String USERS = "users";
         	final String USER = "user";
@@ -112,6 +131,7 @@ public class RetrieveDataTaskGetSpark {
 				String id = json.getString(ID);
 				String sparkType = json.getString(SPARK_TYPE);
 				String contentType = json.getString(CONTENT_TYPE);
+				String createdAt = json.getString(CREATED_AT);
 				String content = json.getString(CONTENT);
 				String firstUser = "";
 				
@@ -137,23 +157,11 @@ public class RetrieveDataTaskGetSpark {
         	    	usersArray[q] = usersArrayList.get(q);
         	    }
         	    
-        	    //Getting Array of Created Ats
-        	    JSONArray createdAtsJSON = json.getJSONArray(CREATED_ATS);
-        	    String[] createdAts = new String[10];
-        	    String firstCreatedAt = "";
-        	    int counter = 0;
-        	    for(int c = 0; c < json.length(); c++){
-        	        JSONObject s = createdAtsJSON.getJSONObject(c);
-        	        // Storing each json item in variable
-        	        if(counter == 0){
-        	        	firstCreatedAt = s.getString(CREATED_AT);
-        	        	counter++;
-        	        }
-        	        String createdAt = s.getString(CREATED_AT);
-        	        createdAts[c] = createdAt;
-        	    }
         	    
-				Spark newSpark = new Spark(Integer.parseInt(id), sparkType.charAt(0), contentType.charAt(0), content, createdAts, firstCreatedAt, usersArray, firstUser);
+        	    String[] createdAts = new String[1];
+        	    createdAts[0] = createdAt;
+        	    
+				Spark newSpark = new Spark(Integer.parseInt(id), sparkType.charAt(0), contentType.charAt(0), content, createdAts, createdAt, usersArray, firstUser);
 				Log.v("TEST", newSpark.toString());
 				return newSpark;
         	} catch (JSONException e) {
