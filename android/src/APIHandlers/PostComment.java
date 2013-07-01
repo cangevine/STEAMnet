@@ -8,21 +8,10 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-
-import org.friendscentral.steamnet.IndexGrid;
-import org.friendscentral.steamnet.JawnAdapter;
-import org.friendscentral.steamnet.BaseClasses.Spark;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.json.parsers.JSONParser;
 import com.squareup.okhttp.OkHttpClient;
 
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.GridView;
 
 public class PostComment{
 	

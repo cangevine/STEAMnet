@@ -9,6 +9,7 @@ import org.friendscentral.steamnet.BaseClasses.Spark;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
@@ -285,7 +286,11 @@ public class JawnAdapter extends BaseAdapter {
 	        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 	        
 	        Log.v("Amount of sparks", String.valueOf(idea.getSparkIds().length));
-	        if (idea.getSparkIds().length == 1) {
+	        TextView t = new TextView(mContext);
+	        t.setTextSize(150);
+	        t.setGravity(Gravity.CENTER_HORIZONTAL);
+	        t.setText(String.valueOf(idea.getSparkIds().length));
+	        /*if (idea.getSparkIds().length == 1) {
 	        	imageView.setImageResource(R.drawable.symbol_idea_1);
 	        } else if (idea.getSparkIds().length == 2) {
 	        	imageView.setImageResource(R.drawable.symbol_idea_2);
@@ -297,7 +302,8 @@ public class JawnAdapter extends BaseAdapter {
 	        	imageView.setImageResource(R.drawable.symbol_image);
 	        }
 	        
-	        layout.addView(imageView);
+	        layout.addView(imageView);*/
+	        layout.addView(t);
 	        
 	        contentView = layout;
 	        

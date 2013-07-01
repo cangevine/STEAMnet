@@ -27,7 +27,7 @@ import android.widget.GridView;
  * @author SamBeckley
  * 
  */
-public class RetrieveDataTaskGetXSparks {
+public class GetXSparks {
 	char spark_type;
 	char content_type;
 	String content;
@@ -39,7 +39,7 @@ public class RetrieveDataTaskGetXSparks {
 	 * @param int X - returns the first X sparks (by createdAt)
 	 */
 	
-	public RetrieveDataTaskGetXSparks(int lim, GridView g, IndexGrid i) {
+	public GetXSparks(int lim, GridView g, IndexGrid i) {
 		
 		Log.v("REPORT", "GET X SPARKS IS BEGGINING, SIR!");
 		OkHTTPTask task = new OkHTTPTask(g, i);

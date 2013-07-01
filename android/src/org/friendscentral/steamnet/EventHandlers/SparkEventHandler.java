@@ -91,6 +91,11 @@ public class SparkEventHandler {
 
     }
     
+    public void clearEventHandlers() {
+    	gridview.setOnItemClickListener(null);
+    	gridview.setOnItemLongClickListener(null);
+    }
+    
     private class SparkDragListener implements OnDragListener {
     	int pos;
     	IndexGrid indexGridContext;
@@ -101,7 +106,7 @@ public class SparkEventHandler {
 			
 			switch (dragEvent.getAction()) {
 		      	case DragEvent.ACTION_DRAG_STARTED:
-		      		//do nothing
+		      		ib.setBackgroundResource(R.drawable.idea_bucket_drop_background);
 		      		break;
 		      	case DragEvent.ACTION_DRAG_ENTERED:
 		      		ib.setBackgroundResource(R.drawable.idea_bucket_drop_background);

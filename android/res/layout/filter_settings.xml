@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/filterSettingsLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
@@ -16,17 +17,21 @@
         android:layout_height="wrap_content" >
 
         <CheckBox
-            android:id="@+id/checkBox1"
+            android:id="@+id/sparkCheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
+            android:onClick="filterSettingsFunction"
+            android:tag="checkBoxChange"
             android:text="@string/filter_settings_include_sparks" />
 
         <CheckBox
-            android:id="@+id/checkBox2"
+            android:id="@+id/ideaCheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
+            android:onClick="filterSettingsFunction"
+            android:tag="checkBoxChange"
             android:text="@string/filter_settings_include_ideas" />
 
     </LinearLayout>
@@ -55,7 +60,8 @@
             android:id="@+id/radio0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="sortRecent"
+            android:onClick="filterSettingsFunction"
+            android:tag="sortRecent"
             android:checked="true"
             android:text="@string/filter_settings_sort_options_timestamp" />
 
@@ -63,7 +69,8 @@
             android:id="@+id/radio1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="randomizeJawns"
+            android:onClick="filterSettingsFunction"
+            android:tag="randomizeJawns"
             android:hint="@string/filter_settings_sort_options_random"
             android:text="@string/filter_settings_sort_options_random" />
 

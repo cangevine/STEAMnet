@@ -8,5 +8,6 @@
 	<classpathentry exported="true" kind="lib" path="libs/okhttp-1.0.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/quick-json-1.0.2.3.jar"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
