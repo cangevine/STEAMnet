@@ -5,12 +5,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Drag sparks here to create an Idea" />
-
     <LinearLayout
         android:id="@+id/bucketFrag"
         android:layout_width="match_parent"
@@ -67,6 +61,7 @@
             android:layout_gravity="center_horizontal"
             android:enabled="false"
             android:text="@string/ignite_button" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -123,4 +118,5 @@
         </LinearLayout>
 
     </LinearLayout>
+
 </LinearLayout>

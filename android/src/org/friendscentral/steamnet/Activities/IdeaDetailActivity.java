@@ -9,7 +9,7 @@ import org.friendscentral.steamnet.BaseClasses.Idea;
 import org.friendscentral.steamnet.BaseClasses.Spark;
 
 import APIHandlers.PostComment;
-import APIHandlers.RetrieveDataTaskGetSpark;
+import APIHandlers.GetSpark;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -78,7 +78,7 @@ public class IdeaDetailActivity extends Activity {
     	indexGrid.setAdapter(adapter);
     	
     	for (int i = 0; i < sparkIds.length; i++) {
-    		RetrieveDataTaskGetSpark r = new RetrieveDataTaskGetSpark(sparkIds[i], gridView, indexGrid);
+    		GetSpark r = new GetSpark(sparkIds[i], gridView, indexGrid);
     	}
     	
     	adapter.notifyDataSetChanged();
