@@ -1,18 +1,24 @@
 package org.friendscentral.steamnet.Activities;
 
+import org.friendscentral.steamnet.CommentAdapter;
 import org.friendscentral.steamnet.R;
+import org.friendscentral.steamnet.BaseClasses.Comment;
 import org.friendscentral.steamnet.BaseClasses.Spark;
 
+import APIHandlers.PostComment;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class SparkDetailActivity extends Activity {
 
@@ -25,11 +31,16 @@ public class SparkDetailActivity extends Activity {
 	String contentType;
 	String creator;
 	String[] tags;
+	Comment[] comments;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_spark_detail);
+		
+		//Fixes autofocus problem:
+        findViewById(R.id.DummyFocusSparkDetail).setFocusableInTouchMode(true);
+        findViewById(R.id.DummyFocusSparkDetail).requestFocus();
 		
 		Intent intent = getIntent();
 		spark = (Spark) intent.getSerializableExtra("spark");	
@@ -40,6 +51,7 @@ public class SparkDetailActivity extends Activity {
 		contentType = spark.getContentTypeString();
 		creator = spark.getUser();
 		tags = spark.getTags();
+		comments = spark.getComments();
 		
 		if(createdAt == null){
 			createdAt = "Date unknown";
@@ -60,6 +72,7 @@ public class SparkDetailActivity extends Activity {
 		fillSparkData();
 		fillSparkTypes();
 		fillTags();
+		fillComments();
 	}
 	
 	public void fillSparkData() {
@@ -188,6 +201,36 @@ public class SparkDetailActivity extends Activity {
 			tagString = "No tags";
 		}
 		sparkTags.setText(tagString);
+	}
+	
+	public void fillComments() {
+		if (comments.length == 0) {
+			TextView header = (TextView) findViewById(R.id.CommentsHeader);
+			header.setText("No comments on this Spark. Be the first!");
+		} else {
+			ListView commentSection = (ListView) findViewById(R.id.CommentList);
+			
+			//CommentAdapter commentAdapter = new CommentAdapter(this, comments);
+			CommentAdapter commentAdapter = new CommentAdapter(this, comments);
+			commentSection.setAdapter(commentAdapter);
+		}
+	}
+	
+	public void submitComment(View v) {
+		EditText editText = (EditText) findViewById(R.id.CommentEditText);
+		String content = editText.getText().toString();
+		editText.setText("");
+		findViewById(R.id.DummyFocusSparkDetail).requestFocus();
+		
+		// TODO Make the @userID dynamic
+		int userID = 0;
+		PostComment comment = new PostComment(id, "S".charAt(0), content, userID);
+		
+		ListView commentSection = (ListView) findViewById(R.id.CommentList);
+		CommentAdapter c = (CommentAdapter) commentSection.getAdapter();
+		Comment newComment = new Comment(userID, content);
+		c.addComment(newComment);
+		c.notifyDataSetChanged();
 	}
 
 	@Override

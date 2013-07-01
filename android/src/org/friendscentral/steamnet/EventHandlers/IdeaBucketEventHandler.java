@@ -119,5 +119,4 @@ public class IdeaBucketEventHandler {
 		ft.addToBackStack(null);
 		ft.commit();
 	}
-    
 }

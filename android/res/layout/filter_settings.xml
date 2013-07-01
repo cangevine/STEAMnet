@@ -55,6 +55,7 @@
             android:id="@+id/radio0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="sortRecent"
             android:checked="true"
             android:text="@string/filter_settings_sort_options_timestamp" />
 
@@ -62,6 +63,7 @@
             android:id="@+id/radio1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="randomizeJawns"
             android:hint="@string/filter_settings_sort_options_random"
             android:text="@string/filter_settings_sort_options_random" />
 

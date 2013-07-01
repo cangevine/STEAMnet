@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import org.friendscentral.steamnet.IndexGrid;
 import org.friendscentral.steamnet.JawnAdapter;
+import org.friendscentral.steamnet.BaseClasses.Comment;
 import org.friendscentral.steamnet.BaseClasses.Idea;
 import org.friendscentral.steamnet.BaseClasses.Jawn;
 import org.friendscentral.steamnet.BaseClasses.Spark;
@@ -78,12 +79,13 @@ public class RetrieveDataTaskGetXJawns {
         }
 
         protected void onPostExecute(String data) {
+        	Log.v("REPORT", "JAAAAAAAAAAAWN");
         	Log.v("REPORT", "WE HAVE MOVED INTO THE POST EXECUTE PHASE, SIR!");
         	Log.d(TAG, "=> "+data);
         	try {
         		Log.v("REPORT", "WE WILL BEGIN TO PARSE THE DATA, SIR!");
 				Jawn[] jawns = parseData(data);
-				
+				Log.v("JAWNS", Integer.toString(jawns.length));
 				JawnAdapter a = new JawnAdapter(gridView.getContext(), jawns, 200);
 				Log.v("REPORT", "WE HAVE ACCESSED THE JAWNADAPTER AND ARE PROCEEDING AS PLANNED, SIR!");
 				indexGrid.setAdapter(a);
@@ -99,6 +101,7 @@ public class RetrieveDataTaskGetXJawns {
 		@SuppressWarnings("unused")
 		Jawn[] parseData(String data) throws JSONException {
 			Log.v("REPORT", "WE ARE PARSING THE DATA, SIR!");
+			final String JAWN_TYPE = "jawn_type";
 			final String ID = "id";
         	final String SPARK_TYPE = "spark_type";
         	final String CONTENT_TYPE = "content_type";
@@ -112,6 +115,9 @@ public class RetrieveDataTaskGetXJawns {
         	final String DESCRIPTION = "description";
         	final String TAGS = "tags";
         	final String SPARKS = "sparks";
+        	final String COMMENTS = "comments";
+        	final String COMMENT_TEXT = "comment_text";
+        	
         	// Creating JSON Parser instance
         	JSONParser jParser = new JSONParser();
         	 
@@ -126,80 +132,94 @@ public class RetrieveDataTaskGetXJawns {
         	        JSONObject j = jawns.getJSONObject(i);
         	        
         	        //checking to see if the Jawn is a Spark or an Idea
-        	        if(/*ITS A SPARK*/true == false){
-        	        	// Storing each json item in variable
-        				String id = j.getString(ID);
-        				String sparkType = j.getString(SPARK_TYPE);
-        				String contentType = j.getString(CONTENT_TYPE);
-        				String content = j.getString(CONTENT);
-        				String firstUser = "";
-        				
-        				//Getting Array of Users
-                	    JSONArray usersJSON = j.getJSONArray(USERS);
-                	     
-                	    // looping through All Users
-                	    ArrayList<Integer> usersArrayList = new ArrayList<Integer>();
-                	    int count = 0;
-                	    for(int q = 0; q < usersJSON.length(); q++){
-                	        JSONObject u = usersJSON.getJSONObject(q);
-                
-                	        // Storing each json item in variable
-                	        if(count == 0){
-                	        	count++;
-                	        	firstUser = u.getString(USERNAME);
-                	        }
-                	        int userID = u.getInt(ID);
-                	        usersArrayList.add(userID);
-                	    }
-                	    int[] usersArray = new int[usersArrayList.size()];
-                	    for(int q = 0; q < usersArrayList.size(); q++){
-                	    	usersArray[q] = usersArrayList.get(q);
-                	    }
-                	    
-                	    //Getting Array of Created Ats
-                	    JSONArray createdAtsJSON = j.getJSONArray(CREATED_ATS);
-                	    String[] createdAts = new String[10];
-                	    String firstCreatedAt = "";
-                	    int counter = 0;
-                	    for(int c = 0; c < j.length(); c++){
-                	        JSONObject s = createdAtsJSON.getJSONObject(c);
-                	        // Storing each json item in variable
-                	        if(counter == 0){
-                	        	firstCreatedAt = s.getString(CREATED_AT);
-                	        	counter++;
-                	        }
-                	        String createdAt = s.getString(CREATED_AT);
-                	        createdAts[c] = createdAt;
-                	    }
-                	    
-	        	        jawnArrayList.add(new Spark(Integer.parseInt(id), sparkType.charAt(0), contentType.charAt(0), content, createdAts, firstCreatedAt, usersArray, firstUser));
+        	        if(j.getString(JAWN_TYPE).equals("spark")){
+    					String id = j.getString(ID);
+    					String sparkType = j.getString(SPARK_TYPE);
+    					String contentType = j.getString(CONTENT_TYPE);
+    					String content = j.getString(CONTENT);
+    					String createdAt = j.getString(CREATED_AT);
+    					String firstUser = "";
+    					//Getting Array of Users
+    	        	    JSONArray usersJSON = j.getJSONArray(USERS);
+    	        	     
+    	        	    // looping through All Users
+    	        	    //ArrayList<Integer> usersArrayList = new ArrayList<Integer>();
+    	        	    //int count = 0;
+    	        	    /*for(int q = 0; q < usersJSON.length(); q++){
+    	        	        JSONObject u = usersJSON.getJSONObject(i);
+    	        	        // Storing each json item in variable
+    	        	        if(count == 0){
+    	        	        	count++;
+    	        	        	firstUser = u.getString(USERNAME);
+    	        	        }
+    	        	        int userID = u.getInt(ID);
+    	        	        usersArrayList.add(userID);
+    	        	    }*/
+    	        	    int[] usersArray = new int[1];
+    	        	    usersArray[0] = 1;
+    	        	    /*for(int q = 0; q < usersArrayList.size(); q++){
+    	        	    	usersArray[q] = usersArrayList.get(q);
+    	        	    }*/
+    	        	    
+    	        	    JSONArray commentsJSON = j.getJSONArray(COMMENTS);
+    	        	    
+    	        	    ArrayList<Comment> commentsArrayList = new ArrayList<Comment>();
+    	        	    for(int k = 0; k < commentsJSON.length(); k++){
+    	        	    	JSONObject c = commentsJSON.getJSONObject(k);
+    	        	    	String commentText = c.getString(COMMENT_TEXT);
+    	        	    	
+    	        	    	/*
+    	        	    	 * 0 as a substitute for the real user id
+    	        	    	 * int commentUser = json.getString(COMMENT_USER);
+    	        	    	 * or something
+    	        	    	 */
+    	        	    	
+    	        	    	commentsArrayList.add(new Comment(0, commentText));
+    	        	    }
+    	        	    
+    	        	    Comment[] commentArray = new Comment[commentsArrayList.size()];
+    	        	    for(int w = 0; w < commentsArrayList.size(); w++){
+    	        	    	commentArray[w] = commentsArrayList.get(w);
+    	        	    }
+    	        	    
+    	        	    String[] createdAts = new String[1];
+    	        	    createdAts[0] = createdAt;
+    	        	    
+	        	        jawnArrayList.add(new Spark(Integer.parseInt(id), sparkType.charAt(0), contentType.charAt(0), content, createdAts, createdAts[0], usersArray, "max", commentArray));
 	        	        
-        	        } else /*Assume its an Idea*/ {
+        	        } else if (j.getString(JAWN_TYPE).equals("idea")) {
         	        	
         	        	// Getting Idea parameters
                 		int id = j.getInt(ID);
             	        String description = j.getString(DESCRIPTION);
-            	        String tags = j.getString(TAGS);
+            	        //String tags = j.getString(TAGS);
             	        
             	        //Getting Array of Sparks
                 	    JSONArray ideasJSON = j.getJSONArray(SPARKS);
                 	     
                 	    // looping through All Sparks
-                	    int[] sparkIds = new int[10];
+                	    ArrayList<Integer> sparkIdArrayList = new ArrayList<Integer>();
                 	    for(int c = 0; c < ideasJSON.length(); c++){
                 	        JSONObject s = ideasJSON.getJSONObject(c);
                 	        // Storing each json item in variable
                 	        int sparkId = s.getInt(ID);
-                	        sparkIds[c] = sparkId;
+                	        sparkIdArrayList.add(sparkId);
+                	    }
+                	    
+                	    int[] sparkIdArray = new int[sparkIdArrayList.size()];
+                	    
+                	    for(int w = 0; w < sparkIdArrayList.size(); w++){
+                	    	sparkIdArray[w] = sparkIdArrayList.get(w);
                 	    }
                 	    
                 	    String firstUser = "";
                 	    //Getting Array of Users
-                	    JSONArray usersJSON = j.getJSONArray(USERS);
+                	    //JSONArray usersJSON = j.getJSONArray(USERS);
                 	    
                 	    //looping through all Users
                 	    int[] userIds = new int[10];
-                	    int count = 0;
+                	    userIds[0] = 1;
+                	    /*int count = 0;
                 	    for(int q = 0; q < usersJSON.length(); q++){
                 	    	JSONObject u = usersJSON.getJSONObject(q);
                 	    	if(count == 0){
@@ -207,13 +227,14 @@ public class RetrieveDataTaskGetXJawns {
                 	    		count++;
                 	    	}
                 	    	userIds[q] = u.getInt(ID);
-                	    }
+                	    }*/
                 	    
                 	    //Getting Array of Created Ats
-                	    JSONArray createdAtsJSON = j.getJSONArray(CREATED_ATS);
+                	    
+                	    //JSONArray createdAtsJSON = j.getJSONArray(CREATED_ATS);
                 	    
                 	    //Looping through All Created Ats
-                	    String[] createdAts = new String[10];
+                	    /*String[] createdAts = new String[10];
                 	    String firstCreatedAt = "";
                 	    int counter = 0;
                 	    for(int w = 0; w < ideasJSON.length(); w++){
@@ -225,9 +246,36 @@ public class RetrieveDataTaskGetXJawns {
                 	        }
                 	        String createdAt = s.getString(CREATED_AT);
                 	        createdAts[w] = createdAt;
-                	    }
+                	    }*/
                 	    
-                	Idea newIdea = new Idea(id, description, tags, sparkIds, userIds, firstUser, createdAts, firstCreatedAt);
+                	    JSONArray commentsJSON = j.getJSONArray(COMMENTS);
+    	        	    
+    	        	    ArrayList<Comment> commentsArrayList = new ArrayList<Comment>();
+    	        	    for(int k = 0; k < commentsJSON.length(); k++){
+    	        	    	JSONObject c = commentsJSON.getJSONObject(k);
+    	        	    	String commentText = c.getString(COMMENT_TEXT);
+    	        	    	
+    	        	    	/*
+    	        	    	 * 0 as a substitute for the real user id
+    	        	    	 * int commentUser = json.getString(COMMENT_USER);
+    	        	    	 * or something
+    	        	    	 */
+    	        	    	
+    	        	    	commentsArrayList.add(new Comment(0, commentText));
+    	        	    }
+    	        	    
+    	        	    Comment[] commentArray = new Comment[commentsArrayList.size()];
+    	        	    for(int w = 0; w < commentsArrayList.size(); w++){
+    	        	    	commentArray[w] = commentsArrayList.get(w);
+    	        	    }
+                	    
+                	    String createdAt = j.getString(CREATED_AT);
+                	    
+                	    String[] tags = new String[10];
+                	    
+                	    
+                	    jawnArrayList.add(new Idea(id, description, tags, sparkIdArray, userIds, user, createdAt, commentArray));
+                	    
         	        }
         	    }
         	    Jawn[] jawnArray = new Jawn[jawnArrayList.size()];
