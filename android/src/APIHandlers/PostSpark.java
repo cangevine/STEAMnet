@@ -37,13 +37,13 @@ public class PostSpark {
 	
 	/**
 	 * @param (char, char, String, GridView, IndexGrid)
-	 * @param st
-	 * @param ct
-	 * @param c
-	 * @param g
-	 * @param i
+	 * @param char - Spark Type
+	 * @param ct - Content Type
+	 * @param c - Content
+	 * @param g - GridView
+	 * @param i - IndexView
 	 */
-	public PostSpark(char st, char ct, String c, GridView g, IndexGrid i) {
+	public PostSpark(char st, char ct, String c, String t, GridView g, IndexGrid i) {
 		spark_type = st;
 		content_type = ct;
 		content = c;
@@ -51,15 +51,7 @@ public class PostSpark {
 		indexGrid = i;
 		adapter = indexGrid.getAdapter();
 		
-		tagsString = "";
-		if(tags != null){
-			for (int w = 0; w < tags.length; w++) {
-				tagsString += tags[w];
-				if (w != tags.length - 1) {
-					tagsString += ",";
-				}
-			}
-		}
+		tagsString = t;
 		
 		Log.v("TAGS", tagsString);
 		
