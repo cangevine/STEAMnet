@@ -52,6 +52,8 @@ public class IndexGrid {
 	
 	public void setJawns(Jawn[] j){
 		jawns = j;
+		adapter.setJawns(jawns);
+		adapter.notifyDataSetChanged();
 	}
 	
 	public Jawn getJawnAt(int pos){

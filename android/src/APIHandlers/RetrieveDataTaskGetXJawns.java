@@ -195,12 +195,12 @@ public class RetrieveDataTaskGetXJawns {
             	        //String tags = j.getString(TAGS);
             	        
             	        //Getting Array of Sparks
-                	    JSONArray ideasJSON = j.getJSONArray(SPARKS);
+                	    JSONArray sparksJSON = j.getJSONArray(SPARKS);
                 	     
                 	    // looping through All Sparks
                 	    ArrayList<Integer> sparkIdArrayList = new ArrayList<Integer>();
-                	    for(int c = 0; c < ideasJSON.length(); c++){
-                	        JSONObject s = ideasJSON.getJSONObject(c);
+                	    for(int c = 0; c < sparksJSON.length(); c++){
+                	        JSONObject s = sparksJSON.getJSONObject(c);
                 	        // Storing each json item in variable
                 	        int sparkId = s.getInt(ID);
                 	        sparkIdArrayList.add(sparkId);

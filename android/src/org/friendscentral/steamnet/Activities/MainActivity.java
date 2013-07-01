@@ -1,5 +1,6 @@
 package org.friendscentral.steamnet.Activities;
 
+import org.friendscentral.steamnet.FilterSettings;
 import org.friendscentral.steamnet.IdeaBucket;
 import org.friendscentral.steamnet.IndexGrid;
 import org.friendscentral.steamnet.JawnAdapter;
@@ -38,6 +39,7 @@ public class MainActivity extends Activity {
     LinearLayout mainLayout;
     GridView gridView;
     IndexGrid indexGrid;
+    FilterSettings filterSettings;
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,17 +58,19 @@ public class MainActivity extends Activity {
 		ft.add(R.id.WizardSection, stc);
 		ft.commit();
 		
-        
         //Initialize the grid of Sparks:
         initializeIndexGridLayout();
         
         //Initialize Idea Bucket:
         initIdeaBucket();
-        
 
 		sparkWizard = new SparkWizard(mainLayout, getFragmentManager());
 		sparkEventHandler = new SparkEventHandler(MainActivity.this, mainLayout, ideaBucket, gridView, indexGrid);
 		bucketHandler = new IdeaBucketEventHandler(MainActivity.this, ideaBucket, mainLayout, getFragmentManager());
+		
+		//Init filter settings
+		LinearLayout fsettings = (LinearLayout) findViewById(R.id.filterSettingsLayout);
+		filterSettings = new FilterSettings(fsettings, mainLayout, this, gridView, indexGrid);
     }
     
     public void initializeIndexGridLayout() {
@@ -147,18 +151,9 @@ public class MainActivity extends Activity {
 		}
 	}
 	
-	public void randomizeJawns(View v) {
-		String className = indexGrid.getAdapter().getClass().getName(); 
-		// TODO Conditional throws an error if it's NOT  the JawnAdapter
-		if (className.equals("org.friendscentral.steamnet.JawnAdapter")) {
-			JawnAdapter ja = indexGrid.getAdapter();
-			ja.shuffleJawns(indexGrid.getJawns());
-			ja.notifyDataSetChanged();
-		}
-	}
-	
-	public void sortRecent(View v) {
-		indexGrid.initIndexGrid(gridView, MainActivity.this, false);
+	public void filterSettingsFunction(View v) {
+		String tag = (String) v.getTag();
+		filterSettings.call(v, tag);
 	}
 	
 	
