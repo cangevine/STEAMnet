@@ -41,6 +41,22 @@ public class Idea extends Jawn implements Serializable{
 	}
 	
 	/**
+	 * @param (int, String, String[], int[], String)
+	 * @param int - id
+	 * @param String - description
+	 * @param String[] - tags
+	 * @param int[] - spark IDs
+	 * @param String - firstUser
+	 */
+	public Idea(int i, String d, String[] t, int[] s, String fu) {
+		id = i;
+		description = d;
+		tags = t;
+		sparkIds = s;
+		firstUser = fu;
+	}
+	
+	/**
 	 * @param (int, String, String, int[], int[], String)
 	 * @param int - id
 	 * @param String - description

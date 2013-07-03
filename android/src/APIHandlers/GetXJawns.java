@@ -83,6 +83,7 @@ public class GetXJawns {
         	try {
         		Log.v("REPORT", "WE WILL BEGIN TO PARSE THE DATA, SIR!");
 				Jawn[] jawns = parseData(data);
+				Log.v("JAWNS", Integer.toString(jawns.length));
 				JawnAdapter a = new JawnAdapter(gridView.getContext(), jawns, 200);
 				Log.v("REPORT", "WE HAVE ACCESSED THE JAWNADAPTER AND ARE PROCEEDING AS PLANNED, SIR!");
 				indexGrid.setAdapter(a);
@@ -114,7 +115,6 @@ public class GetXJawns {
         	final String SPARKS = "sparks";
         	final String COMMENTS = "comments";
         	final String COMMENT_TEXT = "comment_text";
-        	final String TAG_TEXT = "tag_text";
         	
         	// Creating JSON Parser instance
         	JSONParser jParser = new JSONParser();
@@ -166,21 +166,12 @@ public class GetXJawns {
     	        	    String[] createdAts = new String[1];
     	        	    createdAts[0] = createdAt;
     	        	    
-    	        	    JSONArray tagsJSONArray = j.getJSONArray(TAGS);
-    	        	    ArrayList<String> tagsArrayList = new ArrayList<String>();	
-    	        	    for(int z = 0; z < tagsJSONArray.length(); z++){
-    	        	    	JSONObject tagsJSON = tagsJSONArray.getJSONObject(z);
-    	        	    	tagsArrayList.add(tagsJSON.getString(TAG_TEXT));
+    	        	    JSONArray tagsJSON = j.getJSONArray(TAGS);
+    	        	    for(int k = 0; k < tagsJSON.length(); k++){
+    	        	    	
     	        	    }
     	        	    
-    	        	    String[] tagsArray = new String[tagsArrayList.size()];
-    	        	    for(int y = 0; y < tagsArrayList.size(); y++){
-    	        	    	tagsArray[y] = tagsArrayList.get(y);
-    	        	    }
-    	        	    
-    	        	    Log.v("TAGS", tagsArray.toString());
-    	        	    
-	        	        jawnArrayList.add(new Spark(Integer.parseInt(id), sparkType.charAt(0), contentType.charAt(0), content, createdAts, createdAts[0], usersArray, "max", commentArray, tagsArray));
+	        	        jawnArrayList.add(new Spark(Integer.parseInt(id), sparkType.charAt(0), contentType.charAt(0), content, createdAts, createdAts[0], usersArray, "max", commentArray));
 	        	        
         	        } else if (j.getString(JAWN_TYPE).equals("idea")) {
         	        	

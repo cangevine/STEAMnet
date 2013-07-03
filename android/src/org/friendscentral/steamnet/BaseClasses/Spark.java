@@ -25,24 +25,11 @@ public class Spark extends Jawn implements Serializable{
 	 * Don't need updated_at since they should never be edited, but perhaps we need a list of "uploaded at" dates
 	 * Should Sparks have a name/caption type field?
 	 * 
+	 * Users/CreatedAts need to be plural since multiple users (at multiple times) can be credited with the same Spark
+	 * 
 	 * Just setting everything in the creator, since after we grab it you should never need to edit it
 	 */
-	
-	/**
-	 * @param (int, char, char, String, String[], String, int[], String, Comment[], String[])
-	 * @param i - int - id
-	 * @param st - char - Spark Type
-	 * @param ct - char - Content Type
-	 * @param c - String - Content
-	 * @param ca - String[] - CreatedAts
-	 * @param fca - String - First Created At
-	 * @param u - int[] - userIds
-	 * @param fu - String - First User
-	 * @param coms - Comment[]
-	 * @param t - String[] - Tags
-	 */
-	public Spark(int i, char st, char ct, String c, String[] ca, String fca, int[] u, String fu, Comment[] coms, String[] t){
-		//USED BY GETXJAWNS
+	public Spark(int i, char st, char ct, String c, String[] ca, String fca, int[] u, String fu, Comment[] coms){
 		id = i;
 		sparkType = st;
 		contentType = ct;
@@ -52,7 +39,6 @@ public class Spark extends Jawn implements Serializable{
 		userIds = u;
 		firstUser = fu;
 		comments = coms;
-		tags = t;
 	}
 	/**
 	 * @param (id, char, char, String, String)
@@ -66,7 +52,6 @@ public class Spark extends Jawn implements Serializable{
 	 * @param String - firstUser
 	 */
 	public Spark(int i, char st, char ct, String c, String[] ca, String fca, int[] u, String fu){
-		//USED BY GETSPARK
 		id = i;
 		sparkType = st;
 		contentType = ct;
@@ -87,7 +72,6 @@ public class Spark extends Jawn implements Serializable{
 	 * @param String - firstUser
 	 */
 	public Spark(int i, char st, char ct, String c, String[] ca, int[] u, String fu){
-		//USED BY POSTSPARK AND GETXSPARKS
 		id = i;
 		sparkType = st;
 		contentType = ct;
@@ -97,12 +81,39 @@ public class Spark extends Jawn implements Serializable{
 		firstUser = fu;
 	}
 	/**
+	 * @param (id, char, char, String, String)
+	 * @param int - id
+	 * @param char - sparkType
+	 * @param char - contentType
+	 * @param String - content
+	 * @param String - createdAt
+	 */
+	public Spark(int i, char st, char ct, String c, String[] ca) {
+		id = i;
+		sparkType = st;
+		contentType = ct;
+		content = c;
+		createdAts = ca;
+	}
+	/**
+	 * (int, char, char, String)
+	 * @param int - id
+	 * @param char - sparkType
+	 * @param char - contentType
+	 * @param String - content
+	 */
+	public Spark(int i, char st, char ct, String c) {
+		id = i;
+		sparkType = st;
+		contentType = ct;
+		content = c;
+	}
+	/**
 	 * @param char - sparkType
 	 * @param char - contentType
 	 * @param String - content
 	 */
 	public Spark(char st, char ct, String c){
-		//USED BY MAINACTIVITY
 		sparkType = st;
 		contentType = ct;
 		content = c;
