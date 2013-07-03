@@ -129,6 +129,14 @@ public class GetXJawns {
         	    for(int i = 0; i < jawns.length(); i++){
         	        JSONObject j = jawns.getJSONObject(i);
         	        
+        	        JSONArray tagsJSONArray = j.getJSONArray(TAGS);
+        	        
+        	        String[] tagsArray = new String[tagsJSONArray.length()];
+	        	    for(int z = 0; z < tagsJSONArray.length(); z++){
+	        	    	JSONObject tagsJSON = tagsJSONArray.getJSONObject(z);
+	        	    	tagsArray[z] = tagsJSON.getString(TAG_TEXT);
+	        	    }
+	        	    
         	        //checking to see if the Jawn is a Spark or an Idea
         	        if(j.getString(JAWN_TYPE).equals("spark")){
     					String id = j.getString(ID);
@@ -142,9 +150,16 @@ public class GetXJawns {
     	        	    usersArray[0] = 1;
     	        	    
     	        	    
-    	        	    JSONArray commentsJSON = j.getJSONArray(COMMENTS);
+    	        	    JSONArray commentsJSONArray = j.getJSONArray(COMMENTS);
     	        	    
-    	        	    ArrayList<Comment> commentsArrayList = new ArrayList<Comment>();
+    	        	    Comment[] commentArray = new Comment[commentsJSONArray.length()];
+    	        	    for(int w = 0; w < commentsJSONArray.length(); w++){
+    	        	    	JSONObject c = commentsJSONArray.getJSONObject(w);
+    	        	    	String commentText = c.getString(COMMENT_TEXT);
+    	        	    	commentArray[w] = new Comment(0, commentText);
+    	        	    }
+    	        	    
+    	        	    /*ArrayList<Comment> commentsArrayList = new ArrayList<Comment>();
     	        	    for(int k = 0; k < commentsJSON.length(); k++){
     	        	    	JSONObject c = commentsJSON.getJSONObject(k);
     	        	    	String commentText = c.getString(COMMENT_TEXT);
@@ -153,33 +168,16 @@ public class GetXJawns {
     	        	    	 * 0 as a substitute for the real user id
     	        	    	 * int commentUser = json.getString(COMMENT_USER);
     	        	    	 * or something
-    	        	    	 */
+    	        	    	 
     	        	    	
     	        	    	commentsArrayList.add(new Comment(0, commentText));
-    	        	    }
+    	        	    }*/
     	        	    
-    	        	    Comment[] commentArray = new Comment[commentsArrayList.size()];
-    	        	    for(int w = 0; w < commentsArrayList.size(); w++){
-    	        	    	commentArray[w] = commentsArrayList.get(w);
-    	        	    }
+    	        	   
     	        	    
     	        	    String[] createdAts = new String[1];
     	        	    createdAts[0] = createdAt;
-    	        	    
-    	        	    JSONArray tagsJSONArray = j.getJSONArray(TAGS);
-    	        	    ArrayList<String> tagsArrayList = new ArrayList<String>();	
-    	        	    for(int z = 0; z < tagsJSONArray.length(); z++){
-    	        	    	JSONObject tagsJSON = tagsJSONArray.getJSONObject(z);
-    	        	    	tagsArrayList.add(tagsJSON.getString(TAG_TEXT));
-    	        	    }
-    	        	    
-    	        	    String[] tagsArray = new String[tagsArrayList.size()];
-    	        	    for(int y = 0; y < tagsArrayList.size(); y++){
-    	        	    	tagsArray[y] = tagsArrayList.get(y);
-    	        	    }
-    	        	    
-    	        	    Log.v("TAGS", tagsArray.toString());
-    	        	    
+    	        	        	        	        	        	    
 	        	        jawnArrayList.add(new Spark(Integer.parseInt(id), sparkType.charAt(0), contentType.charAt(0), content, createdAts, createdAts[0], usersArray, "max", commentArray, tagsArray));
 	        	        
         	        } else if (j.getString(JAWN_TYPE).equals("idea")) {
@@ -234,12 +232,9 @@ public class GetXJawns {
     	        	    	commentArray[w] = commentsArrayList.get(w);
     	        	    }
                 	    
-                	    String createdAt = j.getString(CREATED_AT);
+                	    String createdAt = j.getString(CREATED_AT);                	    
                 	    
-                	    String[] tags = new String[10];
-                	    
-                	    
-                	    jawnArrayList.add(new Idea(id, description, tags, sparkIdArray, userIds, user, createdAt, commentArray));
+                	    jawnArrayList.add(new Idea(id, description, tagsArray, sparkIdArray, userIds, user, createdAt, commentArray));
                 	    
         	        }
         	    }

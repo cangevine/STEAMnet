@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -219,7 +218,8 @@ public class SparkDetailActivity extends Activity {
 		editText.setText("");
 		findViewById(R.id.DummyFocusSparkDetail).requestFocus();
 		
-		// TODO Make the @userID dynamic
+		// TODO Make the @userID dynamic and ensure content isn't empty/null before posting
+		
 		int userID = 0;
 		PostComment comment = new PostComment(id, "S".charAt(0), content, userID);
 		
@@ -227,6 +227,7 @@ public class SparkDetailActivity extends Activity {
 		CommentAdapter c = (CommentAdapter) commentSection.getAdapter();
 		Comment newComment = new Comment(userID, content);
 		c.addComment(newComment);
+		spark.addComment(newComment);
 		c.notifyDataSetChanged();
 	}
 

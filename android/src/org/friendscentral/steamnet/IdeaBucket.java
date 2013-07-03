@@ -127,6 +127,7 @@ public class IdeaBucket {
 				}
 				
 				// TODO not just "max" every time. Spark.getUser 
+				@SuppressWarnings("unused")
 				PostIdea r = new PostIdea(description, s, tags.split(", "), "max");
 				
 				sparks.clear();

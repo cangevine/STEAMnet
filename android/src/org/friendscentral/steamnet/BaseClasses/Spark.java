@@ -1,6 +1,9 @@
 package org.friendscentral.steamnet.BaseClasses;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+
+import android.util.Log;
 
 /**
  * 
@@ -27,6 +30,8 @@ public class Spark extends Jawn implements Serializable{
 	 * 
 	 * Just setting everything in the creator, since after we grab it you should never need to edit it
 	 */
+	
+	// TODO standardize spark constructors
 	
 	/**
 	 * @param (int, char, char, String, String[], String, int[], String, Comment[], String[])
@@ -197,5 +202,20 @@ public class Spark extends Jawn implements Serializable{
 	
 	public Comment[] getComments() {
 		return comments;
+	}
+	
+	public void addComment(Comment c){
+		Log.v("ADDCOMMENT", "Adding comment");
+		// TODO make this work
+		ArrayList<Comment> tmp = new ArrayList<Comment>();
+		for(int i = 0; i < comments.length; i++){
+			tmp.add(comments[i]);
+		}
+		tmp.add(c);
+		Comment[] newComments = new Comment[tmp.size()];
+		for(int k = 0; k < tmp.size();k++){
+			newComments[k] = tmp.get(k);
+		}
+		comments = newComments;
 	}
 }
