@@ -33,7 +33,6 @@ public class JawnAdapter extends BaseAdapter {
      */
     public JawnAdapter(Context c, Jawn[] j, int size) {
         mContext = c;
-        Log.v("LENGTH", Integer.toString(j.length));
         image_size = size;
         //initSparks(s);
         jawns = j;
