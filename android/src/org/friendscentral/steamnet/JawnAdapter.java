@@ -285,7 +285,6 @@ public class JawnAdapter extends BaseAdapter {
 	        imageView.setLayoutParams(new GridView.LayoutParams(image_size, image_size));
 	        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 	        
-	        Log.v("Amount of sparks", String.valueOf(idea.getSparkIds().length));
 	        TextView t = new TextView(mContext);
 	        t.setTextSize(150);
 	        t.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -324,7 +323,6 @@ public class JawnAdapter extends BaseAdapter {
 			// TODO GETCREATEDAT IS NULL
 			String date = idea.getCreatedAt();
 			String a = "a";
-			Log.v("Date", a+date);
 			TextView dateInfo = new TextView(mContext);
 			dateInfo.setText(date);
 			ideaInfo.addView(dateInfo);

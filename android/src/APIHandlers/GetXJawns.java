@@ -79,9 +79,7 @@ public class GetXJawns {
         }
 
         protected void onPostExecute(String data) {
-        	Log.v("REPORT", "JAAAAAAAAAAAWN");
         	Log.v("REPORT", "WE HAVE MOVED INTO THE POST EXECUTE PHASE, SIR!");
-        	Log.d(TAG, "=> "+data);
         	try {
         		Log.v("REPORT", "WE WILL BEGIN TO PARSE THE DATA, SIR!");
 				Jawn[] jawns = parseData(data);
@@ -167,6 +165,11 @@ public class GetXJawns {
     	        	    
     	        	    String[] createdAts = new String[1];
     	        	    createdAts[0] = createdAt;
+    	        	    
+    	        	    JSONArray tagsJSON = j.getJSONArray(TAGS);
+    	        	    for(int k = 0; k < tagsJSON.length(); k++){
+    	        	    	
+    	        	    }
     	        	    
 	        	        jawnArrayList.add(new Spark(Integer.parseInt(id), sparkType.charAt(0), contentType.charAt(0), content, createdAts, createdAts[0], usersArray, "max", commentArray));
 	        	        

@@ -60,15 +60,12 @@ public class SparkDetailActivity extends Activity {
 			creator = "--User--";
 		}
 		
-		Log.v(TAG, creator);
 		TextView sparkCreator = (TextView) findViewById(R.id.CreatorTextView);
 		sparkCreator.setText("Sparked by "+creator);
 		
 		TextView createdAtView = (TextView) findViewById(R.id.TimestampTextView);
 		createdAtView.setText(createdAt);
-		
-		Log.d(TAG, contentType);
-		
+				
 		fillSparkData();
 		fillSparkTypes();
 		fillTags();

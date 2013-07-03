@@ -134,17 +134,17 @@ public class MainActivity extends Activity {
 			sparkWizard.openContentEntry(v);
 			
 		} else if (tag.equals("submitSpark")) {
-			
+			Log.v("TAGTEST", "Tagging");
 			findViewById(R.id.content_entry_form);
 			EditText tagsForm = (EditText) findViewById(R.id.tag_entry_form);
-			tagsForm.getText().toString().split(", ");
+			String tags = tagsForm.getText().toString();
 			
 			TextView sparkContentView = (TextView) findViewById(R.id.content_entry_form);
 			content = sparkContentView.getText().toString();
 			
 			
 			newSpark = new Spark(sparkType, contentType, content);
-			sparkWizard.submitSpark(v, newSpark, gridView, indexGrid);
+			sparkWizard.submitSpark(v, newSpark, tags, gridView, indexGrid);
 			
 			newSpark = null;
 			

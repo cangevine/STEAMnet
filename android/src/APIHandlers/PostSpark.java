@@ -40,6 +40,7 @@ public class PostSpark {
 	 * @param char - Spark Type
 	 * @param ct - Content Type
 	 * @param c - Content
+	 * @param t- Tags
 	 * @param g - GridView
 	 * @param i - IndexView
 	 */
@@ -53,8 +54,10 @@ public class PostSpark {
 		
 		tagsString = t;
 		
-		Log.v("TAGS", tagsString);
-		
+		if(tagsString != null){
+			Log.v("TAGS", tagsString);
+		}
+			
 		OkHTTPTask task = new OkHTTPTask();
 		task.execute("http://steamnet.herokuapp.com/api/v1/sparks.json");
 	}

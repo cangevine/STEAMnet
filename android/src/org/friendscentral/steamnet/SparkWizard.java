@@ -55,8 +55,16 @@ public class SparkWizard {
 		ft.commit();
 	}
 	
-	public void submitSpark(View v, Spark s, GridView g, IndexGrid i) {
-		PostSpark task = new PostSpark(s.getSparkType(), s.getContentType(), s.getContent(), g, i);
+	/**
+	 * @param (View, Spark, String, GridView, IndexGrid)
+	 * @param View
+	 * @param Spark - to be posted
+	 * @param String - tags, separated by a comma
+	 * @param GridView
+	 * @param IndexGrid
+	 */
+	public void submitSpark(View v, Spark s, String t, GridView g, IndexGrid i) {
+		PostSpark task = new PostSpark(s.getSparkType(), s.getContentType(), s.getContent(), t, g, i);
 		
 		revertWizard(v);
 	}
