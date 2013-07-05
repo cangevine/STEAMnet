@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+@SuppressWarnings("unused")
 public class SparkDetailActivity extends Activity {
 
 	private static final String TAG = "SparkDetailView";

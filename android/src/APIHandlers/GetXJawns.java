@@ -158,22 +158,7 @@ public class GetXJawns {
     	        	    	String commentText = c.getString(COMMENT_TEXT);
     	        	    	commentArray[w] = new Comment(0, commentText);
     	        	    }
-    	        	    
-    	        	    /*ArrayList<Comment> commentsArrayList = new ArrayList<Comment>();
-    	        	    for(int k = 0; k < commentsJSON.length(); k++){
-    	        	    	JSONObject c = commentsJSON.getJSONObject(k);
-    	        	    	String commentText = c.getString(COMMENT_TEXT);
-    	        	    	
-    	        	    	/*
-    	        	    	 * 0 as a substitute for the real user id
-    	        	    	 * int commentUser = json.getString(COMMENT_USER);
-    	        	    	 * or something
-    	        	    	 
-    	        	    	
-    	        	    	commentsArrayList.add(new Comment(0, commentText));
-    	        	    }*/
-    	        	    
-    	        	   
+       	        	   
     	        	    
     	        	    String[] createdAts = new String[1];
     	        	    createdAts[0] = createdAt;
