@@ -87,7 +87,7 @@ public final class R {
         public static final int CommentsHeader=0x7f08003c;
         public static final int CreatorTextView=0x7f080005;
         public static final int DummyFocus=0x7f08000b;
-        public static final int DummyFocusSparkDetail=0x7f08003b;
+        public static final int DummyFocusCommentSection=0x7f08003b;
         public static final int FilterSettings=0x7f08000f;
         public static final int Focus_section=0x7f080001;
         public static final int IdeaBucket=0x7f080010;

@@ -53,7 +53,7 @@ public class FilterSettings {
 	public void sparkBoxChange(char box) {
 		sparkCheck = sparkBox.isChecked();
 		ideaCheck = ideaBox.isChecked();
-		gridview.setAdapter(new SpinnerAdapter(context));
+		gridview.setAdapter(new SpinnerAdapter(context, 16));
 		if (sparkCheck == true && ideaCheck == true) {
 			RetrieveDataTaskGetXJawns r = new RetrieveDataTaskGetXJawns(16, gridview, indexgrid); 
 			JawnAdapter ja = indexgrid.getAdapter();

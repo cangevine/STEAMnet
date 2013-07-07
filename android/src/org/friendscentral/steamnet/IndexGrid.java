@@ -28,7 +28,7 @@ public class IndexGrid {
     	context = c;
     	
     	if (!isIdeaDetailActivity) {
-    		gridview.setAdapter(new SpinnerAdapter(context));
+    		gridview.setAdapter(new SpinnerAdapter(context, 16));
     	
     		@SuppressWarnings("unused")
     		RetrieveDataTaskGetXJawns task = new RetrieveDataTaskGetXJawns(16, gridview, this);
