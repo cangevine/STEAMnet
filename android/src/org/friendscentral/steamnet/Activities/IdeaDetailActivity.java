@@ -78,6 +78,7 @@ public class IdeaDetailActivity extends Activity {
 	public void initializeIndexGridLayout() {
     	final View indexGridLayout = findViewById(R.id.IndexGridIdeaDetail);
     	gridView = (GridView) indexGridLayout.findViewById(R.id.SparkGrid);
+    	gridView.setNumColumns(2);
     	//initial spinners:
     	gridView.setAdapter(new SpinnerAdapter(this, 4));
     	
