@@ -39,8 +39,8 @@ public class SparkDetailActivity extends Activity {
 		setContentView(R.layout.activity_spark_detail);
 		
 		//Fixes autofocus problem:
-        findViewById(R.id.DummyFocusSparkDetail).setFocusableInTouchMode(true);
-        findViewById(R.id.DummyFocusSparkDetail).requestFocus();
+        findViewById(R.id.DummyFocusCommentSection).setFocusableInTouchMode(true);
+        findViewById(R.id.DummyFocusCommentSection).requestFocus();
 		
 		Intent intent = getIntent();
 		spark = (Spark) intent.getSerializableExtra("spark");	
@@ -52,6 +52,9 @@ public class SparkDetailActivity extends Activity {
 		creator = spark.getUser();
 		tags = spark.getTags();
 		comments = spark.getComments();
+		if (comments == null) {
+			comments = new Comment[0];
+		}
 		
 		if(createdAt == null){
 			createdAt = "Date unknown";
@@ -220,7 +223,7 @@ public class SparkDetailActivity extends Activity {
 		EditText editText = (EditText) findViewById(R.id.CommentEditText);
 		String content = editText.getText().toString();
 		editText.setText("");
-		findViewById(R.id.DummyFocusSparkDetail).requestFocus();
+		findViewById(R.id.DummyFocusCommentSection).requestFocus();
 		
 		// TODO Make the @userID dynamic
 		int userID = 0;

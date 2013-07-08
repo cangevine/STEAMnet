@@ -92,13 +92,13 @@ public class GetSpark {
 				JawnAdapter j = indexGrid.getAdapter();
 				Log.v("LOOK HERE", "And still working!");
 				//Log.v("LOOK HERE", String.valueOf(j.getCount()));
-				Jawn[] jawns = j.getJawns();
+				Jawn[] jawns = indexGrid.getJawns();
 				Jawn[] newJawns = new Jawn[jawns.length + 1];
 				for (int i = 0; i < jawns.length; i++) {
 					newJawns[i] = jawns[i];
 				}
 				newJawns[jawns.length] = newSpark; 
-				j.setJawns(newJawns);
+				indexGrid.setJawns(newJawns);
 				Log.v("LOOK RIGHT HERE", String.valueOf(j.getJawns().length));
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block

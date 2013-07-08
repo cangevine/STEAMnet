@@ -1,8 +1,8 @@
 package org.friendscentral.steamnet;
 
 import APIHandlers.GetXIdeas;
-import APIHandlers.GetXJawns;
-import APIHandlers.GetXSparks;
+import APIHandlers.RetrieveDataTaskGetXJawns;
+import APIHandlers.RetrieveDataTaskGetXSparks;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
@@ -53,15 +53,15 @@ public class FilterSettings {
 	public void sparkBoxChange(char box) {
 		sparkCheck = sparkBox.isChecked();
 		ideaCheck = ideaBox.isChecked();
-		gridview.setAdapter(new SpinnerAdapter(context));
+		gridview.setAdapter(new SpinnerAdapter(context, 16));
 		if (sparkCheck == true && ideaCheck == true) {
-			GetXJawns r = new GetXJawns(16, gridview, indexgrid); 
+			RetrieveDataTaskGetXJawns r = new RetrieveDataTaskGetXJawns(16, gridview, indexgrid); 
 			JawnAdapter ja = indexgrid.getAdapter();
 			ja.notifyDataSetChanged();
 			indexgrid.setJawns(ja.getJawns());
 			Log.v(TAG, "Both true");
 		} else if (sparkCheck == true && ideaCheck == false) {
-			GetXSparks r = new GetXSparks(16, gridview, indexgrid); 
+			RetrieveDataTaskGetXSparks r = new RetrieveDataTaskGetXSparks(16, gridview, indexgrid); 
 			JawnAdapter ja = indexgrid.getAdapter();
 			ja.notifyDataSetChanged();
 			indexgrid.setJawns(ja.getJawns());
@@ -82,7 +82,7 @@ public class FilterSettings {
 				indexgrid.setJawns(ja.getJawns());
 			} else {
 				sparkBox.setChecked(true);
-				GetXSparks r = new GetXSparks(16, gridview, indexgrid); 
+				RetrieveDataTaskGetXSparks r = new RetrieveDataTaskGetXSparks(16, gridview, indexgrid); 
 				JawnAdapter ja = indexgrid.getAdapter();
 				ja.notifyDataSetChanged();
 				indexgrid.setJawns(ja.getJawns());
