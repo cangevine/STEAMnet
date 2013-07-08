@@ -28,7 +28,7 @@ import android.widget.GridView;
  * @author SamBeckley
  * 
  */
-public class RetrieveDataTaskGetXJawns {
+public class GetXJawns {
 	char spark_type;
 	char content_type;
 	String content;
@@ -40,7 +40,7 @@ public class RetrieveDataTaskGetXJawns {
 	 * @param int X - returns the first X sparks (by createdAt)
 	 */
 	
-	public RetrieveDataTaskGetXJawns(int lim, GridView g, IndexGrid i) {
+	public GetXJawns(int lim, GridView g, IndexGrid i) {
 		
 		Log.v("REPORT", "THE TASK IS BEGGINING, SIR!");
 		OkHTTPTask task = new OkHTTPTask(g, i);
@@ -63,7 +63,7 @@ public class RetrieveDataTaskGetXJawns {
 		}
         
 		
-        @SuppressWarnings("unused")
+		@SuppressWarnings("unused")
 		private Exception exception;
         
         protected String doInBackground(String... urls) {
@@ -138,28 +138,11 @@ public class RetrieveDataTaskGetXJawns {
     					String contentType = j.getString(CONTENT_TYPE);
     					String content = j.getString(CONTENT);
     					String createdAt = j.getString(CREATED_AT);
-    					String firstUser = "";
-    					//Getting Array of Users
-    	        	    JSONArray usersJSON = j.getJSONArray(USERS);
-    	        	     
-    	        	    // looping through All Users
-    	        	    //ArrayList<Integer> usersArrayList = new ArrayList<Integer>();
-    	        	    //int count = 0;
-    	        	    /*for(int q = 0; q < usersJSON.length(); q++){
-    	        	        JSONObject u = usersJSON.getJSONObject(i);
-    	        	        // Storing each json item in variable
-    	        	        if(count == 0){
-    	        	        	count++;
-    	        	        	firstUser = u.getString(USERNAME);
-    	        	        }
-    	        	        int userID = u.getInt(ID);
-    	        	        usersArrayList.add(userID);
-    	        	    }*/
+    					String firstUser = "";    	        	     
+    	        	    
     	        	    int[] usersArray = new int[1];
     	        	    usersArray[0] = 1;
-    	        	    /*for(int q = 0; q < usersArrayList.size(); q++){
-    	        	    	usersArray[q] = usersArrayList.get(q);
-    	        	    }*/
+    	        	    
     	        	    
     	        	    JSONArray commentsJSON = j.getJSONArray(COMMENTS);
     	        	    
@@ -213,40 +196,10 @@ public class RetrieveDataTaskGetXJawns {
                 	    }
                 	    
                 	    String firstUser = "";
-                	    //Getting Array of Users
-                	    //JSONArray usersJSON = j.getJSONArray(USERS);
                 	    
-                	    //looping through all Users
                 	    int[] userIds = new int[10];
                 	    userIds[0] = 1;
-                	    /*int count = 0;
-                	    for(int q = 0; q < usersJSON.length(); q++){
-                	    	JSONObject u = usersJSON.getJSONObject(q);
-                	    	if(count == 0){
-                	    		firstUser = u.getString(USERNAME);
-                	    		count++;
-                	    	}
-                	    	userIds[q] = u.getInt(ID);
-                	    }*/
-                	    
-                	    //Getting Array of Created Ats
-                	    
-                	    //JSONArray createdAtsJSON = j.getJSONArray(CREATED_ATS);
-                	    
-                	    //Looping through All Created Ats
-                	    /*String[] createdAts = new String[10];
-                	    String firstCreatedAt = "";
-                	    int counter = 0;
-                	    for(int w = 0; w < ideasJSON.length(); w++){
-                	        JSONObject s = createdAtsJSON.getJSONObject(w);
-                	        // Storing each json item in variable
-                	        if(counter == 0){
-                	        	firstCreatedAt = s.getString(CREATED_AT);
-                	        	counter++;
-                	        }
-                	        String createdAt = s.getString(CREATED_AT);
-                	        createdAts[w] = createdAt;
-                	    }*/
+                	   
                 	    
                 	    JSONArray commentsJSON = j.getJSONArray(COMMENTS);
     	        	    

@@ -11,7 +11,7 @@ import org.friendscentral.steamnet.BaseClasses.Jawn;
 import org.friendscentral.steamnet.BaseClasses.Spark;
 
 import APIHandlers.PostComment;
-import APIHandlers.RetrieveDataTaskGetSpark;
+import APIHandlers.GetSpark;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

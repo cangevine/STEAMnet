@@ -23,14 +23,14 @@ import android.util.Log;
  * @author Sam Beckley
  */
 @SuppressWarnings("unused")
-public class RetrieveDataTaskGetIdea {
+public class GetIdea {
 	int id;
 	
 	/**
 	 * @param id - int, ID of the Idea you want to get
 	 */
 	
-	public RetrieveDataTaskGetIdea(int q) {
+	public GetIdea(int q) {
 		id = q;
 		
 		OkHTTPTask task = new OkHTTPTask();

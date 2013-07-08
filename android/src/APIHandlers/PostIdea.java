@@ -13,7 +13,7 @@ import com.squareup.okhttp.OkHttpClient;
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class RetrieveDataTaskPostIdea {
+public class PostIdea {
 	String description;
 	int[] sparks;
 	String sparksString;
@@ -31,7 +31,7 @@ public class RetrieveDataTaskPostIdea {
 	 * @throws IOexception
 	 */
 	
-	public RetrieveDataTaskPostIdea(String d, int[] s, String[] t, String u) {
+	public PostIdea(String d, int[] s, String[] t, String u) {
 		description = d;
 		sparks = s;
 		tags = t;

@@ -26,7 +26,7 @@ import com.squareup.okhttp.OkHttpClient;
  * @author Sam Beckley
  */
 @SuppressWarnings("unused")
-public class RetrieveDataTaskGetSpark {
+public class GetSpark {
 	char spark_type;
 	char content_type;
 	String content;
@@ -41,7 +41,7 @@ public class RetrieveDataTaskGetSpark {
 	 * @param id - int, ID of the Spark you want to get
 	 */
 	
-	public RetrieveDataTaskGetSpark(int id, GridView g, IndexGrid i) {
+	public GetSpark(int id, GridView g, IndexGrid i) {
 		gridview = g;
 		indexgrid = i;
 		

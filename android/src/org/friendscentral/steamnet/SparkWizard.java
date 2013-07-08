@@ -5,7 +5,7 @@ import org.friendscentral.steamnet.SparkWizardFragments.ContentEntry;
 import org.friendscentral.steamnet.SparkWizardFragments.ContentTypeChooser;
 import org.friendscentral.steamnet.SparkWizardFragments.SparkTypeChooser;
 
-import APIHandlers.RetrieveDataTaskPostSpark;
+import APIHandlers.PostSpark;
 import android.app.ActionBar.LayoutParams;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -56,7 +56,7 @@ public class SparkWizard {
 	}
 	
 	public void submitSpark(View v, Spark s, GridView g, IndexGrid i) {
-		RetrieveDataTaskPostSpark task = new RetrieveDataTaskPostSpark(s.getSparkType(), s.getContentType(), s.getContent(), g, i);
+		PostSpark task = new PostSpark(s.getSparkType(), s.getContentType(), s.getContent(), g, i);
 		
 		revertWizard(v);
 	}
