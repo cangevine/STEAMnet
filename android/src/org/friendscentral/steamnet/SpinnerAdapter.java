@@ -12,9 +12,11 @@ import android.widget.ProgressBar;
 
 public class SpinnerAdapter extends BaseAdapter {
 	Context context;
+	int num;
 	
-	public SpinnerAdapter(Context c) {
+	public SpinnerAdapter(Context c, int n) {
 		context = c;
+		num = n;
 	}
 
 	// create a new ImageView for each item referenced by the Adapter
@@ -30,7 +32,7 @@ public class SpinnerAdapter extends BaseAdapter {
     }
 
     public int getCount() {
-        return 16;
+        return num;
     }
 
     public Object getItem(int position) {

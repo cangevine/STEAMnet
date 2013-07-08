@@ -4,8 +4,10 @@ import org.friendscentral.steamnet.CommentAdapter;
 import org.friendscentral.steamnet.IndexGrid;
 import org.friendscentral.steamnet.JawnAdapter;
 import org.friendscentral.steamnet.R;
+import org.friendscentral.steamnet.SpinnerAdapter;
 import org.friendscentral.steamnet.BaseClasses.Comment;
 import org.friendscentral.steamnet.BaseClasses.Idea;
+import org.friendscentral.steamnet.BaseClasses.Jawn;
 import org.friendscentral.steamnet.BaseClasses.Spark;
 
 import APIHandlers.PostComment;
@@ -15,10 +17,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class IdeaDetailActivity extends Activity {
 	private static final String TAG = "IdeaDetailActivity";
@@ -48,6 +52,10 @@ public class IdeaDetailActivity extends Activity {
 		dateTextView = (TextView) findViewById(R.id.TimestampTextView);
 		userTextView = (TextView) findViewById(R.id.CreatorTextView);
 		
+		//Fixes autofocus problem:
+        findViewById(R.id.DummyFocusCommentSection).setFocusableInTouchMode(true);
+        findViewById(R.id.DummyFocusCommentSection).requestFocus();
+		
 		Intent intent = getIntent();
 		idea = (Idea) intent.getSerializableExtra("idea");
 		id = idea.getId();
@@ -70,18 +78,28 @@ public class IdeaDetailActivity extends Activity {
 	public void initializeIndexGridLayout() {
     	final View indexGridLayout = findViewById(R.id.IndexGridIdeaDetail);
     	gridView = (GridView) indexGridLayout.findViewById(R.id.SparkGrid);
+    	gridView.setNumColumns(2);
+    	//initial spinners:
+    	gridView.setAdapter(new SpinnerAdapter(this, 4));
+    	
     	indexGrid = new IndexGrid();
     	indexGrid.initIndexGrid(gridView, this, true);
-    	
-    	Spark[] s = new Spark[0];
-    	adapter = new JawnAdapter(this, s, 4);
+    	adapter = new JawnAdapter(this, new Jawn[0], sparkIds.length);
     	indexGrid.setAdapter(adapter);
+    	indexGrid.setJawns(adapter.getJawns());
     	
+    	RetrieveDataTaskGetSpark r = null;
     	for (int i = 0; i < sparkIds.length; i++) {
-    		GetSpark r = new GetSpark(sparkIds[i], gridView, indexGrid);
+    		 r = new RetrieveDataTaskGetSpark(sparkIds[i], gridView, indexGrid);
     	}
     	
     	adapter.notifyDataSetChanged();
+    	
+    	gridView.setOnItemClickListener(new OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                openDetailView(indexGrid.getJawnAt(position)); //NEED POLYMORPHIC openDetailView
+            }
+        });
     }
 	
 	public void fillComments() {
@@ -101,7 +119,7 @@ public class IdeaDetailActivity extends Activity {
 		EditText editText = (EditText) findViewById(R.id.CommentEditText);
 		String content = editText.getText().toString();
 		editText.setText("");
-		findViewById(R.id.DummyFocusSparkDetail).requestFocus();
+		findViewById(R.id.DummyFocusCommentSection).requestFocus();
 		
 		// TODO Make the @userID dynamic
 		int userID = 0;
@@ -123,6 +141,14 @@ public class IdeaDetailActivity extends Activity {
 			c.notifyDataSetChanged();
 		}
 	}
+	
+	public void openDetailView(Jawn j) {
+	    Intent intent = new Intent(this, SparkDetailActivity.class);
+	    //intent.putExtra(EXTRA_MESSAGE, b);
+	    Spark s = j.getSelfSpark();
+	    intent.putExtra("spark", s);
+	    this.startActivity(intent);
+    }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

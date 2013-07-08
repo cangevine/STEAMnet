@@ -11,13 +11,14 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="3"
+        android:layout_weight="1"
         android:orientation="vertical" >
 
         <LinearLayout
             android:id="@+id/Focus_section"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+            android:layout_height="0dp"
+            android:layout_weight="1" >
 
             <TextView
                 android:id="@+id/IdeaTitleTextView"
@@ -45,11 +46,33 @@
                 android:text="--Creator User--" />
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/DescAndTags"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
+
+            <TextView
+                android:id="@+id/IdeaDescription"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="--Description--" />
+
+            <TextView
+                android:id="@+id/IdeaTags"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="--Tags--" />
+
+        </LinearLayout>
+
         <include
             android:id="@+id/IndexGridIdeaDetail"
-            android:layout_width="920dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="3"
             layout="@layout/index_grid" />
 
     </LinearLayout>
