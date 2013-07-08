@@ -1,0 +1,26 @@
+<h1>Listing sparks</h1>
+
+<table>
+  <tr>
+    <th>Spark type</th>
+    <th>Content type</th>
+    <th>Content</th>
+    <th>Content hash</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @sparks.each do |spark| %>
+  <tr>
+    <td><%= spark.spark_type %></td>
+    <td><%= spark.content_type %></td>
+    <td><%= spark.content %></td>
+    <td><%= spark.content_hash %></td>
+    <td><%= link_to 'Show', ["v1", spark] %></td>
+    <td><%= link_to 'Destroy', ["v1", spark], :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
