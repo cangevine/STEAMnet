@@ -8,6 +8,8 @@ import APIHandlers.AddXIdeas;
 import APIHandlers.AddXJawns;
 import APIHandlers.AddXSparks;
 import android.app.ListActivity;
+import android.util.Log;
+import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.GridView;
@@ -16,6 +18,7 @@ public class EndlessScroller extends ListActivity implements OnScrollListener {
 	FilterSettings filterSettings;
 	GridView gridview;
 	IndexGrid indexgrid;
+	boolean refreshable;
 	
 	public EndlessScroller(FilterSettings f, GridView g, IndexGrid i) {
 		filterSettings = f;
@@ -27,6 +30,11 @@ public class EndlessScroller extends ListActivity implements OnScrollListener {
 	public void onScroll(AbsListView view, int firstVisible, int visibleCount, int totalCount) {
 
 	    boolean loadMore = firstVisible + visibleCount >= totalCount;
+	    
+	    View c = gridview.getChildAt(0);
+	    //int scrolly = -c.getTop() + (gridview.getFirstVisiblePosition() * c.getHeight());
+	    int scrolly = gridview.getFirstVisiblePosition();
+	    refreshable = scrolly <= 0;
 
 	    if (loadMore) {
 	    	//View c = gridview.getChildAt(0);
@@ -45,14 +53,19 @@ public class EndlessScroller extends ListActivity implements OnScrollListener {
 	    	JawnAdapter ja = indexgrid.getAdapter();
 			ja.notifyDataSetChanged();
 			indexgrid.setJawns(ja.getJawns());
+			return;
 			
 			//gridview.setSelection(scrolly);
 	    }
 	    
+	    
+	    if (refreshable) {
+	    	Log.v("Able to be refreshed", "Go!");
+	    }
 	}
 
 	@Override
-	public void onScrollStateChanged(AbsListView arg0, int arg1) {
+	public void onScrollStateChanged(AbsListView view, int scrollState) {
 		// TODO Auto-generated method stub
 		
 	}

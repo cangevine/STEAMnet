@@ -31,7 +31,7 @@ public class IndexGrid {
     		gridview.setAdapter(new SpinnerAdapter(context, 16));
     	
     		@SuppressWarnings("unused")
-    		RetrieveDataTaskGetXJawns task = new RetrieveDataTaskGetXJawns(16, gridview, this);
+    		RetrieveDataTaskGetXJawns task = new RetrieveDataTaskGetXJawns(16, gridview, this, context);
     	}
     	
     	Log.v("indexGrid", "Just called initIndexGrid! Success!");

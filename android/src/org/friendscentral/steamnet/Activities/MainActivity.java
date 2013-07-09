@@ -75,8 +75,6 @@ public class MainActivity extends Activity {
 		//Init filter settings
 		LinearLayout fsettings = (LinearLayout) findViewById(R.id.filterSettingsLayout);
 		filterSettings = new FilterSettings(fsettings, mainLayout, this, gridView, indexGrid);
-		
-		gridView.setOnScrollListener(new EndlessScroller(filterSettings, gridView, indexGrid));
     }
     
     public void initializeIndexGridLayout() {
@@ -160,6 +158,10 @@ public class MainActivity extends Activity {
 	public void filterSettingsFunction(View v) {
 		String tag = (String) v.getTag();
 		filterSettings.call(v, tag);
+	}
+	
+	public void setScrollListener() {
+		gridView.setOnScrollListener(new EndlessScroller(filterSettings, gridView, indexGrid));
 	}
 	
 	
