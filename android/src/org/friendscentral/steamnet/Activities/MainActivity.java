@@ -69,7 +69,6 @@ public class MainActivity extends Activity {
         initIdeaBucket();
 
 		sparkWizard = new SparkWizard(mainLayout, getFragmentManager());
-		sparkEventHandler = new SparkEventHandler(MainActivity.this, mainLayout, ideaBucket, gridView, indexGrid);
 		bucketHandler = new IdeaBucketEventHandler(MainActivity.this, ideaBucket, mainLayout, getFragmentManager());
 		
 		//Init filter settings
@@ -161,9 +160,16 @@ public class MainActivity extends Activity {
 	}
 	
 	public void setScrollListener() {
-		gridView.setOnScrollListener(new EndlessScroller(filterSettings, gridView, indexGrid));
+		gridView.setOnScrollListener(new EndlessScroller(filterSettings, gridView, indexGrid, this));
 	}
 	
+	public SparkEventHandler getSparkEventHandler() {
+		return sparkEventHandler;
+	}
+	
+	public void setSparkEventHandlers() {
+		sparkEventHandler = new SparkEventHandler(this, mainLayout, ideaBucket, gridView, indexGrid); 
+	}
 	
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

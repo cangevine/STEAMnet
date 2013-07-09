@@ -99,6 +99,7 @@ public class GetXIdeas {
 				indexGrid.setAdapter(a);
 				indexGrid.setJawns(ideas);
 				if (mainActivity != null) {
+					mainActivity.setSparkEventHandlers();
 					mainActivity.setScrollListener();
 				}
 			} catch (JSONException e) {

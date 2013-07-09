@@ -331,7 +331,6 @@ public class JawnAdapter extends BaseAdapter {
 			
 			v = ideaInfo;
     	}
-    	
     	return v;
     }
 

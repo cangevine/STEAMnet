@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.friendscentral.steamnet.BaseClasses.Jawn;
 
-import APIHandlers.RetrieveDataTaskGetXJawns;
+import APIHandlers.GetXJawns;
 import android.content.Context;
 import android.util.Log;
 import android.widget.GridView;
@@ -31,7 +31,7 @@ public class IndexGrid {
     		gridview.setAdapter(new SpinnerAdapter(context, 16));
     	
     		@SuppressWarnings("unused")
-    		RetrieveDataTaskGetXJawns task = new RetrieveDataTaskGetXJawns(16, gridview, this, context);
+    		GetXJawns task = new GetXJawns(50, gridview, this, context);
     	}
     	
     	Log.v("indexGrid", "Just called initIndexGrid! Success!");

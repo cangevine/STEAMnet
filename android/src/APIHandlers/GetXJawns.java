@@ -14,6 +14,7 @@ import org.friendscentral.steamnet.BaseClasses.Comment;
 import org.friendscentral.steamnet.BaseClasses.Idea;
 import org.friendscentral.steamnet.BaseClasses.Jawn;
 import org.friendscentral.steamnet.BaseClasses.Spark;
+import org.friendscentral.steamnet.EventHandlers.SparkEventHandler;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,6 +22,7 @@ import org.json.JSONObject;
 import com.json.parsers.JSONParser;
 import com.squareup.okhttp.OkHttpClient;
 
+import android.R;
 import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -102,6 +104,7 @@ public class GetXJawns {
 				indexGrid.setAdapter(a);
 				indexGrid.setJawns(jawns);
 				if (mainActivity != null) {
+					mainActivity.setSparkEventHandlers();
 					mainActivity.setScrollListener();
 				}
 			} catch (JSONException e) {
