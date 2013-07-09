@@ -80,7 +80,7 @@ public class FilterSettings {
 				JawnAdapter ja = indexgrid.getAdapter();
 				ja.notifyDataSetChanged();
 				indexgrid.setJawns(ja.getJawns());
-			} else {
+			} else if (box == 'I') {
 				sparkBox.setChecked(true);
 				RetrieveDataTaskGetXSparks r = new RetrieveDataTaskGetXSparks(16, gridview, indexgrid); 
 				JawnAdapter ja = indexgrid.getAdapter();
@@ -92,6 +92,14 @@ public class FilterSettings {
 	
 	public void sortRecent() {
 		sparkBoxChange('Q');
+	}
+	
+	public boolean getSparkBoxVal() {
+		return sparkBox.isChecked();
+	}
+	
+	public boolean getIdeaBoxVal() {
+		return ideaBox.isChecked();
 	}
 	
 	public void randomizeJawns() {

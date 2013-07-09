@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.friendscentral.steamnet.BaseClasses.Spark;
 
-import APIHandlers.PostIdea;
+import APIHandlers.RetrieveDataTaskPostIdea;
 import android.app.ActionBar.LayoutParams;
 import android.content.Context;
 import android.util.Log;
@@ -127,7 +127,7 @@ public class IdeaBucket {
 				}
 				
 				// TODO not just "max" every time. Spark.getUser 
-				PostIdea r = new PostIdea(description, s, tags.split(", "), "max");
+				RetrieveDataTaskPostIdea r = new RetrieveDataTaskPostIdea(description, s, tags.split(", "), "max");
 				
 				sparks.clear();
 				imageViews[0].setImageResource(0);

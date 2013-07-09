@@ -385,7 +385,7 @@ public class JawnAdapter extends BaseAdapter {
     }
     
     public void addAtPosition(Jawn j, int pos) {
-    	Jawn[] newSet = new Jawn[getJawns().length - 1];
+    	Jawn[] newSet = new Jawn[getJawns().length + 1];
     	for (int i = 0; i < pos; i++) {
     		newSet[i] = getJawns()[i];
     	}
@@ -394,6 +394,10 @@ public class JawnAdapter extends BaseAdapter {
     		newSet[i] = getJawns()[i - 1];
     	}
     	setJawns(newSet);
+    }
+    
+    public void append(Jawn j) {
+    	
     }
     
     public void shuffleJawns(Jawn[] arr) {
