@@ -46,6 +46,9 @@ GEM
       ruby-progressbar (~> 1.0)
     hike (1.2.3)
     i18n (0.6.4)
+    jbuilder (1.4.2)
+      activesupport (>= 3.0.0)
+      multi_json (>= 1.2.0)
     json (1.8.0)
     mail (2.5.4)
       mime-types (~> 1.16)
@@ -110,12 +113,6 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.37)
-<<<<<<< HEAD
-    uglifier (2.1.1)
-      execjs (>= 0.3.0)
-      multi_json (~> 1.0, >= 1.0.2)
-=======
->>>>>>> c72c7d9dccd21ac5bfd24fcc25918f33e992d3b1
     webrat (0.7.3)
       nokogiri (>= 1.2.0)
       rack (>= 1.0)
@@ -130,6 +127,7 @@ DEPENDENCIES
   factory_girl_rails
   faker
   fuubar
+  jbuilder
   json
   pg
   rails (= 4.0.0)
