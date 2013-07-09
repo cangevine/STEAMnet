@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 import org.friendscentral.steamnet.IndexGrid;
 import org.friendscentral.steamnet.JawnAdapter;
-import org.friendscentral.steamnet.Activities.MainActivity;
 import org.friendscentral.steamnet.BaseClasses.Comment;
 import org.friendscentral.steamnet.BaseClasses.Jawn;
 import org.friendscentral.steamnet.BaseClasses.Spark;
@@ -20,8 +19,6 @@ import org.json.JSONObject;
 import com.json.parsers.JSONParser;
 import com.squareup.okhttp.OkHttpClient;
 
-import android.app.Activity;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.GridView;
@@ -30,31 +27,27 @@ import android.widget.GridView;
  * @author SamBeckley
  * 
  */
-public class GetXSparks {
+public class AddXSparks {
 	char spark_type;
 	char content_type;
 	String content;
 	String user;
 	String[] tags;
 	String tagsString;
-	Context context;
-	Activity activity;
-	MainActivity mainActivity;
+	int currentTotal;
+	int limit;
 	
 	/** 
 	 * @param int X - returns the first X sparks (by createdAt)
 	 */
 	
-	public GetXSparks(int lim, GridView g, IndexGrid i, Context c) {
-		context = c;
-		activity = (Activity) context;
-		if (activity.getClass().getName().equals("org.friendscentral.steamnet.Activities.MainActivity")) {
-			mainActivity = (MainActivity) activity;
-		}
+	public AddXSparks(int lim, GridView g, IndexGrid i, int curTotal) {
+		currentTotal = curTotal;
+		limit = lim;
 		
 		Log.v("REPORT", "GET X SPARKS IS BEGGINING, SIR!");
 		OkHTTPTask task = new OkHTTPTask(g, i);
-		task.execute("http://steamnet.herokuapp.com/api/v1/sparks.json?limit="+lim);
+		task.execute("http://steamnet.herokuapp.com/api/v1/sparks.json?limit="+(limit+currentTotal));
 		
 	}
 	
@@ -92,15 +85,12 @@ public class GetXSparks {
         	Log.v("REPORT", "WE HAVE MOVED INTO THE POST EXECUTE PHASE, SIR!");
         	try {
         		Log.v("REPORT", "WE WILL BEGIN TO PARSE THE DATA, SIR!");
-				Jawn[] sparks = parseData(data);
-				Log.v("REPORT", "WE HAVE FINISHED PARSING THE DATA, SIR!");
-				Log.d("SPARKS", sparks.toString());
-				JawnAdapter a = new JawnAdapter(gridView.getContext(), sparks, 200);
+				Jawn[] jawns = parseData(data);
+				Log.v("JAWNS", Integer.toString(jawns.length));
+				JawnAdapter a = indexGrid.getAdapter();
 				Log.v("REPORT", "WE HAVE ACCESSED THE JAWNADAPTER AND ARE PROCEEDING AS PLANNED, SIR!");
-				indexGrid.setAdapter(a);
-				indexGrid.setJawns(sparks);
-				if (mainActivity != null) {
-					mainActivity.setScrollListener();
+				for (int i = limit; i < jawns.length; i++) {
+					a.addAtPosition(jawns[i], a.getJawns().length);
 				}
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block

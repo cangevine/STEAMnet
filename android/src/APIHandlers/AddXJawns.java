@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 import org.friendscentral.steamnet.IndexGrid;
 import org.friendscentral.steamnet.JawnAdapter;
-import org.friendscentral.steamnet.Activities.MainActivity;
 import org.friendscentral.steamnet.BaseClasses.Comment;
 import org.friendscentral.steamnet.BaseClasses.Idea;
 import org.friendscentral.steamnet.BaseClasses.Jawn;
@@ -21,8 +20,6 @@ import org.json.JSONObject;
 import com.json.parsers.JSONParser;
 import com.squareup.okhttp.OkHttpClient;
 
-import android.app.Activity;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.GridView;
@@ -31,31 +28,27 @@ import android.widget.GridView;
  * @author SamBeckley
  * 
  */
-public class GetXJawns {
+public class AddXJawns {
 	char spark_type;
 	char content_type;
 	String content;
 	String user;
 	String[] tags;
 	String tagsString;
-	Context context;
-	Activity activity;
-	MainActivity mainActivity;
+	int currentTotal;
+	int limit;
 	
 	/** 
 	 * @param int X - returns the first X sparks (by createdAt)
 	 */
 	
-	public GetXJawns(int lim, GridView g, IndexGrid i, Context c) {
-		context = c;
-		activity = (Activity) context;
-		if (activity.getClass().getName().equals("org.friendscentral.steamnet.Activities.MainActivity")) {
-			mainActivity = (MainActivity) activity;
-		}
+	public AddXJawns(int lim, GridView g, IndexGrid i, int curTotal) {
+		currentTotal = curTotal;
+		limit = lim;
 		
 		Log.v("REPORT", "THE TASK IS BEGGINING, SIR!");
 		OkHTTPTask task = new OkHTTPTask(g, i);
-		task.execute("http://steamnet.herokuapp.com/api/v1/jawns.json?limit="+lim);
+		task.execute("http://steamnet.herokuapp.com/api/v1/jawns.json?limit="+(lim+curTotal));
 		
 	}
 	
@@ -74,7 +67,7 @@ public class GetXJawns {
 		}
         
 		
-		@SuppressWarnings("unused")
+        @SuppressWarnings("unused")
 		private Exception exception;
         
         protected String doInBackground(String... urls) {
@@ -97,12 +90,10 @@ public class GetXJawns {
         		Log.v("REPORT", "WE WILL BEGIN TO PARSE THE DATA, SIR!");
 				Jawn[] jawns = parseData(data);
 				Log.v("JAWNS", Integer.toString(jawns.length));
-				JawnAdapter a = new JawnAdapter(gridView.getContext(), jawns, 200);
+				JawnAdapter a = indexGrid.getAdapter();
 				Log.v("REPORT", "WE HAVE ACCESSED THE JAWNADAPTER AND ARE PROCEEDING AS PLANNED, SIR!");
-				indexGrid.setAdapter(a);
-				indexGrid.setJawns(jawns);
-				if (mainActivity != null) {
-					mainActivity.setScrollListener();
+				for (int i = limit; i < jawns.length; i++) {
+					a.addAtPosition(jawns[i], a.getJawns().length);
 				}
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
@@ -152,11 +143,28 @@ public class GetXJawns {
     					String contentType = j.getString(CONTENT_TYPE);
     					String content = j.getString(CONTENT);
     					String createdAt = j.getString(CREATED_AT);
-    					String firstUser = "";    	        	     
-    	        	    
+    					String firstUser = "";
+    					//Getting Array of Users
+    	        	    JSONArray usersJSON = j.getJSONArray(USERS);
+    	        	     
+    	        	    // looping through All Users
+    	        	    //ArrayList<Integer> usersArrayList = new ArrayList<Integer>();
+    	        	    //int count = 0;
+    	        	    /*for(int q = 0; q < usersJSON.length(); q++){
+    	        	        JSONObject u = usersJSON.getJSONObject(i);
+    	        	        // Storing each json item in variable
+    	        	        if(count == 0){
+    	        	        	count++;
+    	        	        	firstUser = u.getString(USERNAME);
+    	        	        }
+    	        	        int userID = u.getInt(ID);
+    	        	        usersArrayList.add(userID);
+    	        	    }*/
     	        	    int[] usersArray = new int[1];
     	        	    usersArray[0] = 1;
-    	        	    
+    	        	    /*for(int q = 0; q < usersArrayList.size(); q++){
+    	        	    	usersArray[q] = usersArrayList.get(q);
+    	        	    }*/
     	        	    
     	        	    JSONArray commentsJSON = j.getJSONArray(COMMENTS);
     	        	    
@@ -210,10 +218,40 @@ public class GetXJawns {
                 	    }
                 	    
                 	    String firstUser = "";
+                	    //Getting Array of Users
+                	    //JSONArray usersJSON = j.getJSONArray(USERS);
                 	    
+                	    //looping through all Users
                 	    int[] userIds = new int[10];
                 	    userIds[0] = 1;
-                	   
+                	    /*int count = 0;
+                	    for(int q = 0; q < usersJSON.length(); q++){
+                	    	JSONObject u = usersJSON.getJSONObject(q);
+                	    	if(count == 0){
+                	    		firstUser = u.getString(USERNAME);
+                	    		count++;
+                	    	}
+                	    	userIds[q] = u.getInt(ID);
+                	    }*/
+                	    
+                	    //Getting Array of Created Ats
+                	    
+                	    //JSONArray createdAtsJSON = j.getJSONArray(CREATED_ATS);
+                	    
+                	    //Looping through All Created Ats
+                	    /*String[] createdAts = new String[10];
+                	    String firstCreatedAt = "";
+                	    int counter = 0;
+                	    for(int w = 0; w < ideasJSON.length(); w++){
+                	        JSONObject s = createdAtsJSON.getJSONObject(w);
+                	        // Storing each json item in variable
+                	        if(counter == 0){
+                	        	firstCreatedAt = s.getString(CREATED_AT);
+                	        	counter++;
+                	        }
+                	        String createdAt = s.getString(CREATED_AT);
+                	        createdAts[w] = createdAt;
+                	    }*/
                 	    
                 	    JSONArray commentsJSON = j.getJSONArray(COMMENTS);
     	        	    

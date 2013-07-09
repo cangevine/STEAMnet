@@ -5,8 +5,9 @@ import org.friendscentral.steamnet.SparkWizardFragments.ContentEntry;
 import org.friendscentral.steamnet.SparkWizardFragments.ContentTypeChooser;
 import org.friendscentral.steamnet.SparkWizardFragments.SparkTypeChooser;
 
-import APIHandlers.PostSpark;
+import APIHandlers.RetrieveDataTaskPostSpark;
 import android.app.ActionBar.LayoutParams;
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.test.suitebuilder.annotation.Suppress;
@@ -25,10 +26,10 @@ public class SparkWizard {
 	
 	//Methods for the Wizard Fragments:
 			//Very similar, could probably be consolidated
-	public void openContentTypeChooser(View v) {
+	public void openContentTypeChooser(View v, char type) {
 		updateWeights(5, 3, 1);
 		
-		ContentTypeChooser ctc = new ContentTypeChooser();
+		ContentTypeChooser ctc = new ContentTypeChooser(type);
 		FragmentTransaction ft = fm.beginTransaction();
 		ft.replace(R.id.WizardSection, ctc);
 		ft.addToBackStack(null);
@@ -56,7 +57,7 @@ public class SparkWizard {
 	}
 	
 	public void submitSpark(View v, Spark s, GridView g, IndexGrid i) {
-		PostSpark task = new PostSpark(s.getSparkType(), s.getContentType(), s.getContent(), g, i);
+		RetrieveDataTaskPostSpark task = new RetrieveDataTaskPostSpark(s.getSparkType(), s.getContentType(), s.getContent(), g, i);
 		
 		revertWizard(v);
 	}
@@ -67,6 +68,9 @@ public class SparkWizard {
     	mainLayout.findViewById(R.id.IdeaBucket).setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 0, ib));
     }
 	
+	public Fragment getFragment(int id) {
+		return fm.findFragmentById(id);
+	}
 	//Set up the auto-weighting for each Sidebar componant:
 		//Needs updating, to include descendants...
 	/*findViewById(R.id.WizardSection).setOnClickListener(new OnClickListener() {
