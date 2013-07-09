@@ -4,9 +4,9 @@ import org.friendscentral.steamnet.FilterSettings;
 import org.friendscentral.steamnet.IndexGrid;
 import org.friendscentral.steamnet.JawnAdapter;
 
+import APIHandlers.AddXIdeas;
 import APIHandlers.AddXJawns;
-import APIHandlers.GetXIdeas;
-import APIHandlers.RetrieveDataTaskGetXSparks;
+import APIHandlers.AddXSparks;
 import android.app.ListActivity;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
@@ -38,9 +38,9 @@ public class EndlessScroller extends ListActivity implements OnScrollListener {
 	    	if (sparks && ideas) {
 	    		AddXJawns a = new AddXJawns(16, gridview, indexgrid, totalCount); 
 	    	} else if (sparks && !ideas) {
-	    		RetrieveDataTaskGetXSparks r = new RetrieveDataTaskGetXSparks(newTotal, gridview, indexgrid); 
+	    		AddXSparks a = new AddXSparks(16, gridview, indexgrid, totalCount); 
 	    	} else if (!sparks && ideas) {
-	    		GetXIdeas i = new GetXIdeas(newTotal, gridview, indexgrid);
+	    		AddXIdeas a = new AddXIdeas(16, gridview, indexgrid, totalCount);
 	    	}
 	    	JawnAdapter ja = indexgrid.getAdapter();
 			ja.notifyDataSetChanged();
