@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import org.friendscentral.steamnet.IndexGrid;
 import org.friendscentral.steamnet.JawnAdapter;
+import org.friendscentral.steamnet.Activities.MainActivity;
 import org.friendscentral.steamnet.BaseClasses.Comment;
 import org.friendscentral.steamnet.BaseClasses.Idea;
 import org.friendscentral.steamnet.BaseClasses.Jawn;
@@ -19,6 +20,8 @@ import org.json.JSONObject;
 import com.json.parsers.JSONParser;
 import com.squareup.okhttp.OkHttpClient;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.GridView;
@@ -34,12 +37,20 @@ public class GetXIdeas {
 	String user;
 	String[] tags;
 	String tagsString;
+	Context context;
+	Activity activity;
+	MainActivity mainActivity;
 	
 	/** 
 	 * @param int X - returns the first X ideas (by createdAt)
 	 */
 	
-	public GetXIdeas(int lim, GridView g, IndexGrid i) {
+	public GetXIdeas(int lim, GridView g, IndexGrid i, Context c) {
+		context = c;
+		activity = (Activity) context;
+		if (activity.getClass().getName().equals("org.friendscentral.steamnet.Activities.MainActivity")) {
+			mainActivity = (MainActivity) activity;
+		}
 		
 		Log.v("REPORT", "GET X IDEAS IS BEGGINING, SIR!");
 		OkHTTPTask task = new OkHTTPTask(g, i);
@@ -87,6 +98,9 @@ public class GetXIdeas {
 				Log.v("REPORT", "WE HAVE ACCESSED THE JAWNADAPTER AND ARE PROCEEDING AS PLANNED, SIR!");
 				indexGrid.setAdapter(a);
 				indexGrid.setJawns(ideas);
+				if (mainActivity != null) {
+					mainActivity.setScrollListener();
+				}
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

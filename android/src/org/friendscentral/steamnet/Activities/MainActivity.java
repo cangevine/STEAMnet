@@ -7,8 +7,10 @@ import org.friendscentral.steamnet.JawnAdapter;
 import org.friendscentral.steamnet.R;
 import org.friendscentral.steamnet.SparkWizard;
 import org.friendscentral.steamnet.BaseClasses.Spark;
+import org.friendscentral.steamnet.EventHandlers.EndlessScroller;
 import org.friendscentral.steamnet.EventHandlers.IdeaBucketEventHandler;
 import org.friendscentral.steamnet.EventHandlers.SparkEventHandler;
+import org.friendscentral.steamnet.SparkWizardFragments.ContentTypeChooser;
 import org.friendscentral.steamnet.SparkWizardFragments.SparkTypeChooser;
 
 import android.app.ActionBar.LayoutParams;
@@ -34,6 +36,7 @@ public class MainActivity extends Activity {
     SparkWizard sparkWizard;
     SparkEventHandler sparkEventHandler;
     IdeaBucketEventHandler bucketHandler;
+    LinearLayout wizardSection;
     
     IdeaBucket ideaBucket;
     LinearLayout mainLayout;
@@ -52,6 +55,7 @@ public class MainActivity extends Activity {
         findViewById(R.id.DummyFocus).requestFocus();
         
         //Initialize the Wizard Fragment:
+        wizardSection = (LinearLayout) findViewById(R.id.WizardSection);
         FragmentManager fm = getFragmentManager();
 		FragmentTransaction ft = fm.beginTransaction();
 		SparkTypeChooser stc = new SparkTypeChooser();
@@ -101,14 +105,14 @@ public class MainActivity extends Activity {
 		if (tag.equals("openContentTypeChooser")) {
 			
 			if (v.getId() == R.id.Inspiration_button) {
-				sparkType = "I".charAt(0);
+				sparkType = 'I';
 			} else if (v.getId() == R.id.What_if_button) {
-				sparkType = "W".charAt(0);
+				sparkType = 'W';
 			} else if (v.getId() == R.id.Problem_button) {
-				sparkType = "P".charAt(0);
+				sparkType = 'P';
 			}
 						
-			sparkWizard.openContentTypeChooser(v);
+			sparkWizard.openContentTypeChooser(v, sparkType);
 			
 		} else if (tag.equals("revertWizard")) {
 			
@@ -154,6 +158,10 @@ public class MainActivity extends Activity {
 	public void filterSettingsFunction(View v) {
 		String tag = (String) v.getTag();
 		filterSettings.call(v, tag);
+	}
+	
+	public void setScrollListener() {
+		gridView.setOnScrollListener(new EndlessScroller(filterSettings, gridView, indexGrid));
 	}
 	
 	
