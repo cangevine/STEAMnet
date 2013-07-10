@@ -29,8 +29,6 @@ class V1::JawnsController < ApplicationController
         @jawns = (sparks + ideas).sort_by(&:created_at).reverse
       end
     end
-    
-    respond_with @jawns
   end
   
 end
