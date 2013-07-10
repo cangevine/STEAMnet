@@ -6,6 +6,11 @@ gem 'rails', '4.0.0'
 gem 'json'
 gem 'faker'
 
+gem 'jquery-rails' # TODO: figure out a way to get rid of these without heroku errrors
+gem 'sass-rails', '~> 4.0.0'
+gem 'uglifier', '>= 1.3.0'
+gem 'coffee-rails', '~> 4.0.0'
+
 group :development, :test do
   gem 'sqlite3'
   
