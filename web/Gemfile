@@ -23,7 +23,7 @@ end
 
 group :production do
 	gem 'pg'
-  gem 'faker'
+  gem 'rails_12factor'
 end
 
 # To use ActiveModel has_secure_password
