@@ -10,15 +10,11 @@ class V1::IdeasController < ApplicationController
     else
       @ideas = Idea.order("id DESC")
     end
-    
-    respond_with @ideas
   end
   
   # GET /ideas/1.json
   def show
     @idea = Idea.find(params[:id])
-    
-    respond_with @idea
   end
   
   # POST /ideas.json
@@ -49,7 +45,7 @@ class V1::IdeasController < ApplicationController
           @user.ideas << @idea
         end
 
-        respond_with @idea, :location => ["v1", @idea]
+        render "show"
       else
         hash = { :error => "Invalid sparks." }
 
@@ -74,9 +70,7 @@ class V1::IdeasController < ApplicationController
       @idea.user = nil
       @idea.save
       
-      respond_to do |format|
-        format.json { render :json => @idea, :status => :ok }
-      end
+      render "show", :status => :ok
     end
   end
   
