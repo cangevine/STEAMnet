@@ -7,7 +7,7 @@ class V1::CommentsController < ApplicationController
   
   # GET /comments.json
   def index
-    respond_with @jawn.comments
+    @comments = @jawn.comments
   end
   
   # GET /comments/1.json
@@ -23,7 +23,8 @@ class V1::CommentsController < ApplicationController
     
     @comment.save
     
-    respond_with @comment, :location => ["v1", @jawn, @comment]
+    # respond_with @comment, :location => ["v1", @jawn, @comment]
+    render "show"
   end
   
   # DELETE /comments/1.json
