@@ -12,7 +12,7 @@ class V1::CommentsController < ApplicationController
   
   # GET /comments/1.json
   def show
-    respond_with @comment
+    # Easiest function ever
   end
   
   # POST /comments.json
@@ -23,7 +23,6 @@ class V1::CommentsController < ApplicationController
     
     @comment.save
     
-    # respond_with @comment, :location => ["v1", @jawn, @comment]
     render "show"
   end
   
