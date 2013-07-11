@@ -5,7 +5,7 @@ json.users spark.users, :id, :name, :email
 json.ideas spark.ideas, :id, :created_at, :description
 
 json.comments spark.comments do |comment|
-  json.(comment, :comment_text, :created_at)
+  json.(comment, :id, :comment_text, :created_at)
   json.user comment.user, :id, :name, :email
 end
 

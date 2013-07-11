@@ -5,7 +5,7 @@ json.user idea.user, :id, :name, :email if idea.user
 json.sparks idea.sparks, :id, :created_at, :spark_type, :content_type, :content, :content_hash
 
 json.comments idea.comments do |comment|
-  json.(comment, :comment_text, :created_at)
+  json.(comment, :id, :comment_text, :created_at)
   json.user comment.user, :id, :name, :email
 end
 
