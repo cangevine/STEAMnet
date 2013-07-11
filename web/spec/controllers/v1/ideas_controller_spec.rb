@@ -21,12 +21,26 @@ describe V1::IdeasController do
     
     it "returns the correct ideas" do
       get :index, :format => 'json', :token => @auth_token
-      response.body.should == @ideas.to_json
+      output = JSON.parse(response.body)
+      
+      output.should be_a_kind_of(Array)
+      output.length.should == @ideas.length
+      
+      output.each_with_index do |idea, index|
+        idea["description"].should == @ideas[index].description
+      end
     end
     
     it "limits the ideas correctly" do
       get :index, :format => 'json', :limit => 10, :token => @auth_token
-      response.body.should == @ideas.take(10).to_json
+      output = JSON.parse(response.body)
+      
+      output.should be_a_kind_of(Array)
+      output.length.should == 10
+      
+      output.each_with_index do |idea, index|
+        idea["description"].should == @ideas[index].description
+      end
     end
     
   end
@@ -44,7 +58,10 @@ describe V1::IdeasController do
     
     it "returns the correct idea" do
       get :show, :id => @idea, :format => 'json', :token => @auth_token
-      response.body.should == @idea.to_json
+      output = JSON.parse(response.body)
+      
+      output.should be_a_kind_of(Hash)
+      output["description"].should == @idea.description
     end
     
   end
@@ -125,7 +142,10 @@ describe V1::IdeasController do
       it "should return the idea" do
         post :create, :idea => @attr, :format => 'json', :username => @user.name, :sparks => @sparks, :token => @auth_token
         @idea = Idea.last
-        response.body.should == @idea.to_json
+        output = JSON.parse(response.body)
+
+        output.should be_a_kind_of(Hash)
+        output["description"].should == @idea.description
       end
       
     end
@@ -199,7 +219,10 @@ describe V1::IdeasController do
     it "returns the idea" do
       delete :destroy, :id => @idea, :format => 'json', :username => @user.name, :token => @auth_token
       @idea.reload
-      response.body.should == @idea.to_json
+      output = JSON.parse(response.body)
+      
+      output.should be_a_kind_of(Hash)
+      output["description"].should == @idea.description
     end
     
   end

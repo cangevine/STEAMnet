@@ -19,7 +19,14 @@ describe V1::UsersController do
     
     it "returns the correct users" do
       get :index, :format => 'json', :token => @auth_token
-      response.body.should == @users.to_json
+      output = JSON.parse(response.body)
+      
+      output.should be_a_kind_of(Array)
+      output.length.should == @users.length
+      
+      output.each_with_index do |user, index|
+        user["name"].should == @users[index].name
+      end
     end
     
   end
@@ -37,7 +44,10 @@ describe V1::UsersController do
     
     it "returns the correct user" do
       get :show, :id => @user, :format => 'json', :token => @auth_token
-      response.body.should == @user.to_json
+      output = JSON.parse(response.body)
+      
+      output.should be_a_kind_of(Hash)
+      output["name"].should == @user.name
     end
     
   end
@@ -68,7 +78,10 @@ describe V1::UsersController do
       
       it "should return the user" do
         post :create, :user => @attr, :format => 'json', :token => @auth_token
-        response.body.should == User.find_by(name: @attr[:name]).to_json
+        output = JSON.parse(response.body)
+
+        output.should be_a_kind_of(Hash)
+        output["name"].should == @attr[:name]
       end
       
     end
@@ -115,6 +128,17 @@ describe V1::UsersController do
       @user.reload
       @user.name.should == @attr[:name]
       @user.email.should == @attr[:email]
+    end
+    
+    it "returns the user" do
+      patch :update, :id => @user, :user => @attr, :format => 'json', :token => @auth_token
+      
+      @user.reload
+      
+      output = JSON.parse(response.body)
+      
+      output.should be_a_kind_of(Hash)
+      output["name"].should == @user.name
     end
     
   end

@@ -19,7 +19,10 @@ class Tag < ActiveRecord::Base
   
   validates :tag_text, :presence => true, :format => { :with => /\A[A-Za-z\d_-]+\z/, :message => "must be alphanumerical" }, :uniqueness => { :case_sensitive => true }
   
-  def as_json(options={})
-    super(:include => [:sparks, :ideas])
+  def jawns
+    sparks = self.sparks.order("id DESC")
+    ideas = self.ideas.order("id DESC")
+
+    (sparks + ideas).sort_by(&:created_at).reverse
   end
 end

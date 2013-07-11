@@ -105,6 +105,3 @@ end
     comment.save
   end
 end
-
-puts users
-puts sparks

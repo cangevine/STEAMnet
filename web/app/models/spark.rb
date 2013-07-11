@@ -27,12 +27,6 @@ class Spark < ActiveRecord::Base
   
   before_validation :hash_content
   
-  def as_json(options={})
-    json = super(:include => [:tags, :comments, :users])
-    json[:jawn_type] = "spark"
-    return json
-  end
-  
   def duplicate?
     return (self.errors.to_hash.length == 1) && (self.errors.to_hash.keys[0] == :content_hash)
   end

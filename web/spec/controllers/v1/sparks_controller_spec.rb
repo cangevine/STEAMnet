@@ -21,12 +21,26 @@ describe V1::SparksController do
     
     it "returns the correct sparks" do
       get :index, :format => 'json', :token => @auth_token
-      response.body.should == @sparks.to_json
+      output = JSON.parse(response.body)
+      
+      output.should be_a_kind_of(Array)
+      output.length.should == @sparks.length
+      
+      output.each_with_index do |spark, index|
+        spark["content_hash"].should == @sparks[index].content_hash
+      end
     end
     
     it "limits the sparks correctly" do
       get :index, :format => 'json', :limit => 10, :token => @auth_token
-      response.body.should == @sparks.take(10).to_json
+      output = JSON.parse(response.body)
+      
+      output.should be_a_kind_of(Array)
+      output.length.should == 10
+      
+      output.each_with_index do |spark, index|
+        spark["content_hash"].should == @sparks[index].content_hash
+      end
     end
     
   end
@@ -44,7 +58,10 @@ describe V1::SparksController do
     
     it "returns the correct spark" do
       get :show, :id => @spark, :format => 'json', :token => @auth_token
-      response.body.should == @spark.to_json
+      output = JSON.parse(response.body)
+      
+      output.should be_a_kind_of(Hash)
+      output["content_hash"].should == @spark.content_hash
     end
     
   end
@@ -72,12 +89,13 @@ describe V1::SparksController do
         expect {
           post :create, :spark => @attr, :format => 'json', :username => @user.name, :token => @auth_token
         }.to change { Spark.count }.by(1)
+        
+        Spark.last.content.should == @attr[:content]
       end
       
       it "should add the user to the spark" do
         post :create, :spark => @attr, :format => 'json', :username => @user.name, :token => @auth_token
-        @spark = Spark.last
-        @spark.users.should == [@user]
+        Spark.last.users.should == [@user]
       end
       
       it "should add tags to the spark" do
@@ -89,8 +107,7 @@ describe V1::SparksController do
         
         post :create, :spark => @attr, :format => 'json', :username => @user.name, :tags => tags, :token => @auth_token
         
-        @spark = Spark.last
-        @spark.tags.should == [t1,t2,t3]
+        Spark.last.tags.should == [t1,t2,t3]
       end
       
       it "should create new tags" do
@@ -109,8 +126,11 @@ describe V1::SparksController do
       
       it "should return the spark" do
         post :create, :spark => @attr, :format => 'json', :username => @user.name, :token => @auth_token
-        @spark = Spark.last
-        response.body.should == @spark.to_json
+        output = JSON.parse(response.body)
+
+        output.should be_a_kind_of(Hash)
+        output["content_hash"].should == Spark.last.content_hash
+        output["tags"].should == Spark.last.tags.map(&:tag_text)
       end
       
     end
@@ -161,7 +181,10 @@ describe V1::SparksController do
       
       it "should return the spark" do
         post :create, :spark => @attr, :format => 'json', :username => @user2.name, :token => @auth_token
-        response.body.should == @spark.to_json
+        output = JSON.parse(response.body)
+
+        output.should be_a_kind_of(Hash)
+        output["content_hash"].should == @spark.content_hash
       end
       
     end
@@ -196,7 +219,10 @@ describe V1::SparksController do
     it "returns the spark" do
       delete :destroy, :id => @spark, :format => 'json', :username => @user.name, :token => @auth_token
       @spark.reload
-      response.body.should == @spark.to_json
+      output = JSON.parse(response.body)
+
+      output.should be_a_kind_of(Hash)
+      output["content_hash"].should == @spark.content_hash
     end
     
   end

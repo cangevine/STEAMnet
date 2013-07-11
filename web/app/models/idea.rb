@@ -15,10 +15,4 @@ class Idea < ActiveRecord::Base
   has_many :comments, :as => :commentable, :dependent => :destroy
   has_many :tags, :through => :tag_linkers
   has_many :tag_linkers, :as => :tagable
-  
-  def as_json(options={})
-    json = super(:include => [:sparks, :tags, :comments, :user])
-    json[:jawn_type] = "idea"
-    return json
-  end
 end

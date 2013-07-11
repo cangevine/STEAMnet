@@ -40,7 +40,14 @@ describe V1::CommentsController do
 
       it "returns the correct comments" do
         get :index, :spark_id => @spark, :format => 'json', :token => @auth_token
-        response.body.should == @spark_comments.to_json
+        output = JSON.parse(response.body)
+
+        output.should be_a_kind_of(Array)
+        output.length.should == @spark.comments.length
+
+        output.each_with_index do |comment, index|
+          comment["comment_text"].should == @spark.comments[index].comment_text
+        end
       end
       
     end
@@ -54,7 +61,14 @@ describe V1::CommentsController do
 
       it "returns the correct comments" do
         get :index, :idea_id => @idea, :format => 'json', :token => @auth_token
-        response.body.should == @idea_comments.to_json
+        output = JSON.parse(response.body)
+
+        output.should be_a_kind_of(Array)
+        output.length.should == @idea.comments.length
+
+        output.each_with_index do |comment, index|
+          comment["comment_text"].should == @idea.comments[index].comment_text
+        end
       end
       
     end
@@ -86,7 +100,10 @@ describe V1::CommentsController do
 
       it "returns the correct comment" do
         get :show, :spark_id => @spark, :id => @spark_comment, :format => 'json', :token => @auth_token
-        response.body.should == @spark_comment.to_json
+        output = JSON.parse(response.body)
+
+        output.should be_a_kind_of(Hash)
+        output["comment_text"].should == @spark_comment.comment_text
       end
       
     end
@@ -100,7 +117,10 @@ describe V1::CommentsController do
 
       it "returns the correct comment" do
         get :show, :idea_id => @idea, :id => @idea_comment, :format => 'json', :token => @auth_token
-        response.body.should == @idea_comment.to_json
+        output = JSON.parse(response.body)
+
+        output.should be_a_kind_of(Hash)
+        output["comment_text"].should == @idea_comment.comment_text
       end
       
     end
@@ -130,7 +150,10 @@ describe V1::CommentsController do
       
       it "should return the comment" do
         post :create, :spark_id => @spark, :comment => @attr, :username => @user.name, :format => 'json', :token => @auth_token
-        response.body.should == Comment.last.to_json
+        output = JSON.parse(response.body)
+
+        output.should be_a_kind_of(Hash)
+        output["comment_text"].should == @attr[:comment_text]
       end
       
       it "should associate the user and the comment" do
@@ -162,7 +185,10 @@ describe V1::CommentsController do
       
       it "should return the comment" do
         post :create, :idea_id => @idea, :comment => @attr, :username => @user.name, :format => 'json', :token => @auth_token
-        response.body.should == Comment.last.to_json
+        output = JSON.parse(response.body)
+
+        output.should be_a_kind_of(Hash)
+        output["comment_text"].should == @attr[:comment_text]
       end
       
       it "should associate the user and the comment" do

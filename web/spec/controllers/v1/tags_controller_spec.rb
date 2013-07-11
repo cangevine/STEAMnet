@@ -19,7 +19,14 @@ describe V1::TagsController do
     
     it "returns the correct tags" do
       get :index, :format => 'json', :token => @auth_token
-      response.body.should == @tags.to_json
+      output = JSON.parse(response.body)
+      
+      output.should be_a_kind_of(Array)
+      output.length.should == @tags.length
+      
+      output.each_with_index do |tag, index|
+        tag["tag_text"].should == @tags[index].tag_text
+      end
     end
     
   end
@@ -37,7 +44,11 @@ describe V1::TagsController do
     
     it "returns the correct tag" do
       get :show, :id => @tag.tag_text, :format => 'json', :token => @auth_token
-      response.body.should == @tag.to_json
+      output = JSON.parse(response.body)
+      
+      output.should be_a_kind_of(Hash)
+      output["tag_text"].should == @tag.tag_text
+      output["jawns"].should be_a_kind_of(Array)
     end
     
   end

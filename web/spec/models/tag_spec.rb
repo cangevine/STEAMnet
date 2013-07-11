@@ -117,4 +117,35 @@ describe Tag do
     
   end
   
+  describe "jawns helper" do
+    
+    before(:each) do
+      @tag = Tag.create(@attr)
+      
+      @jawns = []
+      
+      20.times do
+        if [true, false].sample
+          jawn = FactoryGirl.create(:idea)
+        else
+          jawn = FactoryGirl.create(:spark)
+        end
+        
+        jawn.tags << @tag
+        @jawns << jawn
+      end
+      
+      @jawns.reverse!
+    end
+    
+    it "has a jawns method" do
+      @tag.should respond_to(:jawns)
+    end
+    
+    it "returns the correct jawns" do
+      @tag.jawns.should == @jawns
+    end
+    
+  end
+  
 end
