@@ -23,10 +23,6 @@ class Tag < ActiveRecord::Base
     sparks = self.sparks.order("id DESC")
     ideas = self.ideas.order("id DESC")
 
-    return (sparks + ideas).sort_by(&:created_at).reverse
-  end
-  
-  def as_json(options={})
-    super(:include => [:sparks, :ideas])
+    (sparks + ideas).sort_by(&:created_at).reverse
   end
 end
