@@ -5,31 +5,31 @@ class V1::UsersController < ApplicationController
   # GET /users.json
   def index
     @users = User.all
-
-    respond_with @users
   end
   
   # GET /users/1.json
   def show
     @user = User.find_by(name: params[:id])
-
-    respond_with @user
   end
   
   # POST /users.json
   def create
     @user = User.new(user_params)
-    @user.save
     
-    respond_with @user, :location => ["v1", @user]
+    if @user.save
+      render "show"
+    else
+      head :unprocessable_entity
+    end
   end
   
   # PUT /users/1.json
   def update
     @user = User.find_by(name: params[:id])
-    @user.update_attributes(user_params)
     
-    respond_with @user, :stautus => :ok
+    if @user.update_attributes(user_params)
+      render "show", :status => :ok
+    end
   end
   
   # DELETE /users/1.json

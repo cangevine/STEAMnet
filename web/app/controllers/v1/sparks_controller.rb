@@ -10,15 +10,11 @@ class V1::SparksController < ApplicationController
     else
       @sparks = Spark.order("id DESC")
     end
-    
-    respond_with @sparks
   end
   
   # GET /sparks/1.json
   def show
     @spark = Spark.find(params[:id])
-    
-    respond_with @spark
   end
   
   # POST /sparks.json
@@ -29,6 +25,8 @@ class V1::SparksController < ApplicationController
       add_tags_to @spark
       
       @user.sparks << @spark
+      
+      render "show"
     elsif @spark.duplicate?
       # TODO: Handle the different spark_types provided by multiple users
       
@@ -37,9 +35,11 @@ class V1::SparksController < ApplicationController
       unless(@spark.users.include?(@user))
         @spark.users << @user
       end
+      
+      render "show"
+    else
+      head :unprocessable_entity
     end
-    
-    respond_with @spark, :location => ["v1", @spark]
   end
   
   # DELETE /sparks/1.json
@@ -49,9 +49,7 @@ class V1::SparksController < ApplicationController
     if @spark && @spark.users.include?(@user)
       @spark.users.delete(@user)
       
-      respond_to do |format|
-        format.json { render :json => @spark, :status => :ok }
-      end
+      render "show", :status => :ok
     end
   end
   
