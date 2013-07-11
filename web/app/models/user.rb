@@ -22,5 +22,5 @@ class User < ActiveRecord::Base
   has_many :comments
   
   validates :email, :presence => true, :format => { :with => /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/, :message => "must be a valid email address" }, :uniqueness => { :case_sensitive => false }
-  validates :name, :presence => true, :format => { :with => /\A[A-Za-z\d_-]+\z/, :message => "must be alphanumerical" }, :uniqueness => { :case_sensitive => false }
+  validates :name, :presence => true
 end
