@@ -1,5 +1,7 @@
 Steamnet::Application.routes.draw do
   
+  post '/auth/:provider/callback', to: 'authorizations#create'
+  
   scope "api" do
     
     namespace :v1 do
@@ -21,8 +23,9 @@ Steamnet::Application.routes.draw do
 end
 
 #== Route Map
-# Generated on 26 Jun 2013 20:37
+# Generated on 11 Jul 2013 17:18
 #
+#                   POST   /auth/:provider/callback(.:format)              authorizations#create
 #  v1_idea_comments GET    /api/v1/ideas/:idea_id/comments(.:format)       v1/comments#index
 #                   POST   /api/v1/ideas/:idea_id/comments(.:format)       v1/comments#create
 #   v1_idea_comment GET    /api/v1/ideas/:idea_id/comments/:id(.:format)   v1/comments#show
