@@ -2,6 +2,10 @@ class AuthenticationsController < ApplicationController
   
   respond_to :json
   
+  def index
+    
+  end
+  
   def create
     puts request.env["omniauth.auth"]
     
