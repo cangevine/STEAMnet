@@ -1,1 +1,18 @@
-<h1>Hello world</h1>
+<div id="main">
+
+	<h1>Log in using one of these services:</h1>
+	
+	<ul>
+	<% unless Rails.env.production? %>
+		<li class="provider group"><a href="/auth/developer">
+			<div class="center"><%= image_tag "http://placekitten.com/64/64", :size => "64x64" %><p>Developer</p></div>
+		</a></li>
+	<% end %>
+	<% for provider in %w[twitter facebook] %>
+		<li class="provider group"><a href="/auth/<%= provider %>">
+			<div class="center"><%= image_tag "#{provider}_64.png", :size => "64x64" %><p><%= provider.capitalize %></p></div>
+		</a></li>
+	<% end %>
+	</ul>
+
+</div>
