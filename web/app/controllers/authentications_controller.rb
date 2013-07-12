@@ -1,5 +1,7 @@
 class AuthenticationsController < ApplicationController
   
+  respond_to :json
+  
   def create
     puts request.env["omniauth.auth"]
     
@@ -8,7 +10,7 @@ class AuthenticationsController < ApplicationController
     if authentication
       user = authentication.user
     else
-      user = User.create(name: auth['info']['name'], email: auth['info']['email'], password: 'test', password_confirmation: 'test')
+      user = User.create(name: auth['info']['name'], email: auth['info']['email'])
       user.authentications.create(provider: auth['provider'], uid: auth['uid'])
     end
     
