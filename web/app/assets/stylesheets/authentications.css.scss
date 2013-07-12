@@ -9,17 +9,21 @@ h1 {
 	font-weight: bold;
 	font-size: 30px;
 	color: $gray;
+	padding-bottom: 20px;
+	border-bottom: 1px solid $gray;
 }
 
 body {
 	font-family: Helvetica, Arial, sans-serif;
 	font-size: 100%;
-	background: #fff;
+	background: #ddd;
 }
 
 #main {
 	width: 50%;
 	margin: 40px auto;
+	padding: 30px;
+	background: white;
 }
 
 ul {
@@ -31,23 +35,35 @@ ul {
 	margin: 20px 0 20px 0;
 	padding: 10px;
 	border-radius: 10px;
-	border: 1px solid $gray;
-	
-	.center {
-		width: 2	00px;
-		margin: 0 auto;
-	}
 	
 	img {
 		float: left;
-		margin-right: 10px;
+		margin-right: 15px;
 	}
 	
 	p {
 		line-height: 60px;
-		font-size: 18px;
+		font-size: 24px;
 		font-weight: bold;
+		width: 50%;
+		float: left;
 	}
+}
+
+.arrow-right {
+	float: right;
+	margin: 17px 10px 0 0;
+	
+	width: 0; 
+	height: 0; 
+	border-top: 15px solid transparent;
+	border-bottom: 15px solid transparent;
+	
+	border-left: 23px solid rgba(255,255,255,.8);
+}
+
+li:last-child {
+	margin: 0;
 }
 
 .provider:active {
