@@ -12,17 +12,6 @@ class V1::UsersController < ApplicationController
     @user = User.find_by(name: params[:id])
   end
   
-  # POST /users.json
-  def create
-    @user = User.new(user_params)
-    
-    if @user.save
-      render "show"
-    else
-      head :unprocessable_entity
-    end
-  end
-  
   # PUT /users/1.json
   def update
     @user = User.find_by(name: params[:id])

@@ -10,7 +10,7 @@ Steamnet::Application.routes.draw do
         resources :comments, :except => [:new, :edit, :update]
       end
       
-      resources :users, :except => [:new, :edit]
+      resources :users, :except => [:create, :new, :edit]
       
       resources :tags, :only => [:index, :show]
       

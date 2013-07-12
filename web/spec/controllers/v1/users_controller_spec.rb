@@ -52,59 +52,6 @@ describe V1::UsersController do
     
   end
   
-  describe "POST 'create'" do
-    
-    before(:each) do
-      @attr = {
-        :name   => "max",
-        :email  => "max@luzuriaga.com"
-      }
-    end
-    
-    describe "for a new valid user" do
-      
-      it "is successful" do
-        post :create, :user => @attr, :format => 'json', :token => @auth_token
-        response.should be_success
-      end
-    
-      it "should create the user" do
-        expect {
-          post :create, :user => @attr, :format => 'json', :token => @auth_token
-        }.to change { User.count }.by(1)
-      end
-      
-      it "should return the user" do
-        post :create, :user => @attr, :format => 'json', :token => @auth_token
-        output = JSON.parse(response.body)
-
-        output.should be_a_kind_of(Hash)
-        output["name"].should == @attr[:name]
-      end
-      
-    end
-    
-    describe "for a new invalid user" do
-      
-      before(:each) do
-        @attr[:name] = ""
-      end
-      
-      it "isn't successful" do
-        post :create, :user => @attr, :format => 'json', :token => @auth_token
-        response.should_not be_success
-      end
-    
-      it "shouldn't create the user" do
-        expect {
-          post :create, :user => @attr, :format => 'json', :token => @auth_token
-        }.not_to change { User.count }
-      end
-      
-    end
-    
-  end
-  
   describe "PUT 'update'" do
     
     before(:each) do
