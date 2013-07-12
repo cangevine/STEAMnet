@@ -22,6 +22,6 @@ class Device < ActiveRecord::Base
     def generate_token
       begin
         self.token = SecureRandom.hex
-      end while self.class.exists?(access_token: access_token)
+      end while self.class.exists?(token: token)
     end
 end
