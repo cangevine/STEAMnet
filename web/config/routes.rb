@@ -1,6 +1,6 @@
 Steamnet::Application.routes.draw do
   
-  post '/auth/:provider/callback', to: 'authorizations#create'
+  match '/auth/:provider/callback', to: 'authentications#create', :via => [:get, :post]
   
   scope "api" do
     
