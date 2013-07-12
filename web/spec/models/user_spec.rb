@@ -2,12 +2,11 @@
 #
 # Table name: users
 #
-#  id              :integer          not null, primary key
-#  name            :string(255)
-#  password_digest :text
-#  email           :string(255)
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
+#  id         :integer          not null, primary key
+#  name       :string(255)
+#  email      :string(255)
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
 #
 
 require 'spec_helper'
@@ -16,10 +15,8 @@ describe User do
   
   before(:each) do
     @attr = {
-      :name                   => "max",
-      :email                  => "max@example.com",
-      :password               => "testpassword",
-      :password_confirmation  => "testpassword"
+      :name   => "max",
+      :email  => "max@example.com"
     }
   end
   
@@ -65,45 +62,6 @@ describe User do
         user = User.new(@attr.merge(:email => a))
         user.should_not be_valid
       end
-    end
-    
-  end
-  
-  describe "password" do
-    
-    describe "validation" do
-      
-      it "requires a password" do
-        user = User.new(@attr.merge(:password => ""))
-        user.should_not be_valid
-      end
-      
-      it "requires a password_confirmation" do
-        user = User.new(@attr.merge(:password_confirmation => ""))
-        user.should_not be_valid
-      end
-      
-      it "requires password_confirmation to match password" do
-        user = User.new(@attr.merge(:password_confirmation => "someotherpassword"))
-        user.should_not be_valid
-      end
-      
-    end
-    
-    describe "encryption" do
-      
-      before(:each) do
-        @user = User.create!(@attr)
-      end
-      
-      it "has a password digest attribute" do
-        @user.should respond_to(:password_digest)
-      end
-      
-      it "sets the encrypted password" do
-        @user.password_digest.should_not be_blank
-      end
-      
     end
     
   end

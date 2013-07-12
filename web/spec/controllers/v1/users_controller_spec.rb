@@ -56,10 +56,8 @@ describe V1::UsersController do
     
     before(:each) do
       @attr = {
-        :name                   => "max",
-        :email                  => "max@luzuriaga.com",
-        :password               => "password",
-        :password_confirmation  => "password"
+        :name   => "max",
+        :email  => "max@luzuriaga.com"
       }
     end
     
