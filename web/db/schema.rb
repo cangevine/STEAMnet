@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130712004330) do
+ActiveRecord::Schema.define(version: 20130712013138) do
 
   create_table "authentications", force: true do |t|
     t.integer  "user_id"
@@ -28,6 +28,14 @@ ActiveRecord::Schema.define(version: 20130712004330) do
     t.datetime "updated_at",       null: false
     t.integer  "commentable_id"
     t.string   "commentable_type"
+  end
+
+  create_table "devices", force: true do |t|
+    t.string   "token"
+    t.string   "registration_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "user_id"
   end
 
   create_table "ideas", force: true do |t|

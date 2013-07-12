@@ -1,1 +1,1 @@
-json.token "@device.access_token"
+json.token @device.token

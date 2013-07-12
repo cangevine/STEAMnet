@@ -14,7 +14,7 @@ class AuthenticationsController < ApplicationController
       user.authentications.create(provider: auth['provider'], uid: auth['uid'])
     end
     
-    ## Generate an access token
+    @device = user.devices.create()
   end
   
 end

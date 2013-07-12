@@ -15,6 +15,7 @@ class User < ActiveRecord::Base
   end
   
   has_many :authentications
+  has_many :devices
   
   has_and_belongs_to_many :sparks
   has_many :ideas
