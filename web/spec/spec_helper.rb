@@ -25,3 +25,13 @@ RSpec.configure do |config|
   
   config.render_views = true
 end
+
+OmniAuth.config.test_mode = true
+OmniAuth.config.mock_auth[:developer] = {
+  'uid' => 'my@email.com',
+  'provider' => 'developer',
+  'info' => {
+    'name' => 'Test User',
+    'email' => 'my@email.com'
+  }
+}
