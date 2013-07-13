@@ -2,10 +2,6 @@ require 'spec_helper'
 
 describe "Authenticating" do
   
-  before do
-    # request.env["omniauth.auth"] = OmniAuth.config.mock_auth[:developer] 
-  end
-  
   it "should create a new authentication" do
     expect {
       visit "/auth/developer"
