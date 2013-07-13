@@ -32,22 +32,6 @@ describe User do
       user.should_not be_valid
     end
     
-    it "requires an email" do
-      user = User.new(@attr)
-      user.email = ""
-      user.should_not be_valid
-    end
-    
-    it "requires unique emails" do
-      user1 = User.new(@attr)
-      user1.save
-      
-      user2 = User.new(@attr)
-      user2.name = "colin"
-      
-      user2.should_not be_valid
-    end
-    
     it "accepts valid emails" do
       emails = %w[user@foo.com THE_USER@foo.bar.org first.last@foo.jp]
       emails.each do |a|
