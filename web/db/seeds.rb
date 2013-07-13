@@ -3,7 +3,7 @@
 
 require 'faker'
 
-names = %w[max colin aqeel sam drew dan heather grace]
+names = ["Max", "Colin Roberts", "Aqeel Philips", "Sam Beckley", "Drew Leventhal", "Dan Stadtmauer", "Heather Witzel-Lakin", "Grace Heard"]
 users = []
 
 names.each do |n|
