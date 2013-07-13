@@ -18,6 +18,14 @@ describe "Authenticating" do
     }.to change { User.count }.by(1)
   end
   
+  it "should create a new device" do
+    expect {
+      visit "/auth/developer"
+    }.to change { Device.count }.by(1)
+    
+    Device.last.registration_id.should_not be_nil
+  end
+  
   describe "with an existing user and authentication" do
     
     before do
@@ -35,6 +43,14 @@ describe "Authenticating" do
       expect {
         visit "/auth/developer"
       }.not_to change { Authentication.count }.by(1)
+    end
+    
+    it "should create a new device" do
+      expect {
+        visit "/auth/developer"
+      }.to change { Device.count }.by(1)
+      
+      @user.devices.last.registration_id.should_not be_nil
     end
     
   end

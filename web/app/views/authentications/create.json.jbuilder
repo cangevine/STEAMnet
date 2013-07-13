@@ -1,1 +1,0 @@
-json.token @device.token
