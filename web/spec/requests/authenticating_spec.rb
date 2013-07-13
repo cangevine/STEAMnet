@@ -29,8 +29,7 @@ describe "Authenticating" do
   describe "with an existing user and authentication" do
     
     before do
-      @user = FactoryGirl.create(:user)
-      @user.authentications.create(:provider => "developer", :uid => "my@email.com")
+      @test_user.authentications.create(:provider => "developer", :uid => "my@email.com")
     end
     
     it "shouldn't create a new authentication" do
@@ -50,7 +49,7 @@ describe "Authenticating" do
         visit "/auth/developer"
       }.to change { Device.count }.by(1)
       
-      @user.devices.last.registration_id.should_not be_nil
+      @test_user.devices.last.registration_id.should_not be_nil
     end
     
   end
