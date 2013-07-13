@@ -8,9 +8,9 @@
 			<%= image_tag "http://placekitten.com/64/64", :size => "64x64" %><p>Developer</p><div class="arrow-right"></div>
 		</a></li>
 	<% end %>
-	<% for provider in %w[twitter facebook] %>
-		<li class="provider group"><a href="/auth/<%= provider %>">
-			<%= image_tag "#{provider}_64.png", :size => "64x64" %><p><%= provider.capitalize %></p><div class="arrow-right"></div>
+	<% for provider in [["google_oauth2", "google"], ["twitter", "twitter"], ["facebook", "facebook"], ["github", "github"]] %>
+		<li class="provider group"><a href="/auth/<%= provider[0] %>">
+			<%= image_tag "#{provider[1]}_64.png", :size => "64x64" %><p><%= provider[1].capitalize %></p><div class="arrow-right"></div>
 		</a></li>
 	<% end %>
 	</ul>

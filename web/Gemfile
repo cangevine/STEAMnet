@@ -30,6 +30,8 @@ gem 'bcrypt-ruby', '~> 3.0.0'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-twitter'
+gem 'omniauth-google-oauth2'
+gem 'omniauth-github'
 gem 'jbuilder'
 gem 'unicorn'
 
