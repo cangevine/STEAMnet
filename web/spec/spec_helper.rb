@@ -16,10 +16,25 @@ RSpec.configure do |config|
   # config.mock_with :flexmock
   # config.mock_with :rr
   config.mock_with :rspec
-  config.before(:all) { @auth_token = "0577a090fea6e735f471d349b14456ea34924b00" }
+  config.before do
+    @test_user = FactoryGirl.create(:user)
+    @auth_token = @test_user.devices.create(registration_id: "testid123").token
+  end
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
   config.use_transactional_fixtures = true
+  
+  config.render_views = true
 end
+
+OmniAuth.config.test_mode = true
+OmniAuth.config.mock_auth[:developer] = {
+  'uid' => 'my@email.com',
+  'provider' => 'developer',
+  'info' => {
+    'name' => 'Test User',
+    'email' => 'my@email.com'
+  }
+}

@@ -3,11 +3,11 @@
 
 require 'faker'
 
-names = %w[max colin aqeel sam drew dan heather grace]
+names = ["Max", "Colin Roberts", "Aqeel Philips", "Sam Beckley", "Drew Leventhal", "Dan Stadtmauer", "Heather Witzel-Lakin", "Grace Heard"]
 users = []
 
 names.each do |n|
-  users << User.create(:name => n, :email => Faker::Internet.email, :password => "password", :password_confirmation => "password")
+  users << User.create(:name => n, :email => Faker::Internet.email)
 end
 
 tag_texts = %w[awesome purple yellow internet legit tablets android rails]
@@ -105,6 +105,3 @@ end
     comment.save
   end
 end
-
-puts users
-puts sparks

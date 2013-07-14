@@ -21,12 +21,26 @@ describe V1::IdeasController do
     
     it "returns the correct ideas" do
       get :index, :format => 'json', :token => @auth_token
-      response.body.should == @ideas.to_json
+      output = JSON.parse(response.body)
+      
+      output.should be_a_kind_of(Array)
+      output.length.should == @ideas.length
+      
+      output.each_with_index do |idea, index|
+        idea["description"].should == @ideas[index].description
+      end
     end
     
     it "limits the ideas correctly" do
       get :index, :format => 'json', :limit => 10, :token => @auth_token
-      response.body.should == @ideas.take(10).to_json
+      output = JSON.parse(response.body)
+      
+      output.should be_a_kind_of(Array)
+      output.length.should == 10
+      
+      output.each_with_index do |idea, index|
+        idea["description"].should == @ideas[index].description
+      end
     end
     
   end
@@ -44,7 +58,10 @@ describe V1::IdeasController do
     
     it "returns the correct idea" do
       get :show, :id => @idea, :format => 'json', :token => @auth_token
-      response.body.should == @idea.to_json
+      output = JSON.parse(response.body)
+      
+      output.should be_a_kind_of(Hash)
+      output["description"].should == @idea.description
     end
     
   end
@@ -52,8 +69,6 @@ describe V1::IdeasController do
   describe "POST 'create'" do
     
     before(:each) do
-      @user = FactoryGirl.create(:user)
-      
       @s1 = FactoryGirl.create(:spark)
       @s2 = FactoryGirl.create(:spark)
       
@@ -67,30 +82,30 @@ describe V1::IdeasController do
     describe "for a new valid idea" do
       
       it "is successful" do
-        post :create, :idea => @attr, :format => 'json', :username => @user.name, :sparks => @sparks, :token => @auth_token
+        post :create, :idea => @attr, :format => 'json', :username => @test_user.name, :sparks => @sparks, :token => @auth_token
         response.should be_success
       end
     
       it "should create the idea" do
         expect {
-          post :create, :idea => @attr, :format => 'json', :username => @user.name, :sparks => @sparks, :token => @auth_token
+          post :create, :idea => @attr, :format => 'json', :username => @test_user.name, :sparks => @sparks, :token => @auth_token
         }.to change { Idea.count }.by(1)
       end
       
       it "should add the user to the idea" do
-        post :create, :idea => @attr, :format => 'json', :username => @user.name, :sparks => @sparks, :token => @auth_token
+        post :create, :idea => @attr, :format => 'json', :username => @test_user.name, :sparks => @sparks, :token => @auth_token
         @idea = Idea.last
-        @idea.user.should == @user
+        @idea.user.should == @test_user
       end
       
       it "should add the sparks to the idea" do
-        post :create, :idea => @attr, :format => 'json', :username => @user.name, :sparks => @sparks, :token => @auth_token
+        post :create, :idea => @attr, :format => 'json', :username => @test_user.name, :sparks => @sparks, :token => @auth_token
         @idea = Idea.last
         @idea.sparks.should == [@s1, @s2]
       end
       
       it "should ignore invalid sparks" do
-        post :create, :idea => @attr, :format => 'json', :username => @user.name, :sparks => @sparks + ",100", :token => @auth_token
+        post :create, :idea => @attr, :format => 'json', :username => @test_user.name, :sparks => @sparks + ",100", :token => @auth_token
         @idea = Idea.last
         @idea.sparks.should == [@s1, @s2]
       end
@@ -102,7 +117,7 @@ describe V1::IdeasController do
         
         tags = [t1,t2,t3].map(&:tag_text).join(",")
         
-        post :create, :idea => @attr, :format => 'json', :username => @user.name, :sparks => @sparks, :tags => tags, :token => @auth_token
+        post :create, :idea => @attr, :format => 'json', :username => @test_user.name, :sparks => @sparks, :tags => tags, :token => @auth_token
         
         @idea = Idea.last
         @idea.tags.should == [t1,t2,t3]
@@ -115,7 +130,7 @@ describe V1::IdeasController do
         
         tags = [t1,t2,t3].join(",")
         
-        post :create, :idea => @attr, :format => 'json', :username => @user.name, :sparks => @sparks, :tags => tags, :token => @auth_token
+        post :create, :idea => @attr, :format => 'json', :username => @test_user.name, :sparks => @sparks, :tags => tags, :token => @auth_token
         
         [t1,t2,t3].each do |t|
           Tag.find_by(tag_text: t).should_not be_nil
@@ -123,9 +138,12 @@ describe V1::IdeasController do
       end
       
       it "should return the idea" do
-        post :create, :idea => @attr, :format => 'json', :username => @user.name, :sparks => @sparks, :token => @auth_token
+        post :create, :idea => @attr, :format => 'json', :username => @test_user.name, :sparks => @sparks, :token => @auth_token
         @idea = Idea.last
-        response.body.should == @idea.to_json
+        output = JSON.parse(response.body)
+
+        output.should be_a_kind_of(Hash)
+        output["description"].should == @idea.description
       end
       
     end
@@ -133,13 +151,13 @@ describe V1::IdeasController do
     describe "for an idea without sparks" do
       
       it "isn't successful" do
-        post :create, :idea => @attr, :format => 'json', :username => @user.name, :token => @auth_token
+        post :create, :idea => @attr, :format => 'json', :username => @test_user.name, :token => @auth_token
         response.should_not be_success
       end
     
       it "shouldn't create the idea" do
         expect {
-          post :create, :idea => @attr, :format => 'json', :username => @user.name, :token => @auth_token
+          post :create, :idea => @attr, :format => 'json', :username => @test_user.name, :token => @auth_token
         }.not_to change { Idea.count }
       end
       
@@ -148,13 +166,13 @@ describe V1::IdeasController do
     describe "for an idea with invalid sparks" do
       
       it "isn't successful" do
-        post :create, :idea => @attr, :format => 'json', :username => @user.name, :sparks => "100,150", :token => @auth_token
+        post :create, :idea => @attr, :format => 'json', :username => @test_user.name, :sparks => "100,150", :token => @auth_token
         response.should_not be_success
       end
     
       it "shouldn't create the idea" do
         expect {
-          post :create, :idea => @attr, :format => 'json', :username => @user.name, :sparks => "100,150", :token => @auth_token
+          post :create, :idea => @attr, :format => 'json', :username => @test_user.name, :sparks => "100,150", :token => @auth_token
         }.not_to change { Idea.count }
       end
       
@@ -168,38 +186,39 @@ describe V1::IdeasController do
       @s1 = FactoryGirl.create(:spark)
       @s2 = FactoryGirl.create(:spark)
       
-      @user = FactoryGirl.create(:user)
-      
       @idea = FactoryGirl.create(:idea)
       
       @idea.sparks << @s1
       @idea.sparks << @s2
       
-      @idea.user = @user
+      @idea.user = @test_user
       @idea.save
     end
     
     it "is successful" do
-      delete :destroy, :id => @idea, :format => 'json', :username => @user.name, :token => @auth_token
+      delete :destroy, :id => @idea, :format => 'json', :username => @test_user.name, :token => @auth_token
       response.should be_success
     end
     
     it "doesn't destroy the idea" do
       expect {
-        delete :destroy, :id => @idea, :format => 'json', :username => @user.name, :token => @auth_token
+        delete :destroy, :id => @idea, :format => 'json', :username => @test_user.name, :token => @auth_token
       }.not_to change { Idea.count }
     end
     
     it "removes the user from the idea" do
-      delete :destroy, :id => @idea, :format => 'json', :username => @user.name, :token => @auth_token
+      delete :destroy, :id => @idea, :format => 'json', :username => @test_user.name, :token => @auth_token
       @idea.reload
       @idea.user.should be_nil
     end
     
     it "returns the idea" do
-      delete :destroy, :id => @idea, :format => 'json', :username => @user.name, :token => @auth_token
+      delete :destroy, :id => @idea, :format => 'json', :username => @test_user.name, :token => @auth_token
       @idea.reload
-      response.body.should == @idea.to_json
+      output = JSON.parse(response.body)
+      
+      output.should be_a_kind_of(Hash)
+      output["description"].should == @idea.description
     end
     
   end
