@@ -1,114 +1,258 @@
-# STEAMnet
+# STEAMnet API #
 
-The API can be accessed at /api/v1/
+## V1 ##
 
-## Creating objects
+The STEAMnet API version 1 can be accessed at `http://steamnet.herokuapp.com/api/v1/`, so throughout this README any urls that I reference will be an extension of this base url. For instance, if I talk about a GET request to `/users.json`, what I really mean is a GET request to `http://steamnet.herokuapp.com/api/v1/users.json`.
 
-To create an object, send a push request to:
+From now on, every request to the STEAMnet API must be authenticated with a Token, which is generated when a user logs in or creates an account from the Android app (a detailed spec of how this should work in the App can be found in the description for [Pull #62](https://github.com/cangevine/STEAMnet/pull/62)). Once the Token is saved to the Android device, every single request to the api must include the token in the request url. For instance, that `/users.json` request I mentioned previously would not work unless the token is included like so: `http://steamnet.herokuapp.com/api/v1/users.json?token=yourdevicetoken`. The Tokens are associated with a given user and Device, so that the API is aware from which User the request comes, and so that it's aware that the request is coming from the STEAMnet app, and not some malicious third party.
 
-    /api/v1/class.json
+*(Note 7/14/13: currently the API does not use the token authentication, because none of the Android code has been updated to use it yet, but once the Android app is updated to generate and use these tokens, the switch will be flipped and Token authentication will be required for every request.)*
 
-where `class` is the plural of the class you are trying to create (sparks, ideas, users, comments).
+### Sparks ###
 
-with attributes in the form:
+#### Get All Sparks ####
 
-    ?class[attr1]=value1&class[attr2]=value2...?username=myusername
+To get a list of all the sparks in the database, issue a GET request to `/sparks.json?limit=x`, where `x` is the number of sparks you'd like to fetch. If no limit is specified, every spark in the database will be returned. Either way, sparks will be returned in descending order, with the most recent sparks first, going down all the way to the very first spark.
 
-where `class` is the name of the class of which you are making an instance (spark, idea, user, comment), `attr` is the name of the attribute in the Rails model (content, content_type, spark_type, etc.), and `value` is the value of the attribute.
+A sample return of a request to `/sparks.json?limit=2` can be seen here:
 
-Be sure to include the `username` attribute with the currently logged in user in order to associate created comments, sparks, ideas, etc. with a certain user.
+	[
+		{
+			"id":18,
+			"created_at":"2013-07-13T16:29:00.615Z",
+			"spark_type":"P",
+			"content_type":"V",
+			"content":"http://www.youtube.com/watch?v=j5C6X9vOEkU",
+			"content_hash":"a83cf9063c28da791497a752a2657f5881d30b3a",
+			"users":[
+				{
+					"id":6,
+					"name":"Dan Stadtmauer",
+					"email":"rocio@feeneyconsidine.biz"
+				},
+				{
+					"id":8,
+					"name":"Grace Heard",
+					"email":"pauline@morar.net"
+				}
+			],
+			"ideas":[
+				{
+					"id":2,
+					"created_at":"2013-07-13T16:29:00.694Z",
+					"description":"Rerum adipisci vel quod et incidunt excepturi suscipit."
+				},
+				{
+					"id":10,
+					"created_at":"2013-07-13T16:29:00.868Z",
+					"description":"Et quo rerum laboriosam qui saepe fugit minus quasi."
+				},
+				{
+					"id":14,
+					"created_at":"2013-07-13T16:29:01.011Z",
+					"description":"Dolores nostrum est dolorum exercitationem."
+				}
+			],
+			"comments":[
+				{
+					"id":27,
+					"comment_text":"Quaerat facere enim error architecto. Id eligendi est praesentium qui labore ipsam nisi. Aliquam praesentium perspiciatis quia velit veniam.",
+					"created_at":"2013-07-13T16:29:00.634Z",
+					"user":{
+						"id":1,
+						"name":"Max",
+						"email":"bryon.ryan@fisher.com"
+					}
+				},
+				{
+					"id":28,
+					"comment_text":"Et culpa officia. Quam voluptatem aut iste. Eum et sunt odio.",
+					"created_at":"2013-07-13T16:29:00.637Z",
+					"user":{
+						"id":1,
+						"name":"Max",
+						"email":"bryon.ryan@fisher.com"
+					}
+				}
+			],
+			"tags":[
+				"yellow",
+				"rails",
+				"purple"
+			]
+		},
+		{
+			"id":17,
+			"created_at":"2013-07-13T16:29:00.615Z",
+			"spark_type":"P",
+			"content_type":"V",
+			"content":"http://www.youtube.com/watch?v=j5C6X9vOEkU",
+			"content_hash":"a83cf9063c28da791497a752a2657f5881d30b3a",
+			"users":[
+				{
+					"id":6,
+					"name":"Dan Stadtmauer",
+					"email":"rocio@feeneyconsidine.biz"
+				},
+				{
+					"id":8,
+					"name":"Grace Heard",
+					"email":"pauline@morar.net"
+				}
+			],
+			"ideas":[
+				{
+					"id":2,
+					"created_at":"2013-07-13T16:29:00.694Z",
+					"description":"Rerum adipisci vel quod et incidunt excepturi suscipit."
+				},
+				{
+					"id":10,
+					"created_at":"2013-07-13T16:29:00.868Z",
+					"description":"Et quo rerum laboriosam qui saepe fugit minus quasi."
+				},
+				{
+					"id":14,
+					"created_at":"2013-07-13T16:29:01.011Z",
+					"description":"Dolores nostrum est dolorum exercitationem."
+				}
+			],
+			"comments":[
+				{
+					"id":27,
+					"comment_text":"Quaerat facere enim error architecto. Id eligendi est praesentium qui labore ipsam nisi. Aliquam praesentium perspiciatis quia velit veniam.",
+					"created_at":"2013-07-13T16:29:00.634Z",
+					"user":{
+						"id":1,
+						"name":"Max",
+						"email":"bryon.ryan@fisher.com"
+					}
+				},
+				{
+					"id":28,
+					"comment_text":"Et culpa officia. Quam voluptatem aut iste. Eum et sunt odio.",
+					"created_at":"2013-07-13T16:29:00.637Z",
+					"user":{
+						"id":1,
+						"name":"Max",
+						"email":"bryon.ryan@fisher.com"
+					}
+				}
+			],
+			"tags":[
+				"yellow",
+				"rails",
+				"purple"
+			]
+		},
+	]
 
-For instance, a PUSH request to create a new spark would look like this:
+#### Get One spark ####
 
-    /api/v1/sparks.json
-        ?spark[spark_type]=W
-        &spark[content_type]=T
-        &spark[content]=What if kittens
-        &username=max
+Similarly, to get all the details about just one spark, issue a request to `/sparks/id.json`, where id is the id of the spark you want to get. A sample response to `/sparks/18.json` for instance, is strikingly similar to the response for getting all sparks, but with just one:
 
-Such a request would then return the json of the object you have just created, including its `id` and `created_at` attributes at the time at which it was saved into the databse. A more detailed view of this return can be found in the next section.
+	{
+		"id":18,
+		"created_at":"2013-07-13T16:29:00.615Z",
+		"spark_type":"P",
+		"content_type":"V",
+		"content":"http://www.youtube.com/watch?v=j5C6X9vOEkU",
+		"content_hash":"a83cf9063c28da791497a752a2657f5881d30b3a",
+		"users":[
+			{
+				"id":6,
+				"name":"Dan Stadtmauer",
+				"email":"rocio@feeneyconsidine.biz"
+			},
+			{
+				"id":8,
+				"name":"Grace Heard",
+				"email":"pauline@morar.net"
+			}
+		],
+		"ideas":[
+			{
+				"id":2,
+				"created_at":"2013-07-13T16:29:00.694Z",
+				"description":"Rerum adipisci vel quod et incidunt excepturi suscipit."
+			},
+			{
+				"id":10,
+				"created_at":"2013-07-13T16:29:00.868Z",
+				"description":"Et quo rerum laboriosam qui saepe fugit minus quasi."
+			},
+			{
+				"id":14,
+				"created_at":"2013-07-13T16:29:01.011Z",
+				"description":"Dolores nostrum est dolorum exercitationem."
+			}
+		],
+		"comments":[
+			{
+				"id":27,
+				"comment_text":"Quaerat facere enim error architecto. Id eligendi est praesentium qui labore ipsam nisi. Aliquam praesentium perspiciatis quia velit veniam.",
+				"created_at":"2013-07-13T16:29:00.634Z",
+				"user":{
+					"id":1,
+					"name":"Max",
+					"email":"bryon.ryan@fisher.com"
+				}
+			},
+			{
+				"id":28,
+				"comment_text":"Et culpa officia. Quam voluptatem aut iste. Eum et sunt odio.",
+				"created_at":"2013-07-13T16:29:00.637Z",
+				"user":{
+					"id":1,
+					"name":"Max",
+					"email":"bryon.ryan@fisher.com"
+				}
+			}
+		],
+		"tags":[
+			"yellow",
+			"rails",
+			"purple"
+		]
+	}
 
-## Accessing Objects
+#### Creating a Spark ####
 
-To access all the properties of an object, send a GET request to:
+To create a spark, issue a POST request to `/sparks.json`. The available options are as follows
 
-    /api/v1/class/id.json
+* `spark[spark_type]`
+	* Either "W" for what-if question, "I" for inspiration, or "P" for problem. No other characters will be accepted.
+* `spark[content_type]`
+	* "L" for link, "V" for video, "C" for code, "T" for text, "P" for picture, and "A" for audio. Again, only these specific characters will be allowed.
+* `spark[content]`
+	* unless the spark is a code or text spark, this should be a url string. For links, it could be a link to any website, for videos a link to youtube, pictures a link to a picture file (support for file uploading coming later), and audio a link to a soundcloud page.
+* `tags`
+	* A comma-separated list of strings to represent the tags, with no spaces. Tags can only be alphanumerical, plus hyphens and underscores For example "red,green,blue,some-tag,the_tag"
 
-where `class` is again the plural of the class of the object you are trying to get (sparks, ideas, users, comments, tags).
+The API will determine which User is creating the spark based on the Token provided (for now this is done with the `username` attribute, but this will be deprecated once I turn on Token authentication). If the spark exists already, the API will add this user to the spark. If it doesn't exist, the API will create the spark and add the user to it. You can tell which scenario has occured based on the `spark_is_new` attribute of the JSON response, as seen in the response below.
 
-For instance, to access the spark we created in the previous example, use a GET request to:
+A POST request to `/sparks.json?spark[spark_type]=I&spark[content_type]=T&spark[content]=Some%20Text&tags=red,green,blue`, when no spark with that content and content type exists in the database already, will respond with:
 
-    /api/v1/sparks/1.json
-    
-This would then return the following json
-
-    {
-        id: 1,
-        created_at: sometime,
-        updated_at: sometime,
-        spark_type: W,
-        content_type: T,
-        content: What if kittens,
-        content_has: 458JMCW40Z59KJH3WP4I,
-        users: {
-            // a list of users who have sparked this same idea.
-        }
-    }
-
-## Accessing lists of objects
-
-To access the list of all objects of a certain class, send a GET request to:
-
-    /api/v1/class.json
-
-Where `class`, again, is the plural of the class you are trying to access (users, tags, sparks, ideas, comments).
-
-## Class Descriptions
-
-Each class in the database has properties which are settable during the creation of an object of this class, and which are returned during the GET request for this object. These properties are described here.
-
-"*" indicates an attribute that cannot be set during creation, but is still returned while accessing the object.
-
-### User
-
-* email
-* name
-
-### Spark
-
-* spark_type
-* content
-* content_hash
-* content_type
-* tags
-    * passed in as a comma separated list like `tags=yellow,purple,cats`
-    * returned as a list of sparks with all their attributes
-* ideas*
-* users*
-* comments*
-
-### Idea
-
-* description
-* tags
-    * passed in as a comma separated list like `tags=yellow,purple,cats`
-    * returned as a list of sparks with all their attributes
-* sparks*
-* users*
-* comments*
-
-### Comment
-
-* comment_text
-* user*
-* commentable_object
-    * passed in as `commentable_id`
-    * returned as the object with all its attributes
-
-### Tag
-
-(note: tags are created automatically while creating sparks and ideas, they are not created using PUSH requests.
-
-* tag_name
-* sparks*
-* ideas*
+	{
+		"spark_is_new":true, // Only present if the spark was just created.
+		"id":19,
+		"created_at":"2013-07-13T16:29:00.615Z",
+		"spark_type":"I",
+		"content_type":"T",
+		"content":"Some Text",
+		"content_hash":"a83cf9063c28da791497a752a2657f5881d30b3a",
+		"users":[
+			{
+				"id":6,
+				"name":"Dan Stadtmauer",
+				"email":"rocio@feeneyconsidine.biz"
+			},
+		],
+		"ideas":[],
+		"comments":[],
+		"tags":[
+			"red",
+			"green",
+			"blue"
+		]
+	}
