@@ -2,20 +2,22 @@ class ApplicationController < ActionController::Base
   
   protect_from_forgery
   
-  before_action :verify_security_token
+  # before_action :authenticate
   
   private
     
-    def verify_security_token
-      # unless Digest::SHA1.hexdigest(params[:token]) == "639bab0291d34056baee0ebd1664f516ccb67efd" # Digest::SHA1.hexdigest("0577a090fea6e735f471d349b14456ea34924b00")
-      #   head :unauthorized
-      # end
+    def authenticate_new
+      device = Device.find_by(token: params[:token])
+      
+      head :unauthorized unless device
+      
+      @user = device.user
     end
     
     def authenticate
       @user = User.find_by(name: params[:username])
       
-      if(!@user)
+      unless @user
         hash = { :error => "Invalid username." }
         respond_to do |format|
           format.json { render :json => hash, :status => :unauthorized }

@@ -1,0 +1,76 @@
+// Place all the styles related to the authorizations controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+$gray: #444;
+
+h1 {
+	text-align: center;
+	font-weight: bold;
+	font-size: 30px;
+	color: $gray;
+	padding-bottom: 20px;
+	border-bottom: 1px solid $gray;
+}
+
+body {
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 100%;
+	background: #ddd;
+}
+
+#main {
+	width: 50%;
+	margin: 40px auto;
+	padding: 30px;
+	background: white;
+}
+
+ul {
+	list-style-type: none;
+}
+
+.provider {
+	background-color: rgba(0,255,0,.3);
+	margin: 20px 0 20px 0;
+	padding: 10px;
+	border-radius: 10px;
+	
+	img {
+		float: left;
+		margin-right: 15px;
+	}
+	
+	p {
+		line-height: 60px;
+		font-size: 24px;
+		font-weight: bold;
+		width: 50%;
+		float: left;
+	}
+}
+
+.arrow-right {
+	float: right;
+	margin: 17px 10px 0 0;
+	
+	width: 0; 
+	height: 0; 
+	border-top: 15px solid transparent;
+	border-bottom: 15px solid transparent;
+	
+	border-left: 23px solid rgba(255,255,255,.8);
+}
+
+li:last-child {
+	margin: 0;
+}
+
+.provider:active {
+	background-color: rgba(0,255,0,.5);
+}
+
+a, a:hover, a:visited, a:active {
+	color: $gray;
+	text-decoration: none;
+}

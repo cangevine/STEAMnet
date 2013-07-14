@@ -1,0 +1,18 @@
+<div id="main">
+
+	<h1>Log in using one of these services:</h1>
+	
+	<ul>
+	<% unless Rails.env.production? %>
+		<li class="provider group"><a href="/auth/developer">
+			<%= image_tag "http://placekitten.com/64/64", :size => "64x64" %><p>Developer</p><div class="arrow-right"></div>
+		</a></li>
+	<% end %>
+	<% for provider in [["google_oauth2", "google"], ["twitter", "twitter"], ["facebook", "facebook"], ["github", "github"]] %>
+		<li class="provider group"><a href="/auth/<%= provider[0] %>">
+			<%= image_tag "#{provider[1]}_64.png", :size => "64x64" %><p><%= provider[1].capitalize %></p><div class="arrow-right"></div>
+		</a></li>
+	<% end %>
+	</ul>
+
+</div>
