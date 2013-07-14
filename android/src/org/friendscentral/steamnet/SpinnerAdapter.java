@@ -28,6 +28,14 @@ public class SpinnerAdapter extends BaseAdapter {
     	l.setGravity(Gravity.CENTER);
     	l.addView(s);
     	
+    	l.setFocusable(false);
+    	l.setFocusableInTouchMode(false);
+    	l.setClickable(false);
+
+    	s.setFocusable(false);
+    	s.setFocusableInTouchMode(false);
+    	s.setClickable(false);
+    	
     	return l;
     }
 

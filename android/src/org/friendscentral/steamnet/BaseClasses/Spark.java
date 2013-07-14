@@ -19,6 +19,7 @@ public class Spark extends Jawn implements Serializable{
 	String firstCreatedAt;
 	int[] userIds;
 	String[] tags;
+	String tagsString;
 	String firstUser;
 	
 	/*
