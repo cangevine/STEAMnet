@@ -100,6 +100,7 @@ public class GetXSparks {
 				indexGrid.setAdapter(a);
 				indexGrid.setJawns(sparks);
 				if (mainActivity != null) {
+					mainActivity.setSparkEventHandlers();
 					mainActivity.setScrollListener();
 				}
 			} catch (JSONException e) {

@@ -1,5 +1,7 @@
 package org.friendscentral.steamnet;
 
+import org.friendscentral.steamnet.Activities.MainActivity;
+
 import APIHandlers.GetXIdeas;
 import APIHandlers.GetXJawns;
 import APIHandlers.GetXSparks;
@@ -51,23 +53,25 @@ public class FilterSettings {
 	}
 	
 	public void sparkBoxChange(char box) {
+		((MainActivity) context).getSparkEventHandler().clearEventHandlers();
+		
 		sparkCheck = sparkBox.isChecked();
 		ideaCheck = ideaBox.isChecked();
 		gridview.setAdapter(new SpinnerAdapter(context, 16));
 		if (sparkCheck == true && ideaCheck == true) {
-			GetXJawns r = new GetXJawns(16, gridview, indexgrid, context); 
+			GetXJawns r = new GetXJawns(50, gridview, indexgrid, context); 
 			JawnAdapter ja = indexgrid.getAdapter();
 			ja.notifyDataSetChanged();
 			indexgrid.setJawns(ja.getJawns());
 			Log.v(TAG, "Both true");
 		} else if (sparkCheck == true && ideaCheck == false) {
-			GetXSparks r = new GetXSparks(16, gridview, indexgrid, context); 
+			GetXSparks r = new GetXSparks(50, gridview, indexgrid, context); 
 			JawnAdapter ja = indexgrid.getAdapter();
 			ja.notifyDataSetChanged();
 			indexgrid.setJawns(ja.getJawns());
 			Log.v(TAG, "Sparks true");
 		} else if (sparkCheck == false && ideaCheck == true) {
-			GetXIdeas i = new GetXIdeas(16, gridview, indexgrid, context); 
+			GetXIdeas i = new GetXIdeas(50, gridview, indexgrid, context); 
 			JawnAdapter ja = indexgrid.getAdapter();
 			ja.notifyDataSetChanged();
 			indexgrid.setJawns(ja.getJawns());
@@ -76,18 +80,20 @@ public class FilterSettings {
 			Log.v(TAG, "Both false");
 			if (box == 'S') {
 				ideaBox.setChecked(true);
-				GetXIdeas i = new GetXIdeas(16, gridview, indexgrid, context); 
+				GetXIdeas i = new GetXIdeas(50, gridview, indexgrid, context); 
 				JawnAdapter ja = indexgrid.getAdapter();
 				ja.notifyDataSetChanged();
 				indexgrid.setJawns(ja.getJawns());
 			} else if (box == 'I') {
 				sparkBox.setChecked(true);
-				GetXSparks r = new GetXSparks(16, gridview, indexgrid, context); 
+				GetXSparks r = new GetXSparks(50, gridview, indexgrid, context); 
 				JawnAdapter ja = indexgrid.getAdapter();
 				ja.notifyDataSetChanged();
 				indexgrid.setJawns(ja.getJawns());
 			}
 		}
+		
+		((MainActivity) context).getSparkEventHandler().initializeIndexGridLayout();
 	}
 	
 	public void sortRecent() {

@@ -10,19 +10,19 @@ import org.friendscentral.steamnet.BaseClasses.Idea;
 import org.friendscentral.steamnet.BaseClasses.Jawn;
 import org.friendscentral.steamnet.BaseClasses.Spark;
 
+import APIHandlers.GetSpark;
 import APIHandlers.PostComment;
-import APIHandlers.RetrieveDataTaskGetSpark;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
 
 public class IdeaDetailActivity extends Activity {
 	private static final String TAG = "IdeaDetailActivity";
@@ -88,9 +88,9 @@ public class IdeaDetailActivity extends Activity {
     	indexGrid.setAdapter(adapter);
     	indexGrid.setJawns(adapter.getJawns());
     	
-    	RetrieveDataTaskGetSpark r = null;
+    	GetSpark r = null;
     	for (int i = 0; i < sparkIds.length; i++) {
-    		 r = new RetrieveDataTaskGetSpark(sparkIds[i], gridView, indexGrid);
+    		 r = new GetSpark(sparkIds[i], gridView, indexGrid);
     	}
     	
     	adapter.notifyDataSetChanged();

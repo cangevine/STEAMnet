@@ -5,12 +5,11 @@ import org.friendscentral.steamnet.SparkWizardFragments.ContentEntry;
 import org.friendscentral.steamnet.SparkWizardFragments.ContentTypeChooser;
 import org.friendscentral.steamnet.SparkWizardFragments.SparkTypeChooser;
 
-import APIHandlers.RetrieveDataTaskPostSpark;
+import APIHandlers.PostSpark;
 import android.app.ActionBar.LayoutParams;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.test.suitebuilder.annotation.Suppress;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.LinearLayout;
@@ -57,7 +56,8 @@ public class SparkWizard {
 	}
 	
 	public void submitSpark(View v, Spark s, GridView g, IndexGrid i) {
-		RetrieveDataTaskPostSpark task = new RetrieveDataTaskPostSpark(s.getSparkType(), s.getContentType(), s.getContent(), g, i);
+		// TODO "" as a replacement for Tags
+		PostSpark task = new PostSpark(s.getSparkType(), s.getContentType(), s.getContent(), "", g, i);
 		
 		revertWizard(v);
 	}
