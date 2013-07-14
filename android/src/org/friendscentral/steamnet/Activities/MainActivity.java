@@ -3,28 +3,29 @@ package org.friendscentral.steamnet.Activities;
 import org.friendscentral.steamnet.FilterSettings;
 import org.friendscentral.steamnet.IdeaBucket;
 import org.friendscentral.steamnet.IndexGrid;
-import org.friendscentral.steamnet.JawnAdapter;
 import org.friendscentral.steamnet.R;
 import org.friendscentral.steamnet.SparkWizard;
 import org.friendscentral.steamnet.BaseClasses.Spark;
 import org.friendscentral.steamnet.EventHandlers.EndlessScroller;
 import org.friendscentral.steamnet.EventHandlers.IdeaBucketEventHandler;
 import org.friendscentral.steamnet.EventHandlers.SparkEventHandler;
-import org.friendscentral.steamnet.SparkWizardFragments.ContentTypeChooser;
 import org.friendscentral.steamnet.SparkWizardFragments.SparkTypeChooser;
 
+import SparkSubmitters.AudioSubmitter;
+import SparkSubmitters.PictureSubmitter;
 import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 public class MainActivity extends Activity {
 	Spark newSpark;
@@ -32,6 +33,9 @@ public class MainActivity extends Activity {
 	char contentType = "T".charAt(0);
 
     static final String EXTRA_MESSAGE = null;
+    final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1;
+    final static int UPLOAD_IMAGE_ACTIVITY_REQUEST_CODE = 2;
+    final static int UPLOAD_AUDIO_ACTIVITY_REQUEST_CODE = 3;
     
     SparkWizard sparkWizard;
     SparkEventHandler sparkEventHandler;
@@ -68,7 +72,7 @@ public class MainActivity extends Activity {
         //Initialize Idea Bucket:
         initIdeaBucket();
 
-		sparkWizard = new SparkWizard(mainLayout, getFragmentManager());
+		sparkWizard = new SparkWizard(mainLayout, getFragmentManager(), MainActivity.this);
 		bucketHandler = new IdeaBucketEventHandler(MainActivity.this, ideaBucket, mainLayout, getFragmentManager());
 		
 		//Init filter settings
@@ -121,32 +125,31 @@ public class MainActivity extends Activity {
 		} else if (tag.equals("openContentEntry")) {
 			
 			if (v.getId() == R.id.picture_button) {
-				contentType = "P".charAt(0);
+				contentType = 'P';
 			} else if (v.getId() == R.id.video_button) {
-				contentType = "V".charAt(0);
+				contentType = 'V';
 			} else if (v.getId() == R.id.text_button) {
-				contentType = "T".charAt(0);
+				contentType = 'T';
 			} else if (v.getId() == R.id.code_button) {
-				contentType = "C".charAt(0);
+				contentType = 'C';
 			} else if (v.getId() == R.id.audio_button) {
-				contentType = "A".charAt(0);
+				contentType = 'A';
 			} else if (v.getId() == R.id.link_button) {
-				contentType = "L".charAt(0);
+				contentType = 'L';
 			}
 						
-			sparkWizard.openContentEntry(v);
+			sparkWizard.openContentEntry(v, contentType);
 			
 		} else if (tag.equals("submitSpark")) {
 			
-			findViewById(R.id.content_entry_form);
-			EditText tagsForm = (EditText) findViewById(R.id.tag_entry_form);
-			tagsForm.getText().toString().split(", ");
+			newSpark = sparkWizard.getContentEntry().getSparkSubmitter().getNewSpark(sparkType);
 			
-			TextView sparkContentView = (TextView) findViewById(R.id.content_entry_form);
-			content = sparkContentView.getText().toString();
+			//TextView sparkContentView = (TextView) findViewById(R.id.content_entry_form);
+			//content = sparkContentView.getText().toString();
+			content = "Not working right now. Stop.";
 			
 			
-			newSpark = new Spark(sparkType, contentType, content);
+			//newSpark = new Spark(sparkType, contentType, content);
 			sparkWizard.submitSpark(v, newSpark, gridView, indexGrid);
 			
 			newSpark = null;
@@ -168,7 +171,32 @@ public class MainActivity extends Activity {
 	}
 	
 	public void setSparkEventHandlers() {
-		sparkEventHandler = new SparkEventHandler(this, mainLayout, ideaBucket, gridView, indexGrid); 
+		sparkEventHandler = new SparkEventHandler(MainActivity.this, mainLayout, ideaBucket, gridView, indexGrid); 
+	}
+	
+	public SparkWizard getSparkWizard() {
+		return sparkWizard;
+	}
+	
+	protected void onActivityResult (int requestCode, int resultCode, Intent data) {
+		PictureSubmitter p;
+		AudioSubmitter a;
+		switch (requestCode) {
+		case CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE:
+			Log.v("Main Activity", "Should be here if you are taking a picture");
+			p = (PictureSubmitter) sparkWizard.getContentEntry().getSparkSubmitter(); 
+			p.getPictureTaker().onActivityResult(requestCode, resultCode, data);
+			break;
+		case UPLOAD_IMAGE_ACTIVITY_REQUEST_CODE:
+			Log.v("Main Activity", "Should be here if you are uploading an image");
+			p = (PictureSubmitter) sparkWizard.getContentEntry().getSparkSubmitter(); 
+			p.getPictureUploader().onActivityResult(requestCode, resultCode, data);
+			break;
+		case UPLOAD_AUDIO_ACTIVITY_REQUEST_CODE:
+			Log.v("Main Activity", "Should be here if you are uploading an image");
+			a = (AudioSubmitter) sparkWizard.getContentEntry().getSparkSubmitter(); 
+			a.getAudioUploader().onActivityResult(requestCode, resultCode, data);
+		}
 	}
 	
     @Override

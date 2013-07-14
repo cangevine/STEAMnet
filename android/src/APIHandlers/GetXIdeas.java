@@ -103,7 +103,6 @@ public class GetXIdeas {
 					mainActivity.setScrollListener();
 				}
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
         }
@@ -179,6 +178,8 @@ public class GetXIdeas {
 	        	    	JSONObject c = commentsJSON.getJSONObject(k);
 	        	    	String commentText = c.getString(COMMENT_TEXT);
 	        	    	
+	        	    	
+	        	    	// TODO Make users dynamic
 	        	    	/*
 	        	    	 * 0 as a substitute for the real user id
 	        	    	 * int commentUser = json.getString(COMMENT_USER);

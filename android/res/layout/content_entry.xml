@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/Content_Entry_Layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
@@ -11,26 +12,217 @@
         android:layout_weight="1"
         android:text="Almost done! Enter content:"
         android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <EditText
-        android:id="@+id/content_entry_form"
+    
+    <LinearLayout
+        android:id="@+id/text_form"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="3"
-        android:hint="Enter content here"
-        android:ems="10" >
+        android:visibility="gone"
+        android:orientation="vertical" >
+        
+        <EditText
+	        android:id="@+id/text_content_entry_form"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:hint="Enter content here"
+	        android:ems="10" >
+   		</EditText>
+   		
+   		<TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="or Upload a text file:" />
 
-        <requestFocus />
-    </EditText>
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Upload" />
+        
+    </LinearLayout>
     
-    <EditText
-        android:id="@+id/tag_entry_form"
+    <LinearLayout
+        android:id="@+id/link_form"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2"
-        android:hint="Enter tags, separated by commas"
-        android:ems="10" >
-    </EditText>
+        android:layout_weight="3"
+        android:visibility="gone"
+        >
+        
+        <EditText
+	        android:id="@+id/link_content_entry_form"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:hint="Paste link here"
+	        android:ems="10" >
+   		</EditText>
+   		
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/audio_form"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Upload some audio clip:" />
+
+        <Button
+            android:id="@+id/audio_upload_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Upload" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="or Record some audio:" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/Audio_Recording_Buttons" >
+
+            <Button
+                android:id="@+id/audio_record_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Record" />
+
+            <Button
+                android:id="@+id/audio_stop_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:enabled="false"
+                android:text="Stop" />
+        </LinearLayout>
+
+      	<LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:id="@+id/Audio_Playback_Buttons" >
+
+            <Button
+                android:id="@+id/audio_start_playback_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Start playback" />
+
+            <Button
+                android:id="@+id/audio_stop_playback_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:enabled="false"
+                android:text="Stop playback" />
+        </LinearLayout>
+        
+        
+   		
+    </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/picture_form"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <ImageView
+            android:id="@+id/picture_thumbnail"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/steamnet_octopus_small" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Upload some Picture:" />
+
+        <Button
+            android:id="@+id/picture_upload_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Upload" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="or Take a Picture:" />
+
+        <Button
+            android:id="@+id/picture_camera_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Camera"
+            android:onClick="TakePicture" />
+   		
+    </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/video_form"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <EditText
+	        android:id="@+id/video_content_entry_form"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:hint="Paste a YouTube link here"
+	        android:ems="10" >
+   		</EditText>
+   		
+    </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/code_form"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+   		<EditText
+	        android:id="@+id/code_content_entry_form"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:hint="Paste a link to a (public) Github Gist"
+	        android:ems="10" >
+   		</EditText>
+   		
+    </LinearLayout>
+    
+    <EditText
+	    android:id="@+id/tag_entry_form"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:hint="Type some tags here"
+	   	android:ems="10" >
+   	</EditText>
 
     <LinearLayout
         android:layout_width="match_parent"
