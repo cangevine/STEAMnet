@@ -1,7 +1,7 @@
 Steamnet::Application.routes.draw do
   
+  get "/auth", to: "authentications#index"
   match "/auth/:provider/callback", to: "authentications#create", :via => [:get, :post]
-  get "auth", to: "authentications#index"
   
   scope "api" do
     
@@ -24,8 +24,9 @@ Steamnet::Application.routes.draw do
 end
 
 #== Route Map
-# Generated on 11 Jul 2013 20:48
+# Generated on 13 Jul 2013 21:25
 #
+#              auth GET      /auth(.:format)                                 authentications#index
 #                   GET|POST /auth/:provider/callback(.:format)              authentications#create
 #  v1_idea_comments GET      /api/v1/ideas/:idea_id/comments(.:format)       v1/comments#index
 #                   POST     /api/v1/ideas/:idea_id/comments(.:format)       v1/comments#create
@@ -44,7 +45,6 @@ end
 #          v1_spark GET      /api/v1/sparks/:id(.:format)                    v1/sparks#show
 #                   DELETE   /api/v1/sparks/:id(.:format)                    v1/sparks#destroy
 #          v1_users GET      /api/v1/users(.:format)                         v1/users#index
-#                   POST     /api/v1/users(.:format)                         v1/users#create
 #           v1_user GET      /api/v1/users/:id(.:format)                     v1/users#show
 #                   PATCH    /api/v1/users/:id(.:format)                     v1/users#update
 #                   PUT      /api/v1/users/:id(.:format)                     v1/users#update
