@@ -2,6 +2,9 @@ package org.friendscentral.steamnet.BaseClasses;
 
 import java.io.Serializable;
 
+import android.net.Uri;
+import android.os.Bundle;
+
 /**
  * 
  * @author sambeckley 
@@ -21,6 +24,8 @@ public class Spark extends Jawn implements Serializable{
 	String[] tags;
 	String tagsString;
 	String firstUser;
+	
+	Uri multimedia;
 	
 	/*
 	 * Don't need updated_at since they should never be edited, but perhaps we need a list of "uploaded at" dates
@@ -179,6 +184,14 @@ public class Spark extends Jawn implements Serializable{
 		return tags;
 	}
 	
+	public void setTags(String t) {
+		tagsString = t;
+	}
+	
+	public void setTags(String[] t) {
+		tags = t;
+	}
+	
 	/**
 	 * 
 	 * @return The first User - Presumably the first person to Spark the Spark
@@ -209,5 +222,13 @@ public class Spark extends Jawn implements Serializable{
 	
 	public Comment[] getComments() {
 		return comments;
+	}
+	
+	public void setMultimedia(Uri uri) {
+		multimedia = uri;
+	}
+	
+	public Uri getMultimedia() {
+		return multimedia;
 	}
 }

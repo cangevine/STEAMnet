@@ -9,6 +9,7 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.GridView;
 
+// TODO Remove class
 /**
  * 
  * @author sambeckley 

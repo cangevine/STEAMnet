@@ -4,6 +4,7 @@ import org.friendscentral.steamnet.IdeaBucket;
 import org.friendscentral.steamnet.IndexGrid;
 import org.friendscentral.steamnet.R;
 import org.friendscentral.steamnet.Activities.IdeaDetailActivity;
+import org.friendscentral.steamnet.Activities.MainActivity;
 import org.friendscentral.steamnet.Activities.SparkDetailActivity;
 import org.friendscentral.steamnet.BaseClasses.Idea;
 import org.friendscentral.steamnet.BaseClasses.Jawn;
@@ -25,14 +26,16 @@ import android.widget.LinearLayout;
 
 public class SparkEventHandler {
 	static final String EXTRA_MESSAGE = null;
+	MainActivity mainActivity;
 	Context context;
 	LinearLayout mainLayout;
 	IdeaBucket ideaBucket;
 	GridView gridview;
 	IndexGrid indexGrid;
 	
-	public SparkEventHandler(Context c, LinearLayout m, IdeaBucket b, GridView g, IndexGrid i) {
-		context = c;
+	public SparkEventHandler(MainActivity main, LinearLayout m, IdeaBucket b, GridView g, IndexGrid i) {
+		mainActivity = main;
+		context = (Context) main;
 		mainLayout = m;
 		ideaBucket = b;
 		gridview = g;
@@ -42,6 +45,7 @@ public class SparkEventHandler {
 	}
 	
 	public void openDetailView(Jawn j) {
+		mainActivity.getSparkWizard().revertWizard(new View(context));
 		if(j.getType() == 'S'){
 	    	Intent intent = new Intent(context, SparkDetailActivity.class);
 	    	//intent.putExtra(EXTRA_MESSAGE, b);
