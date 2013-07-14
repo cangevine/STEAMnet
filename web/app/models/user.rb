@@ -10,10 +10,6 @@
 #
 
 class User < ActiveRecord::Base
-  def to_param
-    name
-  end
-  
   has_many :authentications
   has_many :devices
   
