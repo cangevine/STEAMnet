@@ -10,14 +10,6 @@ describe "routes for Users" do
     )
   end
   
-  it "routes post /api/v1/users.json to Users controller" do
-    { :post => "/api/v1/users.json" }.should route_to(
-      :controller => "v1/users",
-      :action => "create",
-      :format => "json"
-    )
-  end
-  
   it "routes get /api/v1/users/:id.json to Users controller" do
     { :get => "/api/v1/users/max.json" }.should route_to(
       :controller => "v1/users",

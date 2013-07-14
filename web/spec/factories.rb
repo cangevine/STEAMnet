@@ -7,8 +7,6 @@ FactoryGirl.define do
     sequence :email do |n|
       "user-#{n}@example.com"
     end
-    password "foobar"
-    password_confirmation "foobar"
   end
   
   factory :spark do
