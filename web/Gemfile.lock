@@ -29,7 +29,6 @@ GEM
       rake
     arel (4.0.0)
     atomic (1.1.10)
-    bcrypt-ruby (3.0.1)
     builder (3.1.4)
     coffee-rails (4.0.0)
       coffee-script (>= 2.2.0)
@@ -188,7 +187,6 @@ PLATFORMS
 
 DEPENDENCIES
   annotate
-  bcrypt-ruby (~> 3.0.0)
   coffee-rails (~> 4.0.0)
   factory_girl_rails
   faker
