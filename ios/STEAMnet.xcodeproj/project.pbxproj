@@ -28,6 +28,8 @@
 		50CF80141794EB9D003262F1 /* SNIdeaCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CF80121794EB9D003262F1 /* SNIdeaCell.m */; };
 		50CF80171794EF71003262F1 /* SNLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CF80161794EF71003262F1 /* SNLoginViewController.m */; };
 		50CF80181794EF71003262F1 /* SNLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CF80161794EF71003262F1 /* SNLoginViewController.m */; };
+		50CF801B1795BC2D003262F1 /* STEAMnet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 50CF80191795BC2D003262F1 /* STEAMnet.xcdatamodeld */; };
+		50CF801C1795BC2D003262F1 /* STEAMnet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 50CF80191795BC2D003262F1 /* STEAMnet.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +68,7 @@
 		50CF80121794EB9D003262F1 /* SNIdeaCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNIdeaCell.m; sourceTree = "<group>"; };
 		50CF80151794EF71003262F1 /* SNLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SNLoginViewController.h; path = ../SNLoginViewController.h; sourceTree = "<group>"; };
 		50CF80161794EF71003262F1 /* SNLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SNLoginViewController.m; path = ../SNLoginViewController.m; sourceTree = "<group>"; };
+		50CF801A1795BC2D003262F1 /* STEAMnet.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = STEAMnet.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +132,7 @@
 				50CF80161794EF71003262F1 /* SNLoginViewController.m */,
 				50CF800D1794EB10003262F1 /* SNSparkCell.h */,
 				50CF800E1794EB10003262F1 /* SNSparkCell.m */,
+				50CF80191795BC2D003262F1 /* STEAMnet.xcdatamodeld */,
 				50CF80111794EB9D003262F1 /* SNIdeaCell.h */,
 				50CF80121794EB9D003262F1 /* SNIdeaCell.m */,
 				50ACBC851794C42D00369378 /* SNAppDelegate.h */,
@@ -270,6 +274,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				50ACBC831794C42D00369378 /* main.m in Sources */,
+				50CF801B1795BC2D003262F1 /* STEAMnet.xcdatamodeld in Sources */,
 				50CF80171794EF71003262F1 /* SNLoginViewController.m in Sources */,
 				50CF80131794EB9D003262F1 /* SNIdeaCell.m in Sources */,
 				50CF800B1794C915003262F1 /* SNJawnsViewController.m in Sources */,
@@ -284,6 +289,7 @@
 			files = (
 				50CF80101794EB10003262F1 /* SNSparkCell.m in Sources */,
 				50CF80181794EF71003262F1 /* SNLoginViewController.m in Sources */,
+				50CF801C1795BC2D003262F1 /* STEAMnet.xcdatamodeld in Sources */,
 				50ACBCA21794C42D00369378 /* STEAMnetTests.m in Sources */,
 				50CF800C1794C915003262F1 /* SNJawnsViewController.m in Sources */,
 				50CF80141794EB9D003262F1 /* SNIdeaCell.m in Sources */,
@@ -493,6 +499,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		50CF80191795BC2D003262F1 /* STEAMnet.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				50CF801A1795BC2D003262F1 /* STEAMnet.xcdatamodel */,
+			);
+			currentVersion = 50CF801A1795BC2D003262F1 /* STEAMnet.xcdatamodel */;
+			path = STEAMnet.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 50ACBC6B1794C42C00369378 /* Project object */;
 }

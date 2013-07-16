@@ -49,6 +49,7 @@
         
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Your token" message:token delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil, nil];
         [alert show];
+        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
     }
 }
 
