@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		500BEB241795F77900445498 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 500BEB231795F77900445498 /* User.m */; };
+		500BEB251795F77900445498 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 500BEB231795F77900445498 /* User.m */; };
+		500BEB281795F77900445498 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 500BEB271795F77900445498 /* Comment.m */; };
+		500BEB291795F77900445498 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 500BEB271795F77900445498 /* Comment.m */; };
+		500BEB2C1795F77900445498 /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 500BEB2B1795F77900445498 /* Tag.m */; };
+		500BEB2D1795F77900445498 /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 500BEB2B1795F77900445498 /* Tag.m */; };
+		500BEB301795F77900445498 /* Idea.m in Sources */ = {isa = PBXBuildFile; fileRef = 500BEB2F1795F77900445498 /* Idea.m */; };
+		500BEB311795F77900445498 /* Idea.m in Sources */ = {isa = PBXBuildFile; fileRef = 500BEB2F1795F77900445498 /* Idea.m */; };
+		500BEB341795F77900445498 /* Spark.m in Sources */ = {isa = PBXBuildFile; fileRef = 500BEB331795F77900445498 /* Spark.m */; };
+		500BEB351795F77900445498 /* Spark.m in Sources */ = {isa = PBXBuildFile; fileRef = 500BEB331795F77900445498 /* Spark.m */; };
 		50ACBC771794C42C00369378 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50ACBC761794C42C00369378 /* Foundation.framework */; };
 		50ACBC791794C42C00369378 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50ACBC781794C42C00369378 /* CoreGraphics.framework */; };
 		50ACBC7B1794C42C00369378 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50ACBC7A1794C42C00369378 /* UIKit.framework */; };
@@ -43,6 +53,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		500BEB221795F77900445498 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		500BEB231795F77900445498 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		500BEB261795F77900445498 /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
+		500BEB271795F77900445498 /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
+		500BEB2A1795F77900445498 /* Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tag.h; sourceTree = "<group>"; };
+		500BEB2B1795F77900445498 /* Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tag.m; sourceTree = "<group>"; };
+		500BEB2E1795F77900445498 /* Idea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Idea.h; sourceTree = "<group>"; };
+		500BEB2F1795F77900445498 /* Idea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Idea.m; sourceTree = "<group>"; };
+		500BEB321795F77900445498 /* Spark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Spark.h; sourceTree = "<group>"; };
+		500BEB331795F77900445498 /* Spark.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Spark.m; sourceTree = "<group>"; };
 		50ACBC731794C42C00369378 /* STEAMnet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = STEAMnet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50ACBC761794C42C00369378 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		50ACBC781794C42C00369378 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -133,6 +153,16 @@
 				50CF800D1794EB10003262F1 /* SNSparkCell.h */,
 				50CF800E1794EB10003262F1 /* SNSparkCell.m */,
 				50CF80191795BC2D003262F1 /* STEAMnet.xcdatamodeld */,
+				500BEB321795F77900445498 /* Spark.h */,
+				500BEB331795F77900445498 /* Spark.m */,
+				500BEB2E1795F77900445498 /* Idea.h */,
+				500BEB2F1795F77900445498 /* Idea.m */,
+				500BEB2A1795F77900445498 /* Tag.h */,
+				500BEB2B1795F77900445498 /* Tag.m */,
+				500BEB261795F77900445498 /* Comment.h */,
+				500BEB271795F77900445498 /* Comment.m */,
+				500BEB221795F77900445498 /* User.h */,
+				500BEB231795F77900445498 /* User.m */,
 				50CF80111794EB9D003262F1 /* SNIdeaCell.h */,
 				50CF80121794EB9D003262F1 /* SNIdeaCell.m */,
 				50ACBC851794C42D00369378 /* SNAppDelegate.h */,
@@ -273,12 +303,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				500BEB241795F77900445498 /* User.m in Sources */,
 				50ACBC831794C42D00369378 /* main.m in Sources */,
 				50CF801B1795BC2D003262F1 /* STEAMnet.xcdatamodeld in Sources */,
+				500BEB341795F77900445498 /* Spark.m in Sources */,
 				50CF80171794EF71003262F1 /* SNLoginViewController.m in Sources */,
+				500BEB2C1795F77900445498 /* Tag.m in Sources */,
+				500BEB301795F77900445498 /* Idea.m in Sources */,
 				50CF80131794EB9D003262F1 /* SNIdeaCell.m in Sources */,
 				50CF800B1794C915003262F1 /* SNJawnsViewController.m in Sources */,
 				50CF800F1794EB10003262F1 /* SNSparkCell.m in Sources */,
+				500BEB281795F77900445498 /* Comment.m in Sources */,
 				50ACBC871794C42D00369378 /* SNAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -287,12 +322,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				500BEB311795F77900445498 /* Idea.m in Sources */,
+				500BEB351795F77900445498 /* Spark.m in Sources */,
+				500BEB2D1795F77900445498 /* Tag.m in Sources */,
 				50CF80101794EB10003262F1 /* SNSparkCell.m in Sources */,
+				500BEB251795F77900445498 /* User.m in Sources */,
 				50CF80181794EF71003262F1 /* SNLoginViewController.m in Sources */,
 				50CF801C1795BC2D003262F1 /* STEAMnet.xcdatamodeld in Sources */,
 				50ACBCA21794C42D00369378 /* STEAMnetTests.m in Sources */,
 				50CF800C1794C915003262F1 /* SNJawnsViewController.m in Sources */,
 				50CF80141794EB9D003262F1 /* SNIdeaCell.m in Sources */,
+				500BEB291795F77900445498 /* Comment.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
