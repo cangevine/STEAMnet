@@ -14,13 +14,20 @@
 		50ACBC831794C42D00369378 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50ACBC821794C42D00369378 /* main.m */; };
 		50ACBC871794C42D00369378 /* SNAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 50ACBC861794C42D00369378 /* SNAppDelegate.m */; };
 		50ACBC8A1794C42D00369378 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50ACBC881794C42D00369378 /* Main.storyboard */; };
-		50ACBC8D1794C42D00369378 /* SNViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50ACBC8C1794C42D00369378 /* SNViewController.m */; };
 		50ACBC8F1794C42D00369378 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50ACBC8E1794C42D00369378 /* Images.xcassets */; };
 		50ACBC961794C42D00369378 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50ACBC951794C42D00369378 /* XCTest.framework */; };
 		50ACBC971794C42D00369378 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50ACBC761794C42C00369378 /* Foundation.framework */; };
 		50ACBC981794C42D00369378 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50ACBC7A1794C42C00369378 /* UIKit.framework */; };
 		50ACBCA01794C42D00369378 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 50ACBC9E1794C42D00369378 /* InfoPlist.strings */; };
 		50ACBCA21794C42D00369378 /* STEAMnetTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 50ACBCA11794C42D00369378 /* STEAMnetTests.m */; };
+		50CF800B1794C915003262F1 /* SNJawnsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CF800A1794C915003262F1 /* SNJawnsViewController.m */; };
+		50CF800C1794C915003262F1 /* SNJawnsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CF800A1794C915003262F1 /* SNJawnsViewController.m */; };
+		50CF800F1794EB10003262F1 /* SNSparkCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CF800E1794EB10003262F1 /* SNSparkCell.m */; };
+		50CF80101794EB10003262F1 /* SNSparkCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CF800E1794EB10003262F1 /* SNSparkCell.m */; };
+		50CF80131794EB9D003262F1 /* SNIdeaCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CF80121794EB9D003262F1 /* SNIdeaCell.m */; };
+		50CF80141794EB9D003262F1 /* SNIdeaCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CF80121794EB9D003262F1 /* SNIdeaCell.m */; };
+		50CF80171794EF71003262F1 /* SNLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CF80161794EF71003262F1 /* SNLoginViewController.m */; };
+		50CF80181794EF71003262F1 /* SNLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CF80161794EF71003262F1 /* SNLoginViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,14 +52,20 @@
 		50ACBC851794C42D00369378 /* SNAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SNAppDelegate.h; sourceTree = "<group>"; };
 		50ACBC861794C42D00369378 /* SNAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SNAppDelegate.m; sourceTree = "<group>"; };
 		50ACBC891794C42D00369378 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		50ACBC8B1794C42D00369378 /* SNViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SNViewController.h; sourceTree = "<group>"; };
-		50ACBC8C1794C42D00369378 /* SNViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SNViewController.m; sourceTree = "<group>"; };
 		50ACBC8E1794C42D00369378 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		50ACBC941794C42D00369378 /* STEAMnetTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = STEAMnetTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		50ACBC951794C42D00369378 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		50ACBC9D1794C42D00369378 /* STEAMnetTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "STEAMnetTests-Info.plist"; sourceTree = "<group>"; };
 		50ACBC9F1794C42D00369378 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		50ACBCA11794C42D00369378 /* STEAMnetTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STEAMnetTests.m; sourceTree = "<group>"; };
+		50CF80091794C915003262F1 /* SNJawnsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNJawnsViewController.h; sourceTree = "<group>"; };
+		50CF800A1794C915003262F1 /* SNJawnsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNJawnsViewController.m; sourceTree = "<group>"; };
+		50CF800D1794EB10003262F1 /* SNSparkCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SNSparkCell.h; path = ../SNSparkCell.h; sourceTree = "<group>"; };
+		50CF800E1794EB10003262F1 /* SNSparkCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SNSparkCell.m; path = ../SNSparkCell.m; sourceTree = "<group>"; };
+		50CF80111794EB9D003262F1 /* SNIdeaCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNIdeaCell.h; sourceTree = "<group>"; };
+		50CF80121794EB9D003262F1 /* SNIdeaCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNIdeaCell.m; sourceTree = "<group>"; };
+		50CF80151794EF71003262F1 /* SNLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SNLoginViewController.h; path = ../SNLoginViewController.h; sourceTree = "<group>"; };
+		50CF80161794EF71003262F1 /* SNLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SNLoginViewController.m; path = ../SNLoginViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,11 +125,17 @@
 		50ACBC7C1794C42C00369378 /* STEAMnet */ = {
 			isa = PBXGroup;
 			children = (
+				50CF80151794EF71003262F1 /* SNLoginViewController.h */,
+				50CF80161794EF71003262F1 /* SNLoginViewController.m */,
+				50CF800D1794EB10003262F1 /* SNSparkCell.h */,
+				50CF800E1794EB10003262F1 /* SNSparkCell.m */,
+				50CF80111794EB9D003262F1 /* SNIdeaCell.h */,
+				50CF80121794EB9D003262F1 /* SNIdeaCell.m */,
 				50ACBC851794C42D00369378 /* SNAppDelegate.h */,
 				50ACBC861794C42D00369378 /* SNAppDelegate.m */,
 				50ACBC881794C42D00369378 /* Main.storyboard */,
-				50ACBC8B1794C42D00369378 /* SNViewController.h */,
-				50ACBC8C1794C42D00369378 /* SNViewController.m */,
+				50CF80091794C915003262F1 /* SNJawnsViewController.h */,
+				50CF800A1794C915003262F1 /* SNJawnsViewController.m */,
 				50ACBC8E1794C42D00369378 /* Images.xcassets */,
 				50ACBC7D1794C42D00369378 /* Supporting Files */,
 			);
@@ -251,7 +270,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				50ACBC831794C42D00369378 /* main.m in Sources */,
-				50ACBC8D1794C42D00369378 /* SNViewController.m in Sources */,
+				50CF80171794EF71003262F1 /* SNLoginViewController.m in Sources */,
+				50CF80131794EB9D003262F1 /* SNIdeaCell.m in Sources */,
+				50CF800B1794C915003262F1 /* SNJawnsViewController.m in Sources */,
+				50CF800F1794EB10003262F1 /* SNSparkCell.m in Sources */,
 				50ACBC871794C42D00369378 /* SNAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -260,7 +282,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50CF80101794EB10003262F1 /* SNSparkCell.m in Sources */,
+				50CF80181794EF71003262F1 /* SNLoginViewController.m in Sources */,
 				50ACBCA21794C42D00369378 /* STEAMnetTests.m in Sources */,
+				50CF800C1794C915003262F1 /* SNJawnsViewController.m in Sources */,
+				50CF80141794EB9D003262F1 /* SNIdeaCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -455,6 +481,7 @@
 				50ACBCA71794C42D00369378 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		50ACBCA81794C42D00369378 /* Build configuration list for PBXNativeTarget "STEAMnetTests" */ = {
 			isa = XCConfigurationList;
@@ -463,6 +490,7 @@
 				50ACBCAA1794C42D00369378 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

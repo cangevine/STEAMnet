@@ -1,5 +1,5 @@
 //
-//  SNViewController.h
+//  SNSparkCell.h
 //  STEAMnet
 //
 //  Created by Max Luzuriaga on 7/15/13.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SNViewController : UIViewController
+@interface SNSparkCell : UICollectionViewCell
 
 @end
