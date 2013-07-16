@@ -149,4 +149,68 @@ describe User do
     
   end
   
+  describe "authentication association" do
+    
+    before(:each) do
+      @user = User.create(@attr)
+      
+      @a1 = FactoryGirl.create(:authentication)
+      @a2 = FactoryGirl.create(:authentication)
+      
+      @a1.user = @user
+      @a2.user = @user
+      
+      @a1.save
+      @a2.save
+    end
+    
+    it "has an authentications attribute" do
+      @user.should respond_to(:authentications)
+    end
+    
+    it "has the right authentications" do
+      @user.authentications.should == [@a1, @a2]
+    end
+    
+    it "does destroy associated authentications" do
+      @user.destroy
+      [@a1, @a2].each do |a|
+        Authentication.find_by(id: a.id).should be_nil
+      end
+    end
+    
+  end
+  
+  describe "device association" do
+    
+    before(:each) do
+      @user = User.create(@attr)
+      
+      @d1 = FactoryGirl.create(:device)
+      @d2 = FactoryGirl.create(:device)
+      
+      @d1.user = @user
+      @d2.user = @user
+      
+      @d1.save
+      @d2.save
+    end
+    
+    it "has a devices attribute" do
+      @user.should respond_to(:devices)
+    end
+    
+    it "has the right devices" do
+      @user.devices.should == [@d1, @d2]
+    end
+    
+    it "does destroy associated devices" do
+      @user.destroy
+      [@d1, @d2].each do |d|
+        Device.find_by(id: d.id).should be_nil
+      end
+    end
+    
+  end
+  
 end
