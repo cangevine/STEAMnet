@@ -6,6 +6,8 @@ The STEAMnet API version 1 can be accessed at `http://steamnet.herokuapp.com/api
 
 From now on, every request to the STEAMnet API must be authenticated with a Token, which is generated when a user logs in or creates an account from the Android app (a detailed spec of how this should work in the App can be found in the description for [Pull #62](https://github.com/cangevine/STEAMnet/pull/62)). Once the Token is saved to the Android device, every single request to the api must include the token in the request url. For instance, that `/users.json` request I mentioned previously would not work unless the token is included like so: `http://steamnet.herokuapp.com/api/v1/users.json?token=yourdevicetoken`. The Tokens are associated with a given user and Device, so that the API is aware from which User the request comes, and so that it's aware that the request is coming from the STEAMnet app, and not some malicious third party.
 
+If a request _is_ issued to the API without a token, or with a token that doesn't correspond to a user, the API will respond with no response body, and a response code of 401 unauthorized.
+
 *(Note 7/14/13: currently the API does not use the token authentication, because none of the Android code has been updated to use it yet, but once the Android app is updated to generate and use these tokens, the switch will be flipped and Token authentication will be required for every request.)*
 
 ### Sparks
@@ -465,3 +467,69 @@ A POST request to `/ideas.json?idea[description]=Some%20Description&sparks=1,5,7
 			"blue"
 		]
 	}
+	
+#### Deleting an Idea
+
+Just like sparks, ideas are never deleted in STEAMnet. Instead, when the owner of an idea "deletes" it from STEAMnet, all that really happens is that the user removes their name from the idea. The idea is still available to other users, it just is not associated with the user any more. As such, this request only works if the user found through your token matches the creator of the idea.
+
+To do this, issue a DELETE request to `/ideas/id.json`. To do a delete request in Android, call `.setRequestMethod("DELETE")` on your HttpURLConnection before running it. The response of this request is the same as that of showing or creating one idea, but with no user set for its `user` attribute.
+
+### Comments
+
+#### Getting all Comments on a Given Jawn
+
+To get all the comments on a given spark or idea, issue a GET request to `/sparks|ideas/id/comments.json`, where you specify if the jawn is a spark or idea, and you specify the id of the jawn in question. For instance, to get an array of all the comments on a spark with id 1, you would issue a GET request to `/sparks/1/comments.json`, to which the API would respond with something like:
+
+	[
+		{
+			"id" : 1,
+			"comment_text" : "Animi qui mollitia perspiciatis atque et. Inventore dolores omnis laborum. Ipsa voluptas veniam corporis omnis quisquam iste aut.",
+			"created_at" : "2013-06-26T23:52:03.431Z",
+			"user" : {
+				"id" : 8,
+				"name" : "grace",
+				"email" : "tremayne@hicklehoeger.net"
+			}
+		},
+		{
+			"id" : 2,
+			"comment_text" : "Voluptas neque optio facilis sint fugit. Natus sint id ipsam. Omnis veritatis ab sint vel.","created_at" : "2013-06-26T23:52:03.463Z","user" : {"id" : 6,"name" : "dan","email" : "ines@stoltenberghowell.net"}
+		},
+		{
+			"id" : 3,
+			"comment_text" : "Omnis voluptas omnis et cum non veniam eaque. Ab vero atque commodi culpa magni. Est et dignissimos non.",
+			"created_at" : "2013-06-26T23:52:03.479Z",
+			"user" : {
+				"id" : 6,
+				"name" : "dan",
+				"email" : "ines@stoltenberghowell.net"
+			}
+		}
+	]
+
+Please note that the comments are ordered from oldest first, and that data about the spark being commented upon is omitted from the response, because the API assumes that if you know enough about the spark or idea to form the url needed for this request in the first place, then you either already know enough about the spark or idea, or you definitely know enough to issue another request to get the rest of the data that you need.
+
+#### Posting a Comment
+
+To post a comment on a certain spark or idea, issue a POST request to `/sparks|ideas/id/comments.json`. The only attribute you need to supply for this, other than the token of course, is `comment[comment_text]`. Although a bit redundant, this is the vital piece of information needed to form the comment. The API figures our the jawn you want to comment upon based on the url, and the user making the comment based on the token provided.
+
+For instance, sending a POST request to `/sparks/1/comments.json?comment[comment_text]=Hello%20World` would create a comment on the spark with an id of 1, and return the following json:
+
+	{
+		"id" : 1,
+		"comment_text" : "Hello world.",
+		"created_at" : "2013-06-26T23:52:03.431Z",
+		"user" : {
+			"id" : 8,
+			"name" : "grace",
+			"email" : "tremayne@hicklehoeger.net"
+		}
+	}
+
+#### Deleting a Comment
+
+To delete a comment, issue a DELETE request, just as previously described, to `/sparks|ideas/id/comments/comment_id.json`, where you form the url just as in the previously described requests, with the added detail of the id of the comment you wish to delete.
+
+Logically, this request will only work if the token provided corresponds to the user who authored this comment. Obviously we do not want users to be able to delete other users' comments. It's probably safe to assume that this kind of request will never happen, since the UI of the app should not allow this behavior, but just in case, the API verifies that the users match before deleting the comment.
+
+If the comment was deleted successfully, the response will have an empty body with HTTP response code 204. If the users do not match, the response will have an empty body and HTTP response code 401, for unauthorized.
