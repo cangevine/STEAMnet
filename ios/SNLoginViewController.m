@@ -43,13 +43,16 @@
 {
     NSString *url = [[[webView request] URL] absoluteString];
     
-    if ([url rangeOfString:@"callback"].location != NSNotFound) {
+    if (([url rangeOfString:@"steamnet.herokuapp.com/auth"].location != NSNotFound) && ([url rangeOfString:@"callback"].location != NSNotFound)) {
         NSString *token = [webView stringByEvaluatingJavaScriptFromString:@"document.getElementsByTagName('p')[0].innerHTML"];
         NSLog(@"TOKEN: %@", token);
         
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Your token" message:token delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil, nil];
         [alert show];
         [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//        [defaults setValue:token forKey:@"token"];
     }
 }
 

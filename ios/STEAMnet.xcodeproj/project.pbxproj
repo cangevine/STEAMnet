@@ -17,6 +17,7 @@
 		500BEB311795F77900445498 /* Idea.m in Sources */ = {isa = PBXBuildFile; fileRef = 500BEB2F1795F77900445498 /* Idea.m */; };
 		500BEB341795F77900445498 /* Spark.m in Sources */ = {isa = PBXBuildFile; fileRef = 500BEB331795F77900445498 /* Spark.m */; };
 		500BEB351795F77900445498 /* Spark.m in Sources */ = {isa = PBXBuildFile; fileRef = 500BEB331795F77900445498 /* Spark.m */; };
+		500BEB811795F8DF00445498 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 500BEB801795F8DF00445498 /* CoreData.framework */; };
 		50ACBC771794C42C00369378 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50ACBC761794C42C00369378 /* Foundation.framework */; };
 		50ACBC791794C42C00369378 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50ACBC781794C42C00369378 /* CoreGraphics.framework */; };
 		50ACBC7B1794C42C00369378 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50ACBC7A1794C42C00369378 /* UIKit.framework */; };
@@ -63,6 +64,7 @@
 		500BEB2F1795F77900445498 /* Idea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Idea.m; sourceTree = "<group>"; };
 		500BEB321795F77900445498 /* Spark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Spark.h; sourceTree = "<group>"; };
 		500BEB331795F77900445498 /* Spark.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Spark.m; sourceTree = "<group>"; };
+		500BEB801795F8DF00445498 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		50ACBC731794C42C00369378 /* STEAMnet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = STEAMnet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50ACBC761794C42C00369378 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		50ACBC781794C42C00369378 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -96,6 +98,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				500BEB811795F8DF00445498 /* CoreData.framework in Frameworks */,
 				50ACBC791794C42C00369378 /* CoreGraphics.framework in Frameworks */,
 				50ACBC7B1794C42C00369378 /* UIKit.framework in Frameworks */,
 				50ACBC771794C42C00369378 /* Foundation.framework in Frameworks */,
@@ -137,6 +140,7 @@
 		50ACBC751794C42C00369378 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				500BEB801795F8DF00445498 /* CoreData.framework */,
 				50ACBC761794C42C00369378 /* Foundation.framework */,
 				50ACBC781794C42C00369378 /* CoreGraphics.framework */,
 				50ACBC7A1794C42C00369378 /* UIKit.framework */,
