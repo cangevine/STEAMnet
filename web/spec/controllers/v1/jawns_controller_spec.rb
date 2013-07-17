@@ -55,6 +55,25 @@ describe V1::JawnsController do
       end
     end
     
+    describe "lite response" do
+      
+      it "only returns ids and jawn_types" do
+        get :index, :format => 'json', :lite => "true", :token => @auth_token
+        output = JSON.parse(response.body)
+
+        output.should be_a_kind_of(Array)
+        
+        output.each do |jawn|
+          jawn["id"].should_not be_nil
+          jawn["jawn_type"].should_not be_nil
+          jawn["tags"].should be_nil
+          jawn["description"].should be_nil
+          jawn["content"].should be_nil
+        end
+      end
+      
+    end
+    
     describe "idea filtering" do
       
       it "filters ideas correctly" do
