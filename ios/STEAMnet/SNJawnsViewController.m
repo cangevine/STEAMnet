@@ -8,6 +8,8 @@
 
 #define kBgQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
 
+#import "SNAPIHelper.h"
+
 #import "SNJawnsViewController.h"
 
 #import "SNSparkCell.h"
@@ -104,7 +106,7 @@
 - (void)fetchData
 {
     dispatch_async(kBgQueue, ^{
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://steamnet.herokuapp.com/api/v1/jawns.json"]];
+        NSData *data = [NSData dataWithContentsOfURL:[SNAPIHelper urlForPath:@"jawns" options:@{@"lite": @"true"}]];
         [self performSelectorOnMainThread:@selector(parseData:) withObject:data waitUntilDone:YES];
     });
 }

@@ -52,7 +52,7 @@
         [self.navigationController dismissViewControllerAnimated:YES completion:nil];
         
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-//        [defaults setValue:token forKey:@"token"];
+        [defaults setValue:token forKey:@"token"];
     }
 }
 
