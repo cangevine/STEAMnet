@@ -26,6 +26,8 @@ class V1::SparksController < ApplicationController
       
       @user.sparks << @spark
       
+      @spark_is_new = true
+      
       render "show"
     elsif @spark.duplicate?
       # TODO: Handle the different spark_types provided by multiple users

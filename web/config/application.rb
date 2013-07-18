@@ -43,6 +43,6 @@ module Steamnet
     # config.active_record.schema_format = :sql
 
     # Enable the asset pipeline
-    config.assets.enabled = false
+    config.assets.enabled = true
   end
 end

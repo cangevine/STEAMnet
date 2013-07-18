@@ -129,6 +129,7 @@ describe V1::SparksController do
         output.should be_a_kind_of(Hash)
         output["content_hash"].should == Spark.last.content_hash
         output["tags"].should == Spark.last.tags.map(&:tag_text)
+        output["spark_is_new"].should == true
       end
       
     end
@@ -184,6 +185,7 @@ describe V1::SparksController do
 
         output.should be_a_kind_of(Hash)
         output["content_hash"].should == @spark.content_hash
+        output["spark_is_new"].should_not == true
       end
       
     end
