@@ -1,0 +1,561 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		500BEB241795F77900445498 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 500BEB231795F77900445498 /* User.m */; };
+		500BEB251795F77900445498 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 500BEB231795F77900445498 /* User.m */; };
+		500BEB281795F77900445498 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 500BEB271795F77900445498 /* Comment.m */; };
+		500BEB291795F77900445498 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 500BEB271795F77900445498 /* Comment.m */; };
+		500BEB2C1795F77900445498 /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 500BEB2B1795F77900445498 /* Tag.m */; };
+		500BEB2D1795F77900445498 /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 500BEB2B1795F77900445498 /* Tag.m */; };
+		500BEB301795F77900445498 /* Idea.m in Sources */ = {isa = PBXBuildFile; fileRef = 500BEB2F1795F77900445498 /* Idea.m */; };
+		500BEB311795F77900445498 /* Idea.m in Sources */ = {isa = PBXBuildFile; fileRef = 500BEB2F1795F77900445498 /* Idea.m */; };
+		500BEB341795F77900445498 /* Spark.m in Sources */ = {isa = PBXBuildFile; fileRef = 500BEB331795F77900445498 /* Spark.m */; };
+		500BEB351795F77900445498 /* Spark.m in Sources */ = {isa = PBXBuildFile; fileRef = 500BEB331795F77900445498 /* Spark.m */; };
+		500BEB811795F8DF00445498 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 500BEB801795F8DF00445498 /* CoreData.framework */; };
+		50ACBC771794C42C00369378 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50ACBC761794C42C00369378 /* Foundation.framework */; };
+		50ACBC791794C42C00369378 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50ACBC781794C42C00369378 /* CoreGraphics.framework */; };
+		50ACBC7B1794C42C00369378 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50ACBC7A1794C42C00369378 /* UIKit.framework */; };
+		50ACBC811794C42D00369378 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 50ACBC7F1794C42D00369378 /* InfoPlist.strings */; };
+		50ACBC831794C42D00369378 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50ACBC821794C42D00369378 /* main.m */; };
+		50ACBC871794C42D00369378 /* SNAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 50ACBC861794C42D00369378 /* SNAppDelegate.m */; };
+		50ACBC8A1794C42D00369378 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50ACBC881794C42D00369378 /* Main.storyboard */; };
+		50ACBC8F1794C42D00369378 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50ACBC8E1794C42D00369378 /* Images.xcassets */; };
+		50ACBC961794C42D00369378 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50ACBC951794C42D00369378 /* XCTest.framework */; };
+		50ACBC971794C42D00369378 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50ACBC761794C42C00369378 /* Foundation.framework */; };
+		50ACBC981794C42D00369378 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50ACBC7A1794C42C00369378 /* UIKit.framework */; };
+		50ACBCA01794C42D00369378 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 50ACBC9E1794C42D00369378 /* InfoPlist.strings */; };
+		50ACBCA21794C42D00369378 /* STEAMnetTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 50ACBCA11794C42D00369378 /* STEAMnetTests.m */; };
+		50CF800B1794C915003262F1 /* SNJawnsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CF800A1794C915003262F1 /* SNJawnsViewController.m */; };
+		50CF800C1794C915003262F1 /* SNJawnsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CF800A1794C915003262F1 /* SNJawnsViewController.m */; };
+		50CF800F1794EB10003262F1 /* SNSparkCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CF800E1794EB10003262F1 /* SNSparkCell.m */; };
+		50CF80101794EB10003262F1 /* SNSparkCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CF800E1794EB10003262F1 /* SNSparkCell.m */; };
+		50CF80131794EB9D003262F1 /* SNIdeaCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CF80121794EB9D003262F1 /* SNIdeaCell.m */; };
+		50CF80141794EB9D003262F1 /* SNIdeaCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CF80121794EB9D003262F1 /* SNIdeaCell.m */; };
+		50CF80171794EF71003262F1 /* SNLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CF80161794EF71003262F1 /* SNLoginViewController.m */; };
+		50CF80181794EF71003262F1 /* SNLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CF80161794EF71003262F1 /* SNLoginViewController.m */; };
+		50CF801B1795BC2D003262F1 /* STEAMnet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 50CF80191795BC2D003262F1 /* STEAMnet.xcdatamodeld */; };
+		50CF801C1795BC2D003262F1 /* STEAMnet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 50CF80191795BC2D003262F1 /* STEAMnet.xcdatamodeld */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		50ACBC991794C42D00369378 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 50ACBC6B1794C42C00369378 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 50ACBC721794C42C00369378;
+			remoteInfo = STEAMnet;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		500BEB221795F77900445498 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		500BEB231795F77900445498 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		500BEB261795F77900445498 /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
+		500BEB271795F77900445498 /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
+		500BEB2A1795F77900445498 /* Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tag.h; sourceTree = "<group>"; };
+		500BEB2B1795F77900445498 /* Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tag.m; sourceTree = "<group>"; };
+		500BEB2E1795F77900445498 /* Idea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Idea.h; sourceTree = "<group>"; };
+		500BEB2F1795F77900445498 /* Idea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Idea.m; sourceTree = "<group>"; };
+		500BEB321795F77900445498 /* Spark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Spark.h; sourceTree = "<group>"; };
+		500BEB331795F77900445498 /* Spark.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Spark.m; sourceTree = "<group>"; };
+		500BEB801795F8DF00445498 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		50ACBC731794C42C00369378 /* STEAMnet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = STEAMnet.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		50ACBC761794C42C00369378 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		50ACBC781794C42C00369378 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		50ACBC7A1794C42C00369378 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		50ACBC7E1794C42D00369378 /* STEAMnet-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "STEAMnet-Info.plist"; sourceTree = "<group>"; };
+		50ACBC801794C42D00369378 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		50ACBC821794C42D00369378 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		50ACBC841794C42D00369378 /* STEAMnet-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "STEAMnet-Prefix.pch"; sourceTree = "<group>"; };
+		50ACBC851794C42D00369378 /* SNAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SNAppDelegate.h; sourceTree = "<group>"; };
+		50ACBC861794C42D00369378 /* SNAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SNAppDelegate.m; sourceTree = "<group>"; };
+		50ACBC891794C42D00369378 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		50ACBC8E1794C42D00369378 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		50ACBC941794C42D00369378 /* STEAMnetTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = STEAMnetTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		50ACBC951794C42D00369378 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		50ACBC9D1794C42D00369378 /* STEAMnetTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "STEAMnetTests-Info.plist"; sourceTree = "<group>"; };
+		50ACBC9F1794C42D00369378 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		50ACBCA11794C42D00369378 /* STEAMnetTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STEAMnetTests.m; sourceTree = "<group>"; };
+		50CF80091794C915003262F1 /* SNJawnsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNJawnsViewController.h; sourceTree = "<group>"; };
+		50CF800A1794C915003262F1 /* SNJawnsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNJawnsViewController.m; sourceTree = "<group>"; };
+		50CF800D1794EB10003262F1 /* SNSparkCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SNSparkCell.h; path = ../SNSparkCell.h; sourceTree = "<group>"; };
+		50CF800E1794EB10003262F1 /* SNSparkCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SNSparkCell.m; path = ../SNSparkCell.m; sourceTree = "<group>"; };
+		50CF80111794EB9D003262F1 /* SNIdeaCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNIdeaCell.h; sourceTree = "<group>"; };
+		50CF80121794EB9D003262F1 /* SNIdeaCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNIdeaCell.m; sourceTree = "<group>"; };
+		50CF80151794EF71003262F1 /* SNLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SNLoginViewController.h; path = ../SNLoginViewController.h; sourceTree = "<group>"; };
+		50CF80161794EF71003262F1 /* SNLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SNLoginViewController.m; path = ../SNLoginViewController.m; sourceTree = "<group>"; };
+		50CF801A1795BC2D003262F1 /* STEAMnet.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = STEAMnet.xcdatamodel; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		50ACBC701794C42C00369378 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				500BEB811795F8DF00445498 /* CoreData.framework in Frameworks */,
+				50ACBC791794C42C00369378 /* CoreGraphics.framework in Frameworks */,
+				50ACBC7B1794C42C00369378 /* UIKit.framework in Frameworks */,
+				50ACBC771794C42C00369378 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		50ACBC911794C42D00369378 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50ACBC961794C42D00369378 /* XCTest.framework in Frameworks */,
+				50ACBC981794C42D00369378 /* UIKit.framework in Frameworks */,
+				50ACBC971794C42D00369378 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		50ACBC6A1794C42C00369378 = {
+			isa = PBXGroup;
+			children = (
+				50ACBC7C1794C42C00369378 /* STEAMnet */,
+				50ACBC9B1794C42D00369378 /* STEAMnetTests */,
+				50ACBC751794C42C00369378 /* Frameworks */,
+				50ACBC741794C42C00369378 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		50ACBC741794C42C00369378 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				50ACBC731794C42C00369378 /* STEAMnet.app */,
+				50ACBC941794C42D00369378 /* STEAMnetTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		50ACBC751794C42C00369378 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				500BEB801795F8DF00445498 /* CoreData.framework */,
+				50ACBC761794C42C00369378 /* Foundation.framework */,
+				50ACBC781794C42C00369378 /* CoreGraphics.framework */,
+				50ACBC7A1794C42C00369378 /* UIKit.framework */,
+				50ACBC951794C42D00369378 /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		50ACBC7C1794C42C00369378 /* STEAMnet */ = {
+			isa = PBXGroup;
+			children = (
+				50CF80151794EF71003262F1 /* SNLoginViewController.h */,
+				50CF80161794EF71003262F1 /* SNLoginViewController.m */,
+				50CF800D1794EB10003262F1 /* SNSparkCell.h */,
+				50CF800E1794EB10003262F1 /* SNSparkCell.m */,
+				50CF80191795BC2D003262F1 /* STEAMnet.xcdatamodeld */,
+				500BEB321795F77900445498 /* Spark.h */,
+				500BEB331795F77900445498 /* Spark.m */,
+				500BEB2E1795F77900445498 /* Idea.h */,
+				500BEB2F1795F77900445498 /* Idea.m */,
+				500BEB2A1795F77900445498 /* Tag.h */,
+				500BEB2B1795F77900445498 /* Tag.m */,
+				500BEB261795F77900445498 /* Comment.h */,
+				500BEB271795F77900445498 /* Comment.m */,
+				500BEB221795F77900445498 /* User.h */,
+				500BEB231795F77900445498 /* User.m */,
+				50CF80111794EB9D003262F1 /* SNIdeaCell.h */,
+				50CF80121794EB9D003262F1 /* SNIdeaCell.m */,
+				50ACBC851794C42D00369378 /* SNAppDelegate.h */,
+				50ACBC861794C42D00369378 /* SNAppDelegate.m */,
+				50ACBC881794C42D00369378 /* Main.storyboard */,
+				50CF80091794C915003262F1 /* SNJawnsViewController.h */,
+				50CF800A1794C915003262F1 /* SNJawnsViewController.m */,
+				50ACBC8E1794C42D00369378 /* Images.xcassets */,
+				50ACBC7D1794C42D00369378 /* Supporting Files */,
+			);
+			path = STEAMnet;
+			sourceTree = "<group>";
+		};
+		50ACBC7D1794C42D00369378 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				50ACBC7E1794C42D00369378 /* STEAMnet-Info.plist */,
+				50ACBC7F1794C42D00369378 /* InfoPlist.strings */,
+				50ACBC821794C42D00369378 /* main.m */,
+				50ACBC841794C42D00369378 /* STEAMnet-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		50ACBC9B1794C42D00369378 /* STEAMnetTests */ = {
+			isa = PBXGroup;
+			children = (
+				50ACBCA11794C42D00369378 /* STEAMnetTests.m */,
+				50ACBC9C1794C42D00369378 /* Supporting Files */,
+			);
+			path = STEAMnetTests;
+			sourceTree = "<group>";
+		};
+		50ACBC9C1794C42D00369378 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				50ACBC9D1794C42D00369378 /* STEAMnetTests-Info.plist */,
+				50ACBC9E1794C42D00369378 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		50ACBC721794C42C00369378 /* STEAMnet */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 50ACBCA51794C42D00369378 /* Build configuration list for PBXNativeTarget "STEAMnet" */;
+			buildPhases = (
+				50ACBC6F1794C42C00369378 /* Sources */,
+				50ACBC701794C42C00369378 /* Frameworks */,
+				50ACBC711794C42C00369378 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = STEAMnet;
+			productName = STEAMnet;
+			productReference = 50ACBC731794C42C00369378 /* STEAMnet.app */;
+			productType = "com.apple.product-type.application";
+		};
+		50ACBC931794C42D00369378 /* STEAMnetTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 50ACBCA81794C42D00369378 /* Build configuration list for PBXNativeTarget "STEAMnetTests" */;
+			buildPhases = (
+				50ACBC901794C42D00369378 /* Sources */,
+				50ACBC911794C42D00369378 /* Frameworks */,
+				50ACBC921794C42D00369378 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				50ACBC9A1794C42D00369378 /* PBXTargetDependency */,
+			);
+			name = STEAMnetTests;
+			productName = STEAMnetTests;
+			productReference = 50ACBC941794C42D00369378 /* STEAMnetTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		50ACBC6B1794C42C00369378 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = SN;
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = "Max Luzuriaga";
+				TargetAttributes = {
+					50ACBC931794C42D00369378 = {
+						TestTargetID = 50ACBC721794C42C00369378;
+					};
+				};
+			};
+			buildConfigurationList = 50ACBC6E1794C42C00369378 /* Build configuration list for PBXProject "STEAMnet" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 50ACBC6A1794C42C00369378;
+			productRefGroup = 50ACBC741794C42C00369378 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				50ACBC721794C42C00369378 /* STEAMnet */,
+				50ACBC931794C42D00369378 /* STEAMnetTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		50ACBC711794C42C00369378 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50ACBC8F1794C42D00369378 /* Images.xcassets in Resources */,
+				50ACBC811794C42D00369378 /* InfoPlist.strings in Resources */,
+				50ACBC8A1794C42D00369378 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		50ACBC921794C42D00369378 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50ACBCA01794C42D00369378 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		50ACBC6F1794C42C00369378 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				500BEB241795F77900445498 /* User.m in Sources */,
+				50ACBC831794C42D00369378 /* main.m in Sources */,
+				50CF801B1795BC2D003262F1 /* STEAMnet.xcdatamodeld in Sources */,
+				500BEB341795F77900445498 /* Spark.m in Sources */,
+				50CF80171794EF71003262F1 /* SNLoginViewController.m in Sources */,
+				500BEB2C1795F77900445498 /* Tag.m in Sources */,
+				500BEB301795F77900445498 /* Idea.m in Sources */,
+				50CF80131794EB9D003262F1 /* SNIdeaCell.m in Sources */,
+				50CF800B1794C915003262F1 /* SNJawnsViewController.m in Sources */,
+				50CF800F1794EB10003262F1 /* SNSparkCell.m in Sources */,
+				500BEB281795F77900445498 /* Comment.m in Sources */,
+				50ACBC871794C42D00369378 /* SNAppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		50ACBC901794C42D00369378 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				500BEB311795F77900445498 /* Idea.m in Sources */,
+				500BEB351795F77900445498 /* Spark.m in Sources */,
+				500BEB2D1795F77900445498 /* Tag.m in Sources */,
+				50CF80101794EB10003262F1 /* SNSparkCell.m in Sources */,
+				500BEB251795F77900445498 /* User.m in Sources */,
+				50CF80181794EF71003262F1 /* SNLoginViewController.m in Sources */,
+				50CF801C1795BC2D003262F1 /* STEAMnet.xcdatamodeld in Sources */,
+				50ACBCA21794C42D00369378 /* STEAMnetTests.m in Sources */,
+				50CF800C1794C915003262F1 /* SNJawnsViewController.m in Sources */,
+				50CF80141794EB9D003262F1 /* SNIdeaCell.m in Sources */,
+				500BEB291795F77900445498 /* Comment.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		50ACBC9A1794C42D00369378 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 50ACBC721794C42C00369378 /* STEAMnet */;
+			targetProxy = 50ACBC991794C42D00369378 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		50ACBC7F1794C42D00369378 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				50ACBC801794C42D00369378 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		50ACBC881794C42D00369378 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				50ACBC891794C42D00369378 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		50ACBC9E1794C42D00369378 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				50ACBC9F1794C42D00369378 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		50ACBCA31794C42D00369378 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		50ACBCA41794C42D00369378 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		50ACBCA61794C42D00369378 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "STEAMnet/STEAMnet-Prefix.pch";
+				INFOPLIST_FILE = "STEAMnet/STEAMnet-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		50ACBCA71794C42D00369378 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "STEAMnet/STEAMnet-Prefix.pch";
+				INFOPLIST_FILE = "STEAMnet/STEAMnet-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		50ACBCA91794C42D00369378 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/STEAMnet.app/STEAMnet";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(SYSTEM_APPS_DIR)/Xcode5-DP3.app/Contents/Developer/Library/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "STEAMnet/STEAMnet-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "STEAMnetTests/STEAMnetTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		50ACBCAA1794C42D00369378 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/STEAMnet.app/STEAMnet";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(SYSTEM_APPS_DIR)/Xcode5-DP3.app/Contents/Developer/Library/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "STEAMnet/STEAMnet-Prefix.pch";
+				INFOPLIST_FILE = "STEAMnetTests/STEAMnetTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		50ACBC6E1794C42C00369378 /* Build configuration list for PBXProject "STEAMnet" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				50ACBCA31794C42D00369378 /* Debug */,
+				50ACBCA41794C42D00369378 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		50ACBCA51794C42D00369378 /* Build configuration list for PBXNativeTarget "STEAMnet" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				50ACBCA61794C42D00369378 /* Debug */,
+				50ACBCA71794C42D00369378 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		50ACBCA81794C42D00369378 /* Build configuration list for PBXNativeTarget "STEAMnetTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				50ACBCA91794C42D00369378 /* Debug */,
+				50ACBCAA1794C42D00369378 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		50CF80191795BC2D003262F1 /* STEAMnet.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				50CF801A1795BC2D003262F1 /* STEAMnet.xcdatamodel */,
+			);
+			currentVersion = 50CF801A1795BC2D003262F1 /* STEAMnet.xcdatamodel */;
+			path = STEAMnet.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 50ACBC6B1794C42C00369378 /* Project object */;
+}
