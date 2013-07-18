@@ -533,3 +533,211 @@ To delete a comment, issue a DELETE request, just as previously described, to `/
 Logically, this request will only work if the token provided corresponds to the user who authored this comment. Obviously we do not want users to be able to delete other users' comments. It's probably safe to assume that this kind of request will never happen, since the UI of the app should not allow this behavior, but just in case, the API verifies that the users match before deleting the comment.
 
 If the comment was deleted successfully, the response will have an empty body with HTTP response code 204. If the users do not match, the response will have an empty body and HTTP response code 401, for unauthorized.
+
+### Jawns
+
+#### Getting all Jawns
+
+To get an array of all the jawns in the databse (including both sparks and ideas), issue a GET request to `/jawns.json`. Sparks and ideas are mixed together and sorted in order of when they were created, with newer jawns first. To only get a certain number of jawns, provide the `limit` attribute. A sample response to `/jawns.json?limit=3` would be something like this:
+	
+	[
+		{
+			"id" : 2,
+			"created_at" : "2013-07-13T16:29:00.694Z",
+			"description" : "Rerum adipisci vel quod et incidunt excepturi suscipit.",
+			"user" : {
+				"id" : 1,
+				"name" : "Max",
+				"email" : "bryon.ryan@fisher.com"
+			},
+			"sparks" : [
+				{
+					"id" : 3,
+					"created_at" : "2013-07-13T16:29:00.212Z",
+					"spark_type" : "P",
+					"content_type" : "L",
+					"content" : "http://mraz.biz/antonetta.heel",
+					"content_hash" : "6808bcc4776b5a39dbdc95d6ba34771d4d7e0b3a"
+				},
+				{
+					"id" : 7,
+					"created_at" : "2013-07-13T16:29:00.299Z",
+					"spark_type" : "W",
+					"content_type" : "T",
+					"content" : "Molestiae amet vel velit nihil aut. Esse assumenda et praesentium nostrum. Provident odio voluptas magnam ut repellat.",
+					"content_hash" : "a18ba534b698dd9ae2b3e18da3b16fb34d2c5edb"
+				},
+				{
+					"id" : 8,
+					"created_at" : "2013-07-13T16:29:00.320Z",
+					"spark_type" : "I",
+					"content_type" : "T",
+					"content" : "Quisquam et sit. Fuga in voluptate est consequatur architecto accusamus. Blanditiis quisquam sit quam.",
+					"content_hash" : "90306414b901498ad5dda28cc0c8c4f3ec2fe32c"
+				},
+				{
+					"id" : 18,
+					"created_at" : "2013-07-13T16:29:00.615Z",
+					"spark_type" : "P",
+					"content_type" : "V",
+					"content" : "http://www.youtube.com/watch?v=j5C6X9vOEkU",
+					"content_hash" : "a83cf9063c28da791497a752a2657f5881d30b3a"
+				}
+			],
+			"comments" : [],
+			"tags" : [
+				"yellow",
+				"legit"],
+			"jawn_type" : "idea"
+		},
+		{
+			"id" : 1,"created_at" : "2013-07-13T16:29:00.662Z","description" : "Suscipit quis est dignissimos quis cumque temporibus.",
+			"user" : {
+				"id" : 5,
+				"name" : "Drew Leventhal",
+				"email" : "grady.okon@ruel.org"
+			},
+			"sparks" : [
+				{
+					"id" : 17,
+					"created_at" : "2013-07-13T16:29:00.592Z",
+					"spark_type" : "I",
+					"content_type" : "V",
+					"content" : "http://www.youtube.com/watch?v=1VuMdLm0ccU",
+					"content_hash" : "8172e08070d9e03cbf3d51c3dcb3dc310e7f0f87"
+				},
+				{
+					"id" : 14,
+					"created_at" : "2013-07-13T16:29:00.518Z",
+					"spark_type" : "I",
+					"content_type" : "A",
+					"content" : "http://soundcloud.com/martin_lind/texture-vi",
+					"content_hash" : "775acb2d18b2a529767e10b9e18ac4d0579a6506"
+				},
+				{
+					"id" : 2,
+					"created_at" : "2013-07-13T16:29:00.198Z",
+					"spark_type" : "I",
+					"content_type" : "L",
+					"content" : "http://langoshhahn.biz/teresa.senger",
+					"content_hash" : "ceb35dffb5a951fdf448d07de9e4d7bcc4a8d229"
+				},
+				{
+					"id" : 15,
+					"created_at" : "2013-07-13T16:29:00.548Z",
+					"spark_type" : "P",
+					"content_type" : "A",
+					"content" : "http://soundcloud.com/se-beat/se-beat-straight-to-straight",
+					"content_hash" : "4970380a916ccc26fb3a1c0115410646de4676b1"
+				}
+			],
+			"comments" : [
+				{
+					"id" : 29,
+					"comment_text" : "Quisquam ullam molestias similique error impedit. Culpa libero accusantium. Asperiores omnis eius totam illum enim ut unde.",
+					"created_at" : "2013-07-13T16:29:00.691Z",
+					"user" : {
+						"id" : 7,
+						"name" : "Heather Witzel-Lakin",
+						"email" : "josue.boyle@nikolaus.net"
+					}
+				}
+			],
+			"tags" : [
+				"tablets",
+				"purple"
+			],
+			"jawn_type" : "idea"
+		},
+		{
+			"id" : 18,
+			"created_at" : "2013-07-13T16:29:00.615Z",
+			"spark_type" : "P",
+			"content_type" : "V",
+			"content" : "http://www.youtube.com/watch?v=j5C6X9vOEkU",
+			"content_hash" : "a83cf9063c28da791497a752a2657f5881d30b3a",
+			"users" : [
+				{
+					"id" : 6,
+					"name" : "Dan Stadtmauer",
+					"email" : "rocio@feeneyconsidine.biz"
+				},
+				{
+					"id" : 8,
+					"name" : "Grace Heard",
+					"email" : "pauline@morar.net"
+				}
+			],
+			"ideas" : [
+				{
+					"id" : 2,
+					"created_at" : "2013-07-13T16:29:00.694Z",
+					"description" : "Rerum adipisci vel quod et incidunt excepturi suscipit."
+				},
+				{
+					"id" : 10,
+					"created_at" : "2013-07-13T16:29:00.868Z",
+					"description" : "Et quo rerum laboriosam qui saepe fugit minus quasi."
+				},
+				{
+					"id" : 14,
+					"created_at" : "2013-07-13T16:29:01.011Z",
+					"description" : "Dolores nostrum est dolorum exercitationem."
+				}
+			],
+			"comments" : [
+				{
+					"id" : 27,
+					"comment_text" : "Quaerat facere enim error architecto. Id eligendi est praesentium qui labore ipsam nisi. Aliquam praesentium perspiciatis quia velit veniam.",
+					"created_at" : "2013-07-13T16:29:00.634Z",
+					"user" : {
+						"id" : 1,
+						"name" : "Max",
+						"email" : "bryon.ryan@fisher.com"
+					}
+				},
+				{
+					"id" : 28,
+					"comment_text" : "Et culpa officia. Quam voluptatem aut iste. Eum et sunt odio.",
+					"created_at" : "2013-07-13T16:29:00.637Z",
+					"user" : {
+						"id" : 1,
+						"name" : "Max",
+						"email" : "bryon.ryan@fisher.com"
+					}
+				}
+			],
+			"tags" : [
+				"yellow",
+				"rails",
+				"purple"
+			],
+			"jawn_type" : "spark"
+		}
+	]
+
+Another parameter to supply to the jawns view is `lite`, which, when set to true, results in an ultra light response, which requires exponentially fewer database calls, and results in requests that are 20x faster (in my entirely unscientific tests). It does this by only using the data immediately available for each spark and idea, without making further requests to find associated users, tags, etc. A response for a request to `/jawns.json?limit=3&lite=true` would look something like this:
+
+	[
+		{
+			"id":2,
+			"description":"Rerum adipisci vel quod et incidunt excepturi suscipit.",
+			"created_at":"2013-07-13T16:29:00.694Z",
+			"jawn_type":"idea"
+		},
+		{
+			"id":1,
+			"description":"Suscipit quis est dignissimos quis cumque temporibus.",
+			"created_at":"2013-07-13T16:29:00.662Z",
+			"jawn_type":"idea"
+		},
+		{
+			"id":18,
+			"spark_type":"P",
+			"content_type":"V",
+			"content":"http://www.youtube.com/watch?v=j5C6X9vOEkU",
+			"content_hash":"a83cf9063c28da791497a752a2657f5881d30b3a",
+			"created_at":"2013-07-13T16:29:00.615Z",
+			"jawn_type":"spark"
+		}
+	]
