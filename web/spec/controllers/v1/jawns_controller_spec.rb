@@ -66,9 +66,10 @@ describe V1::JawnsController do
         output.each do |jawn|
           jawn["id"].should_not be_nil
           jawn["jawn_type"].should_not be_nil
-          jawn["tags"].should be_nil
-          jawn["description"].should be_nil
-          jawn["content"].should be_nil
+          jawn["users"].should be_nil
+          jawn["user"].should be_nil
+          jawn["sparks"].should be_nil
+          jawn["ideas"].should be_nil
         end
       end
       

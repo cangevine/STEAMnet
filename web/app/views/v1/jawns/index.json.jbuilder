@@ -1,8 +1,13 @@
 if params[:lite] == "true"
   json.array! @jawns do |jawn|
     type = jawn.class.to_s.downcase
-
-    json.(jawn, :id)
+    
+    case type
+    when "spark"
+      json.(jawn, :id, :spark_type, :content_type, :content, :content_hash, :created_at)
+    when "idea"
+      json.(jawn, :id, :description, :created_at)
+    end
 
     json.jawn_type type
   end
