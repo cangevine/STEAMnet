@@ -39,7 +39,7 @@
     [dateFormat setDateFormat:@"MMMM d, YYYY"];
     
     self.info.text = [dateFormat stringFromDate:idea.createdDate];
-//    self.info.text = [NSString stringWithFormat:@"%@", idea.remoteId];
+    self.info.text = [NSString stringWithFormat:@"%@", idea.remoteId];
 }
 
 /*

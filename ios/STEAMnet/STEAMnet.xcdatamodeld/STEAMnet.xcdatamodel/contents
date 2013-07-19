@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3383" systemVersion="12E55" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Comment" representedClassName="Comment" syncable="YES">
-        <attribute name="createdDate" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="remoteId" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="createdDate" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>
+        <attribute name="remoteId" attributeType="Integer 16" defaultValueString="0" indexed="YES" syncable="YES"/>
         <attribute name="text" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <relationship name="jawn" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Jawn" inverseName="comments" inverseEntity="Jawn" syncable="YES"/>
         <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="comments" inverseEntity="User" syncable="YES"/>

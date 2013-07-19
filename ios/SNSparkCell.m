@@ -39,7 +39,7 @@
     [dateFormat setDateFormat:@"MMMM d, YYYY"];
     
     self.info.text = [dateFormat stringFromDate:spark.createdDate];
-//    self.info.text = [NSString stringWithFormat:@"%@", spark.remoteId];
+    self.info.text = [NSString stringWithFormat:@"%@", spark.remoteId];
 }
 
 /*

@@ -17,7 +17,7 @@
         dateString = [[dateString substringToIndex:(dateString.length-1)] stringByAppendingString:@"-0000"];
     }
     
-    return [self dateFromString:dateString withFormat:@"yyyy-MM-dd'T'HH:mm:ssZ"];
+    return [self dateFromString:dateString withFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
 }
 
 + (NSDate *)dateFromString:(NSString *)dateString withFormat:(NSString *)dateFormat
@@ -25,8 +25,7 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:dateFormat];
     
-    NSLocale *locale = [[NSLocale alloc]
-                        initWithLocaleIdentifier:@"en_US_POSIX"];
+    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
     [dateFormatter setLocale:locale];
     
     NSDate *date = [dateFormatter dateFromString:dateString];
