@@ -9,24 +9,19 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+@class Jawn;
 
 @interface Tag : NSManagedObject
 
 @property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) NSSet *ideas;
-@property (nonatomic, retain) NSSet *sparks;
+@property (nonatomic, retain) NSSet *jawns;
 @end
 
 @interface Tag (CoreDataGeneratedAccessors)
 
-- (void)addIdeasObject:(NSManagedObject *)value;
-- (void)removeIdeasObject:(NSManagedObject *)value;
-- (void)addIdeas:(NSSet *)values;
-- (void)removeIdeas:(NSSet *)values;
-
-- (void)addSparksObject:(NSManagedObject *)value;
-- (void)removeSparksObject:(NSManagedObject *)value;
-- (void)addSparks:(NSSet *)values;
-- (void)removeSparks:(NSSet *)values;
+- (void)addJawnsObject:(Jawn *)value;
+- (void)removeJawnsObject:(Jawn *)value;
+- (void)addJawns:(NSSet *)values;
+- (void)removeJawns:(NSSet *)values;
 
 @end

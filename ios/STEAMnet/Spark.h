@@ -24,6 +24,8 @@
 
 @interface Spark (CoreDataGeneratedAccessors)
 
++ (BOOL)sparkExistsWithRemoteId:(int)sparkId;
+
 - (void)addIdeasObject:(Idea *)value;
 - (void)removeIdeasObject:(Idea *)value;
 - (void)addIdeas:(NSSet *)values;

@@ -9,17 +9,14 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class User, Spark, Idea;
+@class User, Jawn;
 
 @interface Comment : NSManagedObject
 
 @property (nonatomic, retain) NSString * text;
 @property (nonatomic, retain) NSNumber * remoteId;
 @property (nonatomic, retain) NSDate * createdDate;
-@property (nonatomic, retain) Idea *idea;
-@property (nonatomic, retain) Spark *spark;
+@property (nonatomic, retain) Jawn *jawn;
 @property (nonatomic, retain) User *user;
-
-@property (nonatomic, retain) id jawn;
 
 @end

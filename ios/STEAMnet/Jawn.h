@@ -21,6 +21,12 @@
 
 @interface Jawn (CoreDataGeneratedAccessors)
 
++ (BOOL)jawnExistsWithRemoteId:(NSNumber *)remoteId;
++ (NSArray *)savedRemoteIds;
++ (void)deleteJawnsWithRemoteIds:(NSArray *)remoteIds;
+
+- (NSURL *)dataURL;
+
 - (void)addTagsObject:(Tag *)value;
 - (void)removeTagsObject:(Tag *)value;
 - (void)addTags:(NSSet *)values;

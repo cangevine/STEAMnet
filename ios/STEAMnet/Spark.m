@@ -12,7 +12,6 @@
 #import "Tag.h"
 #import "User.h"
 
-
 @implementation Spark
 
 @dynamic content;

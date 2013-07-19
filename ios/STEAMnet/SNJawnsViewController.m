@@ -23,10 +23,12 @@
 
 @interface SNJawnsViewController ()
 
+- (void)saveContext;
 - (void)fetchData;
 - (void)parseData:(NSData *)returnedData;
 
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
+@property (nonatomic, strong) NSMutableArray *objectChanges;
 
 @end
 
@@ -141,7 +143,10 @@
 {
     [self.refreshControl endRefreshing];
     
-    NSError *error = nil;
+    NSMutableArray *ideasToDelete = [[Idea savedRemoteIds] mutableCopy];
+    NSMutableArray *sparksToDelete = [[Spark savedRemoteIds] mutableCopy];
+    
+    NSError *error;
     NSArray *tempJawns = [NSJSONSerialization JSONObjectWithData:returnedData options:0 error:&error];
     
     if (error) {
@@ -150,20 +155,10 @@
     
     for (NSDictionary *jawnDict in tempJawns) {
         if ([jawnDict[@"jawn_type"] isEqualToString:@"spark"]) {
-            NSFetchRequest *request = [[NSFetchRequest alloc] init];
-            [request setFetchLimit:1];
+            [sparksToDelete removeObject:jawnDict[@"id"]];
             
-            NSEntityDescription *entity = [NSEntityDescription entityForName:@"Spark" inManagedObjectContext:self.managedObjectContext];
-            [request setEntity:entity];
-            
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"remoteId == %@", jawnDict[@"id"]];
-            [request setPredicate:predicate];
-            
-            NSError *error;
-            NSInteger count = [self.managedObjectContext countForFetchRequest:request error:&error];
-            if (count < 1) {
+            if (![Spark jawnExistsWithRemoteId:jawnDict[@"id"]]) {
                 // Only create a new spark if it doesn't already exist
-                
                 Spark *spark = [NSEntityDescription insertNewObjectForEntityForName:@"Spark" inManagedObjectContext:self.managedObjectContext];
                 spark.remoteId = jawnDict[@"id"];
                 spark.sparkType = jawnDict[@"spark_type"];
@@ -172,20 +167,10 @@
                 spark.createdDate = [NSDate dateWithISO8601String:jawnDict[@"created_at"]];
             }
         } else if ([jawnDict[@"jawn_type"] isEqualToString:@"idea"]) {
-            NSFetchRequest *request = [[NSFetchRequest alloc] init];
-            [request setFetchLimit:1];
+            [ideasToDelete removeObject:jawnDict[@"id"]];
             
-            NSEntityDescription *entity = [NSEntityDescription entityForName:@"Idea" inManagedObjectContext:self.managedObjectContext];
-            [request setEntity:entity];
-            
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"remoteId == %@", jawnDict[@"id"]];
-            [request setPredicate:predicate];
-            
-            NSError *error;
-            NSInteger count = [self.managedObjectContext countForFetchRequest:request error:&error];
-            if (count < 1) {
+            if (![Idea jawnExistsWithRemoteId:jawnDict[@"id"]]) {
                 // Only create a new idea if it doesn't already exist
-                
                 Idea *idea = [NSEntityDescription insertNewObjectForEntityForName:@"Idea" inManagedObjectContext:self.managedObjectContext];
                 idea.remoteId = jawnDict[@"id"];
                 idea.descriptionText = jawnDict[@"description"];
@@ -194,11 +179,19 @@
         }
     }
     
+    [Idea deleteJawnsWithRemoteIds:ideasToDelete];
+    [Spark deleteJawnsWithRemoteIds:sparksToDelete];
+    
+    [self saveContext];
+}
+
+- (void)saveContext
+{
+    NSError *error;
     if (![self.managedObjectContext save:&error]) {
         NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
     }
 }
-
 
 #pragma mark - Fetched results controller
 
@@ -239,10 +232,87 @@
     return _fetchedResultsController;
 }
 
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
+{
+    self.objectChanges = [[NSMutableArray alloc] init];
+}
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
+{
+    NSLog(@"didChangeSection");
+    switch(type) {
+        case NSFetchedResultsChangeInsert:
+            [self.collectionView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex]];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [self.collectionView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex]];
+            break;
+    }
+}
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath
+{
+    NSMutableDictionary *change = [[NSMutableDictionary alloc] init];
+    
+    switch(type) {
+        case NSFetchedResultsChangeInsert:
+//            [self.collectionView insertItemsAtIndexPaths:@[newIndexPath]];
+            change[@(type)] = newIndexPath;
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+//            [self.collectionView deleteItemsAtIndexPaths:@[indexPath]];
+            change[@(type)] = indexPath;
+            break;
+            
+        case NSFetchedResultsChangeUpdate:
+//            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+            change[@(type)] = indexPath;
+            break;
+            
+        case NSFetchedResultsChangeMove:
+//            [self.collectionView deleteItemsAtIndexPaths:@[indexPath]];
+//            [self.collectionView insertItemsAtIndexPaths:@[newIndexPath]];
+            change[@(type)] = @[indexPath, newIndexPath];
+            break;
+    }
+    
+    [self.objectChanges addObject:change];
+}
+
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
-    // In the simplest, most efficient, case, reload the table view.
-    [self.collectionView reloadData];
+    if ([self.objectChanges count] > 5) {
+        [self.collectionView reloadData];
+    } else {
+        [self.collectionView performBatchUpdates:^{
+            for (NSDictionary *change in self.objectChanges) {
+                [change enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, id obj, BOOL *stop) {
+                    NSFetchedResultsChangeType type = [key unsignedIntegerValue];
+                    switch (type) {
+                        case NSFetchedResultsChangeInsert:
+                            [self.collectionView insertItemsAtIndexPaths:@[obj]];
+                            break;
+                            
+                        case NSFetchedResultsChangeDelete:
+                            [self.collectionView deleteItemsAtIndexPaths:@[obj]];
+                            break;
+                            
+                        case NSFetchedResultsChangeUpdate:
+                            [self.collectionView reloadItemsAtIndexPaths:@[obj]];
+                            break;
+                            
+                        case NSFetchedResultsChangeMove:
+                            [self.collectionView moveItemAtIndexPath:obj[0] toIndexPath:obj[1]];
+                            break;
+                    }
+                }];
+            }
+        } completion:nil];
+    }
+    
+    [self.objectChanges removeAllObjects];
 }
 
 @end
