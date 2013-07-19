@@ -2,12 +2,14 @@ package org.friendscentral.steamnet.SparkWizardFragments;
 
 import org.friendscentral.steamnet.R;
 import org.friendscentral.steamnet.Activities.MainActivity;
+import org.friendscentral.steamnet.SparkSubmitters.AudioSubmitter;
+import org.friendscentral.steamnet.SparkSubmitters.LinkSubmitter;
+import org.friendscentral.steamnet.SparkSubmitters.PictureSubmitter;
+import org.friendscentral.steamnet.SparkSubmitters.SparkSubmitter;
+import org.friendscentral.steamnet.SparkSubmitters.TextSubmitter;
+import org.friendscentral.steamnet.SparkSubmitters.VideoSubmitter;
+import org.friendscentral.steamnet.SparkSubmitters.CodeSubmitter;
 
-import SparkSubmitters.AudioSubmitter;
-import SparkSubmitters.PictureSubmitter;
-import SparkSubmitters.SparkSubmitter;
-import SparkSubmitters.TextSubmitter;
-import SparkSubmitters.VideoSubmitter;
 import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.os.Bundle;
@@ -49,9 +51,11 @@ public class ContentEntry extends Fragment {
 			break;
 		case 'C':
 			v.findViewById(R.id.code_form).setVisibility(View.VISIBLE);
+			a = new CodeSubmitter(v, mainActivity);
 			break;
 		case 'L':
 			v.findViewById(R.id.link_form).setVisibility(View.VISIBLE);
+			a = new LinkSubmitter(v, mainActivity);
 			break;
 		}
 		return v;

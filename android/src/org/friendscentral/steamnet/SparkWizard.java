@@ -48,7 +48,7 @@ public class SparkWizard {
 		ft.addToBackStack(null);
 		ft.commit();
 		
-		setAllInvisible();
+		//setAllInvisible();
 	}
 	
 	public void openContentEntry(View v, char type) {

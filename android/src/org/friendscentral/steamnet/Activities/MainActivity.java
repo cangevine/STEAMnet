@@ -1,31 +1,36 @@
 package org.friendscentral.steamnet.Activities;
 
+import org.friendscentral.steamnet.AuthHandler;
 import org.friendscentral.steamnet.FilterSettings;
 import org.friendscentral.steamnet.IdeaBucket;
 import org.friendscentral.steamnet.IndexGrid;
 import org.friendscentral.steamnet.R;
+import org.friendscentral.steamnet.STEAMnetApplication;
 import org.friendscentral.steamnet.SparkWizard;
 import org.friendscentral.steamnet.BaseClasses.Spark;
 import org.friendscentral.steamnet.EventHandlers.EndlessScroller;
 import org.friendscentral.steamnet.EventHandlers.IdeaBucketEventHandler;
 import org.friendscentral.steamnet.EventHandlers.SparkEventHandler;
+import org.friendscentral.steamnet.SparkSubmitters.AudioSubmitter;
+import org.friendscentral.steamnet.SparkSubmitters.PictureSubmitter;
 import org.friendscentral.steamnet.SparkWizardFragments.SparkTypeChooser;
 
-import SparkSubmitters.AudioSubmitter;
-import SparkSubmitters.PictureSubmitter;
+import android.app.ActionBar;
 import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.widget.EditText;
+import android.view.View.OnClickListener;
+import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
 	Spark newSpark;
@@ -36,6 +41,7 @@ public class MainActivity extends Activity {
     final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1;
     final static int UPLOAD_IMAGE_ACTIVITY_REQUEST_CODE = 2;
     final static int UPLOAD_AUDIO_ACTIVITY_REQUEST_CODE = 3;
+    final static int GET_AUTH_ACTIVITY_REQUEST_CODE = 4;
     
     SparkWizard sparkWizard;
     SparkEventHandler sparkEventHandler;
@@ -52,6 +58,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
         mainLayout = (LinearLayout) findViewById(R.id.MainLayout);
         
         //Fixes autofocus problem:
@@ -120,7 +127,6 @@ public class MainActivity extends Activity {
 		} else if (tag.equals("revertWizard")) {
 			
 			sparkWizard.revertWizard(v);
-			newSpark = null;
 			
 		} else if (tag.equals("openContentEntry")) {
 			
@@ -143,16 +149,7 @@ public class MainActivity extends Activity {
 		} else if (tag.equals("submitSpark")) {
 			
 			newSpark = sparkWizard.getContentEntry().getSparkSubmitter().getNewSpark(sparkType);
-			
-			//TextView sparkContentView = (TextView) findViewById(R.id.content_entry_form);
-			//content = sparkContentView.getText().toString();
-			content = "Not working right now. Stop.";
-			
-			
-			//newSpark = new Spark(sparkType, contentType, content);
 			sparkWizard.submitSpark(v, newSpark, gridView, indexGrid);
-			
-			newSpark = null;
 			
 		}
 	}
@@ -196,14 +193,42 @@ public class MainActivity extends Activity {
 			Log.v("Main Activity", "Should be here if you are uploading an image");
 			a = (AudioSubmitter) sparkWizard.getContentEntry().getSparkSubmitter(); 
 			a.getAudioUploader().onActivityResult(requestCode, resultCode, data);
+			break;
+		case GET_AUTH_ACTIVITY_REQUEST_CODE:
+			Log.v("Main activity", "Should be here if you have just logged in though OAuth");
+			STEAMnetApplication sna = (STEAMnetApplication) getApplication();
+	    	if (sna.getUsername() != null) {
+	    		ActionBar actionBar = getActionBar();
+	    		Button logButton = (Button) actionBar.getCustomView().findViewById(R.id.log_in_button);
+	    		logButton.setText("Log out");
+	    		
+	    		// TODO Log out
+	    		logButton.setOnClickListener(null);
+	    		TextView logInInfo = (TextView) actionBar.getCustomView().findViewById(R.id.log_in_info); 
+	    		logInInfo.setText("Logged in as "+sna.getUsername());
+	    	}
+	    	break;
 		}
 	}
 	
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+    	ActionBar actionBar = getActionBar();
+    	actionBar.setCustomView(R.layout.log_in_action_bar);
+    	
+    	actionBar.getCustomView().findViewById(R.id.log_in_button).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(MainActivity.this, AuthActivity.class);
+				startActivityForResult(intent, GET_AUTH_ACTIVITY_REQUEST_CODE);
+			}
+    	});
+    	
+    	
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_HOME);
         return true;
     }
-	
 }

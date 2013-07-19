@@ -5,47 +5,47 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/DummyFocus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
-    
-    <include
-        android:id="@+id/IndexGrid"
-        android:layout_width="920dp"
-        android:layout_height="wrap_content"
-        layout="@layout/index_grid" />
-
-    <LinearLayout
-        android:id="@+id/Sidebar"
-        android:layout_width="318dp"
-        android:layout_height="match_parent"
-        android:padding="8dp"
-        android:orientation="vertical" >
-            
-        <LinearLayout
-	        android:id="@+id/WizardSection"
-	        android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
+    	<TextView
+	        android:id="@+id/DummyFocus"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        />
+	    
+	    <include
+	        android:id="@+id/IndexGrid"
+	        android:layout_width="920dp"
+	        android:layout_height="wrap_content"
+	        layout="@layout/index_grid" />
+	
+	    <LinearLayout
+	        android:id="@+id/Sidebar"
+	        android:layout_width="318dp"
+	        android:layout_height="match_parent"
+	        android:padding="8dp"
 	        android:orientation="vertical" >
+	            
+	        <LinearLayout
+		        android:id="@+id/WizardSection"
+		        android:layout_width="match_parent"
+	            android:layout_height="0dp"
+	            android:layout_weight="2"
+		        android:orientation="vertical" >
+		    </LinearLayout>
+	        
+	        <include 
+	            android:id="@+id/FilterSettings"
+	            android:layout_width="match_parent"
+	            android:layout_height="0dp"
+	            android:layout_weight="4"
+	            layout="@layout/filter_settings" />
+	
+			<include 
+	            android:id="@+id/IdeaBucket"
+	            android:layout_width="match_parent"
+	            android:layout_height="0dp"
+	            android:layout_weight="2"
+	            layout="@layout/idea_bucket" />
+	
 	    </LinearLayout>
-        
-        <include 
-            android:id="@+id/FilterSettings"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="4"
-            layout="@layout/filter_settings" />
-
-		<include 
-            android:id="@+id/IdeaBucket"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            layout="@layout/idea_bucket" />
-
-    </LinearLayout>
 
 </LinearLayout>
