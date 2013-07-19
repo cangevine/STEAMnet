@@ -8,7 +8,11 @@ h1 {
 	text-align: center;
 	font-weight: bold;
 	font-size: 30px;
+	line-height: 40px;
 	color: $gray;
+}
+
+h1.title {
 	padding-bottom: 20px;
 	border-bottom: 1px solid $gray;
 }
@@ -20,9 +24,9 @@ body {
 }
 
 #main {
-	width: 50%;
-	margin: 40px auto;
-	padding: 30px;
+	width: 86%;
+	margin: 2%;
+	padding: 5%;
 	background: white;
 }
 
@@ -48,6 +52,10 @@ ul {
 		width: 50%;
 		float: left;
 	}
+}
+
+.private {
+	display: none;
 }
 
 .arrow-right {

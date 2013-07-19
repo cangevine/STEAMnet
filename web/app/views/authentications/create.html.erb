@@ -2,6 +2,8 @@
 
 	<h1><%= @new ? "Registered as" : "Logged in as" %> <%= @user.name %></h1>
 	
-	<p><%= @device.token %></p>
+	<p class="private" id="token"><%= @device.token %></p>
+	<p class="private" id="user-name"><%= @user.name %></p>
+	<p class="private" id="user-id"><%= @user.id %></p>
 
 </div>
