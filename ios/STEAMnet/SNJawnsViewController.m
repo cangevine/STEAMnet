@@ -26,6 +26,8 @@
 - (void)fetchData;
 - (void)parseData:(NSData *)returnedData;
 
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
+
 @end
 
 @implementation SNJawnsViewController
@@ -45,6 +47,10 @@
 	
     SNAppDelegate *delegate = [[UIApplication sharedApplication] delegate];
     self.managedObjectContext = [delegate managedObjectContext];
+    
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(fetchData) forControlEvents:UIControlEventValueChanged];
+    [self.collectionView addSubview:self.refreshControl];
     
     self.collectionView.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0];
     
@@ -133,6 +139,8 @@
 
 - (void)parseData:(NSData *)returnedData
 {
+    [self.refreshControl endRefreshing];
+    
     NSError *error = nil;
     NSArray *tempJawns = [NSJSONSerialization JSONObjectWithData:returnedData options:0 error:&error];
     
