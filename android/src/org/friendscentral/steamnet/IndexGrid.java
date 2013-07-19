@@ -61,19 +61,16 @@ public class IndexGrid {
 		return jawns[pos];
 	}
 	
-	public void addJawn(Jawn j){
-    	ArrayList<Jawn> jawnsArrayList = new ArrayList<Jawn>();
-    	for(int i = 0; i < jawns.length; i++){
-    		jawnsArrayList.add(jawns[i]);
-    	}
-    	jawnsArrayList.add(j);
-    	Jawn[] newJawns = new Jawn[jawnsArrayList.size()];
-    	for(int i = 0; i < jawnsArrayList.size(); i++){
-    		newJawns[i] = jawnsArrayList.get(i);
+	public void addJawn(Jawn j) {
+    	Jawn[] newJawns = new Jawn[jawns.length+1];
+    	newJawns[0] = j;
+    	for (int i = 1; i < newJawns.length; i++) {
+    		newJawns[i] = jawns[i - 1];
     	}
     	jawns = newJawns;
     	adapter.setJawns(newJawns);
-    	adapter.getView((jawns.length - 1), null, null);
+    	//adapter.getView((jawns.length - 1), null, null);
+    	adapter.notifyDataSetChanged();
     }
 	
 }

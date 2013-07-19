@@ -135,7 +135,7 @@ public class JawnAdapter extends BaseAdapter {
 		        /*
 	    		 * Placeholder until Soundcloud API is working
 	    		 */
-		        imageView.setImageResource(R.drawable.symbol_link);
+		        imageView.setImageResource(R.drawable.btn_blue_audio);
 		        layout.addView(imageView);
 		        
 	    		contentView = layout;
@@ -204,7 +204,7 @@ public class JawnAdapter extends BaseAdapter {
 		        /*
 	    		 * This is what will be set to the favicon or the screenshot:
 	    		 */
-		        imageView.setImageResource(R.drawable.btn_blue_audio);
+		        imageView.setImageResource(R.drawable.symbol_link);
 		        layout.addView(imageView);
 		        
 	    		contentView = layout;

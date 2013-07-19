@@ -2,6 +2,7 @@ package org.friendscentral.steamnet.BaseClasses;
 
 import java.io.Serializable;
 
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -26,6 +27,7 @@ public class Spark extends Jawn implements Serializable{
 	String firstUser;
 	
 	Uri multimedia;
+	Bitmap image;
 	
 	/*
 	 * Don't need updated_at since they should never be edited, but perhaps we need a list of "uploaded at" dates
@@ -224,11 +226,19 @@ public class Spark extends Jawn implements Serializable{
 		return comments;
 	}
 	
-	public void setMultimedia(Uri uri) {
+	public void setUri(Uri uri) {
 		multimedia = uri;
 	}
 	
-	public Uri getMultimedia() {
+	public Uri getUri() {
 		return multimedia;
+	}
+	
+	public void setBitmap(Bitmap b) {
+		image = b;
+	}
+	
+	public Bitmap getBitmap() {
+		return image;
 	}
 }
