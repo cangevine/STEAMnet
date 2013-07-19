@@ -10,8 +10,8 @@
 #
 
 class User < ActiveRecord::Base
-  has_many :authentications
-  has_many :devices
+  has_many :authentications, :dependent => :destroy
+  has_many :devices, :dependent => :destroy
   
   has_and_belongs_to_many :sparks
   has_many :ideas

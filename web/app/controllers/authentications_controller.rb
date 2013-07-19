@@ -27,7 +27,7 @@ class AuthenticationsController < ApplicationController
       @new = true
     end
     
-    @device = @user.devices.create(registration_id: id)
+    @device = @user.devices.find_or_create_by(registration_id: id)
   end
   
 end

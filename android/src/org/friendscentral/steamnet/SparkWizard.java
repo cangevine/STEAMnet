@@ -1,5 +1,6 @@
 package org.friendscentral.steamnet;
 
+import org.friendscentral.steamnet.Activities.MainActivity;
 import org.friendscentral.steamnet.BaseClasses.Spark;
 import org.friendscentral.steamnet.SparkWizardFragments.ContentEntry;
 import org.friendscentral.steamnet.SparkWizardFragments.ContentTypeChooser;
@@ -15,12 +16,15 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 @SuppressWarnings("unused")
 public class SparkWizard {
+	MainActivity mainActivity;
 	LinearLayout mainLayout;
 	FragmentManager fm;
+	ContentEntry ce;
 	
-	public SparkWizard(LinearLayout ml, FragmentManager f) {
+	public SparkWizard(LinearLayout ml, FragmentManager f, MainActivity m) {
 		mainLayout = ml;
 		fm = f;
+		mainActivity = m;
 	}
 	
 	//Methods for the Wizard Fragments:
@@ -43,12 +47,14 @@ public class SparkWizard {
 		ft.replace(R.id.WizardSection, stc);
 		ft.addToBackStack(null);
 		ft.commit();
+		
+		setAllInvisible();
 	}
 	
-	public void openContentEntry(View v) {
+	public void openContentEntry(View v, char type) {
 		updateWeights(5, 3, 1);
 		
-		ContentEntry ce = new ContentEntry();
+		ce = new ContentEntry(type, mainActivity);
 		FragmentTransaction ft = fm.beginTransaction();
 		ft.replace(R.id.WizardSection, ce);
 		ft.addToBackStack(null);
@@ -57,9 +63,10 @@ public class SparkWizard {
 	
 	public void submitSpark(View v, Spark s, GridView g, IndexGrid i) {
 		// TODO "" as a replacement for Tags
-		PostSpark task = new PostSpark(s.getSparkType(), s.getContentType(), s.getContent(), "", g, i);
-		
-		revertWizard(v);
+		if (s != null) {
+			PostSpark task = new PostSpark(s.getSparkType(), s.getContentType(), s.getContent(), "", g, i);
+			revertWizard(v);
+		}
 	}
 	
 	public void updateWeights(float sp, float fs, float ib) {
@@ -71,6 +78,20 @@ public class SparkWizard {
 	public Fragment getFragment(int id) {
 		return fm.findFragmentById(id);
 	}
+	
+	public void setAllInvisible() {
+		mainLayout.findViewById(R.id.text_form).setVisibility(View.GONE);
+		mainLayout.findViewById(R.id.audio_form).setVisibility(View.GONE);
+		mainLayout.findViewById(R.id.picture_form).setVisibility(View.GONE);
+		mainLayout.findViewById(R.id.video_form).setVisibility(View.GONE);
+		mainLayout.findViewById(R.id.code_form).setVisibility(View.GONE);
+		mainLayout.findViewById(R.id.link_form).setVisibility(View.GONE);
+	}
+	
+	public ContentEntry getContentEntry() {
+		return ce;
+	}
+	
 	//Set up the auto-weighting for each Sidebar componant:
 		//Needs updating, to include descendants...
 	/*findViewById(R.id.WizardSection).setOnClickListener(new OnClickListener() {

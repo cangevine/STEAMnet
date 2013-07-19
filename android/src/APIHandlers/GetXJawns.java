@@ -108,7 +108,6 @@ public class GetXJawns {
 					mainActivity.setScrollListener();
 				}
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
         }

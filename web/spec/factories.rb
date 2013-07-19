@@ -35,4 +35,17 @@ FactoryGirl.define do
     end
   end
   
+  factory :authentication do
+    provider "developer"
+    sequence :uid do |n|
+      "id#{n}"
+    end
+  end
+  
+  factory :device do
+    sequence :registration_id do |n|
+      "id#{n}"
+    end
+  end
+  
 end
