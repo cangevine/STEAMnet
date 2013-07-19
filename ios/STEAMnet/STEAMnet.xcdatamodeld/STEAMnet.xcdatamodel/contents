@@ -3,7 +3,7 @@
     <entity name="Comment" representedClassName="Comment" syncable="YES">
         <attribute name="createdDate" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>
         <attribute name="remoteId" attributeType="Integer 16" defaultValueString="0" indexed="YES" syncable="YES"/>
-        <attribute name="text" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="jawn" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Jawn" inverseName="comments" inverseEntity="Jawn" syncable="YES"/>
         <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="comments" inverseEntity="User" syncable="YES"/>
     </entity>
@@ -39,11 +39,11 @@
         <relationship name="sparks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Spark" inverseName="users" inverseEntity="Spark" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Comment" positionX="-1343" positionY="-72" width="128" height="133"/>
-        <element name="Idea" positionX="-1235" positionY="158" width="128" height="148"/>
-        <element name="Spark" positionX="-1035" positionY="281" width="126" height="178"/>
-        <element name="Tag" positionX="-956" positionY="-18" width="128" height="88"/>
-        <element name="User" positionX="-1593" positionY="203" width="128" height="148"/>
-        <element name="Jawn" positionX="-1163" positionY="-49" width="128" height="103"/>
+        <element name="Comment" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Idea" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Jawn" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Spark" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Tag" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="User" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

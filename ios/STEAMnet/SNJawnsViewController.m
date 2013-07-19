@@ -51,7 +51,6 @@
     self.title = @"STEAMnet";
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
     if (![defaults valueForKey:@"token"]) {
         SNLoginViewController *vc = [[SNLoginViewController alloc] init];
         UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:vc];
@@ -60,7 +59,7 @@
         
         [self presentViewController:nc animated:YES completion:nil];
     } else {
-//        [self fetchData];
+        [self fetchData];
     }
     
     [[self collectionView] registerClass:[SNSparkCell class] forCellWithReuseIdentifier:@"SparkCell"];
@@ -143,21 +142,47 @@
     
     for (NSDictionary *jawnDict in tempJawns) {
         if ([jawnDict[@"jawn_type"] isEqualToString:@"spark"]) {
-            Spark *spark = [NSEntityDescription insertNewObjectForEntityForName:@"Spark" inManagedObjectContext:self.managedObjectContext];
-            spark.remoteId = jawnDict[@"id"];
-            spark.sparkType = jawnDict[@"spark_type"];
-            spark.contentType = jawnDict[@"content_type"];
-            spark.content = jawnDict[@"content"];
-            spark.createdDate = [NSDate dateWithISO8601String:jawnDict[@"created_at"]];
+            NSFetchRequest *request = [[NSFetchRequest alloc] init];
+            [request setFetchLimit:1];
             
-            NSLog(@"%@", spark.description);
+            NSEntityDescription *entity = [NSEntityDescription entityForName:@"Spark" inManagedObjectContext:self.managedObjectContext];
+            [request setEntity:entity];
+            
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"remoteId == %@", jawnDict[@"id"]];
+            [request setPredicate:predicate];
+            
+            NSError *error;
+            NSInteger count = [self.managedObjectContext countForFetchRequest:request error:&error];
+            if (count < 1) {
+                // Only create a new spark if it doesn't already exist
+                
+                Spark *spark = [NSEntityDescription insertNewObjectForEntityForName:@"Spark" inManagedObjectContext:self.managedObjectContext];
+                spark.remoteId = jawnDict[@"id"];
+                spark.sparkType = jawnDict[@"spark_type"];
+                spark.contentType = jawnDict[@"content_type"];
+                spark.content = jawnDict[@"content"];
+                spark.createdDate = [NSDate dateWithISO8601String:jawnDict[@"created_at"]];
+            }
         } else if ([jawnDict[@"jawn_type"] isEqualToString:@"idea"]) {
-            Idea *idea = [NSEntityDescription insertNewObjectForEntityForName:@"Idea" inManagedObjectContext:self.managedObjectContext];
-            idea.remoteId = jawnDict[@"id"];
-            idea.descriptionText = jawnDict[@"description"];
-            idea.createdDate = [NSDate dateWithISO8601String:jawnDict[@"created_at"]];
+            NSFetchRequest *request = [[NSFetchRequest alloc] init];
+            [request setFetchLimit:1];
             
-            NSLog(@"%@", idea.description);
+            NSEntityDescription *entity = [NSEntityDescription entityForName:@"Idea" inManagedObjectContext:self.managedObjectContext];
+            [request setEntity:entity];
+            
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"remoteId == %@", jawnDict[@"id"]];
+            [request setPredicate:predicate];
+            
+            NSError *error;
+            NSInteger count = [self.managedObjectContext countForFetchRequest:request error:&error];
+            if (count < 1) {
+                // Only create a new idea if it doesn't already exist
+                
+                Idea *idea = [NSEntityDescription insertNewObjectForEntityForName:@"Idea" inManagedObjectContext:self.managedObjectContext];
+                idea.remoteId = jawnDict[@"id"];
+                idea.descriptionText = jawnDict[@"description"];
+                idea.createdDate = [NSDate dateWithISO8601String:jawnDict[@"created_at"]];
+            }
         }
     }
     
