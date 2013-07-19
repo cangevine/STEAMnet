@@ -14,20 +14,20 @@
 {
     NSString *base = @"http://steamnet.herokuapp.com/api/v1/";
     
-    NSString *token = (NSString *)[[NSUserDefaults standardUserDefaults] objectForKey:@"token"];
+    NSMutableString *after = [[NSMutableString alloc] init];
     
-    NSMutableString *optionsString = [[NSMutableString alloc] init];
+    [after appendString:(NSString *)[[NSUserDefaults standardUserDefaults] objectForKey:@"token"]];
     
     if (options) {
         for (NSString *key in options) {
             NSString *value = (NSString *)[options valueForKey:key];
             NSString *optionString = [[[@"&" stringByAppendingString:key] stringByAppendingString:@"="] stringByAppendingString:value];
             
-            [optionsString appendString:optionString];
+            [after appendString:optionString];
         }
     }
     
-    NSString *urlString = [[[[base stringByAppendingString:path] stringByAppendingString:@".json?token="] stringByAppendingString:token] stringByAppendingString:optionsString];
+    NSString *urlString = [[[base stringByAppendingString:path] stringByAppendingString:@".json?token="] stringByAppendingString:after];
     
     return [NSURL URLWithString:urlString];
 }

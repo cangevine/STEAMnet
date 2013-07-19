@@ -8,7 +8,8 @@
 
 #import "Comment.h"
 #import "User.h"
-
+#import "Idea.h"
+#import "Spark.h"
 
 @implementation Comment
 
@@ -18,5 +19,27 @@
 @dynamic idea;
 @dynamic spark;
 @dynamic user;
+
+- (id)jawn
+{
+    if (self.idea) {
+        return self.idea;
+    } else if (self.spark) {
+        return self.spark;
+    } else {
+        return nil;
+    }
+}
+
+- (void)setJawn:(id)jawn
+{
+    if ([jawn isKindOfClass:[Idea class]]) {
+        self.idea = jawn;
+        self.spark = nil;
+    } else if ([jawn isKindOfClass:[Spark class]]) {
+        self.spark = jawn;
+        self.idea = nil;
+    }
+}
 
 @end
