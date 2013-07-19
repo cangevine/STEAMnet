@@ -15,9 +15,11 @@
 
     <application
         android:allowBackup="true"
+        android:name="org.friendscentral.steamnet.STEAMnetApplication"
         android:icon="@drawable/steamnet_octopus_small"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme"
+        android:hardwareAccelerated="true" >
         <activity
             android:name="org.friendscentral.steamnet.Activities.MainActivity"
             android:label="@string/app_name" >
@@ -38,6 +40,10 @@
         <activity
             android:name="org.friendscentral.steamnet.Activities.IdeaDetailActivity"
             android:label="Idea Detail" >
+        </activity>
+        <activity
+            android:name="org.friendscentral.steamnet.Activities.AuthActivity"
+            android:label="Log In" >
         </activity>
     </application>
 
