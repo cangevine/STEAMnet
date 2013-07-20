@@ -12,12 +12,18 @@ import org.friendscentral.steamnet.BaseClasses.Spark;
 import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
+import android.view.View.MeasureSpec;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebSettings.PluginState;
+import android.webkit.WebViewClient;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -28,6 +34,8 @@ public class LinkSubmitter extends SparkSubmitter {
 	SparkWizard sparkWizard;
 	ImageView img;
 	Bitmap favicon;
+	Bitmap screenshot;
+	ProgressDialog dialog;
 	
 	public LinkSubmitter(View v, MainActivity m) {
 		super(m);
@@ -44,7 +52,17 @@ public class LinkSubmitter extends SparkSubmitter {
 				
 				String url = getAndParseUrl();
 				
-				new LoadImageFromWeb(url);		
+				WebView preview = (WebView) entryForm.findViewById(R.id.link_content_preview);
+				initWebView(preview);
+				EditText contentForm = (EditText) entryForm.findViewById(R.id.link_content_entry_form);
+				String content = contentForm.getText().toString().trim();
+				
+				dialog = new ProgressDialog(mainActivity);
+                dialog.setMessage("Loading website");
+                dialog.show();
+				preview.loadUrl(content);
+				
+				//new LoadImageFromWeb(url);
 			}
 		});
 	}
@@ -66,8 +84,8 @@ public class LinkSubmitter extends SparkSubmitter {
 		}
 		Spark newSpark = new Spark(sparkType, 'L', content, userId, tags);
 		
-		if (favicon != null) {
-			newSpark.setBitmap(favicon);
+		if (screenshot != null) {
+			newSpark.setBitmap(screenshot);
 		}
 		
 		return newSpark;
@@ -90,6 +108,38 @@ public class LinkSubmitter extends SparkSubmitter {
 		return faviconLink;
 	}
 	
+	public void takeScreenshot() {
+		Log.v("takeScreenshot", "Taking screenshot of gist");
+		View v = entryForm.findViewById(R.id.link_content_preview);
+	    v.setDrawingCacheEnabled(true);
+	    v.measure(MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
+	            MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
+	    v.layout(0, 0, v.getMeasuredWidth(), v.getMeasuredHeight());
+
+	    v.buildDrawingCache(true);
+	    Bitmap source = loadBitmapFromView(v);
+	    int x = 0, y = 0, width = source.getWidth(), height = source.getHeight(); 
+	    screenshot = Bitmap.createBitmap(source, x, y, width, height);
+	    Log.v("takeScreenshot", "Screenshot saved");
+	    
+	    Bitmap scaledScreen = Bitmap.createScaledBitmap(screenshot, 250, 187, true);
+	    
+	    img.setImageBitmap(scaledScreen);
+	    img.setVisibility(View.VISIBLE);
+	    entryForm.findViewById(R.id.link_content_entry_form).setVisibility(View.GONE);
+	    entryForm.findViewById(R.id.link_test_button).setVisibility(View.GONE);
+	    dialog.dismiss();
+	    entryForm.findViewById(R.id.submit_content_entry_button).setEnabled(true);
+	}
+	
+	public static Bitmap loadBitmapFromView(View v) {
+	     Bitmap b = Bitmap.createBitmap( v.getLayoutParams().width, v.getLayoutParams().height, Bitmap.Config.ARGB_8888);                
+	     Canvas c = new Canvas(b);
+	     v.layout(0, 0, v.getLayoutParams().width, v.getLayoutParams().height);
+	     v.draw(c);
+	     return b;
+	}
+	
 	private class LoadImageFromWeb extends AsyncTask<String, Void, Drawable> {
 		String url;
 		Drawable downloadedImage;
@@ -102,7 +152,7 @@ public class LinkSubmitter extends SparkSubmitter {
 		
 		protected void onPreExecute() {
 			 dialog = new ProgressDialog(mainActivity);
-			 dialog.setMessage("Fetching YouTube metadata...");
+			 dialog.setMessage("Fetching website's metadata...");
             dialog.show();
 		}
 		
@@ -125,9 +175,8 @@ public class LinkSubmitter extends SparkSubmitter {
 				
 				InputStream is = (InputStream) new URL(url).getContent();
 		        downloadedImage = Drawable.createFromStream(is, "websiteName");
-		        if (BitmapFactory.decodeStream(is) != null) {
-		        	favicon = BitmapFactory.decodeStream(is);
-		        }
+		        is = (InputStream) new URL(url).getContent();
+		        favicon = BitmapFactory.decodeStream(is);
 				
 				return downloadedImage;
 		    } catch (Exception e) {
@@ -146,6 +195,28 @@ public class LinkSubmitter extends SparkSubmitter {
 		     } else {
 		    	 Toast.makeText(mainActivity, "Error: Link could not be loaded", Toast.LENGTH_SHORT).show();
 		     }
+		}
+	}
+	
+	public void initWebView(WebView wv) {
+		wv.setWebViewClient(new ScreenshotClient());
+		
+		WebSettings webViewSettings = wv.getSettings();
+		webViewSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+		webViewSettings.setJavaScriptEnabled(true);
+		webViewSettings.setPluginsEnabled(true);
+		webViewSettings.setBuiltInZoomControls(true);
+		webViewSettings.setPluginState(PluginState.ON);
+	}
+	
+	private class ScreenshotClient extends WebViewClient {
+		public void onPageStarted(WebView wv, String url, Bitmap f) {
+			Log.v("ScreenshotClient", "Page started loading");
+		}
+		
+		public void onPageFinished(WebView wv, String url) {
+			Log.v("ScreenshotClient", "PageFinishedLoading");
+			takeScreenshot();
 		}
 	}
 }

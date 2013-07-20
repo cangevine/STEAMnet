@@ -110,16 +110,15 @@ public class PostSpark {
 	        	
 	        	// TODO: REMOVE THIS
 	        	user = "max";
-	        	
-	        	String postData = "&spark[spark_type]="+spark_type+"&spark[content_type]="+content_type+"&spark[content]="+content+"&username="+user+"&tags="+tagsString;
-	        	Log.v(TAG, postData);
-	        	
+
 	        	String data = "";
-	        	if (content_type == 'P' || content_type == 'A' || content_type == 'V') {
+	        	if (content_type != 'T') {
 	        		Log.v("PostSpark", "Submitting multimedia");
 	        		data = postMultimedia(urls[0]);
 	        	} else {
 	        		Log.v("PostSpark", "Submitting plain data");
+	        		String postData = "&spark[spark_type]="+spark_type+"&spark[content_type]="+content_type+"&spark[content]="+content+"&username="+user+"&tags="+tagsString;
+		        	Log.v(TAG, postData);
 	        		data = post(new URL(urls[0]), postData.getBytes());
 	        	}
 	        	Log.v("PostSpark - Data being passed to parser:", data);
@@ -267,114 +266,76 @@ public class PostSpark {
 	      }
 	    
 	    public String postMultimedia(String url) throws IOException {
-	    	if (content_type == 'P') {
+	    	HttpClient httpClient = new DefaultHttpClient();
+            HttpContext localContext = new BasicHttpContext();
+            HttpPost httpPost = new HttpPost(url);
+	    	MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+	    	
+	    	FileBody fileBody = null;
+	    	
+	    	switch (content_type) {
+	    	case 'P':
 	    		Log.v("PostSpark", "PostMultimedia called - Spark is a picture");
-		    	HttpClient httpClient = new DefaultHttpClient();
-	            HttpContext localContext = new BasicHttpContext();
-	            HttpPost httpPost = new HttpPost(url);
-		    	MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
-		    	
-		    	String path = getRealPathFromURI(spark.getUri());
-		    	
-		        File imgFile = new File(path);
-		        Log.v("PostMultimedia", path);
-		        FileBody fileBody = new FileBody(imgFile, "image/jpg");
-		        multipartEntity.addPart("spark[file][data]", fileBody);
-		        StringBody sparkTypeBody = new StringBody(String.valueOf(spark_type));
-		        StringBody contentTypeBody = new StringBody(String.valueOf(content_type));
-		        StringBody contentBody = new StringBody(content);
-		        StringBody usernameBody = new StringBody(user);
-		        StringBody tagsBody = new StringBody(tagsString);
-		        multipartEntity.addPart("spark[spark_type]", sparkTypeBody);
-		        multipartEntity.addPart("spark[content_type]", contentTypeBody);
-		        multipartEntity.addPart("spark[content]", contentBody);
-		        multipartEntity.addPart("username", usernameBody);
-		        multipartEntity.addPart("tags", tagsBody);	
-		        
-		        httpPost.setEntity(multipartEntity);
-		        try {
-					HttpResponse response = httpClient.execute(httpPost, localContext);
-					InputStream is = response.getEntity().getContent();
-					return readFirstLine(is);
-				} catch (ClientProtocolException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-	    	} else if (content_type == 'A') {
-	    		Log.v("PostSpark", "PostMultimedia called - Spark is Audio");
-		    	HttpClient httpClient = new DefaultHttpClient();
-	            HttpContext localContext = new BasicHttpContext();
-	            HttpPost httpPost = new HttpPost(url);
-		    	MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
-		    	
-		    	String path = getRealPathFromURI(spark.getUri());
-		    	
-		        File imgFile = new File(path);
-		        Log.v("PostMultimedia", path);
-		        FileBody fileBody = new FileBody(imgFile, "audio/mpeg");
-		        multipartEntity.addPart("spark[file][data]", fileBody);
-		        StringBody sparkTypeBody = new StringBody(String.valueOf(spark_type));
-		        StringBody contentTypeBody = new StringBody(String.valueOf(content_type));
-		        StringBody contentBody = new StringBody(content);
-		        StringBody usernameBody = new StringBody(user);
-		        StringBody tagsBody = new StringBody(tagsString);
-		        multipartEntity.addPart("spark[spark_type]", sparkTypeBody);
-		        multipartEntity.addPart("spark[content_type]", contentTypeBody);
-		        multipartEntity.addPart("spark[content]", contentBody);
-		        multipartEntity.addPart("username", usernameBody);
-		        multipartEntity.addPart("tags", tagsBody);	
-		        
-		        httpPost.setEntity(multipartEntity);
-		        try {
-					HttpResponse response = httpClient.execute(httpPost, localContext);
-					InputStream is = response.getEntity().getContent();
-					return readFirstLine(is);
-				} catch (ClientProtocolException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-	    	} else if (content_type == 'V') {
+	    		String picturePath = getRealPathFromURI(spark.getUri());
+		        File pictureFile = new File(picturePath);
+		        fileBody = new FileBody(pictureFile, "image/jpg");
+	    		break;
+	    	case 'A':
+	    		Log.v("PostSpark", "PostMultimedia called - Spark is audio");
+	    		String audioPath = getRealPathFromURI(spark.getUri());
+		        File audioFile = new File(audioPath);
+		        fileBody = new FileBody(audioFile, "audio/mpeg");
+	    		break;
+	    	case 'C':
+	    		Log.v("PostSpark", "PostMultimedia called - Spark is a code snippet");
+	    		File codeSampleDir = Environment.getExternalStorageDirectory();
+		    	File codeFile = File.createTempFile("temp_gist_thumbnail", ".jpeg", codeSampleDir);
+		    	FileOutputStream codeStream = new FileOutputStream(codeFile);
+		    	Bitmap codeScreenshot = spark.getBitmap();
+		    	codeScreenshot.compress(Bitmap.CompressFormat.JPEG, 50, codeStream);
+		        fileBody = new FileBody(codeFile, "image/jpeg");
+	    		break;
+	    	case 'L':
+	    		Log.v("PostSpark", "PostMultimedia called - Spark is a Link");
+	    		File linkSampleDir = Environment.getExternalStorageDirectory();
+		    	File linkFile = File.createTempFile("temp_link_favicon", ".jpeg", linkSampleDir);
+		    	FileOutputStream linkStream = new FileOutputStream(linkFile);
+		    	Bitmap linkThumbnail = spark.getBitmap();
+		    	linkThumbnail.compress(Bitmap.CompressFormat.JPEG, 50, linkStream);
+		        fileBody = new FileBody(linkFile, "image/jpeg");
+	    		break;
+	    	case 'V':
 	    		Log.v("PostSpark", "PostMultimedia called - Spark is a video");
-		    	HttpClient httpClient = new DefaultHttpClient();
-	            HttpContext localContext = new BasicHttpContext();
-	            HttpPost httpPost = new HttpPost(url);
-		    	MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
-		    	
-		    	//String path = getRealPathFromURI(spark.getUri());
-		    	File sampleDir = Environment.getExternalStorageDirectory();
-		    	File imgFile = File.createTempFile("temp_youtube_thumbnail", ".jpeg", sampleDir);
-		    	FileOutputStream fos = new FileOutputStream(imgFile);
-		    	Bitmap bitmap = spark.getBitmap();
-		    	bitmap.compress(Bitmap.CompressFormat.JPEG, 50, fos);
-		    	
-		        //File imgFile = new File(path);
-		        //Log.v("PostMultimedia", path);
-		        FileBody fileBody = new FileBody(imgFile, "image/jpeg");
-		        multipartEntity.addPart("spark[file][data]", fileBody);
-		        StringBody sparkTypeBody = new StringBody(String.valueOf(spark_type));
-		        StringBody contentTypeBody = new StringBody(String.valueOf(content_type));
-		        StringBody contentBody = new StringBody(content);
-		        StringBody usernameBody = new StringBody(user);
-		        StringBody tagsBody = new StringBody(tagsString);
-		        multipartEntity.addPart("spark[spark_type]", sparkTypeBody);
-		        multipartEntity.addPart("spark[content_type]", contentTypeBody);
-		        multipartEntity.addPart("spark[content]", contentBody);
-		        multipartEntity.addPart("username", usernameBody);
-		        multipartEntity.addPart("tags", tagsBody);	
-		        
-		        httpPost.setEntity(multipartEntity);
-		        try {
-					HttpResponse response = httpClient.execute(httpPost, localContext);
-					InputStream is = response.getEntity().getContent();
-					return readFirstLine(is);
-				} catch (ClientProtocolException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+	    		File videoSampleDir = Environment.getExternalStorageDirectory();
+		    	File videoFile = File.createTempFile("temp_youtube_thumbnail", ".jpeg", videoSampleDir);
+		    	FileOutputStream videoStream = new FileOutputStream(videoFile);
+		    	Bitmap videoThumbnail = spark.getBitmap();
+		    	videoThumbnail.compress(Bitmap.CompressFormat.JPEG, 50, videoStream);
+		        fileBody = new FileBody(videoFile, "image/jpeg");
+	    		break;
 	    	}
+	    	multipartEntity.addPart("spark[file][data]", fileBody);
+	        StringBody sparkTypeBody = new StringBody(String.valueOf(spark_type));
+	        StringBody contentTypeBody = new StringBody(String.valueOf(content_type));
+	        StringBody contentBody = new StringBody(content);
+	        StringBody usernameBody = new StringBody(user);
+	        StringBody tagsBody = new StringBody(tagsString);
+	        multipartEntity.addPart("spark[spark_type]", sparkTypeBody);
+	        multipartEntity.addPart("spark[content_type]", contentTypeBody);
+	        multipartEntity.addPart("spark[content]", contentBody);
+	        multipartEntity.addPart("username", usernameBody);
+	        multipartEntity.addPart("tags", tagsBody);	
+	        
+	        httpPost.setEntity(multipartEntity);
+	        try {
+				HttpResponse response = httpClient.execute(httpPost, localContext);
+				InputStream is = response.getEntity().getContent();
+				return readFirstLine(is);
+			} catch (ClientProtocolException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 	    	return null;
 	    }
 	    
