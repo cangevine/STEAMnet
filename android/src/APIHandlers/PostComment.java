@@ -19,13 +19,15 @@ public class PostComment{
 	char commentableTypeChar;
 	String commentableType;
 	String commentText;
+	String username;
 	int userID;
 	
-	public PostComment(int id, char t, String c, int userID) {
+	public PostComment(int id, char t, String c, int userID, String u) {
 		commentableId = id;
 		commentableTypeChar = t;
 		commentText = c;
 		commentableType = "";
+		username = u;
 		
 		OkHTTPTask task = new OkHTTPTask();
 		if(t == 'S'){
@@ -55,10 +57,6 @@ public class PostComment{
 	        	 * LOOK! ITS RIGHT THERE!
 	        	 */
 	        	
-	        	String username = "";
-	        	if (userID == 0) {
-	        		username = "max";
-	        	}
 	        	// TODO Do database work to decipher the username
 	        	
 	        	String postData = "&comment[comment_text]="+commentText+"&username="+username;

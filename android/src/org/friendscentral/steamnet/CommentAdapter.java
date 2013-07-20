@@ -26,19 +26,15 @@ public class CommentAdapter extends BaseAdapter {
 		comment.setPadding(5, 5, 5, 5);
 		comment.setOrientation(LinearLayout.VERTICAL);
 			
-		int userID = comments[position].getUser();
+		int userID = comments[position].getUserId();
 		String commentContent = comments[position].getContent();
+		String username = comments[position].getUsername();
 			
 		TextView user = new TextView(context);
 		user.setPadding(2, 5, 2, 5);
 		user.setTextSize(20);
 		user.setTypeface(null, Typeface.ITALIC);
-		String username = "--User--";
-		if (userID != 0) {
-				/*
-				 * Do some databse work to figure out who the user is from the ID
-				 */
-		}
+
 		user.setText(username+" says,");
 			
 		TextView content = new TextView(context);
@@ -56,19 +52,16 @@ public class CommentAdapter extends BaseAdapter {
 	
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
 		return comments.length;
 	}
 
 	@Override
 	public Object getItem(int position) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public long getItemId(int position) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	

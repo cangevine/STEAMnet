@@ -1,6 +1,8 @@
 package org.friendscentral.steamnet.SparkSubmitters;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -8,17 +10,20 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.friendscentral.steamnet.R;
+import org.friendscentral.steamnet.STEAMnetApplication;
 import org.friendscentral.steamnet.SparkWizard;
 import org.friendscentral.steamnet.Activities.MainActivity;
 import org.friendscentral.steamnet.BaseClasses.Spark;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.squareup.okhttp.OkHttpClient;
-
 import android.app.ProgressDialog;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,9 +32,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.okhttp.OkHttpClient;
+
 public class VideoSubmitter extends SparkSubmitter {
 	View entryForm;
 	SparkWizard sparkWizard;
+	Bitmap thumbnail;
 	
 	public VideoSubmitter(View v, MainActivity m) {
 		super(m);
@@ -60,8 +68,16 @@ public class VideoSubmitter extends SparkSubmitter {
 		EditText tagsForm = (EditText) entryForm.findViewById(R.id.tag_entry_form);
 		String tags = tagsForm.getText().toString();
 		
-		Spark newSpark = new Spark(sparkType, 'V', content);
-		newSpark.setTags(tags);
+		STEAMnetApplication sna = (STEAMnetApplication) mainActivity.getApplication();
+		String userId = "0";
+		if (sna.getUserId() != null) {
+			userId = sna.getUserId();
+		}
+		Spark newSpark = new Spark(sparkType, 'V', content, userId, tags);
+		if (thumbnail != null) {
+			newSpark.setBitmap(thumbnail);
+		}
+		
 		return newSpark;
 	}
 	
@@ -161,6 +177,7 @@ public class VideoSubmitter extends SparkSubmitter {
 		String id;
 		Drawable d;
 		ProgressDialog dialog;
+		Bitmap t;
 		
 		public LoadImageFromId(String i) {
 			Log.v("LoadImageFromWebOperations", "Constructor");
@@ -181,7 +198,11 @@ public class VideoSubmitter extends SparkSubmitter {
 			
 			try {
 		        InputStream is = (InputStream) new URL(url).getContent();
-		        d = Drawable.createFromStream(is, "src name");
+		        d = Drawable.createFromStream(is, "img.youtube.com");
+		        is = (InputStream) new URL(url).getContent();
+		        t = BitmapFactory.decodeStream(is);
+		        
+		        
 		        return is;
 		    } catch (Exception e) {
 		        Log.v("LoadImageFromWebOperations", "Exc="+e);
@@ -201,6 +222,9 @@ public class VideoSubmitter extends SparkSubmitter {
 				img.setImageDrawable(d);
 				img.setVisibility(View.VISIBLE);
 				entryForm.findViewById(R.id.submit_content_entry_button).setEnabled(true);
+			}
+			if (t != null) {
+				thumbnail = t;
 			}
 		}
 	}

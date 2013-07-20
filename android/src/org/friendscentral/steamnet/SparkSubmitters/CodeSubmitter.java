@@ -1,6 +1,7 @@
 package org.friendscentral.steamnet.SparkSubmitters;
 
 import org.friendscentral.steamnet.R;
+import org.friendscentral.steamnet.STEAMnetApplication;
 import org.friendscentral.steamnet.SparkWizard;
 import org.friendscentral.steamnet.Activities.MainActivity;
 import org.friendscentral.steamnet.BaseClasses.Spark;
@@ -35,8 +36,12 @@ public class CodeSubmitter extends SparkSubmitter {
 		 * Submit function
 		 */
 		if (verifier.contains("gist.github")) {
-			Spark newSpark = new Spark(sparkType, 'C', content);
-			newSpark.setTags(tags);
+			STEAMnetApplication sna = (STEAMnetApplication) mainActivity.getApplication();
+			String userId = "0";
+			if (sna.getUserId() != null) {
+				userId = sna.getUserId();
+			}
+			Spark newSpark = new Spark(sparkType, 'C', content, userId, tags);
 			return newSpark;
 		} else {
 			Toast.makeText(mainActivity, "Not a link to a GitHub gist. Try again", Toast.LENGTH_LONG).show();

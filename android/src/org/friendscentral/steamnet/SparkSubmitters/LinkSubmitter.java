@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.net.URL;
 
 import org.friendscentral.steamnet.R;
+import org.friendscentral.steamnet.STEAMnetApplication;
 import org.friendscentral.steamnet.SparkWizard;
 import org.friendscentral.steamnet.Activities.MainActivity;
 import org.friendscentral.steamnet.BaseClasses.Spark;
@@ -58,8 +59,12 @@ public class LinkSubmitter extends SparkSubmitter {
 		EditText contentForm = (EditText) entryForm.findViewById(R.id.link_content_entry_form);
 		String content = contentForm.getText().toString().trim();
 		
-		Spark newSpark = new Spark(sparkType, 'L', content);
-		newSpark.setTags(tags);
+		STEAMnetApplication sna = (STEAMnetApplication) mainActivity.getApplication();
+		String userId = "0";
+		if (sna.getUserId() != null) {
+			userId = sna.getUserId();
+		}
+		Spark newSpark = new Spark(sparkType, 'L', content, userId, tags);
 		
 		if (favicon != null) {
 			newSpark.setBitmap(favicon);

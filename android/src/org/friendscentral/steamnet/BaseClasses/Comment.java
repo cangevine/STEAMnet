@@ -6,18 +6,28 @@ import java.io.Serializable;
 public class Comment implements Serializable {
 	int userId;
 	String content;
+	String username;
 	
-	public Comment(int u, String c) {
+	public Comment(int u, String c, String un) {
 		userId = u;
 		content = c;
+		username = un;
 	}
 	
-	public void setUser(int u) {
+	public void setUserId(int u) {
 		userId = u;
 	}
 	
-	public int getUser() {
+	public int getUserId() {
 		return userId;
+	}
+	
+	public void setUsername(String u) {
+		username = u;
+	}
+	
+	public String getUsername() {
+		return username;
 	}
 	
 	public void setContent(String c) {

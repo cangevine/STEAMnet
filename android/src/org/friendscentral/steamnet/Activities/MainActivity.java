@@ -42,6 +42,7 @@ public class MainActivity extends Activity {
     final static int UPLOAD_IMAGE_ACTIVITY_REQUEST_CODE = 2;
     final static int UPLOAD_AUDIO_ACTIVITY_REQUEST_CODE = 3;
     final static int GET_AUTH_ACTIVITY_REQUEST_CODE = 4;
+	final static int DETAIL_VIEW_RETURN = 5;
     
     SparkWizard sparkWizard;
     SparkEventHandler sparkEventHandler;
@@ -202,33 +203,86 @@ public class MainActivity extends Activity {
 	    		Button logButton = (Button) actionBar.getCustomView().findViewById(R.id.log_in_button);
 	    		logButton.setText("Log out");
 	    		
-	    		// TODO Log out
-	    		logButton.setOnClickListener(null);
+	    		logButton.setOnClickListener(new OnClickListener() {
+	    			public void onClick(View v) {
+	    				logOut();
+	    			}
+	    		});
 	    		TextView logInInfo = (TextView) actionBar.getCustomView().findViewById(R.id.log_in_info); 
 	    		logInInfo.setText("Logged in as "+sna.getUsername());
 	    	}
 	    	break;
+		case DETAIL_VIEW_RETURN:
+			Log.v("Main activity", "Returned from detail view");
+			STEAMnetApplication sn = (STEAMnetApplication) getApplication();
+			ActionBar ab = getActionBar();
+			Button logB = (Button) ab.getCustomView().findViewById(R.id.log_in_button);
+	    	//Search for conflict:
+			if (sn.getUserId() == null && logB.getText().equals("Log out")) {
+				logOut();
+			} else if (sn.getUserId() != null && logB.getText().equals("Log in")) {
+	    		logB.setText("Log out");
+	    		
+	    		logB.setOnClickListener(new OnClickListener() {
+	    			public void onClick(View v) {
+	    				logOut();
+	    			}
+	    		});
+	    		TextView logInInfo = (TextView) ab.getCustomView().findViewById(R.id.log_in_info); 
+	    		logInInfo.setText("Logged in as "+sn.getUsername());
+			}
+	    	break;
 		}
 	}
 	
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-    	ActionBar actionBar = getActionBar();
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		ActionBar actionBar = getActionBar();
+		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_HOME);
     	actionBar.setCustomView(R.layout.log_in_action_bar);
-    	
+    	STEAMnetApplication sna = (STEAMnetApplication) getApplication();
+    	if (sna.getUserId() != null) {
+    		Button logButton = (Button) actionBar.getCustomView().findViewById(R.id.log_in_button);
+    		logButton.setText("Log out");
+    		
+    		logButton.setOnClickListener(new OnClickListener() {
+    			public void onClick(View v) {
+    				logOut();
+    			}
+    		});
+    		TextView logInInfo = (TextView) actionBar.getCustomView().findViewById(R.id.log_in_info); 
+    		logInInfo.setText("Logged in as "+sna.getUsername());
+    	} else {
+    		actionBar.getCustomView().findViewById(R.id.log_in_button).setOnClickListener(new OnClickListener() {
+    			@Override
+    			public void onClick(View v) {
+    				logIn();
+    			}
+        	});
+    	}
+		
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.detail, menu);
+		return true;
+	}
+	
+	public void logIn() {
+		Intent intent = new Intent(MainActivity.this, AuthActivity.class);
+		startActivityForResult(intent, GET_AUTH_ACTIVITY_REQUEST_CODE);
+	}
+	
+	public void logOut() {
+		STEAMnetApplication sna = (STEAMnetApplication) getApplication();
+		sna.setToken(null);
+		sna.setUserId(null);
+		sna.setUsername(null);
+		ActionBar actionBar = getActionBar();
+    	actionBar.setCustomView(R.layout.log_in_action_bar);
     	actionBar.getCustomView().findViewById(R.id.log_in_button).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(MainActivity.this, AuthActivity.class);
-				startActivityForResult(intent, GET_AUTH_ACTIVITY_REQUEST_CODE);
+				logIn();
 			}
     	});
-    	
-    	
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        
-        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_HOME);
-        return true;
-    }
+	}
 }

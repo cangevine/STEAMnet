@@ -26,6 +26,7 @@ import android.widget.LinearLayout;
 
 public class SparkEventHandler {
 	static final String EXTRA_MESSAGE = null;
+	final static int DETAIL_VIEW_RETURN = 5;
 	MainActivity mainActivity;
 	Context context;
 	LinearLayout mainLayout;
@@ -51,13 +52,13 @@ public class SparkEventHandler {
 	    	//intent.putExtra(EXTRA_MESSAGE, b);
 	    	Spark s = j.getSelfSpark();
 	    	intent.putExtra("spark", s);
-	    	context.startActivity(intent);
+	    	mainActivity.startActivityForResult(intent, DETAIL_VIEW_RETURN);
 		} else if(j.getType() == 'I'){
 	    	Intent intent = new Intent(context, IdeaDetailActivity.class);
 	    	//intent.putExtra(EXTRA_MESSAGE, b);
 	    	Idea i = j.getSelfIdea();
 	    	intent.putExtra("idea", i);
-	    	context.startActivity(intent);
+	    	mainActivity.startActivityForResult(intent, DETAIL_VIEW_RETURN);
 		}
     }
     

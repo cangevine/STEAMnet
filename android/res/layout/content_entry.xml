@@ -82,12 +82,14 @@
             />
         
         <LinearLayout
+            android:id="@+id/Audio_Media_Buttons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/Audio_Media_Buttons" >
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
 
 	        <TextView
-	            android:id="@+id/textView2"
+	            android:id="@+id/audio_upload_textview"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:text="Upload some audio clip:" />
@@ -99,26 +101,34 @@
 	            android:text="Upload" />
 	
 	        <TextView
-	            android:id="@+id/textView3"
+	            android:id="@+id/audio_record_textview"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:text="or Record some audio:" />
+	        
+	        <LinearLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/audio_record_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Record" />
-
-            <Button
-                android:id="@+id/audio_stop_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:enabled="false"
-                android:text="Stop" />
-        </LinearLayout>
+	            <Button
+	                android:id="@+id/audio_record_button"
+	                android:layout_width="0dp"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1"
+	                android:text="Record" />
+	
+	            <Button
+	                android:id="@+id/audio_stop_button"
+	                android:layout_width="0dp"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1"
+	                android:enabled="false"
+	                android:text="Stop" />
+            
+            </LinearLayout>
+            
+	    </LinearLayout>
 
       	<LinearLayout
             android:layout_width="match_parent"
