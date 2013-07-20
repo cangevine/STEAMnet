@@ -6,8 +6,6 @@
     android:orientation="horizontal"
     tools:context=".DetailActivity" >
 
-     <!-- This will eventually need to be changed to a ListView of comments: -->
-
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"

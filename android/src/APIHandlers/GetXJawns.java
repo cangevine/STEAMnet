@@ -55,7 +55,7 @@ public class GetXJawns {
 			mainActivity = (MainActivity) activity;
 		}
 		
-		Log.v("REPORT", "THE TASK IS BEGGINING, SIR!");
+		Log.v("REPORT", "THE TASK IS BEGINNING, SIR!");
 		OkHTTPTask task = new OkHTTPTask(g, i);
 		task.execute("http://steamnet.herokuapp.com/api/v1/jawns.json?limit="+lim);
 		
@@ -94,7 +94,6 @@ public class GetXJawns {
         protected void onPostExecute(String data) {
         	Log.v("REPORT", "JAAAAAAAAAAAWN");
         	Log.v("REPORT", "WE HAVE MOVED INTO THE POST EXECUTE PHASE, SIR!");
-        	Log.d(TAG, "=> "+data);
         	try {
         		Log.v("REPORT", "WE WILL BEGIN TO PARSE THE DATA, SIR!");
 				Jawn[] jawns = parseData(data);
@@ -133,6 +132,7 @@ public class GetXJawns {
         	final String SPARKS = "sparks";
         	final String COMMENTS = "comments";
         	final String COMMENT_TEXT = "comment_text";
+        	final String NAME = "name";
         	
         	// Creating JSON Parser instance
         	JSONParser jParser = new JSONParser();
@@ -166,14 +166,11 @@ public class GetXJawns {
     	        	    for(int k = 0; k < commentsJSON.length(); k++){
     	        	    	JSONObject c = commentsJSON.getJSONObject(k);
     	        	    	String commentText = c.getString(COMMENT_TEXT);
-    	        	    	
-    	        	    	/*
-    	        	    	 * 0 as a substitute for the real user id
-    	        	    	 * int commentUser = json.getString(COMMENT_USER);
-    	        	    	 * or something
-    	        	    	 */
-    	        	    	
-    	        	    	commentsArrayList.add(new Comment(0, commentText));
+    	        	    	JSONObject userObj = c.getJSONObject(USER);
+    	        	    	String userId = userObj.getString(ID);
+    	        	    	String username = userObj.getString(NAME);
+
+    	        	    	commentsArrayList.add(new Comment(Integer.valueOf(userId), commentText, username));
     	        	    }
     	        	    
     	        	    Comment[] commentArray = new Comment[commentsArrayList.size()];
@@ -219,18 +216,15 @@ public class GetXJawns {
                 	    
                 	    JSONArray commentsJSON = j.getJSONArray(COMMENTS);
     	        	    
-    	        	    ArrayList<Comment> commentsArrayList = new ArrayList<Comment>();
+                	    ArrayList<Comment> commentsArrayList = new ArrayList<Comment>();
     	        	    for(int k = 0; k < commentsJSON.length(); k++){
     	        	    	JSONObject c = commentsJSON.getJSONObject(k);
     	        	    	String commentText = c.getString(COMMENT_TEXT);
-    	        	    	
-    	        	    	/*
-    	        	    	 * 0 as a substitute for the real user id
-    	        	    	 * int commentUser = json.getString(COMMENT_USER);
-    	        	    	 * or something
-    	        	    	 */
-    	        	    	
-    	        	    	commentsArrayList.add(new Comment(0, commentText));
+    	        	    	JSONObject userObj = c.getJSONObject(USER);
+    	        	    	String userId = userObj.getString(ID);
+    	        	    	String username = userObj.getString(NAME);
+
+    	        	    	commentsArrayList.add(new Comment(Integer.valueOf(userId), commentText, username));
     	        	    }
     	        	    
     	        	    Comment[] commentArray = new Comment[commentsArrayList.size()];

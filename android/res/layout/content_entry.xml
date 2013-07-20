@@ -43,9 +43,11 @@
         
         <ImageView 
             android:id="@+id/link_favicon"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="250dp"
+            android:layout_height="187dp"
+            android:scaleType="fitCenter"
             android:src="@drawable/steamnet_octopus_small"
+            android:visibility="gone"
             />
         
         <EditText
@@ -62,6 +64,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             />
+        
+        <LinearLayout 
+   		    android:layout_width="1dp"
+   		    android:layout_height="1dp">
+   		
+	   		<WebView
+	   		    android:id="@+id/link_content_preview"
+	   		    android:layout_width="800dp"
+	   		    android:layout_height="600dp" />
+   		
+   		</LinearLayout>
    		
     </LinearLayout>
 
@@ -82,12 +95,14 @@
             />
         
         <LinearLayout
+            android:id="@+id/Audio_Media_Buttons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/Audio_Media_Buttons" >
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
 
 	        <TextView
-	            android:id="@+id/textView2"
+	            android:id="@+id/audio_upload_textview"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:text="Upload some audio clip:" />
@@ -99,26 +114,34 @@
 	            android:text="Upload" />
 	
 	        <TextView
-	            android:id="@+id/textView3"
+	            android:id="@+id/audio_record_textview"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:text="or Record some audio:" />
+	        
+	        <LinearLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/audio_record_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Record" />
-
-            <Button
-                android:id="@+id/audio_stop_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:enabled="false"
-                android:text="Stop" />
-        </LinearLayout>
+	            <Button
+	                android:id="@+id/audio_record_button"
+	                android:layout_width="0dp"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1"
+	                android:text="Record" />
+	
+	            <Button
+	                android:id="@+id/audio_stop_button"
+	                android:layout_width="0dp"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1"
+	                android:enabled="false"
+	                android:text="Stop" />
+            
+            </LinearLayout>
+            
+	    </LinearLayout>
 
       	<LinearLayout
             android:layout_width="match_parent"
@@ -246,6 +269,34 @@
 	        android:hint="Paste a link to a (public) Github Gist"
 	        android:ems="10" >
    		</EditText>
+   		
+   		<Button
+   		    android:id="@+id/code_form_test_button"
+   		    android:layout_width="wrap_content"
+   		    android:layout_height="wrap_content"
+   		    android:text="Test link">
+   		    
+   		</Button>
+   		
+   		<LinearLayout 
+   		    android:id="@+id/code_content_holder"
+   		    android:layout_width="250dp"
+   		    android:layout_height="250dp"
+   		    android:visibility="gone">
+   		
+	   		<WebView
+	   		    android:id="@+id/code_content_preview"
+	   		    android:layout_width="350dp"
+	   		    android:layout_height="350dp" />
+   		
+   		</LinearLayout>
+   		
+   		<ImageView
+   		    android:id="@+id/code_preview_image"
+   		    android:layout_width="200dp"
+   		    android:layout_height="200dp" 
+   		    android:visibility="gone"
+   		    android:scaleType="fitCenter" />
    		
     </LinearLayout>
     

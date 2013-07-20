@@ -3,6 +3,7 @@ package org.friendscentral.steamnet.EventHandlers;
 import org.friendscentral.steamnet.FilterSettings;
 import org.friendscentral.steamnet.IndexGrid;
 import org.friendscentral.steamnet.JawnAdapter;
+import org.friendscentral.steamnet.R;
 import org.friendscentral.steamnet.Activities.MainActivity;
 
 import APIHandlers.AddXIdeas;
@@ -11,13 +12,14 @@ import APIHandlers.AddXSparks;
 import android.app.ActionBar;
 import android.app.ListActivity;
 import android.content.Context;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.GridView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class EndlessScroller extends ListActivity implements OnScrollListener {
 	FilterSettings filterSettings;
@@ -101,11 +103,12 @@ public class EndlessScroller extends ListActivity implements OnScrollListener {
 			//if (!gridview.getAdapter().getClass().getName().equals("org.friendscentral.steamnet.JawnAdapter")) {
 			//	Log.v("ADAPTER", "IS A JAWN ADAPTER");
 			//}
-			
+			LinearLayout customBar = (LinearLayout) actionBar.getCustomView();
+			TextView header = (TextView) customBar.findViewById(R.id.activity_name);
 			switch (motionEvent.getAction()) {
 				case MotionEvent.ACTION_UP:
 					boolean refreshed = false;
-					actionBar.setTitle("STEAMnet");
+					header.setText("STEAMnet");
 					dy = motionEvent.getY();
 					if (dy - y > 250) {
 						filterSettings.sparkBoxChange('Q');
@@ -126,10 +129,10 @@ public class EndlessScroller extends ListActivity implements OnScrollListener {
 						String abTitle = "Pull down to refresh! ";
 						abTitle += Math.min((int) (((ddy - y) / 250)*100), 100);
 						abTitle += "%";
-						actionBar.setTitle(abTitle);
+						header.setText(abTitle);
 						return true;
 					} else {
-						actionBar.setTitle("STEAMnet");
+						header.setText("STEAMnet");
 					}
 					break;
 			}

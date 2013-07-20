@@ -129,6 +129,7 @@ public class GetXIdeas {
         	final String USER_ID = "user_id";
         	final String COMMENTS = "comments";
         	final String COMMENT_TEXT = "comment_text";
+        	final String NAME = "name";
         	// Creating JSON Parser instance
         	JSONParser jParser = new JSONParser();
         	 
@@ -173,20 +174,15 @@ public class GetXIdeas {
             	    
             	    JSONArray commentsJSON = json.getJSONArray(COMMENTS);
 	        	    
-	        	    ArrayList<Comment> commentsArrayList = new ArrayList<Comment>();
+            	    ArrayList<Comment> commentsArrayList = new ArrayList<Comment>();
 	        	    for(int k = 0; k < commentsJSON.length(); k++){
 	        	    	JSONObject c = commentsJSON.getJSONObject(k);
 	        	    	String commentText = c.getString(COMMENT_TEXT);
-	        	    	
-	        	    	
-	        	    	// TODO Make users dynamic
-	        	    	/*
-	        	    	 * 0 as a substitute for the real user id
-	        	    	 * int commentUser = json.getString(COMMENT_USER);
-	        	    	 * or something
-	        	    	 */
-	        	    	
-	        	    	commentsArrayList.add(new Comment(0, commentText));
+	        	    	JSONObject userObj = c.getJSONObject(USER);
+	        	    	String userId = userObj.getString(ID);
+	        	    	String username = userObj.getString(NAME);
+
+	        	    	commentsArrayList.add(new Comment(Integer.valueOf(userId), commentText, username));
 	        	    }
 	        	    
 	        	    Comment[] commentArray = new Comment[commentsArrayList.size()];

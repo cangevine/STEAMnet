@@ -4,6 +4,7 @@ import org.friendscentral.steamnet.CommentAdapter;
 import org.friendscentral.steamnet.IndexGrid;
 import org.friendscentral.steamnet.JawnAdapter;
 import org.friendscentral.steamnet.R;
+import org.friendscentral.steamnet.STEAMnetApplication;
 import org.friendscentral.steamnet.SpinnerAdapter;
 import org.friendscentral.steamnet.BaseClasses.Comment;
 import org.friendscentral.steamnet.BaseClasses.Idea;
@@ -12,20 +13,25 @@ import org.friendscentral.steamnet.BaseClasses.Spark;
 
 import APIHandlers.GetSpark;
 import APIHandlers.PostComment;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 public class IdeaDetailActivity extends Activity {
-	private static final String TAG = "IdeaDetailActivity";
+	final static int GET_AUTH_ACTIVITY_REQUEST_CODE = 4;
+	
 	Idea idea;
 	int id;
 	String title;
@@ -88,9 +94,8 @@ public class IdeaDetailActivity extends Activity {
     	indexGrid.setAdapter(adapter);
     	indexGrid.setJawns(adapter.getJawns());
     	
-    	GetSpark r = null;
     	for (int i = 0; i < sparkIds.length; i++) {
-    		 r = new GetSpark(sparkIds[i], gridView, indexGrid);
+    		 new GetSpark(sparkIds[i], gridView, indexGrid);
     	}
     	
     	adapter.notifyDataSetChanged();
@@ -121,21 +126,28 @@ public class IdeaDetailActivity extends Activity {
 		editText.setText("");
 		findViewById(R.id.DummyFocusCommentSection).requestFocus();
 		
-		// TODO Make the @userID dynamic
 		int userID = 0;
-		PostComment comment = new PostComment(id, 'I', content, userID);
+		STEAMnetApplication sna = (STEAMnetApplication) getApplication();
+		if (sna.getUserId() != null) {
+			userID = Integer.valueOf(sna.getUserId());
+		}
+		String username = "Anonymous";
+		if (sna.getUsername() != null) {
+			username = sna.getUsername();
+		}
+		new PostComment(id, "S".charAt(0), content, userID, username);
 		
 		if (comments.length > 0) {
 			ListView commentSection = (ListView) findViewById(R.id.CommentList);
 			CommentAdapter c = (CommentAdapter) commentSection.getAdapter();
-			Comment newComment = new Comment(userID, content);
+			Comment newComment = new Comment(userID, content, username);
 			c.addComment(newComment);
 			c.notifyDataSetChanged();
 		} else {
 			ListView commentSection = (ListView) findViewById(R.id.CommentList);
 			CommentAdapter commentAdapter = new CommentAdapter(this, comments);
 			commentSection.setAdapter(commentAdapter);
-			Comment newComment = new Comment(userID, content);
+			Comment newComment = new Comment(userID, content, username);
 			CommentAdapter c = (CommentAdapter) commentSection.getAdapter();
 			c.addComment(newComment);
 			c.notifyDataSetChanged();
@@ -152,9 +164,75 @@ public class IdeaDetailActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		ActionBar actionBar = getActionBar();
+		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_HOME);
+    	actionBar.setCustomView(R.layout.log_in_action_bar);
+    	STEAMnetApplication sna = (STEAMnetApplication) getApplication();
+    	if (sna.getUserId() != null) {
+    		Button logButton = (Button) actionBar.getCustomView().findViewById(R.id.log_in_button);
+    		logButton.setText("Log out");
+    		
+    		logButton.setOnClickListener(new OnClickListener() {
+    			public void onClick(View v) {
+    				logOut();
+    			}
+    		});
+    		TextView logInInfo = (TextView) actionBar.getCustomView().findViewById(R.id.log_in_info); 
+    		logInInfo.setText("Logged in as "+sna.getUsername());
+    	} else {
+    		actionBar.getCustomView().findViewById(R.id.log_in_button).setOnClickListener(new OnClickListener() {
+    			@Override
+    			public void onClick(View v) {
+    				logIn();
+    			}
+        	});
+    	}
+		
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.detail, menu);
 		return true;
+	}
+	
+	public void logIn() {
+		Intent intent = new Intent(IdeaDetailActivity.this, AuthActivity.class);
+		startActivityForResult(intent, GET_AUTH_ACTIVITY_REQUEST_CODE);
+	}
+	
+	public void logOut() {
+		STEAMnetApplication sna = (STEAMnetApplication) getApplication();
+		sna.setToken(null);
+		sna.setUserId(null);
+		sna.setUsername(null);
+		ActionBar actionBar = getActionBar();
+    	actionBar.setCustomView(R.layout.log_in_action_bar);
+    	actionBar.getCustomView().findViewById(R.id.log_in_button).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				logIn();
+			}
+    	});
+	}
+	
+	protected void onActivityResult (int requestCode, int resultCode, Intent data) {
+		switch (requestCode) {
+		case GET_AUTH_ACTIVITY_REQUEST_CODE:
+			Log.v("Idea Detail activity", "Should be here if you have just logged in though OAuth");
+			STEAMnetApplication sna = (STEAMnetApplication) getApplication();
+	    	if (sna.getUsername() != null) {
+	    		ActionBar actionBar = getActionBar();
+	    		Button logButton = (Button) actionBar.getCustomView().findViewById(R.id.log_in_button);
+	    		logButton.setText("Log out");
+	    		
+	    		logButton.setOnClickListener(new OnClickListener() {
+	    			public void onClick(View v) {
+	    				logOut();
+	    			}
+	    		});
+	    		TextView logInInfo = (TextView) actionBar.getCustomView().findViewById(R.id.log_in_info); 
+	    		logInInfo.setText("Logged in as "+sna.getUsername());
+	    	}
+	    	break;
+		}
 	}
 
 }

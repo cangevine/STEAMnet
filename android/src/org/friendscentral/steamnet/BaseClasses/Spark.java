@@ -128,6 +128,24 @@ public class Spark extends Jawn implements Serializable{
 	}
 	
 	/**
+	 * @param char - sparkType
+	 * @param char - contentType
+	 * @param String - content
+	 * @param String - userId
+	 * @param String - tagsString
+	 */
+	public Spark(char st, char ct, String c, String id, String t){
+		sparkType = st;
+		contentType = ct;
+		content = c;
+		userIds = new int[1];
+		userIds[0] = Integer.valueOf(id);
+		firstUser = id;
+		tagsString = t;
+		tags = t.split(", ");
+	}
+	
+	/**
 	 * id = -1, sparkType/contentType/content = " "
 	 */
 	
@@ -240,5 +258,11 @@ public class Spark extends Jawn implements Serializable{
 	
 	public Bitmap getBitmap() {
 		return image;
+	}
+	public String getTagsString() {
+		return tagsString;
+	}
+	public String getFirstUser() {
+		return firstUser;
 	}
 }

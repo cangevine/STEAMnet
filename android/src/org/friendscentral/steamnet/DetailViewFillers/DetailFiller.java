@@ -2,6 +2,7 @@ package org.friendscentral.steamnet.DetailViewFillers;
 
 import org.friendscentral.steamnet.CommentAdapter;
 import org.friendscentral.steamnet.R;
+import org.friendscentral.steamnet.STEAMnetApplication;
 import org.friendscentral.steamnet.Activities.SparkDetailActivity;
 import org.friendscentral.steamnet.BaseClasses.Comment;
 import org.friendscentral.steamnet.BaseClasses.Spark;
@@ -102,13 +103,20 @@ public abstract class DetailFiller {
 		editText.setText("");
 		((SparkDetailActivity) context).findViewById(R.id.DummyFocusCommentSection).requestFocus();
 		
-		// TODO Make the @userID dynamic
 		int userID = 0;
-		PostComment comment = new PostComment(id, "S".charAt(0), content, userID);
+		STEAMnetApplication sna = (STEAMnetApplication) ((SparkDetailActivity) context).getApplication();
+		if (sna.getUserId() != null) {
+			userID = Integer.valueOf(sna.getUserId());
+		}
+		String username = "Anonymous";
+		if (sna.getUsername() != null) {
+			username = sna.getUsername();
+		}
+		new PostComment(id, "S".charAt(0), content, userID, username);
 		
-		ListView commentSection = (ListView) ((SparkDetailActivity) context).findViewById(R.id.CommentList);
+		ListView commentSection = (ListView) (((SparkDetailActivity) context).findViewById(R.id.spark_social_section)).findViewById(R.id.CommentList);
 		CommentAdapter c = (CommentAdapter) commentSection.getAdapter();
-		Comment newComment = new Comment(userID, content);
+		Comment newComment = new Comment(userID, content, username);
 		c.addComment(newComment);
 		c.notifyDataSetChanged();
 	}

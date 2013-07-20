@@ -1,9 +1,7 @@
 package org.friendscentral.steamnet.Activities;
 
-import org.friendscentral.steamnet.CommentAdapter;
 import org.friendscentral.steamnet.R;
 import org.friendscentral.steamnet.STEAMnetApplication;
-import org.friendscentral.steamnet.BaseClasses.Comment;
 import org.friendscentral.steamnet.BaseClasses.Spark;
 import org.friendscentral.steamnet.DetailViewFillers.AudioFiller;
 import org.friendscentral.steamnet.DetailViewFillers.CodeFiller;
@@ -13,22 +11,20 @@ import org.friendscentral.steamnet.DetailViewFillers.PictureFiller;
 import org.friendscentral.steamnet.DetailViewFillers.TextFiller;
 import org.friendscentral.steamnet.DetailViewFillers.VideoFiller;
 
-import APIHandlers.PostComment;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.EditText;
-import android.widget.ImageView;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 public class SparkDetailActivity extends Activity {
+	final static int GET_AUTH_ACTIVITY_REQUEST_CODE = 4;
 	DetailFiller filler;
 	private static final String TAG = "SparkDetailView";
 
@@ -63,14 +59,85 @@ public class SparkDetailActivity extends Activity {
 			filler = new CodeFiller(spark, (LinearLayout) findViewById(R.id.CodeData), SparkDetailActivity.this);
 			break;
 		}
-		
+	}
+	
+	public void submitComment(View v) {
+		if (filler != null) {
+			filler.submitComment(v);
+		}
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		ActionBar actionBar = getActionBar();
+		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_HOME);
+    	actionBar.setCustomView(R.layout.log_in_action_bar);
+    	STEAMnetApplication sna = (STEAMnetApplication) getApplication();
+    	if (sna.getUserId() != null) {
+    		Button logButton = (Button) actionBar.getCustomView().findViewById(R.id.log_in_button);
+    		logButton.setText("Log out");
+    		
+    		logButton.setOnClickListener(new OnClickListener() {
+    			public void onClick(View v) {
+    				logOut();
+    			}
+    		});
+    		TextView logInInfo = (TextView) actionBar.getCustomView().findViewById(R.id.log_in_info); 
+    		logInInfo.setText("Logged in as "+sna.getUsername());
+    	} else {
+    		actionBar.getCustomView().findViewById(R.id.log_in_button).setOnClickListener(new OnClickListener() {
+    			@Override
+    			public void onClick(View v) {
+    				logIn();
+    			}
+        	});
+    	}
+		
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.detail, menu);
 		return true;
+	}
+	
+	public void logIn() {
+		Intent intent = new Intent(SparkDetailActivity.this, AuthActivity.class);
+		startActivityForResult(intent, GET_AUTH_ACTIVITY_REQUEST_CODE);
+	}
+	
+	public void logOut() {
+		STEAMnetApplication sna = (STEAMnetApplication) getApplication();
+		sna.setToken(null);
+		sna.setUserId(null);
+		sna.setUsername(null);
+		ActionBar actionBar = getActionBar();
+    	actionBar.setCustomView(R.layout.log_in_action_bar);
+    	actionBar.getCustomView().findViewById(R.id.log_in_button).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				logIn();
+			}
+    	});
+	}
+	
+	protected void onActivityResult (int requestCode, int resultCode, Intent data) {
+		switch (requestCode) {
+		case GET_AUTH_ACTIVITY_REQUEST_CODE:
+			Log.v("Spark Detail activity", "Should be here if you have just logged in though OAuth");
+			STEAMnetApplication sna = (STEAMnetApplication) getApplication();
+	    	if (sna.getUsername() != null) {
+	    		ActionBar actionBar = getActionBar();
+	    		Button logButton = (Button) actionBar.getCustomView().findViewById(R.id.log_in_button);
+	    		logButton.setText("Log out");
+	    		
+	    		logButton.setOnClickListener(new OnClickListener() {
+	    			public void onClick(View v) {
+	    				logOut();
+	    			}
+	    		});
+	    		TextView logInInfo = (TextView) actionBar.getCustomView().findViewById(R.id.log_in_info); 
+	    		logInInfo.setText("Logged in as "+sna.getUsername());
+	    	}
+	    	break;
+		}
 	}
 
 }

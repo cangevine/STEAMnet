@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import org.friendscentral.steamnet.R;
+import org.friendscentral.steamnet.STEAMnetApplication;
 import org.friendscentral.steamnet.Activities.MainActivity;
 import org.friendscentral.steamnet.BaseClasses.Spark;
 
@@ -55,20 +56,26 @@ public class PictureSubmitter extends SparkSubmitter {
 	
 	@Override
 	public Spark getNewSpark(char sparkType) {
-		Date date = new Date();
-    	SimpleDateFormat s = new SimpleDateFormat("yyyy_MM_dd_HHmm", Locale.US);
-		
-		Spark newSpark = new Spark(sparkType, 'P', "Picture: "+ s.format(date));
-		/*if (imageURI != null) {
-			newSpark.setUri(imageURI);
-		}*/
-		if (image != null) {
+		if (image != null) {			
+			Date date = new Date();
+	    	SimpleDateFormat s = new SimpleDateFormat("yyyy_MM_dd_HHmm", Locale.US);
+
+			EditText tagsForm = (EditText) entryForm.findViewById(R.id.tag_entry_form);
+			String tags = tagsForm.getText().toString();
+			
+			STEAMnetApplication sna = (STEAMnetApplication) mainActivity.getApplication();
+			String userId = "0";
+			if (sna.getUserId() != null) {
+				userId = sna.getUserId();
+			}
+			Log.v("PictureSubmitter", "userID: "+userId);
+			Spark newSpark = new Spark(sparkType, 'P', "Picture: "+ s.format(date), userId, tags);
 			newSpark.setBitmap(image);
+			newSpark.setUri(imageURI);
+			
+			return newSpark;
 		}
-		EditText tagsForm = (EditText) entryForm.findViewById(R.id.tag_entry_form);
-		String tags = tagsForm.getText().toString();
-		newSpark.setTags(tags);
-		return newSpark;
+		return null;
 	}
 	
 	public void assignClickListeners() {
@@ -298,6 +305,7 @@ public class PictureSubmitter extends SparkSubmitter {
 	            if ( requestCode == UPLOAD_IMAGE_ACTIVITY_REQUEST_CODE) {
 	                if ( resultCode == mainActivity.RESULT_OK) {
 	                    imageUri = data.getData();
+	                    Log.v("PICTURESUBMITTER", imageUri.getPath());
 	                    new LoadImagesFromSDCard().execute();
 	                } else if ( resultCode == mainActivity.RESULT_CANCELED) {
 	                	Toast.makeText(mainActivity, "Error: Picture could not be uploaded", Toast.LENGTH_SHORT).show();
