@@ -12,7 +12,7 @@ require 'spec_helper'
 
 describe Tag do
   
-  before(:each) do
+  before do
     @attr = {
       :tag_text => "yellow"
     }
@@ -61,7 +61,7 @@ describe Tag do
   
   describe "sparks association" do
     
-    before(:each) do
+    before do
       @tag = Tag.create(@attr)
       
       @s1 = FactoryGirl.create(:spark)
@@ -90,7 +90,7 @@ describe Tag do
   
   describe "ideas association" do
     
-    before(:each) do
+    before do
       @tag = Tag.create(@attr)
       
       @i1 = FactoryGirl.create(:idea)
@@ -119,7 +119,7 @@ describe Tag do
   
   describe "jawns helper" do
     
-    before(:each) do
+    before do
       @tag = Tag.create(@attr)
       
       @jawns = []

@@ -31,3 +31,9 @@ Steamnet::Application.configure do
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
 end
+
+Paperclip.options[:command_path] = "/opt/local/bin/"
+
+Paperclip::Attachment.default_options.merge!({
+  :path => "tmp/test/uploads/:style/:filename"
+})

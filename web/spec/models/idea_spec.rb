@@ -13,7 +13,7 @@ require 'spec_helper'
 
 describe Idea do
   
-  before(:each) do
+  before do
     @attr = {
       :description  => "This is an idea"
     }
@@ -25,7 +25,7 @@ describe Idea do
   
   describe "spark association" do
     
-    before(:each) do
+    before do
       @idea = Idea.create(@attr)
       
       @s1 = FactoryGirl.create(:spark)
@@ -54,7 +54,7 @@ describe Idea do
   
   describe "user association" do
     
-    before(:each) do
+    before do
       @idea = Idea.create(@attr)
       
       @user = FactoryGirl.create(:user)
@@ -79,7 +79,7 @@ describe Idea do
   
   describe "comment association" do
     
-    before(:each) do
+    before do
       @idea = Idea.create(@attr)
       
       @user = FactoryGirl.create(:user)
@@ -116,7 +116,7 @@ describe Idea do
   
   describe "tag association" do
     
-    before(:each) do
+    before do
       @idea = FactoryGirl.create(:idea)
       
       @t1 = FactoryGirl.create(:tag)

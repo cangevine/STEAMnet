@@ -20,7 +20,7 @@ class V1::SparksController < ApplicationController
   # POST /sparks.json
   def create
     @spark = Spark.new(spark_params)
-        
+    
     if @spark.save
       add_tags_to @spark
       
