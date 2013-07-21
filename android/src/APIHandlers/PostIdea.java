@@ -20,6 +20,8 @@ public class PostIdea {
 	String[] tags;
 	String tagsString;
 	String user;
+	String userId;
+	String token;
 	
 	/**
 	 * @param (String, int[], String[], String)
@@ -31,11 +33,13 @@ public class PostIdea {
 	 * @throws IOexception
 	 */
 	
-	public PostIdea(String d, int[] s, String[] t, String u) {
+	public PostIdea(String d, int[] s, String[] t, String u, String uid, String tok) {
 		description = d;
 		sparks = s;
 		tags = t;
 		user = u;
+		userId = uid;
+		token = tok;
 		tagsString = "";
 		for (int i = 0; i < tags.length; i++) {
 			tagsString += tags[i];
@@ -74,7 +78,11 @@ public class PostIdea {
 	        	 * LOOK! ITS RIGHT THERE!
 	        	 */
 	        	
+	        	// TODO make real user:
+	        	user = "max";
+	        	
 	        	//String postData = "&spark[spark_type]="+spark_type+"&spark[content_type]="+content_type+"&spark[content]="+content+"&username="+user+"&tags="+tagsString;
+	        	//String postData = "&idea[description]="+description+"&tags="+tagsString+"&sparks="+sparksString+"&username="+user+"&token"+token;
 	        	String postData = "&idea[description]="+description+"&tags="+tagsString+"&sparks="+sparksString+"&username="+user;
 	        	Log.v(TAG, postData);
 	        		        	

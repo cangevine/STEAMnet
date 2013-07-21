@@ -8,12 +8,14 @@ import org.friendscentral.steamnet.BaseClasses.Spark;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -68,25 +70,35 @@ public class JawnAdapter extends BaseAdapter {
 	    	
 	    	if (con == "P".charAt(0)) {
 		        headerTitle.setText("Picture");
+		        
+		        FrameLayout frameLayout = new FrameLayout(mContext);
+		        frameLayout.setLayoutParams(new GridView.LayoutParams(image_size, image_size));
+		        Drawable imageSymbol = mContext.getResources().getDrawable(R.drawable.symbol_image);
+		        frameLayout.setForeground(imageSymbol);
 	    		
 		        ImageView imageView;
 		        imageView = new ImageView(mContext);
 		        imageView.setLayoutParams(new GridView.LayoutParams(image_size, image_size));
 		        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+		        frameLayout.addView(imageView);
 		        
 		        /*
-		         * This part needs to be updated with the imgur API
-		         * Something like imageView.setImageResource(imgurAPI.getImage())
-		         * Might run into some trouble because its not a drawable?
+		         * This part needs to be updated with the S3 link:
+		         * Get spark bitmap and set it as resource
 		         */
-		        imageView.setImageResource(R.drawable.symbol_image);
+		        imageView.setImageResource(R.drawable.meadow);
 		        
-		        layout.addView(imageView);
+		        layout.addView(frameLayout);
 		        
 		        contentView = layout;
 		        
 	    	} else if (con == "V".charAt(0)) {
 		        headerTitle.setText("Video");
+		        
+		        FrameLayout frameLayout = new FrameLayout(mContext);
+		        frameLayout.setLayoutParams(new GridView.LayoutParams(image_size, image_size));
+		        Drawable imageSymbol = mContext.getResources().getDrawable(R.drawable.symbol_video);
+		        frameLayout.setForeground(imageSymbol);
 	    		
 	    		/*
 	    		 * Normally within an app, embedded Youtube videos either begin playing or launch the Youtube app on click
@@ -105,9 +117,11 @@ public class JawnAdapter extends BaseAdapter {
 		         * This part needs to be updated with the youtube API
 		         * Something like setImageResource(youtubeAPI.getThumbnail())
 		         */
-		        imageView.setImageResource(R.drawable.symbol_video);
+		        imageView.setImageResource(R.drawable.clouds);
 		        
-		        layout.addView(imageView);
+		        frameLayout.addView(imageView);
+		        
+		        layout.addView(frameLayout);
 		        contentView = layout;
 		        
 	    	} else if (con == "A".charAt(0)) {

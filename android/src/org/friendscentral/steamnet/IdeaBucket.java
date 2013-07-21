@@ -2,6 +2,7 @@ package org.friendscentral.steamnet;
 
 import java.util.ArrayList;
 
+import org.friendscentral.steamnet.Activities.MainActivity;
 import org.friendscentral.steamnet.BaseClasses.Spark;
 
 import APIHandlers.PostIdea;
@@ -126,8 +127,21 @@ public class IdeaBucket {
 					s[i] = sparks.get(i).getId();
 				}
 				
-				// TODO not just "max" every time. Spark.getUser 
-				PostIdea r = new PostIdea(description, s, tags.split(", "), "max");
+				STEAMnetApplication sna = (STEAMnetApplication) ((MainActivity) context).getApplication();
+				String userId = "0";
+				if (sna.getUserId() != null) {
+					userId = sna.getUserId();
+				}
+				String username = "Anonymous";
+				if (sna.getUsername() != null) {
+					username = sna.getUsername();
+				}
+				String token = "";
+				if (sna.getToken() != null) {
+					token = sna.getToken();
+				}
+				
+				new PostIdea(description, s, tags.split(", "), userId, username, token);
 				
 				sparks.clear();
 				imageViews[0].setImageResource(0);

@@ -64,7 +64,12 @@ public class SparkWizard {
 	public void submitSpark(View v, Spark s, GridView g, IndexGrid i) {
 		// TODO "" as a replacement for Tags
 		if (s != null) {
-			PostSpark task = new PostSpark(s.getSparkType(), s.getContentType(), s.getContent(), "", g, i);
+			STEAMnetApplication sna = (STEAMnetApplication) mainActivity.getApplication();
+			String token = "";
+			if (sna.getToken() != null) {
+				token = sna.getToken();
+			}
+			PostSpark task = new PostSpark(s, g, i, token, mainActivity);
 			revertWizard(v);
 		}
 	}

@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import org.friendscentral.steamnet.R;
+import org.friendscentral.steamnet.STEAMnetApplication;
 import org.friendscentral.steamnet.Activities.MainActivity;
 import org.friendscentral.steamnet.BaseClasses.Spark;
 
@@ -14,25 +15,19 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.media.MediaRecorder;
 import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 public class AudioSubmitter extends SparkSubmitter {
@@ -120,16 +115,23 @@ public class AudioSubmitter extends SparkSubmitter {
 
 	@Override
 	public Spark getNewSpark(char sparkType) {
+		STEAMnetApplication sna = (STEAMnetApplication) context.getApplicationContext();
+		
 		EditText titleBox = (EditText) audioForm.findViewById(R.id.audio_form_title);
 		String content = titleBox.getText().toString();
 		
-		Spark newSpark = new Spark(sparkType, 'A', content);
+		EditText tagsForm = (EditText) entryForm.findViewById(R.id.tag_entry_form);
+		String tags = tagsForm.getText().toString();
+		
+		String userId = "0";
+		if (sna.getUserId() != null) {
+			userId = sna.getUserId();
+		}
+		Spark newSpark = new Spark(sparkType, 'A', content, userId, tags);
+		
 		if (recording != null) {
 			newSpark.setUri(recording);
 		}
-		EditText tagsForm = (EditText) entryForm.findViewById(R.id.tag_entry_form);
-		String tags = tagsForm.getText().toString();
-		newSpark.setTags(tags);
 		return newSpark;
 	}
 	
