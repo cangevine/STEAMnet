@@ -6,31 +6,25 @@
     tools:context=".DetailActivity" >
 
     <LinearLayout
+        android:id="@+id/complete_spark_data"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:orientation="vertical"
         android:layout_weight="3" >
 
         <LinearLayout
             android:id="@+id/Focus_section"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:padding="10px" >
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="4"
+                android:layout_weight="1"
                 android:paddingLeft="25dp"
                 android:paddingRight="25dp"
                 android:orientation="vertical" >
-
-                <TextView
-                    android:id="@+id/CreatorTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:text="Sparked by --unknown--"
-                    android:textAppearance="?android:attr/textAppearanceLarge" />
 
                 <TextView
                     android:id="@+id/SparkTypeTextView"
@@ -38,30 +32,68 @@
                     android:layout_height="wrap_content"
                     android:padding="10dp"
                     android:text="Spark Type - Content Type"
-                    android:textAppearance="?android:attr/textAppearanceLarge" />
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textSize="25dp" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:padding="25dp"
+                android:layout_gravity="right"
+                android:padding="8dp"
                 android:orientation="vertical" >
 
-                <TextView
-                    android:id="@+id/TimestampTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:text="Date Created" />
-
-                <TextView
-                    android:id="@+id/TagsTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:text="Tags list" />
+                <LinearLayout
+                    android:id="@+id/user_tag"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="horizontal"
+                    android:background="@drawable/user_tag_bg"
+                    android:padding="4dp"
+                    android:gravity="center_vertical">
+                    
+                    <ImageView
+                        android:id="@+id/spark_user_icon"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/user_icon_bg"
+                        android:padding="8dp"
+                        />
+                    
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:orientation="vertical">
+                        
+                        <TextView
+                            android:id="@+id/spark_user_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="5dp"
+                            android:paddingLeft="2dp"
+                            android:paddingRight="2dp"
+                            android:paddingTop="5dp"
+                            android:text="Username"
+                            android:textSize="20sp"
+                            android:textStyle="italic" />
+                        
+		                                        
+		                <TextView
+		                    android:id="@+id/TimestampTextView"
+		                    android:layout_width="wrap_content"
+		                    android:layout_height="wrap_content"
+		                    android:paddingBottom="5dp"
+                            android:paddingLeft="2dp"
+                            android:paddingRight="2dp"
+                            android:paddingTop="5dp"
+		                    android:text="Date Created"
+		                 	android:textSize="15sp" />
+                        
+                    </LinearLayout>
+                    
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -74,6 +106,7 @@
             android:gravity="center_horizontal"
             android:padding="50dp"
             android:orientation="vertical"
+            android:background="@drawable/spark_grid_background"
             android:visibility="gone" >
             
             <TextView
@@ -88,10 +121,11 @@
         <LinearLayout
             android:id="@+id/AudioData"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:gravity="center_horizontal"
             android:padding="50dp"
             android:orientation="vertical"
+            android:background="@drawable/spark_grid_background"
             android:visibility="gone" >
             
             <Button
@@ -113,10 +147,11 @@
         <LinearLayout
             android:id="@+id/VideoData"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:gravity="center_horizontal"
             android:padding="50dp"
             android:orientation="vertical"
+            android:background="@drawable/spark_grid_background"
             android:visibility="gone" >
             
             <TextView 
@@ -147,10 +182,11 @@
         <LinearLayout
             android:id="@+id/PictureData"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:gravity="center_horizontal"
             android:padding="50dp"
             android:orientation="vertical"
+            android:background="@drawable/spark_grid_background"
             android:visibility="gone" >
             
             <ImageView
@@ -165,10 +201,11 @@
         <LinearLayout
             android:id="@+id/LinkData"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:gravity="center_horizontal"
             android:padding="50dp"
             android:orientation="vertical"
+            android:background="@drawable/spark_grid_background"
             android:visibility="gone" >
             
             <LinearLayout
@@ -207,10 +244,11 @@
         <LinearLayout
             android:id="@+id/CodeData"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:gravity="center_horizontal"
             android:padding="50dp"
             android:orientation="vertical"
+            android:background="@drawable/spark_grid_background"
             android:visibility="gone" >
             
             <WebView
