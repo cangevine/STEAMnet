@@ -37,3 +37,4 @@ gem 'unicorn'
 
 gem 'paperclip'
 gem 'aws-sdk'
+gem 'mini_magick'
