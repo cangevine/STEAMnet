@@ -23,8 +23,8 @@ describe Spark do
     @attr = {
       :spark_type   => "I",
       :content_type => "L",
-      :content      => "http://google.com/"
-      # :file         => Rack::Test::UploadedFile.new('spec/fixtures/images/test.jpg', 'image/jpeg')
+      :content      => "http://google.com/",
+      :file         => Rack::Test::UploadedFile.new('spec/fixtures/images/test.jpg', 'image/jpeg')
     }
   end
   
@@ -102,6 +102,39 @@ describe Spark do
       spark2 = Spark.new(@attr)
       spark2.spark_type = "P"
       spark2.should_not be_valid
+    end
+    
+  end
+  
+  describe "file" do
+    
+    it "has a file attribute" do
+      Spark.new.should respond_to(:file)
+    end
+    
+    describe "without an attached file" do
+      
+      before(:each) do
+        @attr[:file] = nil
+        @spark = Spark.create(@attr)
+      end
+      
+      it "has a missing url" do
+        @spark.file.url.should == "/files/original/missing.png"
+      end
+      
+    end
+    
+    describe "with an attached file" do
+      
+      before(:each) do
+        @spark = Spark.create(@attr)
+      end
+      
+      it "has a valid url" do
+        @spark.file.url.should_not == "/files/original/missing.png"
+      end
+      
     end
     
   end
@@ -202,32 +235,32 @@ describe Spark do
   end
   
   describe "tag association" do
+    
+    before(:each) do
+      @spark = FactoryGirl.create(:spark)
       
-      before(:each) do
-        @spark = FactoryGirl.create(:spark)
-        
-        @t1 = FactoryGirl.create(:tag)
-        @t2 = FactoryGirl.create(:tag)
-        
-        @t1.sparks << @spark
-        @t2.sparks << @spark
-      end
+      @t1 = FactoryGirl.create(:tag)
+      @t2 = FactoryGirl.create(:tag)
       
-      it "has a tags attribute" do
-        @spark.should respond_to(:tags)
-      end
-      
-      it "has the right tags" do
-        @spark.tags.should == [@t1, @t2]
-      end
-      
-      it "doesn't destroy associated tags" do
-        @spark.destroy
-        [@t1, @t2].each do |t|
-          Tag.find_by(id: t.id).should_not be_nil
-        end
-      end
-      
+      @t1.sparks << @spark
+      @t2.sparks << @spark
     end
+    
+    it "has a tags attribute" do
+      @spark.should respond_to(:tags)
+    end
+    
+    it "has the right tags" do
+      @spark.tags.should == [@t1, @t2]
+    end
+    
+    it "doesn't destroy associated tags" do
+      @spark.destroy
+      [@t1, @t2].each do |t|
+        Tag.find_by(id: t.id).should_not be_nil
+      end
+    end
+    
+  end
   
 end
