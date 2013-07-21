@@ -34,8 +34,5 @@ gem 'omniauth-github'
 gem 'jbuilder'
 gem 'unicorn'
 
-# Deploy with Capistrano
-# gem 'capistrano'
-
-# To use debugger
-# gem 'ruby-debug'
+gem 'paperclip'
+gem 'aws-sdk'

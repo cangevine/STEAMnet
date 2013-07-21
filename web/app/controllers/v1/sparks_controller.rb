@@ -58,7 +58,7 @@ class V1::SparksController < ApplicationController
   private
   
     def spark_params
-      params.require(:spark).permit(:content, :content_hash, :content_type, :spark_type)
+      params.require(:spark).permit(:content, :content_hash, :content_type, :spark_type, :file)
     end
   
 end

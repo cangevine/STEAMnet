@@ -2,18 +2,24 @@
 #
 # Table name: sparks
 #
-#  id           :integer          not null, primary key
-#  spark_type   :string(1)
-#  content_type :string(1)
-#  content      :text
-#  content_hash :string(255)
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
+#  id                :integer          not null, primary key
+#  spark_type        :string(1)
+#  content_type      :string(1)
+#  content           :text
+#  content_hash      :string(255)
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  file_file_name    :string(255)
+#  file_content_type :string(255)
+#  file_file_size    :integer
+#  file_updated_at   :datetime
 #
 
 require 'digest/sha1'
 
 class Spark < ActiveRecord::Base
+  has_attached_file :file
+  
   has_and_belongs_to_many :ideas
   has_and_belongs_to_many :users
   has_many :comments, :as => :commentable, :dependent => :destroy
