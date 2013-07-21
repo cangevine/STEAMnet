@@ -71,8 +71,9 @@ describe V1::SparksController do
     before(:each) do
       @attr = {
         :spark_type   => "I",
-        :content_type => "L",
-        :content      => "http://google.com/"
+        :content_type => "P",
+        :content      => "Picture title",
+        :file         => fixture_file_upload('spec/fixtures/images/test.jpg', 'image/jpeg')
       }
     end
     

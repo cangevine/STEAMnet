@@ -24,6 +24,7 @@ describe Spark do
       :spark_type   => "I",
       :content_type => "L",
       :content      => "http://google.com/"
+      # :file         => Rack::Test::UploadedFile.new('spec/fixtures/images/test.jpg', 'image/jpeg')
     }
   end
   
