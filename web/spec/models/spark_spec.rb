@@ -19,7 +19,7 @@ require 'spec_helper'
 
 describe Spark do
   
-  before(:each) do
+  before do
     @attr = {
       :spark_type   => "I",
       :content_type => "L",
@@ -114,7 +114,7 @@ describe Spark do
     
     describe "without an attached file" do
       
-      before(:each) do
+      before do
         @attr[:file] = nil
         @spark = Spark.create(@attr)
       end
@@ -127,7 +127,7 @@ describe Spark do
     
     describe "with an attached file" do
       
-      before(:each) do
+      before do
         @spark = Spark.create(@attr)
       end
       
@@ -141,7 +141,7 @@ describe Spark do
   
   describe "idea association" do
     
-    before(:each) do
+    before do
       @spark = Spark.create(@attr)
       
       @i1 = FactoryGirl.create(:idea)
@@ -170,7 +170,7 @@ describe Spark do
   
   describe "user association" do
     
-    before(:each) do
+    before do
       @spark = Spark.create(@attr)
       
       @u1 = FactoryGirl.create(:user)
@@ -199,7 +199,7 @@ describe Spark do
   
   describe "comment association" do
     
-    before(:each) do
+    before do
       @spark = Spark.create(@attr)
       
       @user = FactoryGirl.create(:user)
@@ -236,7 +236,7 @@ describe Spark do
   
   describe "tag association" do
     
-    before(:each) do
+    before do
       @spark = FactoryGirl.create(:spark)
       
       @t1 = FactoryGirl.create(:tag)

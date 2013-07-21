@@ -4,7 +4,7 @@ describe V1::SparksController do
   
   describe "GET 'index'" do
     
-    before(:each) do
+    before do
       @sparks = []
       
       20.times do
@@ -47,7 +47,7 @@ describe V1::SparksController do
   
   describe "GET 'show'" do
     
-    before(:each) do
+    before do
       @spark = FactoryGirl.create(:spark)
     end
     
@@ -69,7 +69,7 @@ describe V1::SparksController do
   
   describe "POST 'create'" do
     
-    before(:each) do
+    before do
       @attr = {
         :spark_type   => "I",
         :content_type => "P",
@@ -138,7 +138,7 @@ describe V1::SparksController do
     
     describe "for a new invalid spark" do
       
-      before(:each) do
+      before do
         @attr[:content_type] = ""
       end
       
@@ -157,7 +157,7 @@ describe V1::SparksController do
     
     describe "for an existing spark" do
       
-      before(:each) do
+      before do
         @spark = Spark.create(@attr)
         @spark.users << @test_user
         
@@ -196,7 +196,7 @@ describe V1::SparksController do
   
   describe "DELETE 'destroy'" do
     
-    before(:each) do
+    before do
       @spark = FactoryGirl.create(:spark)
       
       @spark.users << @test_user
