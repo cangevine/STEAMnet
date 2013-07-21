@@ -62,7 +62,7 @@ describe V1::SparksController do
       
       output.should be_a_kind_of(Hash)
       output["content_hash"].should == @spark.content_hash
-      output["file"].should == @spark.file.url
+      output["file"].should_not be_nil
     end
     
   end
