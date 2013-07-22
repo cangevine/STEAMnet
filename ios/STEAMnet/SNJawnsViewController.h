@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SNJawnsViewController : UICollectionViewController
+#import "SNLoginViewController.h"
+
+@interface SNJawnsViewController : UICollectionViewController <SNLoginViewControllerDelegate, NSFetchedResultsControllerDelegate>
+
+@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @end
