@@ -72,6 +72,12 @@
     }
 }
 
+- (void)prepareForReuse
+{
+    self.imageView.image = nil;
+    [self.overlayView setNeedsDisplay];
+}
+
 - (void)downloadImageWithURL:(NSURL *)url completion:(void (^)(BOOL succeeded, UIImage *image))completionBlock
 {
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];

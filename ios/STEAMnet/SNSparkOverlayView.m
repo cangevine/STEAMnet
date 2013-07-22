@@ -39,7 +39,7 @@
     CGContextRef context = UIGraphicsGetCurrentContext();
     
     CGContextSetLineCap(context, kCGLineCapRound);
-    CGContextSetStrokeColorWithColor(context, [[color colorWithAlphaComponent:0.3] CGColor]);
+    CGContextSetStrokeColorWithColor(context, [[color colorWithAlphaComponent:0.9] CGColor]);
     CGContextSetLineWidth(context, 20.0);
     
     CGContextAddRect(context, rect);
