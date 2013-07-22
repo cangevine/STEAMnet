@@ -25,6 +25,7 @@
         <attribute name="cacheUpdated" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>
         <attribute name="content" attributeType="String" syncable="YES"/>
         <attribute name="contentType" attributeType="String" syncable="YES"/>
+        <attribute name="fileURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sparkType" attributeType="String" syncable="YES"/>
         <relationship name="ideas" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Idea" inverseName="sparks" inverseEntity="Idea" syncable="YES"/>
         <relationship name="users" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="sparks" inverseEntity="User" syncable="YES"/>
