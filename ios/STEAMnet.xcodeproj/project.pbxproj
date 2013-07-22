@@ -18,6 +18,8 @@
 		500BEB341795F77900445498 /* Spark.m in Sources */ = {isa = PBXBuildFile; fileRef = 500BEB331795F77900445498 /* Spark.m */; };
 		500BEB351795F77900445498 /* Spark.m in Sources */ = {isa = PBXBuildFile; fileRef = 500BEB331795F77900445498 /* Spark.m */; };
 		500BEB811795F8DF00445498 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 500BEB801795F8DF00445498 /* CoreData.framework */; };
+		5056A6AC179DADE200B1CC6A /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 5056A6AB179DADE200B1CC6A /* UIImage+ImageEffects.m */; };
+		5056A6AD179DADE200B1CC6A /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 5056A6AB179DADE200B1CC6A /* UIImage+ImageEffects.m */; };
 		50ACBC771794C42C00369378 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50ACBC761794C42C00369378 /* Foundation.framework */; };
 		50ACBC791794C42C00369378 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50ACBC781794C42C00369378 /* CoreGraphics.framework */; };
 		50ACBC7B1794C42C00369378 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50ACBC7A1794C42C00369378 /* UIKit.framework */; };
@@ -31,6 +33,8 @@
 		50ACBC981794C42D00369378 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50ACBC7A1794C42C00369378 /* UIKit.framework */; };
 		50ACBCA01794C42D00369378 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 50ACBC9E1794C42D00369378 /* InfoPlist.strings */; };
 		50ACBCA21794C42D00369378 /* STEAMnetTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 50ACBCA11794C42D00369378 /* STEAMnetTests.m */; };
+		50CCC06D179DB7E900ED501D /* SNSparkOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CCC06C179DB7E900ED501D /* SNSparkOverlayView.m */; };
+		50CCC06E179DB7E900ED501D /* SNSparkOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CCC06C179DB7E900ED501D /* SNSparkOverlayView.m */; };
 		50CF800B1794C915003262F1 /* SNJawnsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CF800A1794C915003262F1 /* SNJawnsViewController.m */; };
 		50CF800C1794C915003262F1 /* SNJawnsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CF800A1794C915003262F1 /* SNJawnsViewController.m */; };
 		50CF800F1794EB10003262F1 /* SNSparkCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CF800E1794EB10003262F1 /* SNSparkCell.m */; };
@@ -71,6 +75,8 @@
 		500BEB321795F77900445498 /* Spark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Spark.h; sourceTree = "<group>"; };
 		500BEB331795F77900445498 /* Spark.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Spark.m; sourceTree = "<group>"; };
 		500BEB801795F8DF00445498 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		5056A6AA179DADE200B1CC6A /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
+		5056A6AB179DADE200B1CC6A /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		50ACBC731794C42C00369378 /* STEAMnet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = STEAMnet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50ACBC761794C42C00369378 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		50ACBC781794C42C00369378 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -88,6 +94,8 @@
 		50ACBC9D1794C42D00369378 /* STEAMnetTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "STEAMnetTests-Info.plist"; sourceTree = "<group>"; };
 		50ACBC9F1794C42D00369378 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		50ACBCA11794C42D00369378 /* STEAMnetTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STEAMnetTests.m; sourceTree = "<group>"; };
+		50CCC06B179DB7E900ED501D /* SNSparkOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNSparkOverlayView.h; sourceTree = "<group>"; };
+		50CCC06C179DB7E900ED501D /* SNSparkOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNSparkOverlayView.m; sourceTree = "<group>"; };
 		50CF80091794C915003262F1 /* SNJawnsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNJawnsViewController.h; sourceTree = "<group>"; };
 		50CF800A1794C915003262F1 /* SNJawnsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNJawnsViewController.m; sourceTree = "<group>"; };
 		50CF800D1794EB10003262F1 /* SNSparkCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SNSparkCell.h; path = ../SNSparkCell.h; sourceTree = "<group>"; };
@@ -168,6 +176,8 @@
 				50CF80161794EF71003262F1 /* SNLoginViewController.m */,
 				50CF800D1794EB10003262F1 /* SNSparkCell.h */,
 				50CF800E1794EB10003262F1 /* SNSparkCell.m */,
+				50CCC06B179DB7E900ED501D /* SNSparkOverlayView.h */,
+				50CCC06C179DB7E900ED501D /* SNSparkOverlayView.m */,
 				50CF80191795BC2D003262F1 /* STEAMnet.xcdatamodeld */,
 				50E9599C1798BA8300CB8C5B /* Jawn.h */,
 				50E9599D1798BA8300CB8C5B /* Jawn.m */,
@@ -192,6 +202,8 @@
 				50E959991798A75B00CB8C5B /* NSDate+RailsDates.m */,
 				50E9599417989C3C00CB8C5B /* SNAPIHelper.h */,
 				50E9599517989C3C00CB8C5B /* SNAPIHelper.m */,
+				5056A6AA179DADE200B1CC6A /* UIImage+ImageEffects.h */,
+				5056A6AB179DADE200B1CC6A /* UIImage+ImageEffects.m */,
 				50ACBC8E1794C42D00369378 /* Images.xcassets */,
 				50ACBC7D1794C42D00369378 /* Supporting Files */,
 			);
@@ -325,6 +337,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5056A6AC179DADE200B1CC6A /* UIImage+ImageEffects.m in Sources */,
 				500BEB241795F77900445498 /* User.m in Sources */,
 				50ACBC831794C42D00369378 /* main.m in Sources */,
 				50CF801B1795BC2D003262F1 /* STEAMnet.xcdatamodeld in Sources */,
@@ -335,6 +348,7 @@
 				500BEB2C1795F77900445498 /* Tag.m in Sources */,
 				500BEB301795F77900445498 /* Idea.m in Sources */,
 				50CF80131794EB9D003262F1 /* SNIdeaCell.m in Sources */,
+				50CCC06D179DB7E900ED501D /* SNSparkOverlayView.m in Sources */,
 				50E9599E1798BA8300CB8C5B /* Jawn.m in Sources */,
 				50CF800B1794C915003262F1 /* SNJawnsViewController.m in Sources */,
 				50CF800F1794EB10003262F1 /* SNSparkCell.m in Sources */,
@@ -358,8 +372,10 @@
 				50E9599B1798A75B00CB8C5B /* NSDate+RailsDates.m in Sources */,
 				50E9599717989C3C00CB8C5B /* SNAPIHelper.m in Sources */,
 				50ACBCA21794C42D00369378 /* STEAMnetTests.m in Sources */,
+				5056A6AD179DADE200B1CC6A /* UIImage+ImageEffects.m in Sources */,
 				50CF800C1794C915003262F1 /* SNJawnsViewController.m in Sources */,
 				50CF80141794EB9D003262F1 /* SNIdeaCell.m in Sources */,
+				50CCC06E179DB7E900ED501D /* SNSparkOverlayView.m in Sources */,
 				500BEB291795F77900445498 /* Comment.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
