@@ -14,3 +14,5 @@
 /log/*.log
 /tmp
 *.log
+
+public/system/
