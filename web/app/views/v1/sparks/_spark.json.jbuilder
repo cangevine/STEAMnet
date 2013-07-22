@@ -1,5 +1,7 @@
 json.(spark, :id, :created_at, :spark_type, :content_type, :content, :content_hash)
 
+json.file spark.file.url if spark.file.exists?
+
 json.users spark.users, :id, :name, :email
 
 json.ideas spark.ideas, :id, :created_at, :description

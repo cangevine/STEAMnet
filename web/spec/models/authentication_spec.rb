@@ -14,7 +14,7 @@ require 'spec_helper'
 
 describe Authentication do
   
-  before(:each) do
+  before do
     @attr = {
       :provider => "This is an idea",
       :uid      => "my@email.com"
@@ -43,7 +43,7 @@ describe Authentication do
   
   describe "user association" do
     
-    before(:each) do
+    before do
       @auth = Authentication.create(@attr)
       
       @user = FactoryGirl.create(:user)

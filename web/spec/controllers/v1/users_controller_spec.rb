@@ -4,7 +4,7 @@ describe V1::UsersController do
   
   describe "GET 'index'" do
     
-    before(:each) do
+    before do
       @users = [@test_user]
       
       20.times do
@@ -33,7 +33,7 @@ describe V1::UsersController do
   
   describe "GET 'show'" do
     
-    before(:each) do
+    before do
       @user = FactoryGirl.create(:user)
     end
     
@@ -54,7 +54,7 @@ describe V1::UsersController do
   
   describe "PUT 'update'" do
     
-    before(:each) do
+    before do
       @attr = {
         :name     => "max",
         :email    => "max@luzuriaga.com"

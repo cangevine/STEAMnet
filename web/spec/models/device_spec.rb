@@ -13,7 +13,7 @@
 require 'spec_helper'
 
 describe Device do
-  before(:each) do
+  before do
     @user = FactoryGirl.create(:user)
     @attr = {
       :user_id          => @user.id,
@@ -40,7 +40,7 @@ describe Device do
   
   describe "user association" do
     
-    before(:each) do
+    before do
       @device = Device.create(@attr)
       
       @user = FactoryGirl.create(:user)

@@ -13,7 +13,7 @@ require 'spec_helper'
 
 describe User do
   
-  before(:each) do
+  before do
     @attr = {
       :name   => "max",
       :email  => "max@example.com"
@@ -52,7 +52,7 @@ describe User do
   
   describe "spark association" do
     
-    before(:each) do
+    before do
       @user = User.create(@attr)
       
       @s1 = FactoryGirl.create(:spark)
@@ -81,7 +81,7 @@ describe User do
   
   describe "idea association" do
     
-    before(:each) do
+    before do
       @user = User.create(@attr)
       
       @i1 = FactoryGirl.create(:idea)
@@ -113,7 +113,7 @@ describe User do
   
   describe "comment association" do
     
-    before(:each) do
+    before do
       @user = User.create(@attr)
       
       @s = FactoryGirl.create(:spark)
@@ -151,7 +151,7 @@ describe User do
   
   describe "authentication association" do
     
-    before(:each) do
+    before do
       @user = User.create(@attr)
       
       @a1 = FactoryGirl.create(:authentication)
@@ -183,7 +183,7 @@ describe User do
   
   describe "device association" do
     
-    before(:each) do
+    before do
       @user = User.create(@attr)
       
       @d1 = FactoryGirl.create(:device)
