@@ -56,7 +56,7 @@ public class IdeaDetailActivity extends Activity {
 		setContentView(R.layout.activity_idea_detail);
 		titleTextView = (TextView) findViewById(R.id.IdeaTitleTextView);
 		dateTextView = (TextView) findViewById(R.id.TimestampTextView);
-		userTextView = (TextView) findViewById(R.id.CreatorTextView);
+		userTextView = (TextView) findViewById(R.id.idea_user_name);
 		
 		//Fixes autofocus problem:
         findViewById(R.id.DummyFocusCommentSection).setFocusableInTouchMode(true);
@@ -109,8 +109,8 @@ public class IdeaDetailActivity extends Activity {
 	
 	public void fillComments() {
 		if (comments.length == 0) {
-			TextView header = (TextView) findViewById(R.id.CommentsHeader);
-			header.setText("No comments on this Spark. Be the first!");
+			//TextView header = (TextView) findViewById(R.id.CommentsHeader);
+			//header.setText("No comments on this Spark. Be the first!");
 		} else {
 			ListView commentSection = (ListView) findViewById(R.id.CommentList);
 			

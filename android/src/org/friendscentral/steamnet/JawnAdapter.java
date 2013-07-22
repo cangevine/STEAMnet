@@ -1,5 +1,7 @@
 package org.friendscentral.steamnet;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import org.friendscentral.steamnet.BaseClasses.Idea;
@@ -7,19 +9,20 @@ import org.friendscentral.steamnet.BaseClasses.Jawn;
 import org.friendscentral.steamnet.BaseClasses.Spark;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TableRow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class JawnAdapter extends BaseAdapter {
@@ -42,63 +45,61 @@ public class JawnAdapter extends BaseAdapter {
     }
 
 	// create a new ImageView for each item referenced by the Adapter
-    public View getView(int position, View convertView, ViewGroup parent) {
-    	View v = null;
+    @SuppressWarnings("deprecation")
+	public View getView(int position, View convertView, ViewGroup parent) {
+    	final int SPARK_INFO_ID = 4;
+		
+    	RelativeLayout v = new RelativeLayout(mContext);
+    	GridView.LayoutParams r = new GridView.LayoutParams(232, 270);
+    	v.setLayoutParams(r);
+    	v.setPadding(8, 0, 8, 8);
+    	v.setGravity(Gravity.CENTER);
+    	
     	if (getJawnAt(position).getType() == 'S') {
 	    	Spark spark = getJawnAt(position).getSelfSpark();
 	    	char con = spark.getContentType();
 	    	View contentView = null;
-	    	LinearLayout sparkInfo = new LinearLayout(mContext);
-	    	sparkInfo.setOrientation(LinearLayout.VERTICAL);
-	    	sparkInfo.setBackgroundColor(Color.WHITE);
-	    	sparkInfo.setPadding(8, 8, 8, 8);
-	    	
-	    	//Prelim stuff for the spark:
-	    	LinearLayout layout = new LinearLayout(mContext);
-    		layout.setOrientation(LinearLayout.VERTICAL);
-	    	
-    		LinearLayout header = new LinearLayout(mContext);
-	    	TextView headerTitle;
-	        headerTitle = new TextView(mContext);
-	        headerTitle.setTextSize(20);
-	        headerTitle.setWidth(0);
-	        LayoutParams titleParams = new TableRow.LayoutParams(0, LayoutParams.WRAP_CONTENT, 9f);
-	        headerTitle.setLayoutParams(titleParams);
-	        header.addView(headerTitle);
-	        
-	        layout.addView(header);
+		    LinearLayout sparkInfo = new LinearLayout(mContext);
+		    sparkInfo.setOrientation(LinearLayout.VERTICAL);
+		    sparkInfo.setBackgroundColor(Color.WHITE);
+		    sparkInfo.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT));
+		    sparkInfo.setGravity(Gravity.CENTER);
+		    sparkInfo.setPadding(8, 0, 8, 8);
+		    sparkInfo.setId(SPARK_INFO_ID);
 	    	
 	    	if (con == "P".charAt(0)) {
-		        headerTitle.setText("Picture");
-		        
 		        FrameLayout frameLayout = new FrameLayout(mContext);
-		        frameLayout.setLayoutParams(new GridView.LayoutParams(image_size, image_size));
+		        frameLayout.setLayoutParams(new FrameLayout.LayoutParams(image_size, image_size));
 		        Drawable imageSymbol = mContext.getResources().getDrawable(R.drawable.symbol_image);
+		        imageSymbol.setAlpha(155);
 		        frameLayout.setForeground(imageSymbol);
+		        frameLayout.setForegroundGravity(Gravity.CENTER);
 	    		
 		        ImageView imageView;
 		        imageView = new ImageView(mContext);
-		        imageView.setLayoutParams(new GridView.LayoutParams(image_size, image_size));
+		        imageView.setLayoutParams(new FrameLayout.LayoutParams(image_size, image_size));
 		        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 		        frameLayout.addView(imageView);
+		        frameLayout.setBackgroundResource(R.drawable.spark_content_bg);
+		        frameLayout.setPadding(4, 4, 4, 4);
 		        
 		        /*
 		         * This part needs to be updated with the S3 link:
 		         * Get spark bitmap and set it as resource
 		         */
-		        imageView.setImageResource(R.drawable.meadow);
+		        if (spark.getBitmap() != null) {
+		        	imageView.setImageBitmap(spark.getBitmap());
+		        }
 		        
-		        layout.addView(frameLayout);
-		        
-		        contentView = layout;
+		        contentView = frameLayout;
 		        
 	    	} else if (con == "V".charAt(0)) {
-		        headerTitle.setText("Video");
-		        
 		        FrameLayout frameLayout = new FrameLayout(mContext);
-		        frameLayout.setLayoutParams(new GridView.LayoutParams(image_size, image_size));
+		        frameLayout.setLayoutParams(new FrameLayout.LayoutParams(image_size, image_size));
 		        Drawable imageSymbol = mContext.getResources().getDrawable(R.drawable.symbol_video);
+		        imageSymbol.setAlpha(155);
 		        frameLayout.setForeground(imageSymbol);
+		        frameLayout.setForegroundGravity(Gravity.CENTER);
 	    		
 	    		/*
 	    		 * Normally within an app, embedded Youtube videos either begin playing or launch the Youtube app on click
@@ -110,19 +111,21 @@ public class JawnAdapter extends BaseAdapter {
 	    		
 		        ImageView imageView;
 		        imageView = new ImageView(mContext);
-		        imageView.setLayoutParams(new GridView.LayoutParams(image_size, image_size));
+		        imageView.setLayoutParams(new FrameLayout.LayoutParams(image_size, image_size));
 		        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-		        imageView.setPadding(8, 8, 8, 8);
+		        frameLayout.addView(imageView);
+		        frameLayout.setBackgroundResource(R.drawable.spark_content_bg);
+		        frameLayout.setPadding(4, 4, 4, 4);
 		        /*
 		         * This part needs to be updated with the youtube API
 		         * Something like setImageResource(youtubeAPI.getThumbnail())
 		         */
-		        imageView.setImageResource(R.drawable.clouds);
 		        
-		        frameLayout.addView(imageView);
+		        if (spark.getBitmap() != null) {
+		        	imageView.setImageBitmap(spark.getBitmap());
+		        }
 		        
-		        layout.addView(frameLayout);
-		        contentView = layout;
+		        contentView = frameLayout;
 		        
 	    	} else if (con == "A".charAt(0)) {
 	    		/*
@@ -134,60 +137,66 @@ public class JawnAdapter extends BaseAdapter {
 	    		 * String audioTitle = soundcloudAPI.getTrackTitle();
 	    		 * headerTitle.setText("Audio: "+audioTitle, 0, Math.min(audioTitle.length(), 100);
 	    		 */
-	    		String audioTitle = "unknown";
-		        headerTitle.setText("Audio");
+	    		String audioTitle = spark.getContent();
+	    		
+	    		FrameLayout frameLayout = new FrameLayout(mContext);
+		        frameLayout.setLayoutParams(new FrameLayout.LayoutParams(image_size, image_size));
+		        //Drawable imageSymbol = mContext.getResources().getDrawable(R.drawable.symbol_image);
+		        //imageSymbol.setAlpha(155);
+		        //frameLayout.setForeground(imageSymbol);
+		        frameLayout.setForegroundGravity(Gravity.CENTER);
 	    		
 	    		/*
 	    		 * Then add the thumbnail:
 	    		 */
 	    		ImageView imageView;
 		        imageView = new ImageView(mContext);
-		        imageView.setLayoutParams(new GridView.LayoutParams(image_size, image_size));
+		        imageView.setLayoutParams(new FrameLayout.LayoutParams(image_size, image_size));
 		        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-		        imageView.setPadding(8, 8, 8, 8);
+		        frameLayout.addView(imageView);
+		        frameLayout.setBackgroundResource(R.drawable.spark_content_bg);
+		        frameLayout.setPadding(4, 4, 4, 4);
 		        	
 		        /*
 	    		 * Placeholder until Soundcloud API is working
 	    		 */
 		        imageView.setImageResource(R.drawable.btn_blue_audio);
-		        layout.addView(imageView);
 		        
-	    		contentView = layout;
+	    		contentView = frameLayout;
 	    		
-	    	} else if (con == "T".charAt(0) /* DIRTY FIX!!!! */ || con == "Q".charAt(0) || con == "P".charAt(0)) {
-	    		headerTitle.setText("Text");
-	    		
+	    	} else if (con == "T".charAt(0)) {
 	    		TextView textview;
 		        textview = new TextView(mContext);
-		        textview.setLayoutParams(new GridView.LayoutParams(image_size, image_size));
+		        textview.setLayoutParams(new FrameLayout.LayoutParams(image_size, image_size));
 		        textview.setPadding(8, 8, 8, 8);
 		        textview.setTextSize(20);
+		        textview.setBackgroundResource(R.drawable.spark_content_bg);
 	    		
 	    		String content = spark.getContent();
 	    		textview.setText(content.toCharArray(), 0, Math.min(200, content.length()));
 	    		
-	    		layout.addView(textview);
-	    		
-	    		contentView = layout;
+	    		contentView = textview;
 	    		
 	    	} else if (con == "C".charAt(0)) {
-	    		headerTitle.setText("Code snippet");
-	    		
 	    		/*
 	    		 * At the moment, code snippets are handled just like text. Eventually they will make use of Github 
 	    		 */
-	    		TextView textview;
-		        textview = new TextView(mContext);
-		        textview.setLayoutParams(new GridView.LayoutParams(image_size, image_size));
-		        textview.setPadding(8, 8, 8, 8);
-		        textview.setTextSize(20);
+	    		FrameLayout frameLayout = new FrameLayout(mContext);
+		        frameLayout.setLayoutParams(new FrameLayout.LayoutParams(image_size, image_size));
 	    		
-	    		String content = spark.getContent();
-	    		textview.setText(content.toCharArray(), 0, Math.min(200, content.length()));
-	    		
-	    		layout.addView(textview);
-	    		
-	    		contentView = layout;
+		        ImageView imageView;
+		        imageView = new ImageView(mContext);
+		        imageView.setLayoutParams(new FrameLayout.LayoutParams(image_size, image_size));
+		        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+		        frameLayout.addView(imageView);
+		        frameLayout.setBackgroundResource(R.drawable.spark_content_bg);
+		        frameLayout.setPadding(4, 4, 4, 4);
+		        
+		        if (spark.getBitmap() != null) {
+		        	imageView.setImageBitmap(spark.getBitmap());
+		        }
+
+	    		contentView = frameLayout;
 	    		
 	    	} else if (con == "L".charAt(0)) {
 	    		/*
@@ -203,29 +212,33 @@ public class JawnAdapter extends BaseAdapter {
 	    		 * something like "Wikipedia - Kittens"
 	    		 */
 
-	    		headerTitle.setText("Link");
-
+	    		FrameLayout frameLayout = new FrameLayout(mContext);
+		        frameLayout.setLayoutParams(new FrameLayout.LayoutParams(image_size, image_size));
+		        Drawable imageSymbol = mContext.getResources().getDrawable(R.drawable.symbol_link);
+		        imageSymbol.setAlpha(155);
+		        frameLayout.setForeground(imageSymbol);
+		        frameLayout.setForegroundGravity(Gravity.CENTER);
 	    		
-	    		/*
-	    		 * Then add the thumbnail:
-	    		 */
-	    		ImageView imageView;
+		        ImageView imageView;
 		        imageView = new ImageView(mContext);
-		        imageView.setLayoutParams(new GridView.LayoutParams(image_size, image_size));
-
+		        imageView.setLayoutParams(new FrameLayout.LayoutParams(image_size, image_size));
 		        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-		        imageView.setPadding(8, 8, 8, 8);
+		        frameLayout.addView(imageView);
+		        frameLayout.setBackgroundResource(R.drawable.spark_content_bg);
+		        frameLayout.setPadding(4, 4, 4, 4);
 		        /*
 	    		 * This is what will be set to the favicon or the screenshot:
 	    		 */
-		        imageView.setImageResource(R.drawable.symbol_link);
-		        layout.addView(imageView);
-		        
-	    		contentView = layout;
+		        if (spark.getBitmap() != null) {
+		        	imageView.setImageBitmap(spark.getBitmap());
+		        }
+
+	    		contentView = frameLayout;
 	    		
 	    	}
 	    	
 	    	if (contentView != null) {
+	    		
 	    		//Attach content:
 		    	sparkInfo.addView(contentView);
 		    	
@@ -248,75 +261,55 @@ public class JawnAdapter extends BaseAdapter {
 		    	
 		    	//Attach ribbon:
 		    	ImageView ribbon = new ImageView(mContext);
-		    	//LayoutParams ribbonParams = new TableRow.LayoutParams(0, LayoutParams.WRAP_CONTENT, 1f);
-		    	LayoutParams ribbonParams = new TableRow.LayoutParams(30, 30, 0f);
-		        ribbon.setLayoutParams(ribbonParams);
 		    	char sparkType = spark.getSparkType();
 		    	if (sparkType == "W".charAt(0)) {
 		    		ribbon.setImageResource(R.drawable.ribbon_whatif);
+		    		sparkInfo.setBackgroundResource(R.drawable.spark_what_if_bg);
 		    	} else if (sparkType == "P".charAt(0)) {
 		    		ribbon.setImageResource(R.drawable.ribbon_problem);
+		    		sparkInfo.setBackgroundResource(R.drawable.spark_problem_bg);
 		    	} else if (sparkType == "I".charAt(0)) {
 		    		ribbon.setImageResource(R.drawable.ribbon_inspiration);
+		    		sparkInfo.setBackgroundResource(R.drawable.spark_inspiration_bg);
 		    	}
-		    	header.addView(ribbon);
 		    	
-		    	v = sparkInfo;
+		    	RelativeLayout.LayoutParams ribbonPosition = new RelativeLayout.LayoutParams(30, 40);
+		    	ribbonPosition.addRule(RelativeLayout.ALIGN_TOP, SPARK_INFO_ID);
+		    	ribbonPosition.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+		    	ribbon.setLayoutParams(ribbonPosition);
+		    	
+		    	v.addView(sparkInfo);	
+		    	v.addView(ribbon);
 	    	} else {
 	    		TextView t = new TextView(mContext);
 	    		t.setText("Error with this one");
 	    		Log.v("Content Type", String.valueOf(spark.getContentType()));
-	    		v = t;
+	    		v.addView(t);
 	    	}
 	    	
     	} else if (getJawns()[position].getType() == 'I') {
     		Idea idea = getJawnAt(position).getSelfIdea();
-	    	char con = idea.getType();
 	    	View contentView = null;
 	    	LinearLayout ideaInfo = new LinearLayout(mContext);
 	    	ideaInfo.setOrientation(LinearLayout.VERTICAL);
 	    	ideaInfo.setBackgroundColor(Color.WHITE);
 	    	ideaInfo.setPadding(8, 8, 8, 8);
+	    	ideaInfo.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT));
+		    ideaInfo.setGravity(Gravity.CENTER);
 	    	
 	    	//Prelim stuff for the spark:
 	    	LinearLayout layout = new LinearLayout(mContext);
     		layout.setOrientation(LinearLayout.VERTICAL);
-	    	
-    		LinearLayout header = new LinearLayout(mContext);
-	    	TextView headerTitle;
-	        headerTitle = new TextView(mContext);
-	        headerTitle.setTextSize(20);
-	        headerTitle.setWidth(0);
-	        LayoutParams titleParams = new TableRow.LayoutParams(0, LayoutParams.WRAP_CONTENT, 9f);
-	        headerTitle.setLayoutParams(titleParams);
-	        header.addView(headerTitle);
-	        
-	        layout.addView(header);
-	        headerTitle.setText("Idea");
-    		
-	        ImageView imageView;
-	        imageView = new ImageView(mContext);
-	        imageView.setLayoutParams(new GridView.LayoutParams(image_size, image_size));
-	        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 	        
 	        Log.v("Amount of sparks", String.valueOf(idea.getSparkIds().length));
 	        TextView t = new TextView(mContext);
+	        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(image_size, image_size);
+	        t.setLayoutParams(lp);
 	        t.setTextSize(150);
-	        t.setGravity(Gravity.CENTER_HORIZONTAL);
+	        t.setGravity(Gravity.CENTER);
+	        t.setBackgroundResource(R.drawable.spark_content_bg);
+	        t.setPadding(4, 0, 4, 4);
 	        t.setText(String.valueOf(idea.getSparkIds().length));
-	        /*if (idea.getSparkIds().length == 1) {
-	        	imageView.setImageResource(R.drawable.symbol_idea_1);
-	        } else if (idea.getSparkIds().length == 2) {
-	        	imageView.setImageResource(R.drawable.symbol_idea_2);
-	        } else  if (idea.getSparkIds().length == 3) {
-	        	imageView.setImageResource(R.drawable.symbol_idea_3);
-	        } else if (idea.getSparkIds().length == 4) {
-	        	imageView.setImageResource(R.drawable.symbol_idea_4);
-	        } else {
-	        	imageView.setImageResource(R.drawable.symbol_image);
-	        }
-	        
-	        layout.addView(imageView);*/
 	        layout.addView(t);
 	        
 	        contentView = layout;
@@ -335,7 +328,6 @@ public class JawnAdapter extends BaseAdapter {
 			ideaInfo.addView(userInfo);
 			
 			//Attach date info:
-			// TODO GETCREATEDAT IS NULL
 			String date = idea.getCreatedAt();
 			String a = "a";
 			Log.v("Date", a+date);
@@ -343,7 +335,9 @@ public class JawnAdapter extends BaseAdapter {
 			dateInfo.setText(date);
 			ideaInfo.addView(dateInfo);
 			
-			v = ideaInfo;
+			ideaInfo.setBackgroundResource(R.drawable.idea_bg);
+			
+			v.addView(ideaInfo);
     	}
     	return v;
     }

@@ -11,6 +11,7 @@ import org.friendscentral.steamnet.DetailViewFillers.PictureFiller;
 import org.friendscentral.steamnet.DetailViewFillers.TextFiller;
 import org.friendscentral.steamnet.DetailViewFillers.VideoFiller;
 
+import APIHandlers.GetSparkForDetail;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
@@ -37,8 +38,12 @@ public class SparkDetailActivity extends Activity {
         findViewById(R.id.DummyFocusCommentSection).requestFocus();
 		
 		Intent intent = getIntent();
-		Spark spark = (Spark) intent.getSerializableExtra("spark");
+		int sparkId = intent.getExtras().getInt("id");
+		new GetSparkForDetail(sparkId, SparkDetailActivity.this);
 		
+	}
+	
+	public void setFiller(Spark spark) {
 		switch (spark.getContentType()) {
 		case 'T':
 			filler = new TextFiller(spark, (LinearLayout) findViewById(R.id.TextData), SparkDetailActivity.this);

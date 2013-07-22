@@ -4,22 +4,44 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
-    <TextView
-        android:id="@+id/header_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:text="Almost done! Enter content:"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+    
+    <LinearLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@drawable/sidebar_header">
+        
+        <ImageView 
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/actionbar_btn"
+            />
+        
+        <TextView 
+            android:id="@+id/header_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Almost done! Enter content:"
+            android:textSize="20dp"
+            />
+        
+    </LinearLayout>
     
     <LinearLayout
         android:id="@+id/text_form"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="3"
+        android:padding="8dp"
         android:visibility="gone"
         android:orientation="vertical" >
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Text entry:"
+            />
         
         <EditText
 	        android:id="@+id/text_content_entry_form"
@@ -37,6 +59,7 @@
         android:layout_height="0dp"
         android:layout_weight="3"
         android:visibility="gone"
+        android:padding="8dp"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         >
@@ -84,6 +107,7 @@
         android:layout_height="0dp"
         android:layout_weight="4"
         android:gravity="center_horizontal"
+        android:padding="8dp"
         android:orientation="vertical"
         android:visibility="gone" >
         
@@ -173,6 +197,7 @@
         android:id="@+id/picture_form"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:padding="8dp"
         android:layout_weight="3"
         android:gravity="center_horizontal"
         android:orientation="vertical"
@@ -218,6 +243,7 @@
         android:layout_height="0dp"
         android:layout_weight="3"
         android:gravity="center_horizontal"
+        android:padding="8dp"
         android:orientation="vertical"
         android:visibility="gone" >
         
@@ -259,6 +285,7 @@
         android:layout_height="0dp"
         android:layout_weight="3"
         android:gravity="center_horizontal"
+        android:padding="8dp"
         android:orientation="vertical"
         android:visibility="gone" >
 
@@ -305,13 +332,15 @@
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
 	    android:hint="Type some tags here"
-	   	android:ems="10" >
+	   	android:ems="10"
+	   	android:padding="8dp" >
    	</EditText>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" >
+        android:layout_weight="1"
+        android:padding="8dp" >
 
         <Button
             android:id="@+id/back_content_entry_button"

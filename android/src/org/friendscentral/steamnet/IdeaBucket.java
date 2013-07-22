@@ -48,21 +48,25 @@ public class IdeaBucket {
 	public void addSpark(Spark ss) {
 		if (sparks.size() < 4) {
 			sparks.add(ss);
-			int resource = 0;
-			if (ss.getContentType() == "P".charAt(0)) {
-				resource = R.drawable.symbol_image;
-			} else if (ss.getContentType() == "V".charAt(0)) {
-				resource = R.drawable.symbol_video;
-			} else  if (ss.getContentType() == "L".charAt(0)) {
-				resource = R.drawable.symbol_link;
-			} else if (ss.getContentType() == "A".charAt(0)) {
-				resource = R.drawable.symbol_link;
-			} else if (ss.getContentType() == "T".charAt(0)) {
-				resource = R.drawable.btn_green_text;
-			} else if (ss.getContentType() == "C".charAt(0)) {
-				resource = R.drawable.btn_green_code;
+			if (ss.getBitmap() != null) {
+				imageViews[sparks.size() - 1].setImageBitmap(ss.getBitmap());
+			} else {
+				int resource = 0;
+				if (ss.getContentType() == "P".charAt(0)) {
+					resource = R.drawable.symbol_image;
+				} else if (ss.getContentType() == "V".charAt(0)) {
+					resource = R.drawable.symbol_video;
+				} else  if (ss.getContentType() == "L".charAt(0)) {
+					resource = R.drawable.symbol_link;
+				} else if (ss.getContentType() == "A".charAt(0)) {
+					resource = R.drawable.symbol_link;
+				} else if (ss.getContentType() == "T".charAt(0)) {
+					resource = R.drawable.btn_green_text;
+				} else if (ss.getContentType() == "C".charAt(0)) {
+					resource = R.drawable.btn_green_code;
+				}
+				imageViews[sparks.size() - 1].setImageResource(resource);
 			}
-			imageViews[sparks.size() - 1].setImageResource(resource);
 		}
 		if (sparks.size() >= 2) {
 			Log.v("Report", "more than 2 sparks");
@@ -74,14 +78,26 @@ public class IdeaBucket {
 	public void removeSpark(int pos) {
 		if (sparks.size() > 0) {
 			sparks.remove(pos);
-			for (int i = pos; i < imageViews.length - 1; i++) {
-				imageViews[i].setImageDrawable(imageViews[i + 1].getDrawable());
+			Log.v("Number of sparks", String.valueOf(sparks.size()));
+			for (int i = 0; i < sparks.size(); i++) {
+				Spark ss = sparks.get(i);
+				int resource = 0;
+				if (ss.getContentType() == 'P') {
+					resource = R.drawable.symbol_image;
+				} else if (ss.getContentType() == 'V') {
+					resource = R.drawable.symbol_video;
+				} else  if (ss.getContentType() == 'L') {
+					resource = R.drawable.symbol_link;
+				} else if (ss.getContentType() == 'A') {
+					resource = R.drawable.symbol_link;
+				} else if (ss.getContentType() == 'T') {
+					resource = R.drawable.btn_green_text;
+				} else if (ss.getContentType() == 'C') {
+					resource = R.drawable.btn_green_code;
+				}
+				imageViews[i].setImageResource(resource);
 			}
-			//imageViews[3].setImageResource(0);
-			/*
-			 * Go through, and if the resource is 0, make it invisible.
-			 * Set the resource to some virtually blank 1px image?
-			 */
+			imageViews[sparks.size()].setImageResource(0);
 		}
 		if (sparks.size() < 2) {
 			Button ignite = (Button) mainLayout.findViewById(R.id.ignite_button);

@@ -30,7 +30,7 @@ public class SparkWizard {
 	//Methods for the Wizard Fragments:
 			//Very similar, could probably be consolidated
 	public void openContentTypeChooser(View v, char type) {
-		updateWeights(5, 3, 1);
+		updateWeights(5, 3, 0);
 		
 		ContentTypeChooser ctc = new ContentTypeChooser(type);
 		FragmentTransaction ft = fm.beginTransaction();
@@ -40,7 +40,7 @@ public class SparkWizard {
 	}
 	
 	public void revertWizard(View v) {
-		updateWeights(2, 4, 2); 
+		updateWeights(2, 4, 3); 
 		
 		SparkTypeChooser stc = new SparkTypeChooser();
 		FragmentTransaction ft = fm.beginTransaction();
@@ -52,7 +52,7 @@ public class SparkWizard {
 	}
 	
 	public void openContentEntry(View v, char type) {
-		updateWeights(5, 3, 1);
+		updateWeights(5, 3, 0);
 		
 		ce = new ContentEntry(type, mainActivity);
 		FragmentTransaction ft = fm.beginTransaction();
@@ -75,9 +75,13 @@ public class SparkWizard {
 	}
 	
 	public void updateWeights(float sp, float fs, float ib) {
-    	mainLayout.findViewById(R.id.WizardSection).setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 0, sp));
-    	mainLayout.findViewById(R.id.FilterSettings).setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 0, fs));
-    	mainLayout.findViewById(R.id.IdeaBucket).setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 0, ib));
+		View wizardSection = mainLayout.findViewById(R.id.WizardSection);
+		View filterSettings = mainLayout.findViewById(R.id.FilterSettings);
+		View ideaBucket = mainLayout.findViewById(R.id.IdeaBucket);
+		
+    	wizardSection.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 0, sp));
+    	filterSettings.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 0, fs));
+    	ideaBucket.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 0, ib));
     }
 	
 	public Fragment getFragment(int id) {

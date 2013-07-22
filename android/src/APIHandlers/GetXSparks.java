@@ -125,6 +125,7 @@ public class GetXSparks {
         	final String COMMENTS = "comments";
         	final String COMMENT_TEXT = "comment_text";
         	final String NAME = "name";
+        	final String FILE = "file";
         	// Creating JSON Parser instance
         	JSONParser jParser = new JSONParser();
         	 
@@ -189,8 +190,16 @@ public class GetXSparks {
 	        	    
 	        	    
 	        	    //*****************************************
-	        	    Spark newSpark = new Spark(Integer.parseInt(id), sparkType.charAt(0), contentType.charAt(0), content, createdAts, usersArray, firstUser);
-	        	    newSpark.setComments(commentArray);
+	        	    Spark newSpark = new Spark(Integer.parseInt(id), sparkType.charAt(0), contentType.charAt(0), content, createdAts, createdAts[0], usersArray, "max", commentArray);
+	        	    if (contentType.charAt(0) != 'T') {
+	        	    	if (json.has(FILE)) {
+	        	    		if (json.getString(FILE) != null) {
+    	        	    		String url = json.getString(FILE);
+    	        	    		Log.v("!!!!!!URL!!!!!!!", url);
+    	        	    		newSpark.setCloudLink(url);
+	        	    		}
+	        	    	}
+	        	    }
 					sparkArrayList.add(newSpark);
         		}
         	    Log.v("ARRAY", sparkArrayList.toString());

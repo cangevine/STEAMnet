@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 public class PictureFiller extends DetailFiller {
 	ImageView pictureView;
@@ -22,12 +23,12 @@ public class PictureFiller extends DetailFiller {
 
 	@Override
 	void fillData() {
-		spark = new Spark();
-		spark.setBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.symbol_video));
-		
 		// TODO definitely need to scale this image and apply formatting:
-		
-		pictureView.setImageBitmap(spark.getBitmap());
+		if (spark.getBitmap() != null) { 
+			pictureView.setImageBitmap(spark.getBitmap());
+		} else {
+			Toast.makeText(context, "Picture not found", Toast.LENGTH_SHORT).show();
+		}
 	}
 
 }

@@ -1,10 +1,15 @@
 package org.friendscentral.steamnet.BaseClasses;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.nio.ByteBuffer;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 
 /**
  * 
@@ -13,7 +18,7 @@ import android.os.Bundle;
  */
 
 @SuppressWarnings("serial")
-public class Spark extends Jawn implements Serializable{
+public class Spark extends Jawn implements Serializable {
 	int id;
 	char sparkType;
 	char contentType;
@@ -25,9 +30,12 @@ public class Spark extends Jawn implements Serializable{
 	String[] tags;
 	String tagsString;
 	String firstUser;
+	String multimediaCloudLink;
 	
 	Uri multimedia;
 	Bitmap image;
+	private static ByteBuffer dst;
+	private static byte[] bytesar;
 	
 	/*
 	 * Don't need updated_at since they should never be edited, but perhaps we need a list of "uploaded at" dates
@@ -265,4 +273,98 @@ public class Spark extends Jawn implements Serializable{
 	public String getFirstUser() {
 		return firstUser;
 	}
+	
+	public String getCloudLink() {
+		return multimediaCloudLink;
+	}
+	public void setCloudLink(String s) {
+		multimediaCloudLink = s;
+	}
+	
+	/*private void writeObject(ObjectOutputStream out) throws IOException{
+
+	    out.writeInt(id);
+	    
+	    out.writeChar(sparkType);
+	    out.writeChar(contentType);
+
+	    out.writeObject(comments);
+	    out.writeObject(content);
+	    out.writeObject(createdAts);
+	    out.writeObject(firstCreatedAt);
+	    out.writeObject(tags);
+	    out.writeObject(tagsString);
+	    out.writeObject(firstUser);
+	    out.writeObject(multimedia);
+
+
+	    out.writeInt(image.getRowBytes());
+	    out.writeInt(image.getHeight());
+	    out.writeInt(image.getWidth());
+
+	    int bmSize = image.getRowBytes() * image.getHeight();
+	    if(dst==null || bmSize > dst.capacity())
+	        dst= ByteBuffer.allocate(bmSize);
+
+	    out.writeInt(dst.capacity());
+
+	    dst.position(0);
+
+	    image.copyPixelsToBuffer(dst);
+	    if(bytesar==null || bmSize > bytesar.length)
+	        bytesar=new byte[bmSize];
+
+	    dst.position(0);
+	    dst.get(bytesar);
+
+
+	    out.write(bytesar, 0, bytesar.length);
+
+	}
+
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
+
+	    id=in.readInt();
+	    
+	    sparkType = in.readChar();
+	    contentType = in.readChar();
+	    
+	    comments = (Comment[]) in.readObject();
+	    content = (String) in.readObject();
+	    createdAts = (String[]) in.readObject();
+	    firstCreatedAt = (String) in.readObject();
+	    tags = (String[]) in.readObject();
+	    tagsString = (String) in.readObject();
+	    firstUser = (String) in.readObject();
+	    multimedia = (Uri) in.readObject();
+
+
+	    int nbRowBytes=in.readInt();
+	    int height=in.readInt();
+	    int width=in.readInt();
+
+	    int bmSize=in.readInt();
+
+
+
+	    if(bytesar==null || bmSize > bytesar.length)
+	        bytesar= new byte[bmSize];
+
+
+	    int offset=0;
+
+	    while(in.available()>0){
+	        offset=offset + in.read(bytesar, offset, in.available());
+	    }
+
+
+	    if(dst==null || bmSize > dst.capacity())
+	        dst= ByteBuffer.allocate(bmSize);
+	    dst.position(0);
+	    dst.put(bytesar);
+	    dst.position(0);
+	    image=Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+	    image.copyPixelsFromBuffer(dst);
+	    //in.close();
+	}*/
 }

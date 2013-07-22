@@ -4,9 +4,11 @@ import org.friendscentral.steamnet.BaseClasses.Comment;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -24,8 +26,19 @@ public class CommentAdapter extends BaseAdapter {
 		//if (comments != null) {
 		LinearLayout comment = new LinearLayout(context);
 		comment.setPadding(5, 5, 5, 5);
-		comment.setOrientation(LinearLayout.VERTICAL);
+		comment.setOrientation(LinearLayout.HORIZONTAL);
+		comment.setGravity(Gravity.CENTER_VERTICAL);
+		
+		ImageView contactPicture = new ImageView(context);
+		contactPicture.setLayoutParams(new LinearLayout.LayoutParams(50, 50));
+		contactPicture.setImageResource(R.drawable.user_icon_bg);
+		contactPicture.setPadding(8, 8, 8, 8);
+		comment.addView(contactPicture);
 			
+		LinearLayout commentInfo = new LinearLayout(context);
+		commentInfo.setPadding(8, 8, 8, 8);
+		commentInfo.setOrientation(LinearLayout.VERTICAL);
+		
 		int userID = comments[position].getUserId();
 		String commentContent = comments[position].getContent();
 		String username = comments[position].getUsername();
@@ -35,7 +48,7 @@ public class CommentAdapter extends BaseAdapter {
 		user.setTextSize(20);
 		user.setTypeface(null, Typeface.ITALIC);
 
-		user.setText(username+" says,");
+		user.setText(username+" says...");
 			
 		TextView content = new TextView(context);
 		content.setPadding(2, 5, 2, 5);
@@ -43,9 +56,12 @@ public class CommentAdapter extends BaseAdapter {
 		content.setText(commentContent);
 			
 			
-		comment.addView(user);
-		comment.addView(content);
+		commentInfo.addView(user);
+		commentInfo.addView(content);
+		
+		comment.addView(commentInfo);
 			
+		comment.setBackgroundResource(R.drawable.comment_bg);
 		
 		return comment;
 	}

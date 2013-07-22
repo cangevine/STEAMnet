@@ -21,8 +21,10 @@ import android.view.View.OnDragListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 public class SparkEventHandler {
 	static final String EXTRA_MESSAGE = null;
@@ -51,7 +53,7 @@ public class SparkEventHandler {
 	    	Intent intent = new Intent(context, SparkDetailActivity.class);
 	    	//intent.putExtra(EXTRA_MESSAGE, b);
 	    	Spark s = j.getSelfSpark();
-	    	intent.putExtra("spark", s);
+	    	intent.putExtra("id", s.getId());
 	    	mainActivity.startActivityForResult(intent, DETAIL_VIEW_RETURN);
 		} else if(j.getType() == 'I'){
 	    	Intent intent = new Intent(context, IdeaDetailActivity.class);
@@ -73,9 +75,11 @@ public class SparkEventHandler {
 			public boolean onItemLongClick(AdapterView<?> adapterView, View view,
 					int pos, long id) {
 				if (indexGrid.getAdapter().getJawnAt(pos).getType() == 'S') {
+					final int SPARK_INFO_ID = 4;
 					ClipData data = ClipData.newPlainText("", "");
-					LinearLayout spark = (LinearLayout) view;
-					View sparkContent = ((LinearLayout) spark.getChildAt(0)).getChildAt(1);
+					RelativeLayout holder = (RelativeLayout) view;
+					LinearLayout spark = (LinearLayout) holder.findViewById(SPARK_INFO_ID);
+					View sparkContent = ((FrameLayout) spark.getChildAt(0)).getChildAt(0);
 					if (sparkContent.getClass().getName().equals("android.widget.TextView")) {
 						sparkContent.setBackgroundColor(Color.WHITE);
 					}
