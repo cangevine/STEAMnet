@@ -1,5 +1,7 @@
 package org.friendscentral.steamnet;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import org.friendscentral.steamnet.BaseClasses.Idea;
@@ -7,6 +9,8 @@ import org.friendscentral.steamnet.BaseClasses.Jawn;
 import org.friendscentral.steamnet.BaseClasses.Spark;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
@@ -63,26 +67,7 @@ public class JawnAdapter extends BaseAdapter {
 		    sparkInfo.setPadding(8, 0, 8, 8);
 		    sparkInfo.setId(SPARK_INFO_ID);
 	    	
-	    	//Prelim stuff for the spark:
-	    	LinearLayout layout = new LinearLayout(mContext);
-    		layout.setOrientation(LinearLayout.VERTICAL);
-	    	
-    		//LinearLayout header = new LinearLayout(mContext);
-	    	TextView headerTitle;
-	        headerTitle = new TextView(mContext);
-	        /*headerTitle.setPadding(0, 8, 0, 0);
-	        headerTitle.setTextSize(20);
-	        headerTitle.setWidth(0);
-	        LayoutParams titleParams = new TableRow.LayoutParams(0, LayoutParams.WRAP_CONTENT, 9f);
-	        headerTitle.setLayoutParams(titleParams);
-	        header.addView(headerTitle);
-	        header.setPadding(8, 0, 8, 8);
-	        
-	        layout.addView(header);*/
-	    	
 	    	if (con == "P".charAt(0)) {
-		        headerTitle.setText("Picture");
-		        
 		        FrameLayout frameLayout = new FrameLayout(mContext);
 		        frameLayout.setLayoutParams(new FrameLayout.LayoutParams(image_size, image_size));
 		        Drawable imageSymbol = mContext.getResources().getDrawable(R.drawable.symbol_image);
@@ -102,15 +87,13 @@ public class JawnAdapter extends BaseAdapter {
 		         * This part needs to be updated with the S3 link:
 		         * Get spark bitmap and set it as resource
 		         */
-		        imageView.setImageResource(R.drawable.meadow);
+		        if (spark.getBitmap() != null) {
+		        	imageView.setImageBitmap(spark.getBitmap());
+		        }
 		        
-		        layout.addView(frameLayout);
-		        
-		        contentView = layout;
+		        contentView = frameLayout;
 		        
 	    	} else if (con == "V".charAt(0)) {
-		        headerTitle.setText("Video");
-		        
 		        FrameLayout frameLayout = new FrameLayout(mContext);
 		        frameLayout.setLayoutParams(new FrameLayout.LayoutParams(image_size, image_size));
 		        Drawable imageSymbol = mContext.getResources().getDrawable(R.drawable.symbol_video);
@@ -137,10 +120,12 @@ public class JawnAdapter extends BaseAdapter {
 		         * This part needs to be updated with the youtube API
 		         * Something like setImageResource(youtubeAPI.getThumbnail())
 		         */
-		        imageView.setImageResource(R.drawable.video_placeholder);
 		        
-		        layout.addView(frameLayout);
-		        contentView = layout;
+		        if (spark.getBitmap() != null) {
+		        	imageView.setImageBitmap(spark.getBitmap());
+		        }
+		        
+		        contentView = frameLayout;
 		        
 	    	} else if (con == "A".charAt(0)) {
 	    		/*
@@ -153,7 +138,13 @@ public class JawnAdapter extends BaseAdapter {
 	    		 * headerTitle.setText("Audio: "+audioTitle, 0, Math.min(audioTitle.length(), 100);
 	    		 */
 	    		String audioTitle = spark.getContent();
-		        headerTitle.setText("Audio");
+	    		
+	    		FrameLayout frameLayout = new FrameLayout(mContext);
+		        frameLayout.setLayoutParams(new FrameLayout.LayoutParams(image_size, image_size));
+		        //Drawable imageSymbol = mContext.getResources().getDrawable(R.drawable.symbol_image);
+		        //imageSymbol.setAlpha(155);
+		        //frameLayout.setForeground(imageSymbol);
+		        frameLayout.setForegroundGravity(Gravity.CENTER);
 	    		
 	    		/*
 	    		 * Then add the thumbnail:
@@ -162,20 +153,18 @@ public class JawnAdapter extends BaseAdapter {
 		        imageView = new ImageView(mContext);
 		        imageView.setLayoutParams(new FrameLayout.LayoutParams(image_size, image_size));
 		        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-		        imageView.setBackgroundResource(R.drawable.spark_content_bg);
-		        imageView.setPadding(4, 4, 4, 4);
+		        frameLayout.addView(imageView);
+		        frameLayout.setBackgroundResource(R.drawable.spark_content_bg);
+		        frameLayout.setPadding(4, 4, 4, 4);
 		        	
 		        /*
 	    		 * Placeholder until Soundcloud API is working
 	    		 */
 		        imageView.setImageResource(R.drawable.btn_blue_audio);
-		        layout.addView(imageView);
 		        
-	    		contentView = layout;
+	    		contentView = frameLayout;
 	    		
 	    	} else if (con == "T".charAt(0)) {
-	    		headerTitle.setText("Text");
-	    		
 	    		TextView textview;
 		        textview = new TextView(mContext);
 		        textview.setLayoutParams(new FrameLayout.LayoutParams(image_size, image_size));
@@ -186,13 +175,9 @@ public class JawnAdapter extends BaseAdapter {
 	    		String content = spark.getContent();
 	    		textview.setText(content.toCharArray(), 0, Math.min(200, content.length()));
 	    		
-	    		layout.addView(textview);
-	    		
-	    		contentView = layout;
+	    		contentView = textview;
 	    		
 	    	} else if (con == "C".charAt(0)) {
-	    		headerTitle.setText("Code snippet");
-	    		
 	    		/*
 	    		 * At the moment, code snippets are handled just like text. Eventually they will make use of Github 
 	    		 */
@@ -207,11 +192,11 @@ public class JawnAdapter extends BaseAdapter {
 		        frameLayout.setBackgroundResource(R.drawable.spark_content_bg);
 		        frameLayout.setPadding(4, 4, 4, 4);
 		        
-		        imageView.setImageResource(R.drawable.gist_placeholder);
-	    		
-	    		layout.addView(frameLayout);
-	    		
-	    		contentView = layout;
+		        if (spark.getBitmap() != null) {
+		        	imageView.setImageBitmap(spark.getBitmap());
+		        }
+
+	    		contentView = frameLayout;
 	    		
 	    	} else if (con == "L".charAt(0)) {
 	    		/*
@@ -227,8 +212,6 @@ public class JawnAdapter extends BaseAdapter {
 	    		 * something like "Wikipedia - Kittens"
 	    		 */
 
-	    		headerTitle.setText("Link");
-	    		
 	    		FrameLayout frameLayout = new FrameLayout(mContext);
 		        frameLayout.setLayoutParams(new FrameLayout.LayoutParams(image_size, image_size));
 		        Drawable imageSymbol = mContext.getResources().getDrawable(R.drawable.symbol_link);
@@ -246,10 +229,11 @@ public class JawnAdapter extends BaseAdapter {
 		        /*
 	    		 * This is what will be set to the favicon or the screenshot:
 	    		 */
-		        imageView.setImageResource(R.drawable.link_placeholder);
-		        layout.addView(frameLayout);
-		        
-	    		contentView = layout;
+		        if (spark.getBitmap() != null) {
+		        	imageView.setImageBitmap(spark.getBitmap());
+		        }
+
+	    		contentView = frameLayout;
 	    		
 	    	}
 	    	

@@ -26,7 +26,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="fill_parent"
+        android:gravity="center_vertical" >
 
         <LinearLayout
             android:layout_width="0dp"
@@ -42,7 +43,7 @@
                 android:layout_gravity="center_horizontal"
                 android:background="#00000000"
                 android:onClick="updateWizard"
-                android:src="@drawable/inspiration_button_source"
+                android:src="@drawable/btn_inspiration"
                 android:tag="openContentTypeChooser" />
 
             <TextView
@@ -69,7 +70,7 @@
                 android:layout_gravity="center_horizontal"
                 android:background="#00000000"
                 android:onClick="updateWizard"
-                android:src="@drawable/what_if_button_source"
+                android:src="@drawable/btn_what_if"
                 android:tag="openContentTypeChooser" />
 
             <TextView
@@ -96,7 +97,7 @@
                 android:background="#00000000"
                 android:layout_gravity="center_horizontal"
                 android:onClick="updateWizard"
-                android:src="@drawable/problem_button_source"
+                android:src="@drawable/btn_problem"
                 android:tag="openContentTypeChooser" />
 
             <TextView

@@ -120,7 +120,9 @@ public class CodeSubmitter extends SparkSubmitter {
 
 	    v.buildDrawingCache(true);
 	    Bitmap source = loadBitmapFromView(v);
-	    int x = 0, y = 0, width = Math.min(350, j.getWidth()), height = Math.min(350, j.getHeight() - 20); 
+	    int maxSize = 350;
+	    int smallerMeasure = Math.min(j.getWidth(), j.getHeight() - 20);
+	    int x = 0, y = 0, width = Math.min(maxSize, smallerMeasure), height = Math.min(maxSize, smallerMeasure); 
 	    screenshot = Bitmap.createBitmap(source, x, y, width, height);
 	    Log.v("takeScreenshot", "Screenshot saved");
 	}

@@ -86,6 +86,7 @@ public class LinkSubmitter extends SparkSubmitter {
 		
 		if (screenshot != null) {
 			newSpark.setBitmap(screenshot);
+			Log.v("Screenshot attached", "successfully");
 		}
 		
 		return newSpark;

@@ -63,7 +63,7 @@ public abstract class DetailFiller {
 		
 		fillSparkTypes();
 		//fillTags();
-		fillComments();
+		//fillComments();
 	}
 	
 	public void fillSparkTypes() {
@@ -88,7 +88,7 @@ public abstract class DetailFiller {
 		sparkTags.setText(tagString);
 	}*/
 	
-	public void fillComments() {
+	/*public void fillComments() {
 		if (comments.length == 0) {
 			//TextView header = (TextView) ((SparkDetailActivity) context).findViewById(R.id.CommentsHeader);
 			//header.setText("No comments on this Spark. Be the first!");
@@ -99,7 +99,7 @@ public abstract class DetailFiller {
 			CommentAdapter commentAdapter = new CommentAdapter(((SparkDetailActivity) context), comments);
 			commentSection.setAdapter(commentAdapter);
 		}
-	}
+	}*/
 	
 	public void submitComment(View v) {
 		EditText editText = (EditText) ((SparkDetailActivity) context).findViewById(R.id.CommentEditText);
