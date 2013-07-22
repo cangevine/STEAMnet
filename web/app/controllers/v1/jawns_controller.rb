@@ -31,4 +31,11 @@ class V1::JawnsController < ApplicationController
     end
   end
   
+  def count
+    @ideas = Idea.count
+    @sparks = Spark.count
+    
+    @jawns = @ideas + @sparks
+  end
+  
 end

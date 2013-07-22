@@ -2,29 +2,29 @@ require 'spec_helper'
 
 describe V1::JawnsController do
   
-  describe "GET 'index'" do
+  before do
+    @jawns = []
+    @ideas = []
+    @sparks = []
     
-    before do
-      @jawns = []
-      @ideas = []
-      @sparks = []
-      
-      20.times do
-        if [true, false].sample
-          idea = FactoryGirl.create(:idea)
-          @jawns << idea
-          @ideas << idea
-        else
-          spark = FactoryGirl.create(:spark)
-          @jawns << spark
-          @sparks << spark
-        end
+    20.times do
+      if [true, false].sample
+        idea = FactoryGirl.create(:idea)
+        @jawns << idea
+        @ideas << idea
+      else
+        spark = FactoryGirl.create(:spark)
+        @jawns << spark
+        @sparks << spark
       end
-      
-      @jawns.reverse!
-      @ideas.reverse!
-      @sparks.reverse!
     end
+    
+    @jawns.reverse!
+    @ideas.reverse!
+    @sparks.reverse!
+  end
+  
+  describe "GET 'index'" do
     
     it "is successful" do
       get :index, :format => 'json', :token => @auth_token
@@ -133,6 +133,34 @@ describe V1::JawnsController do
         end
       end
       
+    end
+    
+  end
+  
+  describe "GET 'count" do
+    
+    it "should have the correct sparks count" do
+      get :count, :format => 'json', :token => @auth_token
+      output = JSON.parse(response.body)
+
+      output.should be_a_kind_of(Hash)
+      output["sparks_count"].should == @sparks.count
+    end
+    
+    it "should have the correct ideas count" do
+      get :count, :format => 'json', :token => @auth_token
+      output = JSON.parse(response.body)
+
+      output.should be_a_kind_of(Hash)
+      output["ideas_count"].should == @ideas.count
+    end
+    
+    it "should have the correct jawns count" do
+      get :count, :format => 'json', :token => @auth_token
+      output = JSON.parse(response.body)
+
+      output.should be_a_kind_of(Hash)
+      output["jawns_count"].should == @jawns.count
     end
     
   end
