@@ -4,7 +4,7 @@ describe V1::TagsController do
   
   describe "GET 'index'" do
     
-    before(:each) do
+    before do
       @tags = []
       
       5.times do
@@ -33,7 +33,7 @@ describe V1::TagsController do
   
   describe "GET 'show'" do
     
-    before(:each) do
+    before do
       @tag = FactoryGirl.create(:tag)
     end
     

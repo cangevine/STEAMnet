@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130712013138) do
+ActiveRecord::Schema.define(version: 20130719224155) do
 
   create_table "authentications", force: true do |t|
     t.integer  "user_id"
@@ -51,12 +51,16 @@ ActiveRecord::Schema.define(version: 20130712013138) do
   end
 
   create_table "sparks", force: true do |t|
-    t.string   "spark_type",   limit: 1
-    t.string   "content_type", limit: 1
+    t.string   "spark_type",        limit: 1
+    t.string   "content_type",      limit: 1
     t.text     "content"
     t.string   "content_hash"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.string   "file_file_name"
+    t.string   "file_content_type"
+    t.integer  "file_file_size"
+    t.datetime "file_updated_at"
   end
 
   create_table "sparks_users", id: false, force: true do |t|

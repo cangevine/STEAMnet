@@ -4,7 +4,7 @@ describe V1::IdeasController do
   
   describe "GET 'index'" do
     
-    before(:each) do
+    before do
       @ideas = []
       
       20.times do
@@ -47,7 +47,7 @@ describe V1::IdeasController do
   
   describe "GET 'show'" do
     
-    before(:each) do
+    before do
       @idea = FactoryGirl.create(:idea)
     end
     
@@ -68,7 +68,7 @@ describe V1::IdeasController do
   
   describe "POST 'create'" do
     
-    before(:each) do
+    before do
       @s1 = FactoryGirl.create(:spark)
       @s2 = FactoryGirl.create(:spark)
       
@@ -182,7 +182,7 @@ describe V1::IdeasController do
   
   describe "DELETE 'destroy'" do
     
-    before(:each) do
+    before do
       @s1 = FactoryGirl.create(:spark)
       @s2 = FactoryGirl.create(:spark)
       

@@ -24,6 +24,7 @@ end
 group :production do
 	gem 'pg'
   gem 'rails_12factor'
+  # gem 'RMagick'
 end
 
 gem 'omniauth'
@@ -34,8 +35,5 @@ gem 'omniauth-github'
 gem 'jbuilder'
 gem 'unicorn'
 
-# Deploy with Capistrano
-# gem 'capistrano'
-
-# To use debugger
-# gem 'ruby-debug'
+gem 'paperclip'
+gem 'aws-sdk'

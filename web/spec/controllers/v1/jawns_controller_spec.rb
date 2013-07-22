@@ -4,7 +4,7 @@ describe V1::JawnsController do
   
   describe "GET 'index'" do
     
-    before(:each) do
+    before do
       @jawns = []
       @ideas = []
       @sparks = []

@@ -2,14 +2,14 @@ require 'spec_helper'
 
 describe V1::CommentsController do
   
-  before(:each) do
+  before do
     @spark = FactoryGirl.create(:spark)
     @idea = FactoryGirl.create(:idea)
   end
   
   describe "GET 'index'" do
     
-    before(:each) do
+    before do
       @spark_comments = []
       @idea_comments = []
       
@@ -75,7 +75,7 @@ describe V1::CommentsController do
   
   describe "GET 'show'" do
     
-    before(:each) do
+    before do
       @spark_comment = FactoryGirl.create(:comment)
       @spark_comment.user = @test_user
       @spark_comment.commentable = @spark
@@ -127,7 +127,7 @@ describe V1::CommentsController do
   
   describe "POST 'create'" do
     
-    before(:each) do
+    before do
       @attr = {
         :comment_text => "This is a comment!"
       }
@@ -207,7 +207,7 @@ describe V1::CommentsController do
   
   describe "DELETE 'destroy'" do
     
-    before(:each) do
+    before do
       @comment = FactoryGirl.create(:comment)
       @comment.user = @test_user
       @comment.save
@@ -215,7 +215,7 @@ describe V1::CommentsController do
     
     describe "on a Spark" do
       
-      before(:each) do
+      before do
         @comment.commentable = @spark
         @comment.save
       end
@@ -237,7 +237,7 @@ describe V1::CommentsController do
       
       describe "with the wrong user" do
         
-        before(:each) do
+        before do
           @wrong_user = FactoryGirl.create(:user)
         end
         
@@ -258,7 +258,7 @@ describe V1::CommentsController do
     
     describe "on an Idea" do
       
-      before(:each) do
+      before do
         @comment.commentable = @idea
         @comment.save
       end
@@ -280,7 +280,7 @@ describe V1::CommentsController do
       
       describe "with the wrong user" do
         
-        before(:each) do
+        before do
           @wrong_user = FactoryGirl.create(:user)
         end
         

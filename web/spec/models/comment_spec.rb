@@ -15,7 +15,7 @@ require 'spec_helper'
 
 describe Comment do
   
-  before(:each) do
+  before do
     @attr = {
       :comment_text => "This is a comment"
     }
@@ -37,7 +37,7 @@ describe Comment do
   
   describe "user association" do
     
-    before(:each) do
+    before do
       @comment = Comment.create(@attr)
       
       @user = FactoryGirl.create(:user)
@@ -62,7 +62,7 @@ describe Comment do
   
   describe "commentable association" do
     
-    before(:each) do
+    before do
       @comment = Comment.create(@attr)
       
       @idea = FactoryGirl.create(:idea)
