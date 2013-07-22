@@ -41,6 +41,12 @@
 		50CF80181794EF71003262F1 /* SNLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CF80161794EF71003262F1 /* SNLoginViewController.m */; };
 		50CF801B1795BC2D003262F1 /* STEAMnet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 50CF80191795BC2D003262F1 /* STEAMnet.xcdatamodeld */; };
 		50CF801C1795BC2D003262F1 /* STEAMnet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 50CF80191795BC2D003262F1 /* STEAMnet.xcdatamodeld */; };
+		50E9599617989C3C00CB8C5B /* SNAPIHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E9599517989C3C00CB8C5B /* SNAPIHelper.m */; };
+		50E9599717989C3C00CB8C5B /* SNAPIHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E9599517989C3C00CB8C5B /* SNAPIHelper.m */; };
+		50E9599A1798A75B00CB8C5B /* NSDate+RailsDates.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E959991798A75B00CB8C5B /* NSDate+RailsDates.m */; };
+		50E9599B1798A75B00CB8C5B /* NSDate+RailsDates.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E959991798A75B00CB8C5B /* NSDate+RailsDates.m */; };
+		50E9599E1798BA8300CB8C5B /* Jawn.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E9599D1798BA8300CB8C5B /* Jawn.m */; };
+		50E9599F1798BA8300CB8C5B /* Jawn.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E9599D1798BA8300CB8C5B /* Jawn.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +97,12 @@
 		50CF80151794EF71003262F1 /* SNLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SNLoginViewController.h; path = ../SNLoginViewController.h; sourceTree = "<group>"; };
 		50CF80161794EF71003262F1 /* SNLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SNLoginViewController.m; path = ../SNLoginViewController.m; sourceTree = "<group>"; };
 		50CF801A1795BC2D003262F1 /* STEAMnet.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = STEAMnet.xcdatamodel; sourceTree = "<group>"; };
+		50E9599417989C3C00CB8C5B /* SNAPIHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNAPIHelper.h; sourceTree = "<group>"; };
+		50E9599517989C3C00CB8C5B /* SNAPIHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNAPIHelper.m; sourceTree = "<group>"; };
+		50E959981798A75B00CB8C5B /* NSDate+RailsDates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+RailsDates.h"; sourceTree = "<group>"; };
+		50E959991798A75B00CB8C5B /* NSDate+RailsDates.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+RailsDates.m"; sourceTree = "<group>"; };
+		50E9599C1798BA8300CB8C5B /* Jawn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Jawn.h; sourceTree = "<group>"; };
+		50E9599D1798BA8300CB8C5B /* Jawn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Jawn.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +169,8 @@
 				50CF800D1794EB10003262F1 /* SNSparkCell.h */,
 				50CF800E1794EB10003262F1 /* SNSparkCell.m */,
 				50CF80191795BC2D003262F1 /* STEAMnet.xcdatamodeld */,
+				50E9599C1798BA8300CB8C5B /* Jawn.h */,
+				50E9599D1798BA8300CB8C5B /* Jawn.m */,
 				500BEB321795F77900445498 /* Spark.h */,
 				500BEB331795F77900445498 /* Spark.m */,
 				500BEB2E1795F77900445498 /* Idea.h */,
@@ -174,6 +188,10 @@
 				50ACBC881794C42D00369378 /* Main.storyboard */,
 				50CF80091794C915003262F1 /* SNJawnsViewController.h */,
 				50CF800A1794C915003262F1 /* SNJawnsViewController.m */,
+				50E959981798A75B00CB8C5B /* NSDate+RailsDates.h */,
+				50E959991798A75B00CB8C5B /* NSDate+RailsDates.m */,
+				50E9599417989C3C00CB8C5B /* SNAPIHelper.h */,
+				50E9599517989C3C00CB8C5B /* SNAPIHelper.m */,
 				50ACBC8E1794C42D00369378 /* Images.xcassets */,
 				50ACBC7D1794C42D00369378 /* Supporting Files */,
 			);
@@ -311,10 +329,13 @@
 				50ACBC831794C42D00369378 /* main.m in Sources */,
 				50CF801B1795BC2D003262F1 /* STEAMnet.xcdatamodeld in Sources */,
 				500BEB341795F77900445498 /* Spark.m in Sources */,
+				50E9599A1798A75B00CB8C5B /* NSDate+RailsDates.m in Sources */,
+				50E9599617989C3C00CB8C5B /* SNAPIHelper.m in Sources */,
 				50CF80171794EF71003262F1 /* SNLoginViewController.m in Sources */,
 				500BEB2C1795F77900445498 /* Tag.m in Sources */,
 				500BEB301795F77900445498 /* Idea.m in Sources */,
 				50CF80131794EB9D003262F1 /* SNIdeaCell.m in Sources */,
+				50E9599E1798BA8300CB8C5B /* Jawn.m in Sources */,
 				50CF800B1794C915003262F1 /* SNJawnsViewController.m in Sources */,
 				50CF800F1794EB10003262F1 /* SNSparkCell.m in Sources */,
 				500BEB281795F77900445498 /* Comment.m in Sources */,
@@ -331,8 +352,11 @@
 				500BEB2D1795F77900445498 /* Tag.m in Sources */,
 				50CF80101794EB10003262F1 /* SNSparkCell.m in Sources */,
 				500BEB251795F77900445498 /* User.m in Sources */,
+				50E9599F1798BA8300CB8C5B /* Jawn.m in Sources */,
 				50CF80181794EF71003262F1 /* SNLoginViewController.m in Sources */,
 				50CF801C1795BC2D003262F1 /* STEAMnet.xcdatamodeld in Sources */,
+				50E9599B1798A75B00CB8C5B /* NSDate+RailsDates.m in Sources */,
+				50E9599717989C3C00CB8C5B /* SNAPIHelper.m in Sources */,
 				50ACBCA21794C42D00369378 /* STEAMnetTests.m in Sources */,
 				50CF800C1794C915003262F1 /* SNJawnsViewController.m in Sources */,
 				50CF80141794EB9D003262F1 /* SNIdeaCell.m in Sources */,

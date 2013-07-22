@@ -5,16 +5,33 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/ContentTypeChooserHeader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Inspiration - Choose type:"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+    <LinearLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@drawable/sidebar_header">
+        
+        <ImageView 
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/actionbar_btn"
+            />
+        
+        <TextView 
+            android:id="@+id/ContentTypeChooserHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Idea Bucket:"
+            android:textSize="20dp"
+            />
+        
+    </LinearLayout>
 
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:padding="16dp" >
 
         <TableRow
             android:id="@+id/tableRow1"
@@ -24,7 +41,7 @@
             <Button
                 android:id="@+id/picture_button"
                 android:layout_width="0dp"
-                android:layout_height="70dp"
+                android:layout_height="80dp"
                 android:background="@drawable/btn_green_picture"
                 android:layout_weight="1"
                 android:tag="openContentEntry"
@@ -33,7 +50,7 @@
             <Button
                 android:id="@+id/video_button"
                 android:layout_width="0dp"
-                android:layout_height="70dp"
+                android:layout_height="80dp"
                 android:background="@drawable/btn_green_video"
                 android:layout_weight="1"
                 android:tag="openContentEntry"
@@ -48,7 +65,7 @@
             <Button
                 android:id="@+id/text_button"
                 android:layout_width="0dp"
-                android:layout_height="70dp"
+                android:layout_height="80dp"
                 android:background="@drawable/btn_green_text"
                 android:layout_weight="1"
                 android:tag="openContentEntry"
@@ -57,7 +74,7 @@
             <Button
                 android:id="@+id/code_button"
                 android:layout_width="0dp"
-                android:layout_height="70dp"
+                android:layout_height="80dp"
                 android:background="@drawable/btn_green_code"
                 android:layout_weight="1"
                 android:tag="openContentEntry"
@@ -72,7 +89,7 @@
             <Button
                 android:id="@+id/audio_button"
                 android:layout_width="0dp"
-               	android:layout_height="70dp"
+               	android:layout_height="80dp"
                 android:background="@drawable/btn_green_audio"
                 android:layout_weight="1"
                 android:tag="openContentEntry"
@@ -81,7 +98,7 @@
             <Button
                 android:id="@+id/link_button"
                 android:layout_width="0dp"
-                android:layout_height="70dp"
+                android:layout_height="80dp"
                 android:background="@drawable/btn_green_link"
                 android:layout_weight="1"
                 android:tag="openContentEntry"

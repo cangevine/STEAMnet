@@ -9,6 +9,7 @@ import org.friendscentral.steamnet.BaseClasses.Spark;
 
 import APIHandlers.PostComment;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -51,15 +52,18 @@ public abstract class DetailFiller {
 		
 		if(sparkType.equals("I")){
 			sparkType = "Inspiration";
+			((SparkDetailActivity) context).findViewById(R.id.complete_spark_data).setBackgroundResource(R.drawable.spark_inspiration_bg);
 		} else if(sparkType.equals("P")){
 			sparkType = "Problem";
+			((SparkDetailActivity) context).findViewById(R.id.complete_spark_data).setBackgroundResource(R.drawable.spark_problem_bg);
 		} else if(sparkType.equals("W")){
 			sparkType = "What If";
+			((SparkDetailActivity) context).findViewById(R.id.complete_spark_data).setBackgroundResource(R.drawable.spark_what_if_bg);
 		}
 		
 		fillSparkTypes();
 		//fillTags();
-		fillComments();
+		//fillComments();
 	}
 	
 	public void fillSparkTypes() {
@@ -84,10 +88,10 @@ public abstract class DetailFiller {
 		sparkTags.setText(tagString);
 	}*/
 	
-	public void fillComments() {
+	/*public void fillComments() {
 		if (comments.length == 0) {
-			TextView header = (TextView) ((SparkDetailActivity) context).findViewById(R.id.CommentsHeader);
-			header.setText("No comments on this Spark. Be the first!");
+			//TextView header = (TextView) ((SparkDetailActivity) context).findViewById(R.id.CommentsHeader);
+			//header.setText("No comments on this Spark. Be the first!");
 		} else {
 			ListView commentSection = (ListView) ((SparkDetailActivity) context).findViewById(R.id.CommentList);
 			
@@ -95,7 +99,7 @@ public abstract class DetailFiller {
 			CommentAdapter commentAdapter = new CommentAdapter(((SparkDetailActivity) context), comments);
 			commentSection.setAdapter(commentAdapter);
 		}
-	}
+	}*/
 	
 	public void submitComment(View v) {
 		EditText editText = (EditText) ((SparkDetailActivity) context).findViewById(R.id.CommentEditText);

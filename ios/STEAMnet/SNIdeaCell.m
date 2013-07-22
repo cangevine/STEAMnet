@@ -8,15 +8,38 @@
 
 #import "SNIdeaCell.h"
 
+#import "Idea.h"
+
+@interface SNIdeaCell ()
+
+@property (nonatomic, strong) UILabel *info;
+
+@end
+
 @implementation SNIdeaCell
+
+@synthesize idea;
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor orangeColor];
+        self.info = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, 100, 100)];
+        [self addSubview:self.info];
     }
     return self;
+}
+
+- (void)setIdea:(Idea *)anIdea
+{
+    idea = anIdea;
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"MMMM d, YYYY"];
+    
+    self.info.text = [dateFormat stringFromDate:idea.createdDate];
+    self.info.text = [NSString stringWithFormat:@"%@", idea.remoteId];
 }
 
 /*

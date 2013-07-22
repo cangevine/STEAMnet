@@ -46,7 +46,6 @@ public class VideoFiller extends DetailFiller {
 
 	@Override
 	void fillData() {
-		content = "http://www.youtube.com/watch?v=2hrrAfHtfjA";
 		final String videoId = parseYoutubeUrl(content);
 		if (videoId != null) {
 			new LoadDataFromId(videoId);

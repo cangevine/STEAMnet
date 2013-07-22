@@ -4,16 +4,30 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Create a new spark!"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+    <LinearLayout 
+	   	android:layout_width="fill_parent"
+		android:layout_height="40dp"
+		android:orientation="horizontal"
+		android:gravity="center_vertical"
+		android:background="@drawable/sidebar_header">
+			        
+		<ImageView 
+		    android:layout_width="20dp"
+		    android:layout_height="20dp"
+		    android:src="@drawable/actionbar_btn" />
+			        
+		<TextView 
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Create a new Spark"
+			android:textSize="20dp" />
+        
+   	</LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="fill_parent"
+        android:gravity="center_vertical" >
 
         <LinearLayout
             android:layout_width="0dp"
@@ -29,7 +43,7 @@
                 android:layout_gravity="center_horizontal"
                 android:background="#00000000"
                 android:onClick="updateWizard"
-                android:src="@drawable/inspiration_button_source"
+                android:src="@drawable/btn_inspiration"
                 android:tag="openContentTypeChooser" />
 
             <TextView
@@ -56,7 +70,7 @@
                 android:layout_gravity="center_horizontal"
                 android:background="#00000000"
                 android:onClick="updateWizard"
-                android:src="@drawable/what_if_button_source"
+                android:src="@drawable/btn_what_if"
                 android:tag="openContentTypeChooser" />
 
             <TextView
@@ -83,7 +97,7 @@
                 android:background="#00000000"
                 android:layout_gravity="center_horizontal"
                 android:onClick="updateWizard"
-                android:src="@drawable/problem_button_source"
+                android:src="@drawable/btn_problem"
                 android:tag="openContentTypeChooser" />
 
             <TextView

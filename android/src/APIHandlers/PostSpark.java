@@ -298,7 +298,7 @@ public class PostSpark {
 	    	case 'L':
 	    		Log.v("PostSpark", "PostMultimedia called - Spark is a Link");
 	    		File linkSampleDir = Environment.getExternalStorageDirectory();
-		    	File linkFile = File.createTempFile("temp_link_favicon", ".jpeg", linkSampleDir);
+		    	File linkFile = File.createTempFile("temp_link_screenshot", ".jpeg", linkSampleDir);
 		    	FileOutputStream linkStream = new FileOutputStream(linkFile);
 		    	Bitmap linkThumbnail = spark.getBitmap();
 		    	linkThumbnail.compress(Bitmap.CompressFormat.JPEG, 50, linkStream);
@@ -314,7 +314,7 @@ public class PostSpark {
 		        fileBody = new FileBody(videoFile, "image/jpeg");
 	    		break;
 	    	}
-	    	multipartEntity.addPart("spark[file][data]", fileBody);
+	    	multipartEntity.addPart("spark[file]", fileBody);
 	        StringBody sparkTypeBody = new StringBody(String.valueOf(spark_type));
 	        StringBody contentTypeBody = new StringBody(String.valueOf(content_type));
 	        StringBody contentBody = new StringBody(content);

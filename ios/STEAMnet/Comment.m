@@ -8,15 +8,15 @@
 
 #import "Comment.h"
 #import "User.h"
-
+#import "Idea.h"
+#import "Spark.h"
 
 @implementation Comment
 
 @dynamic text;
 @dynamic remoteId;
 @dynamic createdDate;
-@dynamic idea;
-@dynamic spark;
+@dynamic jawn;
 @dynamic user;
 
 @end

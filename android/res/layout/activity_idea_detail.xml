@@ -9,46 +9,102 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:orientation="vertical" >
-
+        
         <LinearLayout
             android:id="@+id/Focus_section"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1" >
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/idea_bg"
+            android:padding="10px" >
 
-            <TextView
-                android:id="@+id/IdeaTitleTextView"
+            <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"
-                android:padding="10dp"
-                android:text="--IDEA TITLE--"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-            <TextView
-                android:id="@+id/TimestampTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:padding="10dp"
-                android:text="--Date Created--" />
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp"
+                android:orientation="vertical" >
 
-            <TextView
-                android:id="@+id/CreatorTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="10dp"
-                android:text="--Creator User--" />
+                <TextView
+                    android:id="@+id/IdeaTitleTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="--IDEA TITLE--"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textSize="25dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:padding="8dp"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:id="@+id/user_tag"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="horizontal"
+                    android:background="@drawable/user_tag_bg"
+                    android:padding="4dp"
+                    android:gravity="center_vertical">
+                    
+                    <ImageView
+                        android:id="@+id/idea_user_icon"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/user_icon_bg"
+                        android:padding="8dp"
+                        />
+                    
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:orientation="vertical">
+                        
+                        <TextView
+                            android:id="@+id/idea_user_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="5dp"
+                            android:paddingLeft="2dp"
+                            android:paddingRight="2dp"
+                            android:paddingTop="5dp"
+                            android:text="Username"
+                            android:textSize="20sp"
+                            android:textStyle="italic" />
+                        
+		                                        
+		                <TextView
+		                    android:id="@+id/TimestampTextView"
+		                    android:layout_width="wrap_content"
+		                    android:layout_height="wrap_content"
+		                    android:paddingBottom="5dp"
+                            android:paddingLeft="2dp"
+                            android:paddingRight="2dp"
+                            android:paddingTop="5dp"
+		                    android:text="Date Created"
+		                 	android:textSize="15sp" />
+                        
+                    </LinearLayout>
+                    
+                </LinearLayout>
+
+            </LinearLayout>
+
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/DescAndTags"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" >
+            android:layout_height="wrap_content"
+            android:padding="10px" >
 
             <TextView
                 android:id="@+id/IdeaDescription"
@@ -69,8 +125,7 @@
         <include
             android:id="@+id/IndexGridIdeaDetail"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_height="fill_parent"
             layout="@layout/index_grid" />
 
     </LinearLayout>
