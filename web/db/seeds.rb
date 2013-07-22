@@ -20,9 +20,14 @@ end
 content_types = %w[L C T P A V]
 spark_types = %w[W I P]
 
-pictures = %w[http://1.bp.blogspot.com/_mLv-KWFqzEU/TOoJBVb7NJI/AAAAAAAAABk/cj44CcZq6v8/s1600/sparks%2525205.jpg http://upload.wikimedia.org/wikipedia/commons/4/41/Space_Shuttle_Columbia_launching.jpg http://images2.fanpop.com/images/photos/5800000/happy-kitten-kittens-5890512-1600-1200.jpg]
-videos = %w[http://www.youtube.com/watch?v=j5C6X9vOEkU http://www.youtube.com/watch?v=1VuMdLm0ccU http://www.youtube.com/watch?v=oHg5SJYRHA0]
-audios = %w[http://soundcloud.com/se-beat/se-beat-straight-to-straight http://soundcloud.com/martin_lind/texture-vi http://soundcloud.com/martin_lind/suburbia-i-3]
+pictures = %w[image1.jpg image2.jpg image3.jpg]
+videos = %w[http://www.youtube.com/watch?v=FSi2fJALDyQ http://www.youtube.com/watch?v=DF8nHmHUCAs http://www.youtube.com/watch?v=iCE1W-aGsWU]
+video_thumbs = %w[video1.jpeg video2.jpeg video3.jpeg]
+audios = %w[audio1.mp4 audio2.m4a audio3.m4a]
+links = %w[http://developer.android.com/reference/java/io/FileOutputStream.html http://www.reddit.com http://rapgenius.com/Kanye-west-hold-my-liquor-lyrics]
+link_thumbs = %w[link1.jpeg link2.jpeg link3.jpeg]
+code = %w[https://gist.github.com/aphillips915/6045025 https://gist.github.com/aphillips915/6051260 https://gist.github.com/aphillips915/6051262]
+code_thumbs = %w[code1.jpeg code1.jpeg code3.jpeg]
 
 sparks = []
 
@@ -32,17 +37,24 @@ content_types.each do |c|
     
     case c
     when "L"
-      spark.content = Faker::Internet.url
+      spark.content = links.pop
+      spark.file = File.new("db/seed_files/#{link_thumbs.pop}", "r")
     when "C"
-      spark.content = "User.create!(:name => #{Faker::Internet.user_name})"
+      spark.content = code.pop
+      spark.file = File.new("db/seed_files/#{code_thumbs.pop}", "r")
     when "T"
       spark.content = Faker::Lorem.sentences.join(" ")
     when "P"
-      spark.content = pictures.pop
+      filename = pictures.pop
+      spark.content = filename
+      spark.file = File.new("db/seed_files/#{filename}", "r")
     when "A"
-      spark.content = audios.pop
+      filename = audios.pop
+      spark.content = filename
+      spark.file = File.new("db/seed_files/#{filename}", "r")
     when "V"
       spark.content = videos.pop
+      spark.file = File.new("db/seed_files/#{video_thumbs.pop}", "r")
     end
     
     spark.save
