@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol SNLoginViewControllerDelegate <NSObject>
+
+- (void)didLogIn:(BOOL)loggedIn;
+
+@end
+
 @interface SNLoginViewController : UIViewController <UIWebViewDelegate>
+
+@property (nonatomic, strong) id<SNLoginViewControllerDelegate> delegate;
 
 @end

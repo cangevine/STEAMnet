@@ -16,6 +16,8 @@
 
 @implementation SNLoginViewController
 
+@synthesize delegate;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -43,16 +45,16 @@
 {
     NSString *url = [[[webView request] URL] absoluteString];
     
-    if (([url rangeOfString:@"steamnet.herokuapp.com/auth"].location != NSNotFound) && ([url rangeOfString:@"callback"].location != NSNotFound)) {
+    if (([url hasPrefix:@"http://steamnet.herokuapp.com/auth"]) && ([url rangeOfString:@"callback"].location != NSNotFound)) {
         NSString *token = [webView stringByEvaluatingJavaScriptFromString:@"document.getElementsByTagName('p')[0].innerHTML"];
         NSLog(@"TOKEN: %@", token);
         
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Your token" message:token delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil, nil];
-        [alert show];
-        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+        [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
         
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-//        [defaults setValue:token forKey:@"token"];
+        [defaults setValue:token forKey:@"token"];
+        
+        [self.delegate didLogIn:YES];
     }
 }
 

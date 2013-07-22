@@ -1,37 +1,33 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3383" systemVersion="12E55" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Comment" representedClassName="Comment" syncable="YES">
-        <attribute name="createdDate" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="remoteId" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="text" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
-        <relationship name="idea" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Idea" inverseName="comments" inverseEntity="Idea" syncable="YES"/>
-        <relationship name="spark" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Spark" inverseName="comments" inverseEntity="Spark" syncable="YES"/>
+        <attribute name="createdDate" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>
+        <attribute name="remoteId" attributeType="Integer 16" defaultValueString="0" indexed="YES" syncable="YES"/>
+        <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="jawn" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Jawn" inverseName="comments" inverseEntity="Jawn" syncable="YES"/>
         <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="comments" inverseEntity="User" syncable="YES"/>
     </entity>
-    <entity name="Idea" representedClassName="Idea" syncable="YES">
-        <attribute name="createdDate" optional="YES" attributeType="Date" syncable="YES"/>
+    <entity name="Idea" representedClassName="Idea" parentEntity="Jawn" syncable="YES">
         <attribute name="descriptionText" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="remoteId" attributeType="Integer 16" defaultValueString="0" indexed="YES" syncable="YES"/>
-        <relationship name="comments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Comment" inverseName="idea" inverseEntity="Comment" syncable="YES"/>
         <relationship name="sparks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Spark" inverseName="ideas" inverseEntity="Spark" syncable="YES"/>
-        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="ideas" inverseEntity="Tag" syncable="YES"/>
         <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="ideas" inverseEntity="User" syncable="YES"/>
     </entity>
-    <entity name="Spark" representedClassName="Spark" syncable="YES">
-        <attribute name="content" attributeType="String" syncable="YES"/>
-        <attribute name="contentType" attributeType="String" syncable="YES"/>
+    <entity name="Jawn" representedClassName="Jawn" isAbstract="YES" syncable="YES">
         <attribute name="createdDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="remoteId" attributeType="Integer 16" defaultValueString="0" indexed="YES" syncable="YES"/>
+        <relationship name="comments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Comment" inverseName="jawn" inverseEntity="Comment" syncable="YES"/>
+        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="jawns" inverseEntity="Tag" syncable="YES"/>
+    </entity>
+    <entity name="Spark" representedClassName="Spark" parentEntity="Jawn" syncable="YES">
+        <attribute name="content" attributeType="String" syncable="YES"/>
+        <attribute name="contentType" attributeType="String" syncable="YES"/>
         <attribute name="sparkType" attributeType="String" syncable="YES"/>
-        <relationship name="comments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Comment" inverseName="spark" inverseEntity="Comment" syncable="YES"/>
         <relationship name="ideas" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Idea" inverseName="sparks" inverseEntity="Idea" syncable="YES"/>
-        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="sparks" inverseEntity="Tag" syncable="YES"/>
         <relationship name="users" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="sparks" inverseEntity="User" syncable="YES"/>
     </entity>
     <entity name="Tag" representedClassName="Tag" syncable="YES">
         <attribute name="name" attributeType="String" indexed="YES" syncable="YES"/>
-        <relationship name="ideas" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Idea" inverseName="tags" inverseEntity="Idea" syncable="YES"/>
-        <relationship name="sparks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Spark" inverseName="tags" inverseEntity="Spark" syncable="YES"/>
+        <relationship name="jawns" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Jawn" inverseName="tags" inverseEntity="Jawn" syncable="YES"/>
     </entity>
     <entity name="User" representedClassName="User" syncable="YES">
         <attribute name="createdDate" attributeType="Date" syncable="YES"/>
@@ -43,10 +39,11 @@
         <relationship name="sparks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Spark" inverseName="users" inverseEntity="Spark" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Comment" positionX="-1521" positionY="278" width="128" height="133"/>
-        <element name="Idea" positionX="-1181" positionY="315" width="128" height="148"/>
-        <element name="Spark" positionX="-1368" positionY="593" width="126" height="178"/>
-        <element name="Tag" positionX="-990" positionY="515" width="128" height="88"/>
-        <element name="User" positionX="-1647" positionY="468" width="128" height="148"/>
+        <element name="Comment" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Idea" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Jawn" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Spark" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Tag" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="User" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

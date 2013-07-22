@@ -12,17 +12,12 @@
 #import "Tag.h"
 #import "User.h"
 
-
 @implementation Spark
 
 @dynamic content;
 @dynamic contentType;
-@dynamic createdDate;
-@dynamic remoteId;
 @dynamic sparkType;
-@dynamic comments;
 @dynamic ideas;
-@dynamic tags;
 @dynamic users;
 
 @end

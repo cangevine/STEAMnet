@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class Spark;
+
 @interface SNSparkCell : UICollectionViewCell
+
+@property (nonatomic, strong) Spark *spark;
 
 @end

@@ -12,7 +12,6 @@
 @implementation Tag
 
 @dynamic name;
-@dynamic ideas;
-@dynamic sparks;
+@dynamic jawns;
 
 @end
