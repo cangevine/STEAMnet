@@ -21,6 +21,9 @@
 @property (nonatomic, retain) NSString * fileURL;
 @property (nonatomic, retain) NSSet *ideas;
 @property (nonatomic, retain) NSSet *users;
+
+@property (nonatomic, retain) UIImage *cachedImage;
+
 @end
 
 @interface Spark (CoreDataGeneratedAccessors)

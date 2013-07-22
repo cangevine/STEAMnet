@@ -21,4 +21,6 @@
 @dynamic ideas;
 @dynamic users;
 
+@synthesize cachedImage;
+
 @end
