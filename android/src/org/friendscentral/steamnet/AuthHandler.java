@@ -3,7 +3,9 @@ package org.friendscentral.steamnet;
 import org.friendscentral.steamnet.Activities.AuthActivity;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -11,6 +13,7 @@ import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 
 public class AuthHandler {
+	ProgressDialog dialog;
 	AuthActivity ma;
 	LinearLayout mainForm;
 	WebView authForm;
@@ -101,7 +104,14 @@ public class AuthHandler {
 	        return true;
 	    }
 		
+		public void onPageStarted(WebView view, String url, Bitmap favicon) {
+			dialog = new ProgressDialog(ma);
+			dialog.setMessage("Communicating with authorization portal...");
+			dialog.show();
+		}
+		
 		public void onPageFinished(WebView view, String url) {
+			dialog.dismiss();
 			if (url.contains("callback?"))
 				checkIfLoggedIn(url);
 		}

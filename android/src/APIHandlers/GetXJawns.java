@@ -1,9 +1,12 @@
 package APIHandlers;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -14,20 +17,21 @@ import org.friendscentral.steamnet.BaseClasses.Comment;
 import org.friendscentral.steamnet.BaseClasses.Idea;
 import org.friendscentral.steamnet.BaseClasses.Jawn;
 import org.friendscentral.steamnet.BaseClasses.Spark;
-import org.friendscentral.steamnet.EventHandlers.SparkEventHandler;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.json.parsers.JSONParser;
-import com.squareup.okhttp.OkHttpClient;
-
-import android.R;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.GridView;
+
+import com.json.parsers.JSONParser;
+import com.squareup.okhttp.OkHttpClient;
 
 /**
  * @author SamBeckley
@@ -43,6 +47,7 @@ public class GetXJawns {
 	Context context;
 	Activity activity;
 	MainActivity mainActivity;
+	Jawn[] jawns;
 	
 	/** 
 	 * @param int X - returns the first X sparks (by createdAt)
@@ -96,16 +101,8 @@ public class GetXJawns {
         	Log.v("REPORT", "WE HAVE MOVED INTO THE POST EXECUTE PHASE, SIR!");
         	try {
         		Log.v("REPORT", "WE WILL BEGIN TO PARSE THE DATA, SIR!");
-				Jawn[] jawns = parseData(data);
-				Log.v("JAWNS", Integer.toString(jawns.length));
-				JawnAdapter a = new JawnAdapter(gridView.getContext(), jawns, 200);
-				Log.v("REPORT", "WE HAVE ACCESSED THE JAWNADAPTER AND ARE PROCEEDING AS PLANNED, SIR!");
-				indexGrid.setAdapter(a);
-				indexGrid.setJawns(jawns);
-				if (mainActivity != null) {
-					mainActivity.setSparkEventHandlers();
-					mainActivity.setScrollListener();
-				}
+				jawns = parseData(data);
+				new decodeMultimedia();
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -133,6 +130,7 @@ public class GetXJawns {
         	final String COMMENTS = "comments";
         	final String COMMENT_TEXT = "comment_text";
         	final String NAME = "name";
+        	final String FILE = "file";
         	
         	// Creating JSON Parser instance
         	JSONParser jParser = new JSONParser();
@@ -181,7 +179,17 @@ public class GetXJawns {
     	        	    String[] createdAts = new String[1];
     	        	    createdAts[0] = createdAt;
     	        	    
-	        	        jawnArrayList.add(new Spark(Integer.parseInt(id), sparkType.charAt(0), contentType.charAt(0), content, createdAts, createdAts[0], usersArray, "max", commentArray));
+    	        	    Spark newSpark = new Spark(Integer.parseInt(id), sparkType.charAt(0), contentType.charAt(0), content, createdAts, createdAts[0], usersArray, "max", commentArray);
+    	        	    if (contentType.charAt(0) != 'T') {
+    	        	    	if (j.has(FILE)) {
+    	        	    		if (j.getString(FILE) != null) {
+	    	        	    		String url = j.getString(FILE);
+	    	        	    		Log.v("!!!!!!URL!!!!!!!", url);
+	    	        	    		newSpark.setCloudLink(url);
+    	        	    		}
+    	        	    	}
+    	        	    }
+	        	        jawnArrayList.add(newSpark);
 	        	        
         	        } else if (j.getString(JAWN_TYPE).equals("idea")) {
         	        	
@@ -251,6 +259,56 @@ public class GetXJawns {
         	}
         	return null;
         }
+		
+		private class decodeMultimedia extends AsyncTask<String, Void, InputStream> {
+			Bitmap bitmap;
+			
+			public decodeMultimedia() {
+				this.execute();
+			}
+			
+			@Override
+			protected InputStream doInBackground(String... params) {
+				InputStream is = null;
+				for (int i = 0; i < jawns.length; i++) {
+					if (jawns[i].getType() == 'S') {
+						Spark spark = jawns[i].getSelfSpark();
+						char c = spark.getContentType();
+						if (c == 'P' || c == 'V' || c == 'L' || c == 'C') {
+							Log.v("decodeMultimedia", c+" Spark contains a picture. Decoding image");
+							if (spark.getCloudLink() != null) {
+								try {
+									String url = spark.getCloudLink();
+									Log.v("Cloud link:", url);
+									is = (InputStream) new URL(url).getContent();
+									bitmap = BitmapFactory.decodeStream(is);
+									spark.setBitmap(bitmap);
+								} catch (MalformedURLException e) {
+									e.printStackTrace();
+								} catch (IOException e) {
+									e.printStackTrace();
+								}
+							}
+						} else if (c == 'A') {
+							Log.v("decodeMultimedia", "Spark contains audio. Doing nothing and decoding on runtime");
+						}
+					}
+				}
+				return is;
+			}
+			
+			protected void onPostExecute(InputStream i) {
+				JawnAdapter a = new JawnAdapter(gridView.getContext(), jawns, 200);
+				Log.v("REPORT", "WE HAVE ACCESSED THE JAWNADAPTER AND ARE PROCEEDING AS PLANNED, SIR!");
+				indexGrid.setAdapter(a);
+				indexGrid.setJawns(jawns);
+				if (mainActivity != null) {
+					mainActivity.setSparkEventHandlers();
+					mainActivity.setScrollListener();
+				}	
+			}
+			
+		}
         
         String get(URL url) throws IOException {
           HttpURLConnection connection = client.open(url);
