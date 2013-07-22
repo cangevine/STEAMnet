@@ -16,6 +16,7 @@ Steamnet::Application.routes.draw do
       resources :tags, :only => [:index, :show]
       
       get "jawns" => "jawns#index"
+      get "jawns/count" => "jawns#count"
       
     end
     
@@ -24,7 +25,7 @@ Steamnet::Application.routes.draw do
 end
 
 #== Route Map
-# Generated on 13 Jul 2013 21:25
+# Generated on 22 Jul 2013 15:23
 #
 #              auth GET      /auth(.:format)                                 authentications#index
 #                   GET|POST /auth/:provider/callback(.:format)              authentications#create
@@ -52,3 +53,4 @@ end
 #           v1_tags GET      /api/v1/tags(.:format)                          v1/tags#index
 #            v1_tag GET      /api/v1/tags/:id(.:format)                      v1/tags#show
 #          v1_jawns GET      /api/v1/jawns(.:format)                         v1/jawns#index
+#    v1_jawns_count GET      /api/v1/jawns/count(.:format)                   v1/jawns#count
