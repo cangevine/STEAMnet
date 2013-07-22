@@ -9,7 +9,6 @@
         <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="comments" inverseEntity="User" syncable="YES"/>
     </entity>
     <entity name="Idea" representedClassName="Idea" parentEntity="Jawn" syncable="YES">
-        <attribute name="cacheUpdated" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>
         <attribute name="descriptionText" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="sparks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Spark" inverseName="ideas" inverseEntity="Spark" syncable="YES"/>
         <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="ideas" inverseEntity="User" syncable="YES"/>
@@ -22,7 +21,6 @@
         <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="jawns" inverseEntity="Tag" syncable="YES"/>
     </entity>
     <entity name="Spark" representedClassName="Spark" parentEntity="Jawn" syncable="YES">
-        <attribute name="cacheUpdated" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>
         <attribute name="content" attributeType="String" syncable="YES"/>
         <attribute name="contentType" attributeType="String" syncable="YES"/>
         <attribute name="fileURL" optional="YES" attributeType="String" syncable="YES"/>

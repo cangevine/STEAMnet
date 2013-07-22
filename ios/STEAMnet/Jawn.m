@@ -25,6 +25,7 @@
 @implementation Jawn
 
 @dynamic createdDate;
+@dynamic cacheUpdated;
 @dynamic remoteId;
 @dynamic tags;
 @dynamic comments;
@@ -82,6 +83,25 @@
         
         [context deleteObject:(Jawn *)result[0]];
     }
+}
+
++ (Jawn *)jawnWithRemoteId:(NSNumber *)remoteId
+{
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setFetchLimit:1];
+    
+    NSManagedObjectContext *context = [(SNAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
+    
+    NSEntityDescription *entity = [NSEntityDescription entityForName:[self entityName] inManagedObjectContext:context];
+    [request setEntity:entity];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"remoteId == %@", remoteId];
+    [request setPredicate:predicate];
+    
+    NSError *error;
+    NSArray *result = [context executeFetchRequest:request error:&error];
+    
+    return (Jawn *)result[0];
 }
 
 + (NSString *)entityName

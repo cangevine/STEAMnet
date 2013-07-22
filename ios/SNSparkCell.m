@@ -13,6 +13,7 @@
 @interface SNSparkCell ()
 
 @property (nonatomic, strong) UILabel *info;
+@property (nonatomic, strong) UIImageView *imageView;
 
 @end
 
@@ -27,6 +28,9 @@
         self.backgroundColor = [UIColor purpleColor];
         self.info = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, 100, 100)];
         [self addSubview:self.info];
+        
+        self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+        [self addSubview:self.imageView];
     }
     return self;
 }
@@ -35,11 +39,15 @@
 {
     spark = aSpark;
     
-    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:@"MMMM d, YYYY"];
-    
-    self.info.text = [dateFormat stringFromDate:spark.createdDate];
     self.info.text = [NSString stringWithFormat:@"%@", spark.remoteId];
+    
+    if (([spark.contentType  isEqual: @"P"]) || ([spark.contentType  isEqual: @"C"]) || ([spark.contentType  isEqual: @"V"]) || ([spark.contentType  isEqual: @"L"])) {
+        NSURL *url = [NSURL URLWithString:spark.fileURL];
+        NSData *data = [NSData dataWithContentsOfURL:url];
+        UIImage *img = [[UIImage alloc] initWithData:data];
+        self.imageView.image = img;
+    }
+    NSLog(@"file: %@", spark.fileURL);
 }
 
 /*

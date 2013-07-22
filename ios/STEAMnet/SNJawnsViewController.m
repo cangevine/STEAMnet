@@ -157,25 +157,46 @@
         if ([jawnDict[@"jawn_type"] isEqualToString:@"spark"]) {
             [sparksToDelete removeObject:jawnDict[@"id"]];
             
-            if (![Spark jawnExistsWithRemoteId:jawnDict[@"id"]]) {
+            Spark *spark;
+            
+            if ([Spark jawnExistsWithRemoteId:jawnDict[@"id"]]) {
+                spark = (Spark *)[Spark jawnWithRemoteId:jawnDict[@"id"]];
+            } else {
                 // Only create a new spark if it doesn't already exist
-                Spark *spark = [NSEntityDescription insertNewObjectForEntityForName:@"Spark" inManagedObjectContext:self.managedObjectContext];
+                spark = [NSEntityDescription insertNewObjectForEntityForName:@"Spark" inManagedObjectContext:self.managedObjectContext];
+                
                 spark.remoteId = jawnDict[@"id"];
-                spark.sparkType = jawnDict[@"spark_type"];
-                spark.contentType = jawnDict[@"content_type"];
-                spark.content = jawnDict[@"content"];
                 spark.createdDate = [NSDate dateWithISO8601String:jawnDict[@"created_at"]];
             }
+            
+            if (jawnDict[@"file"]) {
+                spark.fileURL = jawnDict[@"file"];
+            } else {
+                spark.fileURL = @"";
+            }
+            spark.sparkType = jawnDict[@"spark_type"];
+            spark.contentType = jawnDict[@"content_type"];
+            spark.content = jawnDict[@"content"];
+            
+            spark.cacheUpdated = [NSDate date];
         } else if ([jawnDict[@"jawn_type"] isEqualToString:@"idea"]) {
             [ideasToDelete removeObject:jawnDict[@"id"]];
             
-            if (![Idea jawnExistsWithRemoteId:jawnDict[@"id"]]) {
+            Idea *idea;
+            
+            if ([Idea jawnExistsWithRemoteId:jawnDict[@"id"]]) {
+                idea = (Idea *)[Idea jawnWithRemoteId:jawnDict[@"id"]];
+            } else {
                 // Only create a new idea if it doesn't already exist
-                Idea *idea = [NSEntityDescription insertNewObjectForEntityForName:@"Idea" inManagedObjectContext:self.managedObjectContext];
+                idea = [NSEntityDescription insertNewObjectForEntityForName:@"Idea" inManagedObjectContext:self.managedObjectContext];
+                
                 idea.remoteId = jawnDict[@"id"];
-                idea.descriptionText = jawnDict[@"description"];
                 idea.createdDate = [NSDate dateWithISO8601String:jawnDict[@"created_at"]];
             }
+            
+            idea.descriptionText = jawnDict[@"description"];
+            
+            idea.cacheUpdated = [NSDate date];
         }
     }
     

@@ -18,6 +18,7 @@
 @property (nonatomic, retain) NSString * content;
 @property (nonatomic, retain) NSString * contentType;
 @property (nonatomic, retain) NSString * sparkType;
+@property (nonatomic, retain) NSString * fileURL;
 @property (nonatomic, retain) NSSet *ideas;
 @property (nonatomic, retain) NSSet *users;
 @end

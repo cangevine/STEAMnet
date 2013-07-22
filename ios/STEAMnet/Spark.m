@@ -17,6 +17,7 @@
 @dynamic content;
 @dynamic contentType;
 @dynamic sparkType;
+@dynamic fileURL;
 @dynamic ideas;
 @dynamic users;
 

@@ -17,6 +17,7 @@
 @property (nonatomic, retain) NSNumber * remoteId;
 @property (nonatomic, retain) NSDate * createdDate;
 @property (nonatomic, retain) NSDate * updatedDate;
+@property (nonatomic, retain) NSDate *cacheUpdated;
 @property (nonatomic, retain) NSSet *comments;
 @property (nonatomic, retain) NSSet *ideas;
 @property (nonatomic, retain) NSSet *sparks;
