@@ -3,11 +3,13 @@ package org.friendscentral.steamnet.DetailViewFillers;
 import org.friendscentral.steamnet.R;
 import org.friendscentral.steamnet.BaseClasses.Spark;
 
+import android.app.ProgressDialog;
 import android.content.Context;
-import android.util.Log;
+import android.graphics.Bitmap;
 import android.webkit.WebSettings;
-import android.webkit.WebView;
 import android.webkit.WebSettings.PluginState;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 
 public class CodeFiller extends DetailFiller {
@@ -23,9 +25,6 @@ public class CodeFiller extends DetailFiller {
 
 	@Override
 	void fillData() {
-		// To be removed:
-		content = "https://gist.github.com/aphillips915/5987363";
-		
 		if (content.contains("gist.github.com")) {
 			String url;
 			if (content.contains(".js")) {
@@ -35,6 +34,7 @@ public class CodeFiller extends DetailFiller {
 			}
 			String embed = "<html><head>"+url+"</head></html>";
 			
+			gistHolder.setWebViewClient(new CustomWebClient()); 
 			WebSettings webViewSettings = gistHolder.getSettings();
 			webViewSettings.setJavaScriptCanOpenWindowsAutomatically(true);
 			webViewSettings.setJavaScriptEnabled(true);
@@ -43,6 +43,20 @@ public class CodeFiller extends DetailFiller {
 			webViewSettings.setPluginState(PluginState.ON);
 			
 			gistHolder.loadDataWithBaseURL("https://gist.github.com/", embed, "text/html", "utf-8", null);	
+		}
+	}
+	
+	private class CustomWebClient extends WebViewClient {
+		ProgressDialog dialog;
+		
+		public void onPageStarted(WebView view, String url, Bitmap favicon) {
+			dialog = new ProgressDialog(context);
+			dialog.setMessage("Loading Gist...");
+			dialog.show();
+		}
+		
+		public void onPageFinished(WebView view, String url) {
+			dialog.dismiss();
 		}
 	}
 

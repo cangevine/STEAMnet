@@ -13,6 +13,8 @@ import org.friendscentral.steamnet.BaseClasses.Spark;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -20,6 +22,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -44,19 +47,18 @@ public class LinkFiller extends DetailFiller {
 
 	@Override
 	void fillData() {
-		faviconView.setImageBitmap(spark.getBitmap());
+		new GetFavicon(content);
 		new getPageTitle(content);
 		loadIframe();
 		//getScreenshot();
 	}
 	
 	public void loadIframe() {
-		//String url = content;
-		// TODO Remove:
-		final String url = "http://www.google.com/";
+		final String url = content;
 		String webViewContent = "<html><body><center><iframe src='"+url+"'></iframe></center></body></html>";
 		Log.v("HTML String:", webViewContent);
 		
+		screenshotView.setWebViewClient(new CustomWebClient());
 		WebSettings webViewSettings = screenshotView.getSettings();
 		webViewSettings.setJavaScriptCanOpenWindowsAutomatically(true);
 		webViewSettings.setJavaScriptEnabled(true);
@@ -82,8 +84,7 @@ public class LinkFiller extends DetailFiller {
 		OkHttpClient client;
 		
 		public getPageTitle(String s) {
-			//url = s;
-			url = "http://www.google.com/";
+			url = s;
 			client = new OkHttpClient();
 			this.execute();
 		}
@@ -112,7 +113,7 @@ public class LinkFiller extends DetailFiller {
 			String title = s.substring(s.indexOf(begin) + begin.length(), s.indexOf(end));
 			Log.v("LinkFiller", title);
 			pageTitle.setText(title);
-			pageTitle.setTextSize(35f);
+			pageTitle.setTextSize(25f);
 			dialog.dismiss();
 		}
 		
@@ -139,5 +140,52 @@ public class LinkFiller extends DetailFiller {
 		}
 		
 	}
+	
+	private class GetFavicon extends AsyncTask<String, Void, InputStream> {
+		String url;
+		Drawable d;
+		
+		public GetFavicon(String u) {
+			Log.v("LoadImageFromWebOperations", "Constructor");
+			String prelink = "http://getfavicon.appspot.com/";
+			String url = prelink + u;
+			this.execute();
+		}
+		
+		@Override
+		protected InputStream doInBackground(String... arg0) {
+			Log.v("LoadImageFromWebOperations", "doInBackgroud");
+			try {
+		        InputStream is = (InputStream) new URL(url).getContent();
+		        d = Drawable.createFromStream(is, "src name");
+		        return is;
+		    } catch (Exception e) {
+		        Log.v("LoadImageFromWebOperations", "Exc="+e);
+		    }
+			return null;
+		}
+		
+		protected void onPostExecute(InputStream i) {
+			Log.v("LoadImageFromWebOperations", "onPostExecute");
+			
+			if (d != null) {
+				faviconView.setImageDrawable(d);
+			}
+		}
+	}
 
+	private class CustomWebClient extends WebViewClient {
+		ProgressDialog dialog;
+		
+		public void onPageStarted(WebView view, String url, Bitmap favicon) {
+			dialog = new ProgressDialog(context);
+			dialog.setMessage("Loading webpage...");
+			dialog.show();
+		}
+		
+		public void onPageFinished(WebView view, String url) {
+			dialog.dismiss();
+		}
+	}
+	
 }

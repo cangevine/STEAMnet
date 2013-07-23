@@ -1,5 +1,8 @@
 package org.friendscentral.steamnet;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import org.friendscentral.steamnet.BaseClasses.Comment;
 
 import android.content.Context;
@@ -44,14 +47,14 @@ public class CommentAdapter extends BaseAdapter {
 		String username = comments[position].getUsername();
 			
 		TextView user = new TextView(context);
-		user.setPadding(2, 5, 2, 5);
+		user.setPadding(2, 0, 2, 0);
 		user.setTextSize(20);
 		user.setTypeface(null, Typeface.ITALIC);
 
 		user.setText(username+" says...");
 			
 		TextView content = new TextView(context);
-		content.setPadding(2, 5, 2, 5);
+		content.setPadding(2, 0, 2, 0);
 		content.setTextSize(15);
 		content.setText(commentContent);
 			
@@ -88,6 +91,22 @@ public class CommentAdapter extends BaseAdapter {
 		}
 		newComments[comments.length] = c;
 		comments = newComments;
+	}
+	
+	public void removeComment(int position) {
+		ArrayList<Comment> cList = new ArrayList<Comment>(Arrays.asList(comments));
+		if (position < cList.size()) {
+			cList.remove(position);
+			Comment[] newComments = new Comment[cList.size()];
+			for (int i = 0; i < cList.size(); i++) {
+				newComments[i] = cList.get(i);
+			}
+			comments = newComments;
+		}
+	}
+	
+	public Comment[] getComments() {
+		return comments;
 	}
 
 }

@@ -120,6 +120,11 @@ public class AudioSubmitter extends SparkSubmitter {
 		EditText titleBox = (EditText) audioForm.findViewById(R.id.audio_form_title);
 		String content = titleBox.getText().toString();
 		
+		if (content.equals("")) {
+			Toast.makeText(mainActivity, "Please enter a title", Toast.LENGTH_LONG).show();
+			return null;
+		}
+		
 		EditText tagsForm = (EditText) entryForm.findViewById(R.id.tag_entry_form);
 		String tags = tagsForm.getText().toString();
 		

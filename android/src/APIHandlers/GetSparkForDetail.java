@@ -1,8 +1,6 @@
 package APIHandlers;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -10,22 +8,18 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-import org.friendscentral.steamnet.IndexGrid;
-import org.friendscentral.steamnet.JawnAdapter;
 import org.friendscentral.steamnet.Activities.SparkDetailActivity;
 import org.friendscentral.steamnet.BaseClasses.Comment;
-import org.friendscentral.steamnet.BaseClasses.Jawn;
 import org.friendscentral.steamnet.BaseClasses.Spark;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.GridView;
 
 import com.json.parsers.JSONParser;
 import com.squareup.okhttp.OkHttpClient;
@@ -36,6 +30,7 @@ import com.squareup.okhttp.OkHttpClient;
  */
 public class GetSparkForDetail {
 	int sparkId;
+	ProgressDialog dialog;
 	SparkDetailActivity sparkDetailActivity;
 	
 	/** 
@@ -43,21 +38,24 @@ public class GetSparkForDetail {
 	 */
 	
 	public GetSparkForDetail(int id, SparkDetailActivity sda) {
+		Log.v("GetSparkForDetail", "Created new instance");
 		sparkId = id;
 		sparkDetailActivity = sda;
-		Log.v("REPORT", "GET X SPARKS IS BEGGINING, SIR!");
-		OkHTTPTask task = new OkHTTPTask();
+		RetrieveSpark task = new RetrieveSpark();
+		dialog = new ProgressDialog(sparkDetailActivity);
+		dialog.setTitle("Loading Spark data");
+		dialog.show();
 		task.execute("http://steamnet.herokuapp.com/api/v1/sparks/"+sparkId+".json");
 		
 	}
 	
-	class OkHTTPTask extends AsyncTask<String, Void, String> {
+	class RetrieveSpark extends AsyncTask<String, Void, String> {
 		
 		String TAG = "RetreiveDataTask";
 		
 		OkHttpClient client;
 		
-		public OkHTTPTask(){
+		public RetrieveSpark(){
 			client = new OkHttpClient();
 		}
         
@@ -66,10 +64,8 @@ public class GetSparkForDetail {
 		private Exception exception;
         
         protected String doInBackground(String... urls) {
-        	Log.v("REPORT", "WE ARE EXECUTING THE REQUEST IN THE BACKGROUND, SIR!");
             try {
             	return get(new URL(urls[0]));
-            	
             } catch (Exception e) {
                 this.exception = e;
                 Log.e(TAG, "Exception: "+e);
@@ -78,11 +74,9 @@ public class GetSparkForDetail {
         }
 
         protected void onPostExecute(String data) {
-        	Log.v("REPORT", "WE HAVE MOVED INTO THE POST EXECUTE PHASE, SIR!");
         	try {
-        		Log.v("REPORT", "WE WILL BEGIN TO PARSE THE DATA, SIR!");
+        		Log.v("GetSparkForDetail - Retrieve Spark", "successfully retrieved spark");
 				Spark spark = parseData(data);
-				Log.v("REPORT", "WE HAVE FINISHED PARSING THE DATA, SIR!");
 				new decodeMultimedia(spark);
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
@@ -94,7 +88,6 @@ public class GetSparkForDetail {
         
 		@SuppressWarnings("unused")
 		Spark parseData(String data) throws JSONException {
-			Log.v("REPORT", "WE ARE PARSING THE DATA, SIR!");
         	final String ID = "id";
         	final String SPARK_TYPE = "spark_type";
         	final String CONTENT_TYPE = "content_type";
@@ -171,7 +164,7 @@ public class GetSparkForDetail {
     	    	if (json.has(FILE)) {
     	    		if (json.getString(FILE) != null) {
         	    		String url = json.getString(FILE);
-        	    		Log.v("!!!!!!URL!!!!!!!", url);
+        	    		Log.v("Url of Spark's file attachment", url);
         	    		newSpark.setCloudLink(url);
     	    		}
     	    	}
@@ -192,15 +185,17 @@ public class GetSparkForDetail {
 			protected InputStream doInBackground(String... params) {
 				InputStream is = null;
 				char c = spark.getContentType();
-				if (c == 'P' || c == 'V' || c == 'L' || c == 'C') {
+				if (c == 'P') {
 					Log.v("decodeMultimedia", c+" Spark contains a picture. Decoding image");
 					if (spark.getCloudLink() != null) {
 						try {
 							String url = spark.getCloudLink();
 							Log.v("Cloud link:", url);
 							is = (InputStream) new URL(url).getContent();
-							bitmap = BitmapFactory.decodeStream(is);
-							spark.setBitmap(bitmap);
+							Bitmap bitmap = BitmapFactory.decodeStream(is);
+							float aspectRatio = ((float) bitmap.getWidth()) / ((float) bitmap.getHeight());
+							Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, (int) (aspectRatio * 500), 500, true);
+							spark.setBitmap(scaledBitmap);
 							boolean bitmapExists = (spark.getBitmap() != null);
 							Log.v("Bitmapexists?", String.valueOf(bitmapExists));
 						} catch (MalformedURLException e) {
@@ -216,6 +211,8 @@ public class GetSparkForDetail {
 			}
 			
 			protected void onPostExecute(InputStream i) {
+				Log.v("GetSparkForDetail - DecodeMultimedia", "Multimedia successfully decoded");
+				dialog.dismiss();
 				sparkDetailActivity.setFiller(spark);
 			}
 			

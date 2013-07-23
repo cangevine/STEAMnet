@@ -12,16 +12,17 @@ import org.friendscentral.steamnet.JawnAdapter;
 import org.friendscentral.steamnet.BaseClasses.Comment;
 import org.friendscentral.steamnet.BaseClasses.Jawn;
 import org.friendscentral.steamnet.BaseClasses.Spark;
+import org.friendscentral.steamnet.EventHandlers.EndlessScroller;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.json.parsers.JSONParser;
-import com.squareup.okhttp.OkHttpClient;
-
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.GridView;
+
+import com.json.parsers.JSONParser;
+import com.squareup.okhttp.OkHttpClient;
 
 /**
  * @author SamBeckley
@@ -37,13 +38,16 @@ public class AddXSparks {
 	int currentTotal;
 	int limit;
 	
+	EndlessScroller endlessScroller;
+	
 	/** 
 	 * @param int X - returns the first X sparks (by createdAt)
 	 */
 	
-	public AddXSparks(int lim, GridView g, IndexGrid i, int curTotal) {
+	public AddXSparks(int lim, GridView g, IndexGrid i, int curTotal, EndlessScroller es) {
 		currentTotal = curTotal;
 		limit = lim;
+		endlessScroller = es;
 		
 		Log.v("REPORT", "GET X SPARKS IS BEGGINING, SIR!");
 		OkHTTPTask task = new OkHTTPTask(g, i);
@@ -92,6 +96,10 @@ public class AddXSparks {
 				for (int i = limit; i < jawns.length; i++) {
 					a.addAtPosition(jawns[i], a.getJawns().length);
 				}
+				a.notifyDataSetChanged();
+				new MultimediaLoader(indexGrid, a);
+				indexGrid.setJawns(a.getJawns());
+				endlessScroller.doneRefreshing();
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -114,6 +122,7 @@ public class AddXSparks {
         	final String COMMENT_TEXT = "comment_text";
         	final String USER = "user";
         	final String NAME = "name";
+        	final String FILE = "file";
         	// Creating JSON Parser instance
         	JSONParser jParser = new JSONParser();
         	 
@@ -178,9 +187,17 @@ public class AddXSparks {
 	        	    
 	        	    
 	        	    //*****************************************
-	        	    Spark newSpark = new Spark(Integer.parseInt(id), sparkType.charAt(0), contentType.charAt(0), content, createdAts, usersArray, firstUser);
-	        	    newSpark.setComments(commentArray);
-					sparkArrayList.add(newSpark);
+	        	    Spark newSpark = new Spark(Integer.parseInt(id), sparkType.charAt(0), contentType.charAt(0), content, createdAts, createdAts[0], usersArray, "max", commentArray);
+	        	    if (contentType.charAt(0) != 'T') {
+	        	    	if (json.has(FILE)) {
+	        	    		if (json.getString(FILE) != null) {
+    	        	    		String url = json.getString(FILE);
+    	        	    		Log.v("!!!!!!URL!!!!!!!", url);
+    	        	    		newSpark.setCloudLink(url);
+	        	    		}
+	        	    	}
+	        	    }
+        	        sparkArrayList.add(newSpark);
         		}
         	    Log.v("ARRAY", sparkArrayList.toString());
         	    Spark[] sparkArray = new Spark[sparkArrayList.size()];

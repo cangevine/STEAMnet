@@ -8,6 +8,7 @@
     <LinearLayout 
         android:layout_width="fill_parent"
         android:layout_height="40dp"
+        android:layout_weight="1"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:background="@drawable/sidebar_header">
@@ -63,6 +64,17 @@
             android:text="Submit" />
 
     </LinearLayout>
+    
+    <Button
+        android:id="@+id/create_idea_button"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="Create Idea with this Spark"
+        android:visibility="gone">
+        
+    </Button>
     
         
     <TextView

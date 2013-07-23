@@ -34,8 +34,6 @@ public class Spark extends Jawn implements Serializable {
 	
 	Uri multimedia;
 	Bitmap image;
-	private static ByteBuffer dst;
-	private static byte[] bytesar;
 	
 	/*
 	 * Don't need updated_at since they should never be edited, but perhaps we need a list of "uploaded at" dates

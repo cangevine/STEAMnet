@@ -8,6 +8,7 @@ import org.friendscentral.steamnet.BaseClasses.Spark;
 
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class TextSubmitter extends SparkSubmitter {
 	View entryForm;
@@ -26,6 +27,11 @@ public class TextSubmitter extends SparkSubmitter {
 		
 		EditText contentForm = (EditText) entryForm.findViewById(R.id.text_content_entry_form);
 		String content = contentForm.getText().toString();
+		
+		if (content.equals("")) {
+			Toast.makeText(mainActivity, "Please enter some content", Toast.LENGTH_LONG).show();
+			return null;
+		}
 		
 		STEAMnetApplication sna = (STEAMnetApplication) mainActivity.getApplication();
 		String userId = "0";

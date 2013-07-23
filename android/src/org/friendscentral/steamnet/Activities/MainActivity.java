@@ -1,6 +1,6 @@
 package org.friendscentral.steamnet.Activities;
 
-import org.friendscentral.steamnet.AuthHandler;
+import org.friendscentral.steamnet.AttachScrollListener;
 import org.friendscentral.steamnet.FilterSettings;
 import org.friendscentral.steamnet.IdeaBucket;
 import org.friendscentral.steamnet.IndexGrid;
@@ -8,7 +8,6 @@ import org.friendscentral.steamnet.R;
 import org.friendscentral.steamnet.STEAMnetApplication;
 import org.friendscentral.steamnet.SparkWizard;
 import org.friendscentral.steamnet.BaseClasses.Spark;
-import org.friendscentral.steamnet.EventHandlers.EndlessScroller;
 import org.friendscentral.steamnet.EventHandlers.IdeaBucketEventHandler;
 import org.friendscentral.steamnet.EventHandlers.SparkEventHandler;
 import org.friendscentral.steamnet.SparkSubmitters.AudioSubmitter;
@@ -26,7 +25,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.LinearLayout;
@@ -161,7 +159,11 @@ public class MainActivity extends Activity {
 	}
 	
 	public void setScrollListener() {
-		gridView.setOnScrollListener(new EndlessScroller(filterSettings, gridView, indexGrid, this));
+		new AttachScrollListener(filterSettings, gridView, indexGrid, MainActivity.this);
+	}
+	 
+	public IndexGrid getIndexGrid() {
+		return indexGrid;
 	}
 	
 	public SparkEventHandler getSparkEventHandler() {
@@ -241,7 +243,7 @@ public class MainActivity extends Activity {
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_HOME);
     	actionBar.setCustomView(R.layout.log_in_action_bar);
     	STEAMnetApplication sna = (STEAMnetApplication) getApplication();
-    	if (sna.getUserId() != null) {
+    	if (!sna.getReadOnlyMode()) {
     		Button logButton = (Button) actionBar.getCustomView().findViewById(R.id.log_in_button);
     		logButton.setText("Log out");
     		
@@ -276,6 +278,7 @@ public class MainActivity extends Activity {
 		sna.setToken(null);
 		sna.setUserId(null);
 		sna.setUsername(null);
+		sna.setReadOnlyMode(true);
 		ActionBar actionBar = getActionBar();
     	actionBar.setCustomView(R.layout.log_in_action_bar);
     	actionBar.getCustomView().findViewById(R.id.log_in_button).setOnClickListener(new OnClickListener() {

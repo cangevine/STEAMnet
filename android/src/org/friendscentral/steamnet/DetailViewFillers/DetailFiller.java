@@ -9,13 +9,15 @@ import org.friendscentral.steamnet.BaseClasses.Spark;
 
 import APIHandlers.PostComment;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public abstract class DetailFiller {
 	abstract void fillData();
@@ -63,7 +65,7 @@ public abstract class DetailFiller {
 		
 		fillSparkTypes();
 		//fillTags();
-		//fillComments();
+		fillComments();
 	}
 	
 	public void fillSparkTypes() {
@@ -88,23 +90,20 @@ public abstract class DetailFiller {
 		sparkTags.setText(tagString);
 	}*/
 	
-	/*public void fillComments() {
+	public void fillComments() {
+		ListView commentSection = (ListView) ((SparkDetailActivity) context).findViewById(R.id.CommentList);
+		CommentAdapter commentAdapter = new CommentAdapter(((SparkDetailActivity) context), comments);
 		if (comments.length == 0) {
-			//TextView header = (TextView) ((SparkDetailActivity) context).findViewById(R.id.CommentsHeader);
-			//header.setText("No comments on this Spark. Be the first!");
-		} else {
-			ListView commentSection = (ListView) ((SparkDetailActivity) context).findViewById(R.id.CommentList);
-			
-			//CommentAdapter commentAdapter = new CommentAdapter(this, comments);
-			CommentAdapter commentAdapter = new CommentAdapter(((SparkDetailActivity) context), comments);
-			commentSection.setAdapter(commentAdapter);
+			Comment c = new Comment(0, "No comments on this Spark, be the first!", "STEAMnet");
+			commentAdapter.addComment(c);
+			commentAdapter.notifyDataSetChanged();
 		}
-	}*/
+		commentSection.setAdapter(commentAdapter);
+	}
 	
 	public void submitComment(View v) {
 		EditText editText = (EditText) ((SparkDetailActivity) context).findViewById(R.id.CommentEditText);
 		String content = editText.getText().toString();
-		editText.setText("");
 		((SparkDetailActivity) context).findViewById(R.id.DummyFocusCommentSection).requestFocus();
 		
 		int userID = 0;
@@ -112,16 +111,33 @@ public abstract class DetailFiller {
 		if (sna.getUserId() != null) {
 			userID = Integer.valueOf(sna.getUserId());
 		}
-		String username = "Anonymous";
 		if (sna.getUsername() != null) {
-			username = sna.getUsername();
+			String username = sna.getUsername();
+			new PostComment(id, "S".charAt(0), content, userID, username, sna.getToken());
+			
+			ListView commentSection = (ListView) (((SparkDetailActivity) context).findViewById(R.id.spark_social_section)).findViewById(R.id.CommentList);
+			CommentAdapter c = (CommentAdapter) commentSection.getAdapter();
+			Comment newComment = new Comment(userID, content, username);
+			c.addComment(newComment);
+			if (c.getComments()[0].getUserId() == 0) {
+				c.removeComment(0);
+			}
+			c.notifyDataSetChanged();
+			editText.setText("");
+		} else {
+			Toast.makeText(context, "Please log in to submit a comment", Toast.LENGTH_SHORT).show();
 		}
-		new PostComment(id, "S".charAt(0), content, userID, username);
 		
-		ListView commentSection = (ListView) (((SparkDetailActivity) context).findViewById(R.id.spark_social_section)).findViewById(R.id.CommentList);
-		CommentAdapter c = (CommentAdapter) commentSection.getAdapter();
-		Comment newComment = new Comment(userID, content, username);
-		c.addComment(newComment);
-		c.notifyDataSetChanged();
+	}
+	
+	public void initSparkButton() {
+		Button createIdea = (Button) ((SparkDetailActivity) context).findViewById(R.id.Social_section).findViewById(R.id.create_idea_button); 
+		createIdea.setVisibility(View.VISIBLE);
+		createIdea.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO do stuff
+			}
+		});
 	}
 }

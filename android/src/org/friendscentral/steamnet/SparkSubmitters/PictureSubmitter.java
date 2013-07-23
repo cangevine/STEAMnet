@@ -49,6 +49,7 @@ public class PictureSubmitter extends SparkSubmitter {
 		context = (Context) mainActivity;
 		entryForm = (ViewGroup) v;
 		pictureForm = (ViewGroup) entryForm.findViewById(R.id.picture_form);
+		entryForm.findViewById(R.id.submit_content_entry_button).setEnabled(false);
 		
 		imageThumb = (ImageView) v.findViewById(R.id.picture_thumbnail);
 		assignClickListeners();
@@ -70,7 +71,9 @@ public class PictureSubmitter extends SparkSubmitter {
 			}
 			Log.v("PictureSubmitter", "userID: "+userId);
 			Spark newSpark = new Spark(sparkType, 'P', "Picture: "+ s.format(date), userId, tags);
-			newSpark.setBitmap(image);
+			float aspectRatio = ((float) image.getWidth()) / ((float) image.getHeight());
+			Bitmap scaledBitmap = Bitmap.createScaledBitmap(image, (int) (aspectRatio * 500), 500, true);
+			newSpark.setBitmap(scaledBitmap);
 			newSpark.setUri(imageURI);
 			
 			return newSpark;
@@ -220,7 +223,6 @@ public class PictureSubmitter extends SparkSubmitter {
 	                    cursor.close();
 	                }
 	            }
-	            Log.v("Picture taker", ""+imageID);
 	            return ""+imageID;
 	        }
 	     
@@ -261,6 +263,7 @@ public class PictureSubmitter extends SparkSubmitter {
 	                                mScaledBitmap = scaledBitmap;
 	                            }
 	                        }
+	                        return null;
 	                    } catch (IOException e) {
 	                        cancel(true);
 	                    }
@@ -268,11 +271,20 @@ public class PictureSubmitter extends SparkSubmitter {
 	            }
 	             
 	            protected void onPostExecute(Void unused) {
+	            	Log.v("PictureTaker", "PostExecute called");
 	                dialog.dismiss();
 	                if(mBitmap != null) {
-	                   image = mBitmap;
-	                   imageURI = imageUri;
-	                   setThumbnail(mScaledBitmap);
+	                	float aspectRatio = ((float) mBitmap.getWidth()) / ((float) mBitmap.getHeight());
+	                	if (mBitmap.getWidth() > 500 || mBitmap.getHeight() > 500) {
+	       					Bitmap smallerBitmap = Bitmap.createScaledBitmap(mBitmap, (int) (aspectRatio * 500), 500, true);
+	       					Log.v("PictureTaker", String.valueOf(smallerBitmap.getHeight()));
+	       					image = smallerBitmap;
+	                   } else {
+	                	   	image = mBitmap;
+	                   }
+	       				imageURI = imageUri;
+	       				setThumbnail(mScaledBitmap);
+	       				entryForm.findViewById(R.id.submit_content_entry_button).setEnabled(true);
 	                } else {
 	                	Toast.makeText(mainActivity, "Error: Picture could not be loaded", Toast.LENGTH_SHORT).show();
 	                }
@@ -350,9 +362,16 @@ public class PictureSubmitter extends SparkSubmitter {
 	                dialog.dismiss();
 	                if(mBitmap != null) {
 	                   //showImg.setImageBitmap(mBitmap);
-	                   image = mBitmap;
+	                   float aspectRatio = ((float) mBitmap.getWidth()) / ((float) mBitmap.getHeight());
+	                   if (mBitmap.getWidth() > 500 || mBitmap.getHeight() > 500) {
+	       					Bitmap smallerBitmap = Bitmap.createScaledBitmap(mBitmap, (int) (aspectRatio * 500), 500, true);
+	       					image = smallerBitmap;
+	                   } else {
+	                	   	image = mBitmap;
+	                   }
 	                   imageURI = imageUri;
 	                   setThumbnail(mScaledBitmap);
+	                   entryForm.findViewById(R.id.submit_content_entry_button).setEnabled(true);
 	                } else {
 	                	Toast.makeText(mainActivity, "Error: Picture could not be uploaded", Toast.LENGTH_SHORT).show();
 	                }

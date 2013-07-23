@@ -14,6 +14,7 @@ import android.app.FragmentTransaction;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 @SuppressWarnings("unused")
 public class SparkWizard {
 	MainActivity mainActivity;
@@ -30,13 +31,18 @@ public class SparkWizard {
 	//Methods for the Wizard Fragments:
 			//Very similar, could probably be consolidated
 	public void openContentTypeChooser(View v, char type) {
-		updateWeights(5, 3, 0);
-		
-		ContentTypeChooser ctc = new ContentTypeChooser(type);
-		FragmentTransaction ft = fm.beginTransaction();
-		ft.replace(R.id.WizardSection, ctc);
-		ft.addToBackStack(null);
-		ft.commit();
+		STEAMnetApplication sna = (STEAMnetApplication) mainActivity.getApplication();
+		if (!sna.getReadOnlyMode()) {
+			updateWeights(5, 3, 0);
+			
+			ContentTypeChooser ctc = new ContentTypeChooser(type);
+			FragmentTransaction ft = fm.beginTransaction();
+			ft.replace(R.id.WizardSection, ctc);
+			ft.addToBackStack(null);
+			ft.commit();
+		} else {
+			Toast.makeText(mainActivity, "Please log in to create a new Spark", Toast.LENGTH_LONG).show();
+		}
 	}
 	
 	public void revertWizard(View v) {

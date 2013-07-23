@@ -5,7 +5,9 @@ import java.io.IOException;
 import org.friendscentral.steamnet.R;
 import org.friendscentral.steamnet.BaseClasses.Spark;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaPlayer.OnPreparedListener;
@@ -33,45 +35,26 @@ public class AudioFiller extends DetailFiller {
 	@Override
 	void fillData() {
 		audioStreamer = new AudioStreamer(spark.getUri());
-		startPlayback.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (audioStreamer != null) {
-					audioStreamer.play();
-					stopPlayback.setEnabled(true);
-					startPlayback.setEnabled(false);
-				}
-			}
-		});
-		
-		stopPlayback.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (audioStreamer != null) {
-					audioStreamer.stop();
-					stopPlayback.setEnabled(false);
-					startPlayback.setEnabled(true);
-				}
-			}
-		});
 	}
 	
 	public class AudioStreamer {
 		Uri uri;
 		boolean prepared;
 		MediaPlayer mediaPlayer;
+		ProgressDialog dialog; 
 		
 		public AudioStreamer(Uri u) {
 			uri = u;
 			prepared = false;
 			
 			mediaPlayer = new MediaPlayer();
+			mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 			initMediaPlayer();
 		}
 		
 		public void initMediaPlayer() {
 			try {
-				mediaPlayer.setDataSource(context, uri);
+				mediaPlayer.setDataSource(spark.getCloudLink());
 			} catch (IllegalArgumentException e) {
 				e.printStackTrace();
 			} catch (SecurityException e) {
@@ -89,14 +72,39 @@ public class AudioFiller extends DetailFiller {
 				}
 		   	});
 			
+			dialog = new ProgressDialog(context);
+			dialog.setMessage("Loading audio file...");
+			dialog.show();
 		   	mediaPlayer.prepareAsync();
 		   	
 		   	mediaPlayer.setOnCompletionListener(new OnCompletionListener(){
 				@Override
 				public void onCompletion(MediaPlayer mp) {
+					dialog.dismiss();
 					stopPlayback.setEnabled(false);
 					startPlayback.setEnabled(true);
-					mediaPlayer.seekTo(0);
+					
+					startPlayback.setOnClickListener(new OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							if (audioStreamer != null) {
+								audioStreamer.play();
+								stopPlayback.setEnabled(true);
+								startPlayback.setEnabled(false);
+							}
+						}
+					});
+					
+					stopPlayback.setOnClickListener(new OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							if (audioStreamer != null) {
+								audioStreamer.stop();
+								stopPlayback.setEnabled(false);
+								startPlayback.setEnabled(true);
+							}
+						}
+					});
 				} 
 		   	});
 		}
@@ -113,6 +121,10 @@ public class AudioFiller extends DetailFiller {
 				mediaPlayer.seekTo(0);
 			}
 		}
+	}
+	
+	public AudioStreamer getAudioStreamer() {
+		return audioStreamer;
 	}
 	
 }

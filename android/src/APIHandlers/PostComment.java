@@ -8,10 +8,13 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import com.squareup.okhttp.OkHttpClient;
+
+import org.friendscentral.steamnet.STEAMnetApplication;
 
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.squareup.okhttp.OkHttpClient;
 
 public class PostComment{
 	
@@ -21,13 +24,15 @@ public class PostComment{
 	String commentText;
 	String username;
 	int userID;
+	String token;
 	
-	public PostComment(int id, char t, String c, int userID, String u) {
+	public PostComment(int id, char t, String c, int userID, String u, String tok) {
 		commentableId = id;
 		commentableTypeChar = t;
 		commentText = c;
 		commentableType = "";
 		username = u;
+		token = tok;
 		
 		OkHTTPTask task = new OkHTTPTask();
 		if(t == 'S'){
@@ -59,7 +64,7 @@ public class PostComment{
 	        	
 	        	// TODO Do database work to decipher the username
 	        	
-	        	String postData = "&comment[comment_text]="+commentText+"&username="+username;
+	        	String postData = "&comment[comment_text]="+commentText+"&username="+username+"&token="+token;
 	        	Log.v(TAG, postData);
 	        	
 	        	//return get(new URL(urls[0]));

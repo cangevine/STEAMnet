@@ -12,16 +12,17 @@ import org.friendscentral.steamnet.JawnAdapter;
 import org.friendscentral.steamnet.BaseClasses.Comment;
 import org.friendscentral.steamnet.BaseClasses.Idea;
 import org.friendscentral.steamnet.BaseClasses.Jawn;
+import org.friendscentral.steamnet.EventHandlers.EndlessScroller;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.json.parsers.JSONParser;
-import com.squareup.okhttp.OkHttpClient;
-
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.GridView;
+
+import com.json.parsers.JSONParser;
+import com.squareup.okhttp.OkHttpClient;
 
 /**
  * @author SamBeckley
@@ -37,13 +38,16 @@ public class AddXIdeas {
 	int currentTotal;
 	int limit;
 	
+	EndlessScroller endlessScroller;
+	
 	/** 
 	 * @param int X - returns the first X ideas (by createdAt)
 	 */
 	
-	public AddXIdeas(int lim, GridView g, IndexGrid i, int curTotal) {
+	public AddXIdeas(int lim, GridView g, IndexGrid i, int curTotal, EndlessScroller es) {
 		limit = lim;
 		currentTotal = curTotal;
+		endlessScroller = es;
 		
 		Log.v("REPORT", "GET X IDEAS IS BEGGINING, SIR!");
 		OkHTTPTask task = new OkHTTPTask(g, i);
@@ -91,6 +95,10 @@ public class AddXIdeas {
 				for (int i = limit; i < jawns.length; i++) {
 					a.addAtPosition(jawns[i], a.getJawns().length);
 				}
+				a.notifyDataSetChanged();
+				new MultimediaLoader(indexGrid, a);
+				indexGrid.setJawns(a.getJawns());
+				endlessScroller.doneRefreshing();
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
