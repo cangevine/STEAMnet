@@ -54,13 +54,13 @@ public class GetXJawns {
 	 */
 	
 	public GetXJawns(int lim, GridView g, IndexGrid i, Context c) {
+		Log.v("GetXJawns", "called");
 		context = c;
 		activity = (Activity) context;
 		if (activity.getClass().getName().equals("org.friendscentral.steamnet.Activities.MainActivity")) {
 			mainActivity = (MainActivity) activity;
 		}
 		
-		Log.v("REPORT", "THE TASK IS BEGINNING, SIR!");
 		OkHTTPTask task = new OkHTTPTask(g, i);
 		task.execute("http://steamnet.herokuapp.com/api/v1/jawns.json?limit="+lim);
 		
@@ -102,7 +102,16 @@ public class GetXJawns {
         	try {
         		Log.v("REPORT", "WE WILL BEGIN TO PARSE THE DATA, SIR!");
 				jawns = parseData(data);
-				new decodeMultimedia();
+				JawnAdapter a = new JawnAdapter(gridView.getContext(), jawns, 200);
+				Log.v("REPORT", "WE HAVE ACCESSED THE JAWNADAPTER AND ARE PROCEEDING AS PLANNED, SIR!");
+				indexGrid.setAdapter(a);
+				indexGrid.setJawns(jawns);
+				if (mainActivity != null) {
+					mainActivity.setSparkEventHandlers();
+					mainActivity.setScrollListener();
+				}
+				new MultimediaLoader(indexGrid, a);
+				//new decodeMultimedia();
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -154,6 +163,8 @@ public class GetXJawns {
     					String createdAt = j.getString(CREATED_AT);
     					String firstUser = "";    	        	     
     	        	    
+    					
+    					// TODO This is NOT dynamic:
     	        	    int[] usersArray = new int[1];
     	        	    usersArray[0] = 1;
     	        	    
@@ -184,7 +195,6 @@ public class GetXJawns {
     	        	    	if (j.has(FILE)) {
     	        	    		if (j.getString(FILE) != null) {
 	    	        	    		String url = j.getString(FILE);
-	    	        	    		Log.v("!!!!!!URL!!!!!!!", url);
 	    	        	    		newSpark.setCloudLink(url);
     	        	    		}
     	        	    	}
@@ -260,7 +270,7 @@ public class GetXJawns {
         	return null;
         }
 		
-		private class decodeMultimedia extends AsyncTask<String, Void, InputStream> {
+		/*private class decodeMultimedia extends AsyncTask<String, Void, InputStream> {
 			Bitmap bitmap;
 			
 			public decodeMultimedia() {
@@ -281,8 +291,11 @@ public class GetXJawns {
 									String url = spark.getCloudLink();
 									Log.v("Cloud link:", url);
 									is = (InputStream) new URL(url).getContent();
-									bitmap = BitmapFactory.decodeStream(is);
-									spark.setBitmap(bitmap);
+									Bitmap bitmap = BitmapFactory.decodeStream(is);
+									float aspectRatio = ((float) bitmap.getWidth()) / ((float) bitmap.getHeight());
+									Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, (int) (aspectRatio * 200), 200, true);
+									Log.v("Width:", String.valueOf((int) (aspectRatio * 200)));
+									spark.setBitmap(scaledBitmap);
 								} catch (MalformedURLException e) {
 									e.printStackTrace();
 								} catch (IOException e) {
@@ -308,7 +321,7 @@ public class GetXJawns {
 				}	
 			}
 			
-		}
+		}*/
         
         String get(URL url) throws IOException {
           HttpURLConnection connection = client.open(url);
@@ -332,6 +345,6 @@ public class GetXJawns {
             return out.toByteArray();
           }
 	    
-	 }
+	 	}
 
 }

@@ -103,6 +103,7 @@ public class GetXSparks {
 					mainActivity.setSparkEventHandlers();
 					mainActivity.setScrollListener();
 				}
+				new MultimediaLoader(indexGrid, a);
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

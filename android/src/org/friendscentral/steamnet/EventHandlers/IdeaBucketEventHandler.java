@@ -54,6 +54,7 @@ public class IdeaBucketEventHandler {
 	        
 	        TrashCan tc = new TrashCan();
 	        updateFragment(tc, R.id.WizardSection);
+	        View trashCanView = tc.getTrashCanView();
 	        
     		TrashCanListener tcl = new TrashCanListener();
 	        tcl.setPos(pos);
@@ -62,6 +63,7 @@ public class IdeaBucketEventHandler {
 	         * Eventually set to only the trashcan:
 	         */
 	        mainLayout.findViewById(R.id.Sidebar).setOnDragListener(tcl);
+	        //trashCanView.setOnDragListener(tcl);
     		
     		return false;
     	}

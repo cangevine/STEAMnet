@@ -6,12 +6,16 @@ public class STEAMnetApplication extends Application {
 	private String userToken;
 	private String username;
 	private String userId;
+	boolean readOnlyMode;
 	
 	@Override
 	public void onCreate() {
+		// TODO eventually make this persistant
+		
 		userToken = null;
 		username = null;
 		userId = null;
+		readOnlyMode = true;
 		super.onCreate();
 	}
 	
@@ -37,5 +41,13 @@ public class STEAMnetApplication extends Application {
 	
 	public String getUserId() {
 		return userId;
+	}
+	
+	public void setReadOnlyMode(boolean b) {
+		readOnlyMode = b;
+	}
+	
+	public boolean getReadOnlyMode() {
+		return readOnlyMode;
 	}
 }

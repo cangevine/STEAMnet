@@ -28,6 +28,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class IdeaDetailActivity extends Activity {
 	final static int GET_AUTH_ACTIVITY_REQUEST_CODE = 4;
@@ -108,16 +109,14 @@ public class IdeaDetailActivity extends Activity {
     }
 	
 	public void fillComments() {
+		ListView commentSection = (ListView) IdeaDetailActivity.this.findViewById(R.id.CommentList);
+		CommentAdapter commentAdapter = new CommentAdapter(IdeaDetailActivity.this, comments);
 		if (comments.length == 0) {
-			//TextView header = (TextView) findViewById(R.id.CommentsHeader);
-			//header.setText("No comments on this Spark. Be the first!");
-		} else {
-			ListView commentSection = (ListView) findViewById(R.id.CommentList);
-			
-			//CommentAdapter commentAdapter = new CommentAdapter(this, comments);
-			CommentAdapter commentAdapter = new CommentAdapter(this, comments);
-			commentSection.setAdapter(commentAdapter);
+			Comment c = new Comment(0, "No comments on this Spark, be the first!", "STEAMnet");
+			commentAdapter.addComment(c);
+			commentAdapter.notifyDataSetChanged();
 		}
+		commentSection.setAdapter(commentAdapter);
 	}
 	
 	public void submitComment(View v) {
@@ -131,26 +130,21 @@ public class IdeaDetailActivity extends Activity {
 		if (sna.getUserId() != null) {
 			userID = Integer.valueOf(sna.getUserId());
 		}
-		String username = "Anonymous";
 		if (sna.getUsername() != null) {
-			username = sna.getUsername();
-		}
-		new PostComment(id, "S".charAt(0), content, userID, username);
-		
-		if (comments.length > 0) {
-			ListView commentSection = (ListView) findViewById(R.id.CommentList);
+			String username = sna.getUsername();
+			new PostComment(id, "S".charAt(0), content, userID, username, sna.getToken());
+			
+			ListView commentSection = (ListView) IdeaDetailActivity.this.findViewById(R.id.spark_social_section).findViewById(R.id.CommentList);
 			CommentAdapter c = (CommentAdapter) commentSection.getAdapter();
 			Comment newComment = new Comment(userID, content, username);
 			c.addComment(newComment);
+			if (c.getComments()[0].getUserId() == 0) {
+				c.removeComment(0);
+			}
 			c.notifyDataSetChanged();
+			editText.setText("");
 		} else {
-			ListView commentSection = (ListView) findViewById(R.id.CommentList);
-			CommentAdapter commentAdapter = new CommentAdapter(this, comments);
-			commentSection.setAdapter(commentAdapter);
-			Comment newComment = new Comment(userID, content, username);
-			CommentAdapter c = (CommentAdapter) commentSection.getAdapter();
-			c.addComment(newComment);
-			c.notifyDataSetChanged();
+			Toast.makeText(this, "Please log in to submit a comment", Toast.LENGTH_SHORT).show();
 		}
 	}
 	
@@ -203,6 +197,7 @@ public class IdeaDetailActivity extends Activity {
 		sna.setToken(null);
 		sna.setUserId(null);
 		sna.setUsername(null);
+		sna.setReadOnlyMode(true);
 		ActionBar actionBar = getActionBar();
     	actionBar.setCustomView(R.layout.log_in_action_bar);
     	actionBar.getCustomView().findViewById(R.id.log_in_button).setOnClickListener(new OnClickListener() {
@@ -218,7 +213,7 @@ public class IdeaDetailActivity extends Activity {
 		case GET_AUTH_ACTIVITY_REQUEST_CODE:
 			Log.v("Idea Detail activity", "Should be here if you have just logged in though OAuth");
 			STEAMnetApplication sna = (STEAMnetApplication) getApplication();
-	    	if (sna.getUsername() != null) {
+	    	if (!sna.getReadOnlyMode()) {
 	    		ActionBar actionBar = getActionBar();
 	    		Button logButton = (Button) actionBar.getCustomView().findViewById(R.id.log_in_button);
 	    		logButton.setText("Log out");
