@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+@class Comment, Spark, Idea;
 
 @interface User : NSManagedObject
 
@@ -23,18 +24,18 @@
 
 @interface User (CoreDataGeneratedAccessors)
 
-- (void)addCommentsObject:(NSManagedObject *)value;
-- (void)removeCommentsObject:(NSManagedObject *)value;
+- (void)addCommentsObject:(Comment *)value;
+- (void)removeCommentsObject:(Comment *)value;
 - (void)addComments:(NSSet *)values;
 - (void)removeComments:(NSSet *)values;
 
-- (void)addIdeasObject:(NSManagedObject *)value;
-- (void)removeIdeasObject:(NSManagedObject *)value;
+- (void)addIdeasObject:(Idea *)value;
+- (void)removeIdeasObject:(Idea *)value;
 - (void)addIdeas:(NSSet *)values;
 - (void)removeIdeas:(NSSet *)values;
 
-- (void)addSparksObject:(NSManagedObject *)value;
-- (void)removeSparksObject:(NSManagedObject *)value;
+- (void)addSparksObject:(Spark *)value;
+- (void)removeSparksObject:(Spark *)value;
 - (void)addSparks:(NSSet *)values;
 - (void)removeSparks:(NSSet *)values;
 

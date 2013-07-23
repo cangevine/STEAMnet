@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class Idea;
+
 @interface SNIdeaCell : UICollectionViewCell
+
+@property (nonatomic, strong) Idea *idea;
 
 @end

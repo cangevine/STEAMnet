@@ -15,11 +15,7 @@
 @implementation Idea
 
 @dynamic descriptionText;
-@dynamic remoteId;
-@dynamic createdDate;
-@dynamic comments;
 @dynamic sparks;
-@dynamic tags;
 @dynamic user;
 
 @end
