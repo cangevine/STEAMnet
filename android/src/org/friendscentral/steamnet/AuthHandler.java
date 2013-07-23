@@ -92,6 +92,7 @@ public class AuthHandler {
 	    public void checkIfFinished() {
 	    	if (sna.getUsername() != null && sna.getToken() != null && sna.getUserId() != null) {
 	    		Log.v("AuthHandler", "reverting");
+	    		sna.setReadOnlyMode(false);
 	    		ma.revertAuth();
 	    	}
 	    }

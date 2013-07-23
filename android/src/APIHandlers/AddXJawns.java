@@ -13,16 +13,17 @@ import org.friendscentral.steamnet.BaseClasses.Comment;
 import org.friendscentral.steamnet.BaseClasses.Idea;
 import org.friendscentral.steamnet.BaseClasses.Jawn;
 import org.friendscentral.steamnet.BaseClasses.Spark;
+import org.friendscentral.steamnet.EventHandlers.EndlessScroller;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.json.parsers.JSONParser;
-import com.squareup.okhttp.OkHttpClient;
-
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.GridView;
+
+import com.json.parsers.JSONParser;
+import com.squareup.okhttp.OkHttpClient;
 
 /**
  * @author SamBeckley
@@ -38,13 +39,16 @@ public class AddXJawns {
 	int currentTotal;
 	int limit;
 	
+	EndlessScroller endlessScroller;
+	
 	/** 
 	 * @param int X - returns the first X sparks (by createdAt)
 	 */
 	
-	public AddXJawns(int lim, GridView g, IndexGrid i, int curTotal) {
+	public AddXJawns(int lim, GridView g, IndexGrid i, int curTotal, EndlessScroller es) {
 		currentTotal = curTotal;
 		limit = lim;
+		endlessScroller = es;
 		
 		Log.v("REPORT", "THE TASK IS BEGGINING, SIR!");
 		OkHTTPTask task = new OkHTTPTask(g, i);
@@ -95,6 +99,10 @@ public class AddXJawns {
 				for (int i = limit; i < jawns.length; i++) {
 					a.addAtPosition(jawns[i], a.getJawns().length);
 				}
+				a.notifyDataSetChanged();
+				indexGrid.setJawns(a.getJawns());
+				new MultimediaLoader(indexGrid, a);
+				endlessScroller.doneRefreshing();
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -123,6 +131,7 @@ public class AddXJawns {
         	final String COMMENTS = "comments";
         	final String COMMENT_TEXT = "comment_text";
         	final String NAME = "name";
+        	final String FILE = "file";
         	
         	// Creating JSON Parser instance
         	JSONParser jParser = new JSONParser();
@@ -188,7 +197,17 @@ public class AddXJawns {
     	        	    String[] createdAts = new String[1];
     	        	    createdAts[0] = createdAt;
     	        	    
-	        	        jawnArrayList.add(new Spark(Integer.parseInt(id), sparkType.charAt(0), contentType.charAt(0), content, createdAts, createdAts[0], usersArray, "max", commentArray));
+    	        	    Spark newSpark = new Spark(Integer.parseInt(id), sparkType.charAt(0), contentType.charAt(0), content, createdAts, createdAts[0], usersArray, "max", commentArray);
+    	        	    if (contentType.charAt(0) != 'T') {
+    	        	    	if (j.has(FILE)) {
+    	        	    		if (j.getString(FILE) != null) {
+	    	        	    		String url = j.getString(FILE);
+	    	        	    		Log.v("!!!!!!URL!!!!!!!", url);
+	    	        	    		newSpark.setCloudLink(url);
+    	        	    		}
+    	        	    	}
+    	        	    }
+	        	        jawnArrayList.add(newSpark);
 	        	        
         	        } else if (j.getString(JAWN_TYPE).equals("idea")) {
         	        	

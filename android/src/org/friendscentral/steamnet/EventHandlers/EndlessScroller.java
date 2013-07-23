@@ -1,8 +1,12 @@
 package org.friendscentral.steamnet.EventHandlers;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import org.friendscentral.steamnet.FilterSettings;
 import org.friendscentral.steamnet.IndexGrid;
-import org.friendscentral.steamnet.JawnAdapter;
 import org.friendscentral.steamnet.R;
 import org.friendscentral.steamnet.Activities.MainActivity;
 
@@ -12,6 +16,7 @@ import APIHandlers.AddXSparks;
 import android.app.ActionBar;
 import android.app.ListActivity;
 import android.content.Context;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -29,20 +34,28 @@ public class EndlessScroller extends ListActivity implements OnScrollListener {
 	ActionBar actionBar;
 	MainActivity main;
 	
+	boolean reachedEnd;
 	boolean refreshable;
 	boolean refreshOnRelease;
+	boolean isRefreshing;
 	int previousLastItem;
+	
+	int jawnsInDB;
 	
 	float y;
 	float dy;
 	
-	public EndlessScroller(FilterSettings f, GridView g, IndexGrid i, Context c) {
+	public EndlessScroller(FilterSettings f, GridView g, IndexGrid i, Context c, int jidb) {
+		Log.v("EndlessScroller", "EndlessScroller attached to GridView");
+		
+		reachedEnd = false;
 		filterSettings = f;
 		gridview = g;
 		indexgrid = i;
 		context = c;
 		main = (MainActivity) context;
 		actionBar = main.getActionBar();
+		jawnsInDB = jidb;
 		
 		y = -1;
 		dy = -1;
@@ -67,21 +80,22 @@ public class EndlessScroller extends ListActivity implements OnScrollListener {
 	    	return;
 	    
 	    
-	    boolean loadMore = firstVisible + visibleCount + 15 >= totalCount;
-	    if (loadMore) {
-	    	
-	    	boolean sparks = filterSettings.getSparkBoxVal();
-	    	boolean ideas = filterSettings.getIdeaBoxVal();
-	    	if (sparks && ideas) {
-	    		AddXJawns a = new AddXJawns(16, gridview, indexgrid, totalCount); 
-	    	} else if (sparks && !ideas) {
-	    		AddXSparks a = new AddXSparks(16, gridview, indexgrid, totalCount); 
-	    	} else if (!sparks && ideas) {
-	    		AddXIdeas a = new AddXIdeas(16, gridview, indexgrid, totalCount);
-	    	}
-	    	JawnAdapter ja = indexgrid.getAdapter();
-			ja.notifyDataSetChanged();
-			indexgrid.setJawns(ja.getJawns());
+	    boolean loadMore = firstVisible + visibleCount + 14 >= totalCount;
+	    if (loadMore && !isRefreshing) {
+			if (totalCount < jawnsInDB) {
+				isRefreshing = true;
+				boolean sparks = filterSettings.getSparkBoxVal();
+				boolean ideas = filterSettings.getIdeaBoxVal();
+				if (sparks && ideas) {
+					new AddXJawns(16, gridview, indexgrid, totalCount, EndlessScroller.this); 
+				} else if (sparks && !ideas) {
+					new AddXSparks(16, gridview, indexgrid, totalCount, EndlessScroller.this); 
+				} else if (!sparks && ideas) {
+					new AddXIdeas(16, gridview, indexgrid, totalCount, EndlessScroller.this);
+				}
+			} else {
+				reachedEnd = true;
+			}
 			return;
 			
 			//gridview.setSelection(scrolly);
@@ -140,6 +154,14 @@ public class EndlessScroller extends ListActivity implements OnScrollListener {
 			return false;
 		}
 		
+	}
+	
+	public void doneRefreshing() {
+		isRefreshing = false;
+	}
+	
+	public boolean hasReachedEnd() {
+		return reachedEnd;
 	}
 
 }

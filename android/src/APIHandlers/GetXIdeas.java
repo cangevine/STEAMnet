@@ -102,6 +102,7 @@ public class GetXIdeas {
 					mainActivity.setSparkEventHandlers();
 					mainActivity.setScrollListener();
 				}
+				new MultimediaLoader(indexGrid, a);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}

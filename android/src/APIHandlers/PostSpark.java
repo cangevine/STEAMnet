@@ -112,15 +112,15 @@ public class PostSpark {
 	        	user = "max";
 
 	        	String data = "";
-	        	if (content_type != 'T') {
+	        	//if (content_type != 'T') {
 	        		Log.v("PostSpark", "Submitting multimedia");
 	        		data = postMultimedia(urls[0]);
-	        	} else {
-	        		Log.v("PostSpark", "Submitting plain data");
-	        		String postData = "&spark[spark_type]="+spark_type+"&spark[content_type]="+content_type+"&spark[content]="+content+"&username="+user+"&tags="+tagsString;
-		        	Log.v(TAG, postData);
-	        		data = post(new URL(urls[0]), postData.getBytes());
-	        	}
+	        	//} else {
+	        		//Log.v("PostSpark", "Submitting plain data");
+	        		//String postData = "&spark[spark_type]="+spark_type+"&spark[content_type]="+content_type+"&spark[content]="+content+"&username="+user+"&tags="+tagsString;
+		        	//Log.v(TAG, postData);
+	        		//data = post(new URL(urls[0]), postData.getBytes());
+	        	//}
 	        	Log.v("PostSpark - Data being passed to parser:", data);
 	        	return data;
 	        	
@@ -218,7 +218,7 @@ public class PostSpark {
 	     * TRYING TO MAKE POST FROM HERE DOWN
 	     */
 	    
-	    String post(URL url, byte[] body) throws IOException {
+	    /*String post(URL url, byte[] body) throws IOException {
 	        HttpURLConnection connection = client.open(url);
 	        OutputStream out = null;
 	        InputStream in = null;
@@ -245,7 +245,7 @@ public class PostSpark {
 	          if (out != null) out.close();
 	          if (in != null) in.close();
 	        }
-	      }
+	      }*/
 	    
 	    String readFirstLine(InputStream in) throws IOException {
 	        BufferedReader reader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
@@ -276,15 +276,20 @@ public class PostSpark {
 	    	switch (content_type) {
 	    	case 'P':
 	    		Log.v("PostSpark", "PostMultimedia called - Spark is a picture");
-	    		String picturePath = getRealPathFromURI(spark.getUri());
-		        File pictureFile = new File(picturePath);
-		        fileBody = new FileBody(pictureFile, "image/jpg");
+	    		File pictureSampleDir = Environment.getExternalStorageDirectory();
+		    	File pictureFile = File.createTempFile("temp_picture_thumbnail", ".jpeg", pictureSampleDir);
+		    	FileOutputStream pictureStream = new FileOutputStream(pictureFile);
+		    	Bitmap picture = spark.getBitmap();
+		    	picture.compress(Bitmap.CompressFormat.JPEG, 70, pictureStream);
+		        fileBody = new FileBody(pictureFile, "image/jpeg");
+		        multipartEntity.addPart("spark[file]", fileBody);
 	    		break;
 	    	case 'A':
 	    		Log.v("PostSpark", "PostMultimedia called - Spark is audio");
 	    		String audioPath = getRealPathFromURI(spark.getUri());
 		        File audioFile = new File(audioPath);
 		        fileBody = new FileBody(audioFile, "audio/mpeg");
+		        multipartEntity.addPart("spark[file]", fileBody);
 	    		break;
 	    	case 'C':
 	    		Log.v("PostSpark", "PostMultimedia called - Spark is a code snippet");
@@ -292,8 +297,9 @@ public class PostSpark {
 		    	File codeFile = File.createTempFile("temp_gist_thumbnail", ".jpeg", codeSampleDir);
 		    	FileOutputStream codeStream = new FileOutputStream(codeFile);
 		    	Bitmap codeScreenshot = spark.getBitmap();
-		    	codeScreenshot.compress(Bitmap.CompressFormat.JPEG, 50, codeStream);
+		    	codeScreenshot.compress(Bitmap.CompressFormat.JPEG, 100, codeStream);
 		        fileBody = new FileBody(codeFile, "image/jpeg");
+		        multipartEntity.addPart("spark[file]", fileBody);
 	    		break;
 	    	case 'L':
 	    		Log.v("PostSpark", "PostMultimedia called - Spark is a Link");
@@ -301,8 +307,9 @@ public class PostSpark {
 		    	File linkFile = File.createTempFile("temp_link_screenshot", ".jpeg", linkSampleDir);
 		    	FileOutputStream linkStream = new FileOutputStream(linkFile);
 		    	Bitmap linkThumbnail = spark.getBitmap();
-		    	linkThumbnail.compress(Bitmap.CompressFormat.JPEG, 50, linkStream);
+		    	linkThumbnail.compress(Bitmap.CompressFormat.JPEG, 100, linkStream);
 		        fileBody = new FileBody(linkFile, "image/jpeg");
+		        multipartEntity.addPart("spark[file]", fileBody);
 	    		break;
 	    	case 'V':
 	    		Log.v("PostSpark", "PostMultimedia called - Spark is a video");
@@ -312,19 +319,21 @@ public class PostSpark {
 		    	Bitmap videoThumbnail = spark.getBitmap();
 		    	videoThumbnail.compress(Bitmap.CompressFormat.JPEG, 50, videoStream);
 		        fileBody = new FileBody(videoFile, "image/jpeg");
+		        multipartEntity.addPart("spark[file]", fileBody);
 	    		break;
 	    	}
-	    	multipartEntity.addPart("spark[file]", fileBody);
 	        StringBody sparkTypeBody = new StringBody(String.valueOf(spark_type));
 	        StringBody contentTypeBody = new StringBody(String.valueOf(content_type));
 	        StringBody contentBody = new StringBody(content);
 	        StringBody usernameBody = new StringBody(user);
 	        StringBody tagsBody = new StringBody(tagsString);
+	        StringBody tokenBody = new StringBody(token);
 	        multipartEntity.addPart("spark[spark_type]", sparkTypeBody);
 	        multipartEntity.addPart("spark[content_type]", contentTypeBody);
 	        multipartEntity.addPart("spark[content]", contentBody);
 	        multipartEntity.addPart("username", usernameBody);
 	        multipartEntity.addPart("tags", tagsBody);	
+	        multipartEntity.addPart("token", tokenBody);
 	        
 	        httpPost.setEntity(multipartEntity);
 	        try {

@@ -27,6 +27,7 @@ import android.widget.TextView;
 public class SparkDetailActivity extends Activity {
 	final static int GET_AUTH_ACTIVITY_REQUEST_CODE = 4;
 	DetailFiller filler;
+	Spark spark;
 	private static final String TAG = "SparkDetailView";
 
 	@Override
@@ -43,7 +44,8 @@ public class SparkDetailActivity extends Activity {
 		
 	}
 	
-	public void setFiller(Spark spark) {
+	public void setFiller(Spark s) {
+		spark = s;
 		switch (spark.getContentType()) {
 		case 'T':
 			filler = new TextFiller(spark, (LinearLayout) findViewById(R.id.TextData), SparkDetailActivity.this);
@@ -78,7 +80,7 @@ public class SparkDetailActivity extends Activity {
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_HOME);
     	actionBar.setCustomView(R.layout.log_in_action_bar);
     	STEAMnetApplication sna = (STEAMnetApplication) getApplication();
-    	if (sna.getUserId() != null) {
+    	if (!sna.getReadOnlyMode()) {
     		Button logButton = (Button) actionBar.getCustomView().findViewById(R.id.log_in_button);
     		logButton.setText("Log out");
     		
@@ -113,6 +115,7 @@ public class SparkDetailActivity extends Activity {
 		sna.setToken(null);
 		sna.setUserId(null);
 		sna.setUsername(null);
+		sna.setReadOnlyMode(true);
 		ActionBar actionBar = getActionBar();
     	actionBar.setCustomView(R.layout.log_in_action_bar);
     	actionBar.getCustomView().findViewById(R.id.log_in_button).setOnClickListener(new OnClickListener() {
@@ -128,7 +131,7 @@ public class SparkDetailActivity extends Activity {
 		case GET_AUTH_ACTIVITY_REQUEST_CODE:
 			Log.v("Spark Detail activity", "Should be here if you have just logged in though OAuth");
 			STEAMnetApplication sna = (STEAMnetApplication) getApplication();
-	    	if (sna.getUsername() != null) {
+	    	if (!sna.getReadOnlyMode()) {
 	    		ActionBar actionBar = getActionBar();
 	    		Button logButton = (Button) actionBar.getCustomView().findViewById(R.id.log_in_button);
 	    		logButton.setText("Log out");
@@ -142,6 +145,15 @@ public class SparkDetailActivity extends Activity {
 	    		logInInfo.setText("Logged in as "+sna.getUsername());
 	    	}
 	    	break;
+		}
+	}
+	
+	protected void onDestroy() {
+		super.onDestroy();
+		if (filler != null && spark.getContentType() == 'A') {
+			if (((AudioFiller) filler).getAudioStreamer() != null) {
+				((AudioFiller) filler).getAudioStreamer().stop();
+			}
 		}
 	}
 

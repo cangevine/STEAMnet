@@ -1,8 +1,7 @@
 package org.friendscentral.steamnet;
 
-import java.util.ArrayList;
-
 import org.friendscentral.steamnet.BaseClasses.Jawn;
+import org.friendscentral.steamnet.EventHandlers.EndlessScroller;
 
 import APIHandlers.GetXJawns;
 import android.content.Context;
@@ -20,6 +19,7 @@ public class IndexGrid {
 	GridView gridview;
 	Context context;
 	JawnAdapter adapter;
+	EndlessScroller endlessScroller;
 	
 	private Jawn[] jawns;
 	
@@ -72,5 +72,13 @@ public class IndexGrid {
     	//adapter.getView((jawns.length - 1), null, null);
     	adapter.notifyDataSetChanged();
     }
+	
+	public void setScrollListener(EndlessScroller e) {
+		endlessScroller = e;
+	}
+	
+	public EndlessScroller getScrollListener() {
+		return endlessScroller;
+	}
 	
 }

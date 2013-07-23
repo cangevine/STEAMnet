@@ -12,11 +12,11 @@ import org.friendscentral.steamnet.BaseClasses.Spark;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.squareup.okhttp.OkHttpClient;
-
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -25,9 +25,11 @@ import android.view.View.OnClickListener;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.squareup.okhttp.OkHttpClient;
 
 @SuppressLint("SetJavaScriptEnabled")
 public class VideoFiller extends DetailFiller {
@@ -67,6 +69,7 @@ public class VideoFiller extends DetailFiller {
 		Log.v("HTML String:", webViewContent);
 		
 		video.setWebChromeClient(new WebChromeClient());
+		video.setWebViewClient(new CustomWebClient());
 		
 		WebSettings webViewSettings = video.getSettings();
 		webViewSettings.setJavaScriptCanOpenWindowsAutomatically(true);
@@ -85,10 +88,14 @@ public class VideoFiller extends DetailFiller {
 		String uploader;
 		String uploaded;
 		OkHttpClient client;
+		ProgressDialog dialog;
 		
 		public LoadDataFromId(String u) {
 			id = u;
 			client = new OkHttpClient();
+			dialog = new ProgressDialog(context);
+			dialog.setMessage("Loading YouTube metadata...");
+			dialog.show();
 			this.execute();
 		}
 
@@ -130,6 +137,7 @@ public class VideoFiller extends DetailFiller {
 				String dataString = "Uploaded by: "+uploader;
 				videoDescription.setText(dataString);
 			}
+			dialog.dismiss();
 		}
 		
 		String get(URL url) throws IOException {
@@ -152,6 +160,20 @@ public class VideoFiller extends DetailFiller {
 				out.write(buffer, 0, count);
 			}
             return out.toByteArray();
+		}
+	}
+	
+	private class CustomWebClient extends WebViewClient {
+		ProgressDialog dialog;
+		
+		public void onPageStarted(WebView view, String url, Bitmap favicon) {
+			dialog = new ProgressDialog(context);
+			dialog.setMessage("Loading YouTube video...");
+			dialog.show();
+		}
+		
+		public void onPageFinished(WebView view, String url) {
+			dialog.dismiss();
 		}
 	}
 	

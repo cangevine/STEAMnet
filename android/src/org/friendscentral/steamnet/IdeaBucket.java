@@ -3,11 +3,13 @@ package org.friendscentral.steamnet;
 import java.util.ArrayList;
 
 import org.friendscentral.steamnet.Activities.MainActivity;
+import org.friendscentral.steamnet.Activities.SparkDetailActivity;
 import org.friendscentral.steamnet.BaseClasses.Spark;
 
 import APIHandlers.PostIdea;
 import android.app.ActionBar.LayoutParams;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,8 +17,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 public class IdeaBucket {
+	final static int DETAIL_VIEW_RETURN = 5;
+	
 	LinearLayout layout;
 	Context context;
 	LinearLayout mainLayout;
@@ -73,35 +78,61 @@ public class IdeaBucket {
 			Button ignite = (Button) mainLayout.findViewById(R.id.ignite_button);
 			ignite.setEnabled(true);
 		}
+		setOnClickListeners();
 	}
 	
 	public void removeSpark(int pos) {
 		if (sparks.size() > 0) {
 			sparks.remove(pos);
 			Log.v("Number of sparks", String.valueOf(sparks.size()));
-			for (int i = 0; i < sparks.size(); i++) {
-				Spark ss = sparks.get(i);
-				int resource = 0;
-				if (ss.getContentType() == 'P') {
-					resource = R.drawable.symbol_image;
-				} else if (ss.getContentType() == 'V') {
-					resource = R.drawable.symbol_video;
-				} else  if (ss.getContentType() == 'L') {
-					resource = R.drawable.symbol_link;
-				} else if (ss.getContentType() == 'A') {
-					resource = R.drawable.symbol_link;
-				} else if (ss.getContentType() == 'T') {
-					resource = R.drawable.btn_green_text;
-				} else if (ss.getContentType() == 'C') {
-					resource = R.drawable.btn_green_code;
+			for (int i = 0; i < imageViews.length; i++) {
+				if (i < sparks.size()) {
+					Spark ss = sparks.get(i);
+					if (ss.getBitmap() != null) {
+						imageViews[i].setImageBitmap(ss.getBitmap());
+					} else {
+						int resource = 0;
+						if (ss.getContentType() == "P".charAt(0)) {
+							resource = R.drawable.symbol_image;
+						} else if (ss.getContentType() == "V".charAt(0)) {
+							resource = R.drawable.symbol_video;
+						} else  if (ss.getContentType() == "L".charAt(0)) {
+							resource = R.drawable.symbol_link;
+						} else if (ss.getContentType() == "A".charAt(0)) {
+							resource = R.drawable.symbol_link;
+						} else if (ss.getContentType() == "T".charAt(0)) {
+							resource = R.drawable.btn_green_text;
+						} else if (ss.getContentType() == "C".charAt(0)) {
+							resource = R.drawable.btn_green_code;
+						}
+						imageViews[i].setImageResource(resource);
+					}
+				} else {
+					imageViews[i].setImageDrawable(null);
 				}
-				imageViews[i].setImageResource(resource);
 			}
-			imageViews[sparks.size()].setImageResource(0);
 		}
 		if (sparks.size() < 2) {
 			Button ignite = (Button) mainLayout.findViewById(R.id.ignite_button);
 			ignite.setEnabled(false);
+		}
+	}
+	
+	public void setOnClickListeners() {
+		for (int i = 0; i < imageViews.length; i++) {
+			if (i < sparks.size()) {
+				final int pos = i;
+				imageViews[i].setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						Intent intent = new Intent(context, SparkDetailActivity.class);
+				    	intent.putExtra("id", sparks.get(pos).getId());
+				    	((MainActivity) context).startActivityForResult(intent, DETAIL_VIEW_RETURN);
+					}
+				});
+			} else {
+				imageViews[i].setOnClickListener(null);
+			}
 		}
 	}
 	
@@ -115,11 +146,15 @@ public class IdeaBucket {
 
 			@Override
 			public void onClick(View v) {
-				Log.v("Clicked", "Clicked");
-				if (sparks.size() > 0) {
-					bucketFrag.setVisibility(View.GONE);
-					submitFrag.setVisibility(View.VISIBLE);
-					updateWeights(0,0,1);
+				STEAMnetApplication sna = (STEAMnetApplication) ((MainActivity) context).getApplication();
+				if (!sna.getReadOnlyMode()) {
+					if (sparks.size() > 0) {
+						bucketFrag.setVisibility(View.GONE);
+						submitFrag.setVisibility(View.VISIBLE);
+						updateWeights(0,0,1);
+					}
+				} else {
+					Toast.makeText(context, "Please log in to submit an Idea", Toast.LENGTH_LONG).show();
 				}
 			}
 			
