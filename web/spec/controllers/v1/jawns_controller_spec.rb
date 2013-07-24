@@ -107,6 +107,62 @@ describe V1::JawnsController do
       
     end
     
+    describe "random sorting" do
+      
+      it "returns the correct jawns" do
+        seed = 0.3
+        
+        get :index, :format => 'json', :seed => "#{seed}", :token => @auth_token
+        output = JSON.parse(response.body)
+
+        output.should be_a_kind_of(Array)
+        output.length.should == @jawns.length
+        
+        jawns = (Spark.all + Idea.all).shuffle(random: Random.new((seed+1)*10))
+        
+        output.each_with_index do |jawn, index|
+          jawn["jawn_type"].should == jawns[index].class.to_s.downcase
+        end
+      end
+      
+      it "returns the same jawns with the same seed" do
+        seed = 0.3
+        
+        get :index, :format => 'json', :seed => "#{seed}", :token => @auth_token
+        output = JSON.parse(response.body)
+        
+        get :index, :format => 'json', :seed => "#{seed}", :token => @auth_token
+        output2 = JSON.parse(response.body)
+
+        output.length.should == output2.length
+        
+        output.each_with_index do |jawn, index|
+          jawn["id"].should == output2[index]["id"]
+        end
+      end
+      
+      describe "offset" do
+        
+        it "uses the same order as without the offset" do
+          seed = 0.3
+
+          get :index, :format => 'json', :seed => "#{seed}", :token => @auth_token
+          output = JSON.parse(response.body)
+
+          get :index, :format => 'json', :seed => "#{seed}", :token => @auth_token, :offset => 5
+          output2 = JSON.parse(response.body)
+
+          output2.length.should == output.length - 5
+
+          output2.each_with_index do |jawn, index|
+            jawn["id"].should == output[index + 5]["id"]
+          end
+        end
+        
+      end
+      
+    end
+    
     describe "idea filtering" do
       
       it "filters ideas correctly" do
@@ -165,6 +221,69 @@ describe V1::JawnsController do
             jawn["jawn_type"].should == "idea"
             jawn["description"].should == jawns[index].description
           end
+        end
+
+      end
+      
+      describe "random sorting" do
+
+        it "returns the correct ideas" do
+          seed = 0.3
+
+          get :index, :format => 'json', :filter => "ideas", :seed => "#{seed}", :token => @auth_token
+          output = JSON.parse(response.body)
+
+          output.should be_a_kind_of(Array)
+          output.length.should == @ideas.length
+          
+          idea_ids = @ideas.map(&:id)
+          ids = []
+          
+          output.each do |jawn|
+            ids << jawn["id"]
+          end
+          
+          ids.each do |id|
+            idea_ids.delete id
+          end
+          
+          idea_ids.should be_empty
+        end
+        
+        it "returns the same ideas with the same seed" do
+          seed = 0.3
+        
+          get :index, :format => 'json', :filter => "ideas", :seed => "#{seed}", :token => @auth_token
+          output = JSON.parse(response.body)
+        
+          get :index, :format => 'json', :filter => "ideas", :seed => "#{seed}", :token => @auth_token
+          output2 = JSON.parse(response.body)
+        
+          output.length.should == output2.length
+        
+          output.each_with_index do |jawn, index|
+            jawn["id"].should == output2[index]["id"]
+          end
+        end
+        
+        describe "offset" do
+        
+          it "uses the same order as without the offset" do
+            seed = 0.3
+        
+            get :index, :format => 'json', :filter => "ideas", :seed => "#{seed}", :token => @auth_token
+            output = JSON.parse(response.body)
+        
+            get :index, :format => 'json', :filter => "ideas", :seed => "#{seed}", :token => @auth_token, :offset => 5
+            output2 = JSON.parse(response.body)
+        
+            output2.length.should == output.length - 5
+        
+            output2.each_with_index do |jawn, index|
+              jawn["id"].should == output[index + 5]["id"]
+            end
+          end
+        
         end
 
       end
@@ -231,6 +350,69 @@ describe V1::JawnsController do
           end
         end
         
+      end
+      
+      describe "random sorting" do
+
+        it "returns the correct sparks" do
+          seed = 0.3
+
+          get :index, :format => 'json', :filter => "sparks", :seed => "#{seed}", :token => @auth_token
+          output = JSON.parse(response.body)
+
+          output.should be_a_kind_of(Array)
+          output.length.should == @sparks.length
+          
+          spark_ids = @sparks.map(&:id)
+          ids = []
+          
+          output.each do |jawn|
+            ids << jawn["id"]
+          end
+          
+          ids.each do |id|
+            spark_ids.delete id
+          end
+          
+          spark_ids.should be_empty
+        end
+        
+        it "returns the same sparks with the same seed" do
+          seed = 0.3
+        
+          get :index, :format => 'json', :filter => "sparks", :seed => "#{seed}", :token => @auth_token
+          output = JSON.parse(response.body)
+        
+          get :index, :format => 'json', :filter => "sparks", :seed => "#{seed}", :token => @auth_token
+          output2 = JSON.parse(response.body)
+        
+          output.length.should == output2.length
+        
+          output.each_with_index do |jawn, index|
+            jawn["id"].should == output2[index]["id"]
+          end
+        end
+        
+        describe "offset" do
+        
+          it "uses the same order as without the offset" do
+            seed = 0.3
+        
+            get :index, :format => 'json', :filter => "sparks", :seed => "#{seed}", :token => @auth_token
+            output = JSON.parse(response.body)
+        
+            get :index, :format => 'json', :filter => "sparks", :seed => "#{seed}", :token => @auth_token, :offset => 5
+            output2 = JSON.parse(response.body)
+        
+            output2.length.should == output.length - 5
+        
+            output2.each_with_index do |jawn, index|
+              jawn["id"].should == output[index + 5]["id"]
+            end
+          end
+        
+        end
+
       end
       
     end
