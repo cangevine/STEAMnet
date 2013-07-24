@@ -15,7 +15,7 @@ class V1::JawnsController < ApplicationController
         sparks = Spark.limit(params[:limit])
         ideas = Idea.limit(params[:limit])
         
-        int = ((seed + 1) * 10).to_i
+        int = ((seed + 1) * 10000).to_i
         @jawns = (sparks + ideas).shuffle(random: Random.new(int))
 
         if params[:offset]
