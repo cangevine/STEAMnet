@@ -263,4 +263,24 @@ describe Spark do
     
   end
   
+  describe "random" do
+    
+    before do
+      10.times do
+        FactoryGirl.create(:spark)
+      end
+    end
+    
+    it "should randomize the sparks" do
+      Spark.random(0.4).map(&:id).should_not == Spark.all.map(&:id)
+    end
+    
+    it "should return the same order for the same seed" do
+      Spark.random(0.4).map(&:id).should == Spark.random(0.4).map(&:id)
+      Spark.random(0.3).map(&:id).should == Spark.random(0.3).map(&:id)
+      Spark.random(0.3).map(&:id).should_not == Spark.random(0.4).map(&:id)
+    end
+    
+  end
+  
 end

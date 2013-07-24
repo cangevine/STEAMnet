@@ -24,8 +24,8 @@ ActiveRecord::Schema.define(version: 20130719224155) do
   create_table "comments", force: true do |t|
     t.text     "comment_text"
     t.integer  "user_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "commentable_id"
     t.string   "commentable_type"
   end
@@ -40,8 +40,8 @@ ActiveRecord::Schema.define(version: 20130719224155) do
 
   create_table "ideas", force: true do |t|
     t.text     "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "user_id"
   end
 
@@ -55,8 +55,8 @@ ActiveRecord::Schema.define(version: 20130719224155) do
     t.string   "content_type",      limit: 1
     t.text     "content"
     t.string   "content_hash"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "file_file_name"
     t.string   "file_content_type"
     t.integer  "file_file_size"
@@ -69,8 +69,8 @@ ActiveRecord::Schema.define(version: 20130719224155) do
   end
 
   create_table "tag_linkers", force: true do |t|
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "tagable_id"
     t.string   "tagable_type"
     t.integer  "tag_id"
@@ -78,15 +78,15 @@ ActiveRecord::Schema.define(version: 20130719224155) do
 
   create_table "tags", force: true do |t|
     t.string   "tag_text"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", force: true do |t|
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

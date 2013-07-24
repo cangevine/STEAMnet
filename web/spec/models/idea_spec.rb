@@ -143,4 +143,24 @@ describe Idea do
     
   end
   
+  describe "random" do
+    
+    before do
+      10.times do
+        FactoryGirl.create(:idea)
+      end
+    end
+    
+    it "should randomize the ideas" do
+      Idea.random(0.4).map(&:id).should_not == Idea.all.map(&:id)
+    end
+    
+    it "should return the same order for the same seed" do
+      Idea.random(0.4).map(&:id).should == Idea.random(0.4).map(&:id)
+      Idea.random(0.3).map(&:id).should == Idea.random(0.3).map(&:id)
+      Idea.random(0.3).map(&:id).should_not == Idea.random(0.4).map(&:id)
+    end
+    
+  end
+  
 end
