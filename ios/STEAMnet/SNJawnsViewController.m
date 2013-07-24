@@ -54,7 +54,8 @@
     [self.refreshControl addTarget:self action:@selector(fetchData) forControlEvents:UIControlEventValueChanged];
     [self.collectionView addSubview:self.refreshControl];
     
-    self.collectionView.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0];
+//    self.collectionView.backgroundColor = [UIColor colorWithRed:0.75 green:0.75 blue:0.75 alpha:1.0];
+    self.collectionView.backgroundColor = [UIColor blackColor];
     
     self.title = @"STEAMnet";
     

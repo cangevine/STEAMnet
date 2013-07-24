@@ -24,6 +24,9 @@
 
 @property (nonatomic, retain) UIImage *cachedImage;
 
++ (UIColor *)colorForSparkType:(NSString *)sparkType;
++ (UIColor *)colorForContentType:(NSString *)contentType;
+
 @end
 
 @interface Spark (CoreDataGeneratedAccessors)

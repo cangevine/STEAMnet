@@ -18,6 +18,8 @@
 		500BEB341795F77900445498 /* Spark.m in Sources */ = {isa = PBXBuildFile; fileRef = 500BEB331795F77900445498 /* Spark.m */; };
 		500BEB351795F77900445498 /* Spark.m in Sources */ = {isa = PBXBuildFile; fileRef = 500BEB331795F77900445498 /* Spark.m */; };
 		500BEB811795F8DF00445498 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 500BEB801795F8DF00445498 /* CoreData.framework */; };
+		505321D9179DD92D007F9D9B /* SNNewSparkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 505321D8179DD92D007F9D9B /* SNNewSparkViewController.m */; };
+		505321DA179DD92D007F9D9B /* SNNewSparkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 505321D8179DD92D007F9D9B /* SNNewSparkViewController.m */; };
 		5056A6AC179DADE200B1CC6A /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 5056A6AB179DADE200B1CC6A /* UIImage+ImageEffects.m */; };
 		5056A6AD179DADE200B1CC6A /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 5056A6AB179DADE200B1CC6A /* UIImage+ImageEffects.m */; };
 		50ACBC771794C42C00369378 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50ACBC761794C42C00369378 /* Foundation.framework */; };
@@ -75,6 +77,8 @@
 		500BEB321795F77900445498 /* Spark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Spark.h; sourceTree = "<group>"; };
 		500BEB331795F77900445498 /* Spark.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Spark.m; sourceTree = "<group>"; };
 		500BEB801795F8DF00445498 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		505321D7179DD92D007F9D9B /* SNNewSparkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNNewSparkViewController.h; sourceTree = "<group>"; };
+		505321D8179DD92D007F9D9B /* SNNewSparkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNNewSparkViewController.m; sourceTree = "<group>"; };
 		5056A6AA179DADE200B1CC6A /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
 		5056A6AB179DADE200B1CC6A /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		50ACBC731794C42C00369378 /* STEAMnet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = STEAMnet.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -196,6 +200,8 @@
 				50ACBC851794C42D00369378 /* SNAppDelegate.h */,
 				50ACBC861794C42D00369378 /* SNAppDelegate.m */,
 				50ACBC881794C42D00369378 /* Main.storyboard */,
+				505321D7179DD92D007F9D9B /* SNNewSparkViewController.h */,
+				505321D8179DD92D007F9D9B /* SNNewSparkViewController.m */,
 				50CF80091794C915003262F1 /* SNJawnsViewController.h */,
 				50CF800A1794C915003262F1 /* SNJawnsViewController.m */,
 				50E959981798A75B00CB8C5B /* NSDate+RailsDates.h */,
@@ -345,6 +351,7 @@
 				50E9599A1798A75B00CB8C5B /* NSDate+RailsDates.m in Sources */,
 				50E9599617989C3C00CB8C5B /* SNAPIHelper.m in Sources */,
 				50CF80171794EF71003262F1 /* SNLoginViewController.m in Sources */,
+				505321D9179DD92D007F9D9B /* SNNewSparkViewController.m in Sources */,
 				500BEB2C1795F77900445498 /* Tag.m in Sources */,
 				500BEB301795F77900445498 /* Idea.m in Sources */,
 				50CF80131794EB9D003262F1 /* SNIdeaCell.m in Sources */,
@@ -377,6 +384,7 @@
 				50CF80141794EB9D003262F1 /* SNIdeaCell.m in Sources */,
 				50CCC06E179DB7E900ED501D /* SNSparkOverlayView.m in Sources */,
 				500BEB291795F77900445498 /* Comment.m in Sources */,
+				505321DA179DD92D007F9D9B /* SNNewSparkViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

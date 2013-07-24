@@ -8,6 +8,8 @@
 
 #import "SNSparkOverlayView.h"
 
+#import "Spark.h"
+
 @implementation SNSparkOverlayView
 
 @synthesize color;
@@ -25,13 +27,7 @@
 {
     _sparkType = theSparkType;
     
-    if ([_sparkType isEqual:@"I"]) {
-        color = [UIColor colorWithRed:87.0/255.0 green:87.0/255.0 blue:237.0/255.0 alpha:1.0];
-    } else if ([_sparkType isEqual:@"P"]) {
-        color = [UIColor colorWithRed:237.0/255.0 green:87.0/255.0 blue:87.0/255.0 alpha:1.0];
-    } else if ([_sparkType isEqual:@"W"]) {
-        color = [UIColor colorWithRed:87.0/255.0 green:237.0/255.0 blue:87.0/255.0 alpha:1.0];
-    }
+    color = [Spark colorForSparkType:_sparkType];
 }
 
 - (void)drawRect:(CGRect)rect
