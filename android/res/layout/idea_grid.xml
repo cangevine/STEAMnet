@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/idea_grid"
+    android:layout_width="200dp"
+    android:layout_height="200dp"
+    android:orientation="vertical" >
+    
+    <!-- top horizontal row -->
+    <LinearLayout
+        android:layout_height="100dp"
+        android:layout_width="fill_parent"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal" >
+        
+        <LinearLayout
+            android:padding="5dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp">
+
+            <ImageView
+                android:id="@+id/idea_grid_top_left"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:scaleType="centerCrop" />
+	        
+	    </LinearLayout>
+        
+         <LinearLayout
+            android:padding="5dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp">
+        
+	        <ImageView
+		        android:id="@+id/idea_grid_top_right"
+		        android:layout_width="100dp"
+		        android:layout_height="100dp"
+		        android:scaleType="centerCrop" />
+	        
+	    </LinearLayout>
+        
+    </LinearLayout>
+    
+    <!-- bottom horizontal row -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal" >
+
+         <LinearLayout
+            android:padding="5dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp">
+        
+	        <ImageView
+		        android:id="@+id/idea_grid_bottom_left"
+		        android:layout_width="100dp"
+		        android:layout_height="100dp"
+		        android:scaleType="centerCrop" />
+	        
+	    </LinearLayout>
+
+         <LinearLayout
+            android:padding="5dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp">
+        
+	        <ImageView
+		        android:id="@+id/idea_grid_bottom_right"
+		        android:layout_width="100dp"
+		        android:layout_height="100dp"
+		        android:scaleType="centerCrop" />
+	        
+	    </LinearLayout>
+
+    </LinearLayout>
+    
+</LinearLayout>

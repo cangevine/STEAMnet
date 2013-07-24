@@ -81,4 +81,8 @@ public class IndexGrid {
 		return endlessScroller;
 	}
 	
+	public Context getContext() {
+		return context;
+	}
+	
 }

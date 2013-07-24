@@ -3,6 +3,8 @@ package org.friendscentral.steamnet.BaseClasses;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import android.graphics.Bitmap;
+
 /**
  * 
  * @author sambeckley
@@ -19,6 +21,7 @@ public class Idea extends Jawn implements Serializable{
 	String[] createdAts;
 	String firstCreatedAt;
 	Comment[] comments;
+	Bitmap[] sparkThumbs;
 	
 	/**
 	 * @param (int, String, String[], int[], int[], String)
@@ -176,6 +179,10 @@ public class Idea extends Jawn implements Serializable{
 		tags = s;
 	}
 	
+	public int[] getIds() {
+		return sparkIds;
+	}
+	
 	public void setIds(int[] i){
 		sparkIds = i;
 	}
@@ -195,4 +202,26 @@ public class Idea extends Jawn implements Serializable{
 	public Comment[] getComments() {
 		return comments;
 	}
+	
+	public Bitmap[] getBitmaps() {
+		return sparkThumbs;
+	}
+	
+	public Bitmap getBitmap(int i) {
+		if (i < sparkThumbs.length) { 
+			return sparkThumbs[i];
+		}
+		return null;
+	}
+	
+	public void setBitmaps(Bitmap[] b) {
+		sparkThumbs = b;
+	}
+	
+	public void setBitmap(Bitmap b, int i) {
+		if (i < sparkThumbs.length) { 
+			sparkThumbs[i] = b;
+		}
+	}
+
 }

@@ -221,6 +221,7 @@ public class GetXJawns {
                 	    }
                 	    
                 	    int[] sparkIdArray = new int[sparkIdArrayList.size()];
+                	    Log.v("Spark Id Array:", sparkIdArrayList.toString());
                 	    
                 	    for(int w = 0; w < sparkIdArrayList.size(); w++){
                 	    	sparkIdArray[w] = sparkIdArrayList.get(w);
@@ -254,8 +255,9 @@ public class GetXJawns {
                 	    
                 	    String[] tags = new String[10];
                 	    
-                	    
-                	    jawnArrayList.add(new Idea(id, description, tags, sparkIdArray, userIds, user, createdAt, commentArray));
+                	    Idea idea = new Idea(id, description, tags, sparkIdArray, userIds, user, createdAt, commentArray);
+                	    idea.setBitmaps(new Bitmap[sparkIdArray.length]);
+                	    jawnArrayList.add(idea);
                 	    
         	        }
         	    }

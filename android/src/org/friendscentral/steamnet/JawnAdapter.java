@@ -7,12 +7,13 @@ import org.friendscentral.steamnet.BaseClasses.Idea;
 import org.friendscentral.steamnet.BaseClasses.Jawn;
 import org.friendscentral.steamnet.BaseClasses.Spark;
 
-import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -332,25 +333,36 @@ public class JawnAdapter extends BaseAdapter {
 		    	LinearLayout ideaInfo = new LinearLayout(mContext);
 		    	ideaInfo.setOrientation(LinearLayout.VERTICAL);
 		    	ideaInfo.setBackgroundColor(Color.WHITE);
-		    	ideaInfo.setPadding(8, 8, 8, 8);
 		    	ideaInfo.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT));
 			    ideaInfo.setGravity(Gravity.CENTER);
+			    
+			    FrameLayout frameLayout = new FrameLayout(mContext);
+		        frameLayout.setLayoutParams(new FrameLayout.LayoutParams(image_size, image_size));
+		        frameLayout.setForegroundGravity(Gravity.CENTER);
+		        frameLayout.setBackgroundResource(R.drawable.spark_content_bg);
+		        
+		        LayoutInflater inflater = LayoutInflater.from(mContext);
+				LinearLayout grid = (LinearLayout) inflater.inflate(R.layout.idea_grid, null);
 		    	
-		    	//Prelim stuff for the spark:
-		    	LinearLayout layout = new LinearLayout(mContext);
-	    		layout.setOrientation(LinearLayout.VERTICAL);
-		        
-		        TextView t = new TextView(mContext);
-		        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(image_size, image_size);
-		        t.setLayoutParams(lp);
-		        t.setTextSize(150);
-		        t.setGravity(Gravity.CENTER);
-		        t.setBackgroundResource(R.drawable.spark_content_bg);
-		        t.setPadding(4, 0, 4, 4);
-		        t.setText(String.valueOf(idea.getSparkIds().length));
-		        layout.addView(t);
-		        
-		        contentView = layout;
+				if (idea.getBitmaps() != null) {
+					frameLayout.addView(grid);
+					if (idea.getBitmap(0) != null)
+						((ImageView) grid.findViewById(R.id.idea_grid_top_left)).setImageBitmap(idea.getBitmap(0));
+					if (idea.getBitmap(1) != null)
+						((ImageView) grid.findViewById(R.id.idea_grid_top_right)).setImageBitmap(idea.getBitmap(1));
+					if (idea.getBitmap(2) != null)
+						((ImageView) grid.findViewById(R.id.idea_grid_bottom_left)).setImageBitmap(idea.getBitmap(2));
+					if (idea.getBitmap(3) != null)
+						((ImageView) grid.findViewById(R.id.idea_grid_bottom_right)).setImageBitmap(idea.getBitmap(3));
+		        } 
+				if (idea.getBitmap(0) == null) {
+		        	ProgressBar pb = new ProgressBar(mContext);
+		        	pb.setPadding(50, 50, 50, 50);
+		        	frameLayout.addView(pb);
+		        }
+
+				
+		        contentView = frameLayout;
 		        
 		        //Attach content
 				ideaInfo.addView(contentView);
