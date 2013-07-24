@@ -118,7 +118,7 @@ describe V1::JawnsController do
         output.should be_a_kind_of(Array)
         output.length.should == @jawns.length
         
-        jawns = (Spark.all + Idea.all).shuffle(random: Random.new((seed+1)*10))
+        jawns = (Spark.all + Idea.all).shuffle(random: Random.new((seed+1)*10000))
         
         output.each_with_index do |jawn, index|
           jawn["jawn_type"].should == jawns[index].class.to_s.downcase
