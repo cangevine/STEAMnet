@@ -15,4 +15,9 @@ class Idea < ActiveRecord::Base
   has_many :comments, :as => :commentable, :dependent => :destroy
   has_many :tags, :through => :tag_linkers
   has_many :tag_linkers, :as => :tagable
+  
+  def self.random(seed)
+    self.connection.execute "select setseed(#{seed})"
+    return self.order("RANDOM()")
+  end
 end
