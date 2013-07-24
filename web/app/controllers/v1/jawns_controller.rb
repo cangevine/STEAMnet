@@ -6,7 +6,7 @@ class V1::JawnsController < ApplicationController
   def index
     seed = params[:seed].to_f
     
-    if (seed >= -1) && (seed != 0) && (seed <= 1)
+    if (seed >= -1) && (seed <= 1)
       if params[:filter] == "sparks"
         @jawns = Spark.random(seed).offset(params[:offset]).limit(params[:limit])
       elsif params[:filter] == "ideas"
