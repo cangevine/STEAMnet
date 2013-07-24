@@ -93,6 +93,14 @@ public class Idea extends Jawn implements Serializable{
 			tags[q] = tagsArrayList.get(q);
 		}
 	}
+	/**
+	 * 
+	 */
+	public Idea(int i, String d, String ca) {
+		id = i;
+		description = d;
+		firstCreatedAt = ca;
+	}
 	
 	/**
 	 * id = -1, tags/sparks = empty, ArrayLists, username = ""
@@ -167,8 +175,8 @@ public class Idea extends Jawn implements Serializable{
 	 * 
 	 * @return The ID of the first user (presumably the first person to create the idea)
 	 */
-	public int getUser(){
-		return userIds[0];
+	public String getUser(){
+		return firstUser;
 	}
 	
 	public int[] getUsers(){

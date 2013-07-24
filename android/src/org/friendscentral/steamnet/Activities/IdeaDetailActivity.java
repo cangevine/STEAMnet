@@ -69,7 +69,7 @@ public class IdeaDetailActivity extends Activity {
 		//title = idea.getTitle();
 		sparkIds = idea.getSparkIds();
 		date = idea.getCreatedAt();
-		userID = idea.getUser();
+		userID = idea.getUsers()[0];
 		comments = idea.getComments();
 		// TODO get user from ID
 		user = "--an unknown user--";

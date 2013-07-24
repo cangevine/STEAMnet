@@ -110,6 +110,16 @@ public class Spark extends Jawn implements Serializable {
 		createdAts = ca;
 	}
 	/**
+	 * 
+	 */
+	public Spark(int i, char st, char ct, String c, String ca) {
+		id = i;
+		sparkType = st;
+		contentType = ct;
+		content = c;
+		firstCreatedAt = ca;
+	}
+	/**
 	 * (int, char, char, String)
 	 * @param int - id
 	 * @param char - sparkType
@@ -235,7 +245,7 @@ public class Spark extends Jawn implements Serializable {
 	}
 	
 	public String getDate(){
-		return createdAts[0];
+		return firstCreatedAt;
 	}
 	
 	public String toString(){

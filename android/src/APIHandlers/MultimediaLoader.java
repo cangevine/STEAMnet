@@ -13,11 +13,13 @@ import org.friendscentral.steamnet.JawnAdapter;
 import org.friendscentral.steamnet.BaseClasses.Idea;
 import org.friendscentral.steamnet.BaseClasses.Jawn;
 import org.friendscentral.steamnet.BaseClasses.Spark;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.squareup.okhttp.OkHttpClient;
 
@@ -58,9 +60,9 @@ public class MultimediaLoader {
 		
 		@Override
 		protected InputStream doInBackground(String... args) {
-			if (jawn.getType() == 'S' && !jAdapter.getLoadedList().get(position)) {
+			if (jawn.getType() == 'S') {
 				spark = jawn.getSelfSpark();
-				if (spark.getContentType() != 'T' && spark.getContentType() != 'A') {
+				if (spark.getBitmap() == null && spark.getContentType() != 'T' && spark.getContentType() != 'A') {
 					if (spark.getCloudLink() != null) {
 						try {
 							String url = spark.getCloudLink();
@@ -80,51 +82,67 @@ public class MultimediaLoader {
 					}
 				}
 			} else if (jawn.getType() == 'I') {
+				final String SPARKS = "sparks";
+				final String ID = "id";
+				
 				idea = jawn.getSelfIdea();
 				unloadedThumbs = new ArrayList<Integer>();
 				ideaSparksJSON = new ArrayList<String>();
 				
-				int index = 0;
-				for (int sparkId : idea.getIds()) {
-					Log.v("MultimediaLoader", "Searching for Spark ID "+sparkId);
-					for (int i = 0; i < jAdapter.getJawns().length; i++) {
-						Spark compareSpark = jAdapter.getJawns()[i].getSelfSpark(); 
-						if (compareSpark != null) {
-							Log.v("MultimediaLoader", "CompareSpark isn't null. It's ID: "+compareSpark.getId());
-							if (compareSpark.getId() == sparkId) {
-								Log.v("MultimediaLoader:", "Found a corresponding spark");
-								if (compareSpark.getBitmap() != null) {
-									Log.v("MultimediaLoader:", "Loading bitmap from spark");
-									idea.setBitmap(compareSpark.getBitmap(), index);
-								} else {
-									Log.v("MultimediaLoader:", "Saving spark to help later");
-									savedIndices[index] = i;
+				String fullIdeaUrl = "http://steamnet.herokuapp.com/api/v1/ideas/"+idea.getId()+".json";
+				try {
+					JSONObject fullIdeaJSON = new JSONObject(get(new URL(fullIdeaUrl)));
+					JSONArray sparkArray = fullIdeaJSON.getJSONArray(SPARKS);
+					int[] sparkIds = new int[sparkArray.length()];
+					for (int i = 0; i < sparkArray.length(); i++) {
+						JSONObject specificSpark = (JSONObject) sparkArray.get(i);
+						sparkIds[i] = specificSpark.getInt(ID);
+					}
+					idea.setIds(sparkIds);
+					idea.setBitmaps(new Bitmap[sparkIds.length]);
+					
+					int index = 0;
+					for (int sparkId : idea.getIds()) {
+						for (int i = 0; i < jAdapter.getJawns().length; i++) {
+							Spark compareSpark = jAdapter.getJawns()[i].getSelfSpark(); 
+							if (compareSpark != null) {
+								if (compareSpark.getId() == sparkId) {
+									if (compareSpark.getBitmap() != null) {
+										idea.setBitmap(compareSpark.getBitmap(), index);
+									} else {
+										savedIndices[index] = i;
+									}
+									break;
 								}
-								break;
 							}
 						}
+						index++;
 					}
-					index++;
-				}
-				
-				index = 0;
-				for (Bitmap bitmap : idea.getBitmaps()) {
-					if (bitmap == null) {
-						if (unloadedThumbs.size() < 4) {
-							unloadedThumbs.add(index);
-							String url = "http://steamnet.herokuapp.com/api/v1/sparks/"+idea.getIds()[index]+".json";
-							try {
-								ideaSparksJSON.add(get(new URL(url)));
-							} catch (MalformedURLException e) {
-								e.printStackTrace();
-							} catch (IOException e) {
-								e.printStackTrace();
-							}	
+					
+					index = 0;
+					for (Bitmap bitmap : idea.getBitmaps()) {
+						if (bitmap == null) {
+							if (unloadedThumbs.size() < 4) {
+								unloadedThumbs.add(index);
+								String url = "http://steamnet.herokuapp.com/api/v1/sparks/"+idea.getIds()[index]+".json";
+								try {
+									ideaSparksJSON.add(get(new URL(url)));
+								} catch (MalformedURLException e) {
+									e.printStackTrace();
+								} catch (IOException e) {
+									e.printStackTrace();
+								}	
+							}
 						}
+						index++;
 					}
-					index++;
+				} catch (MalformedURLException e1) {
+					e1.printStackTrace();
+				} catch (JSONException e1) {
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					e1.printStackTrace();
 				}
-				
 			}
 			return null;
 		}

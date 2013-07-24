@@ -282,7 +282,7 @@ public class JawnAdapter extends BaseAdapter {
 			    	
 			    	//Attach user info:
 			    	String user = "by ";
-			    	if (!spark.getUser().equals("")) {
+			    	if (spark.getUser() != null) {
 			    		user += spark.getUser();
 			    	} else {
 			    		user += "an unknown user";
@@ -354,8 +354,7 @@ public class JawnAdapter extends BaseAdapter {
 						((ImageView) grid.findViewById(R.id.idea_grid_bottom_left)).setImageBitmap(idea.getBitmap(2));
 					if (idea.getBitmap(3) != null)
 						((ImageView) grid.findViewById(R.id.idea_grid_bottom_right)).setImageBitmap(idea.getBitmap(3));
-		        } 
-				if (idea.getBitmap(0) == null) {
+		        } else  {
 		        	ProgressBar pb = new ProgressBar(mContext);
 		        	pb.setPadding(50, 50, 50, 50);
 		        	frameLayout.addView(pb);
@@ -369,12 +368,13 @@ public class JawnAdapter extends BaseAdapter {
 				
 				//Attach user info:
 				TextView userInfo = new TextView(mContext);
-				int userID = idea.getUser();
-				String user = "";
-				if (userID == 0 || userID == 1) {
-					user = "an unknown user";
+				String user = "by an unknown user";
+				if (idea.getUser() != null) {
+					// TODO update:
+					user = "max";
 				}
-				userInfo.setText("By "+user);
+				userInfo.setText("by "+user);
+				userInfo.setPadding(8, 0, 8, 0);
 				ideaInfo.addView(userInfo);
 				
 				//Attach date info:
@@ -382,6 +382,7 @@ public class JawnAdapter extends BaseAdapter {
 				String a = "a";
 				TextView dateInfo = new TextView(mContext);
 				dateInfo.setText(date);
+				dateInfo.setPadding(8, 0, 8, 0);
 				ideaInfo.addView(dateInfo);
 				
 				ideaInfo.setBackgroundResource(R.drawable.idea_bg);
