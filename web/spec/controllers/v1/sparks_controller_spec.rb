@@ -43,6 +43,23 @@ describe V1::SparksController do
       end
     end
     
+    describe "lite response" do
+      
+      it "only returns ids and stuff" do
+        get :index, :format => 'json', :lite => "true", :token => @auth_token
+        output = JSON.parse(response.body)
+        
+        output.should be_a_kind_of(Array)
+        
+        output.each do |spark|
+          spark["id"].should_not be_nil
+          spark["users"].should be_nil
+          spark["ideas"].should be_nil
+        end
+      end
+      
+    end
+    
   end
   
   describe "GET 'show'" do
@@ -63,6 +80,21 @@ describe V1::SparksController do
       output.should be_a_kind_of(Hash)
       output["content_hash"].should == @spark.content_hash
       output["file"].should_not be_nil
+    end
+    
+    describe "lite response" do
+      
+      it "only returns id and stuff" do
+        get :show, :id => @spark, :format => 'json', :lite => "true", :token => @auth_token
+        output = JSON.parse(response.body)
+        
+        output.should be_a_kind_of(Hash)
+        
+        output["id"].should_not be_nil
+        output["users"].should be_nil
+        output["ideas"].should be_nil
+      end
+      
     end
     
   end
