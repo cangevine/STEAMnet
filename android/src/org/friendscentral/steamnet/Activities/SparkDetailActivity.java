@@ -115,10 +115,7 @@ public class SparkDetailActivity extends Activity {
 	
 	public void logOut() {
 		STEAMnetApplication sna = (STEAMnetApplication) getApplication();
-		sna.setToken(null);
-		sna.setUserId(null);
-		sna.setUsername(null);
-		sna.setReadOnlyMode(true);
+		sna.logOut();
 		ActionBar actionBar = getActionBar();
     	actionBar.setCustomView(R.layout.log_in_action_bar);
     	actionBar.getCustomView().findViewById(R.id.log_in_button).setOnClickListener(new OnClickListener() {

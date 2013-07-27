@@ -132,10 +132,8 @@ public class IdeaDetailActivity extends Activity {
 		
 		int userID = 0;
 		STEAMnetApplication sna = (STEAMnetApplication) getApplication();
-		if (sna.getUserId() != null) {
+		if (!sna.getReadOnlyMode()) {
 			userID = Integer.valueOf(sna.getUserId());
-		}
-		if (sna.getUsername() != null) {
 			String username = sna.getUsername();
 			ListView commentSection = (ListView) findViewById(R.id.CommentList);
 			CommentAdapter c = (CommentAdapter) commentSection.getAdapter();
@@ -193,10 +191,7 @@ public class IdeaDetailActivity extends Activity {
 	
 	public void logOut() {
 		STEAMnetApplication sna = (STEAMnetApplication) getApplication();
-		sna.setToken(null);
-		sna.setUserId(null);
-		sna.setUsername(null);
-		sna.setReadOnlyMode(true);
+		sna.logOut();
 		ActionBar actionBar = getActionBar();
     	actionBar.setCustomView(R.layout.log_in_action_bar);
     	actionBar.getCustomView().findViewById(R.id.log_in_button).setOnClickListener(new OnClickListener() {

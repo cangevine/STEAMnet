@@ -114,10 +114,8 @@ public abstract class DetailFiller {
 		
 		int userID = 0;
 		STEAMnetApplication sna = (STEAMnetApplication) ((SparkDetailActivity) context).getApplication();
-		if (sna.getUserId() != null) {
+		if (!sna.getReadOnlyMode()) {
 			userID = Integer.valueOf(sna.getUserId());
-		}
-		if (sna.getUsername() != null) {
 			String username = sna.getUsername();
 			ListView commentSection = (ListView) (((SparkDetailActivity) context).findViewById(R.id.spark_social_section)).findViewById(R.id.CommentList);
 			CommentAdapter c = (CommentAdapter) commentSection.getAdapter();

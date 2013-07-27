@@ -91,6 +91,7 @@ public class Spark extends Jawn implements Serializable {
 		contentType = ct;
 		content = c;
 		createdAts = ca;
+		firstCreatedAt = createdAts[0];
 		userIds = u;
 		firstUser = fu;
 	}
