@@ -105,7 +105,7 @@ public class GetXJawns {
 				JawnAdapter a = new JawnAdapter(gridView.getContext(), jawns, 200);
 				Log.v("REPORT", "WE HAVE ACCESSED THE JAWNADAPTER AND ARE PROCEEDING AS PLANNED, SIR!");
 				indexGrid.setAdapter(a);
-				indexGrid.setJawns(jawns);
+				indexGrid.setJawnsWithCaching(jawns);
 				if (mainActivity != null) {
 					mainActivity.setSparkEventHandlers();
 					mainActivity.setScrollListener();

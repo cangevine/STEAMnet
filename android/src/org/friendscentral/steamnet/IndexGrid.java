@@ -37,11 +37,10 @@ public class IndexGrid {
     	
     	if (!isIdeaDetailActivity) {
     		if (datasource.getAllJawns() != null && datasource.getAllJawns().length > 0) {
-    			Log.v("Proof that isn't null:", datasource.getAllJawns()[0].toString());
-    			jawns = new Jawn[0];
-    			setAdapter(new JawnAdapter(context, new Jawn[0], 200));
+    			Log.v("IndexGrid init function", "Loading Jawns from cache");
     			new LoadJawnsFromCache(datasource, IndexGrid.this, context);
     		} else {
+    			Log.v("IndexGrid init function", "Loading Jawns from web");
     			gridview.setAdapter(new SpinnerAdapter(context, 16));
     			new GetXJawns(50, gridview, this, context);
     		}
@@ -61,16 +60,31 @@ public class IndexGrid {
 		gridview.setAdapter(adapter);
 	}
 	
-	public void setJawns(Jawn[] j){
-		Log.v("IndexGrid", "setJawns called");
+	public void setJawns(Jawn[] j) {
+		jawns = j;
+		adapter.setJawns(jawns);
+		adapter.notifyDataSetChanged();
+	}
+	
+	public void setJawnsWithCaching(Jawn[] j){
+		Log.v("IndexGrid", "setJawnsWithCaching called");
 		
 		jawns = j;
 		adapter.setJawns(jawns);
 		adapter.notifyDataSetChanged();
 		
+		Log.v("Size of DB before deleting:", ""+datasource.getAllJawns().length);
 		datasource.deleteAllJawnsInDb();
-		for (Jawn jawn : j)
+		Log.v("Size of DB after deleting:", ""+datasource.getAllJawns().length);
+		int numJawnsAdded = 0;
+		for (Jawn jawn : j) {
+			if (numJawnsAdded >= 50) {
+				break;
+			}
 			datasource.addJawnToDb(jawn);
+			numJawnsAdded++;
+		}
+		Log.v("Size of DB after caching:", ""+datasource.getAllJawns().length);
 	}
 	
 	public Jawn getJawnAt(int pos){

@@ -41,8 +41,7 @@ public class JawnsDataSource {
 	}
 	
 	public void deleteAllJawnsInDb() {
-		String delete = "DELETE FROM "+JawnOpenHelper.TABLE_JAWNS;
-	    database.rawQuery(delete, null);
+	    database.delete(JawnOpenHelper.TABLE_JAWNS, null, null);
 	}
 	
 	public void addJawnToDb(Jawn jawn) {

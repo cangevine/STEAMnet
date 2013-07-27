@@ -29,6 +29,11 @@ public class LoadJawnsFromCache {
 		protected String doInBackground(Void... arg0) {
 			Jawn[] cachedJawns = datasource.getAllJawns();
 			
+			/*for (Jawn cachedJawn : cachedJawns) {
+				Log.v("Jawn content::", cachedJawn.toString());
+			}*/
+			Log.v("Amount of jawns:", ""+cachedJawns.length);
+			
 			Log.v("CacheLoader", "executed");
 			
 			//Cut cached Jawns down to just 50, if needed
@@ -47,7 +52,9 @@ public class LoadJawnsFromCache {
 		
 		protected void onPostExecute(String s) {
 			Log.v("CacheLoader", "in post execute");
-			indexgrid.setJawns(jawnsFromCache);
+			
+			indexgrid.setAdapter(new JawnAdapter(context, jawnsFromCache, 200));
+			indexgrid.setJawns(indexgrid.getAdapter().getJawns());
 			new MultimediaLoader(indexgrid, indexgrid.getAdapter());
 			new UserLoader(indexgrid, indexgrid.getAdapter());
 		}
