@@ -2,23 +2,15 @@ class ApplicationController < ActionController::Base
   
   protect_from_forgery
   
-  # before_action :authenticate
-  
   private
     
-    def authenticate_new
+    def authenticate
       device = Device.find_by(token: params[:token])
       
-      head :unauthorized unless device
-      
-      @user = device.user
-    end
-    
-    def authenticate
-      @user = User.find_by(name: params[:username])
-      
-      unless @user
-        hash = { :error => "Invalid username." }
+      if device
+        @user = device.user
+      else
+        hash = { :error => "Invalid token." }
         respond_to do |format|
           format.json { render :json => hash, :status => :unauthorized }
         end
