@@ -43,6 +43,23 @@ describe V1::IdeasController do
       end
     end
     
+    describe "lite response" do
+      
+      it "only returns ids and stuff" do
+        get :index, :format => 'json', :lite => "true", :token => @auth_token
+        output = JSON.parse(response.body)
+        
+        output.should be_a_kind_of(Array)
+        
+        output.each do |idea|
+          idea["id"].should_not be_nil
+          idea["user"].should be_nil
+          idea["sparks"].should be_nil
+        end
+      end
+      
+    end
+    
   end
   
   describe "GET 'show'" do
@@ -62,6 +79,21 @@ describe V1::IdeasController do
       
       output.should be_a_kind_of(Hash)
       output["description"].should == @idea.description
+    end
+    
+    describe "lite response" do
+      
+      it "only returns id and stuff" do
+        get :show, :id => @idea, :format => 'json', :lite => "true", :token => @auth_token
+        output = JSON.parse(response.body)
+        
+        output.should be_a_kind_of(Hash)
+        
+        output["id"].should_not be_nil
+        output["user"].should be_nil
+        output["sparks"].should be_nil
+      end
+      
     end
     
   end
