@@ -109,6 +109,7 @@ public class Spark extends Jawn implements Serializable {
 		contentType = ct;
 		content = c;
 		createdAts = ca;
+		firstCreatedAt = createdAts[0];
 		userIds = new int[0];
 	}
 	/**
@@ -120,6 +121,8 @@ public class Spark extends Jawn implements Serializable {
 		contentType = ct;
 		content = c;
 		firstCreatedAt = ca;
+		createdAts = new String[1];
+		createdAts[0] = firstCreatedAt;
 		userIds = new int[0];
 	}
 	/**
@@ -224,11 +227,7 @@ public class Spark extends Jawn implements Serializable {
 	}
 	
 	public String getCreatedAt(){
-		if(createdAts[0] != null){
-			return createdAts[0];
-		} else {
-			return null;
-		}
+		return firstCreatedAt;
 	}
 	
 	public char getType(){

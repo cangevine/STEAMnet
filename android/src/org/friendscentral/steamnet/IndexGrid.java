@@ -4,6 +4,10 @@ import org.friendscentral.steamnet.BaseClasses.Jawn;
 import org.friendscentral.steamnet.EventHandlers.EndlessScroller;
 
 import APIHandlers.GetXJawns;
+import APIHandlers.LoadJawnsFromCache;
+import APIHandlers.MultimediaLoader;
+import APIHandlers.UserLoader;
+import CachingHandlers.JawnsDataSource;
 import android.content.Context;
 import android.util.Log;
 import android.widget.GridView;
@@ -19,23 +23,29 @@ public class IndexGrid {
 	GridView gridview;
 	Context context;
 	JawnAdapter adapter;
+	JawnsDataSource datasource;
 	EndlessScroller endlessScroller;
 	
 	private Jawn[] jawns;
 	
-	public void initIndexGrid(GridView g, Context c, boolean isIdeaDetailActivity) {
-		//Use setter methods:
+	public void initIndexGrid(GridView g, Context c, JawnsDataSource d, boolean isIdeaDetailActivity) {
+		Log.v("indexGrid", "Just called initIndexGrid!");
+		
 		gridview = g;
     	context = c;
+    	datasource = d;
     	
     	if (!isIdeaDetailActivity) {
-    		gridview.setAdapter(new SpinnerAdapter(context, 16));
-    	
-    		@SuppressWarnings("unused")
-    		GetXJawns task = new GetXJawns(50, gridview, this, context);
+    		if (datasource.getAllJawns() != null && datasource.getAllJawns().length > 0) {
+    			Log.v("Proof that isn't null:", datasource.getAllJawns()[0].toString());
+    			jawns = new Jawn[0];
+    			setAdapter(new JawnAdapter(context, new Jawn[0], 200));
+    			new LoadJawnsFromCache(datasource, IndexGrid.this, context);
+    		} else {
+    			gridview.setAdapter(new SpinnerAdapter(context, 16));
+    			new GetXJawns(50, gridview, this, context);
+    		}
     	}
-    	
-    	Log.v("indexGrid", "Just called initIndexGrid! Success!");
 	}
 	
 	public Jawn[] getJawns() {
@@ -52,9 +62,15 @@ public class IndexGrid {
 	}
 	
 	public void setJawns(Jawn[] j){
+		Log.v("IndexGrid", "setJawns called");
+		
 		jawns = j;
 		adapter.setJawns(jawns);
 		adapter.notifyDataSetChanged();
+		
+		datasource.deleteAllJawnsInDb();
+		for (Jawn jawn : j)
+			datasource.addJawnToDb(jawn);
 	}
 	
 	public Jawn getJawnAt(int pos){
