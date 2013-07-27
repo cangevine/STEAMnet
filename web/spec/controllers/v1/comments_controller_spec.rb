@@ -136,18 +136,18 @@ describe V1::CommentsController do
     describe "on a Spark" do
       
       it "is successful" do
-        post :create, :spark_id => @spark, :comment => @attr, :username => @test_user.name, :format => 'json', :token => @auth_token
+        post :create, :spark_id => @spark, :comment => @attr, :format => 'json', :token => @auth_token
         response.should be_success
       end
     
       it "should create the comment" do
         expect {
-          post :create, :spark_id => @spark, :comment => @attr, :username => @test_user.name, :format => 'json', :token => @auth_token
+          post :create, :spark_id => @spark, :comment => @attr, :format => 'json', :token => @auth_token
         }.to change { Comment.count }.by(1)
       end
       
       it "should return the comment" do
-        post :create, :spark_id => @spark, :comment => @attr, :username => @test_user.name, :format => 'json', :token => @auth_token
+        post :create, :spark_id => @spark, :comment => @attr, :format => 'json', :token => @auth_token
         output = JSON.parse(response.body)
 
         output.should be_a_kind_of(Hash)
@@ -155,13 +155,13 @@ describe V1::CommentsController do
       end
       
       it "should associate the user and the comment" do
-        post :create, :spark_id => @spark, :comment => @attr, :username => @test_user.name, :format => 'json', :token => @auth_token
+        post :create, :spark_id => @spark, :comment => @attr, :format => 'json', :token => @auth_token
         comment = Comment.last
         comment.user.should == @test_user
       end
       
       it "should associate the spark and the comment" do
-        post :create, :spark_id => @spark, :comment => @attr, :username => @test_user.name, :format => 'json', :token => @auth_token
+        post :create, :spark_id => @spark, :comment => @attr, :format => 'json', :token => @auth_token
         comment = Comment.find_by(comment_text: @attr[:comment_text])
         comment.commentable.should == @spark
       end
@@ -171,18 +171,18 @@ describe V1::CommentsController do
     describe "on an Idea" do
       
       it "is successful" do
-        post :create, :idea_id => @idea, :comment => @attr, :username => @test_user.name, :format => 'json', :token => @auth_token
+        post :create, :idea_id => @idea, :comment => @attr, :format => 'json', :token => @auth_token
         response.should be_success
       end
     
       it "should create the comment" do
         expect {
-          post :create, :idea_id => @idea, :comment => @attr, :username => @test_user.name, :format => 'json', :token => @auth_token
+          post :create, :idea_id => @idea, :comment => @attr, :format => 'json', :token => @auth_token
         }.to change { Comment.count }.by(1)
       end
       
       it "should return the comment" do
-        post :create, :idea_id => @idea, :comment => @attr, :username => @test_user.name, :format => 'json', :token => @auth_token
+        post :create, :idea_id => @idea, :comment => @attr, :format => 'json', :token => @auth_token
         output = JSON.parse(response.body)
 
         output.should be_a_kind_of(Hash)
@@ -190,13 +190,13 @@ describe V1::CommentsController do
       end
       
       it "should associate the user and the comment" do
-        post :create, :idea_id => @idea, :comment => @attr, :username => @test_user.name, :format => 'json', :token => @auth_token
+        post :create, :idea_id => @idea, :comment => @attr, :format => 'json', :token => @auth_token
         comment = Comment.last
         comment.user.should == @test_user
       end
       
       it "should associate the idea and the comment" do
-        post :create, :idea_id => @idea, :comment => @attr, :username => @test_user.name, :format => 'json', :token => @auth_token
+        post :create, :idea_id => @idea, :comment => @attr, :format => 'json', :token => @auth_token
         comment = Comment.last
         comment.commentable.should == @idea
       end
@@ -211,6 +211,9 @@ describe V1::CommentsController do
       @comment = FactoryGirl.create(:comment)
       @comment.user = @test_user
       @comment.save
+      
+      @wrong_user = FactoryGirl.create(:user)
+      @wrong_token = @wrong_user.devices.create(registration_id: "testid123").token
     end
     
     describe "on a Spark" do
@@ -223,13 +226,13 @@ describe V1::CommentsController do
       describe "with the correct user" do
         
         it "is successful" do
-          delete :destroy, :spark_id => @spark, :id => @comment, :username => @test_user.name, :format => 'json', :token => @auth_token
+          delete :destroy, :spark_id => @spark, :id => @comment, :format => 'json', :token => @auth_token
           response.should be_success
         end
 
         it "destroys the comment" do
           expect {
-            delete :destroy, :spark_id => @spark, :id => @comment, :username => @test_user.name, :format => 'json', :token => @auth_token
+            delete :destroy, :spark_id => @spark, :id => @comment, :format => 'json', :token => @auth_token
           }.to change { Comment.count }.by(-1)
         end
         
@@ -237,18 +240,14 @@ describe V1::CommentsController do
       
       describe "with the wrong user" do
         
-        before do
-          @wrong_user = FactoryGirl.create(:user)
-        end
-        
         it "isn't successful" do
-          delete :destroy, :spark_id => @spark, :id => @comment, :username => @wrong_user.name, :format => 'json', :token => @auth_token
+          delete :destroy, :spark_id => @spark, :id => @comment, :format => 'json', :token => @wrong_token
           response.should_not be_success
         end
 
         it "doesn't destroy the comment" do
           expect {
-            delete :destroy, :spark_id => @spark, :id => @comment, :username => @wrong_user.name, :format => 'json', :token => @auth_token
+            delete :destroy, :spark_id => @spark, :id => @comment, :format => 'json', :token => @wrong_token
           }.not_to change { Comment.count }
         end
         
@@ -266,13 +265,13 @@ describe V1::CommentsController do
       describe "with the correct user" do
         
         it "is successful" do
-          delete :destroy, :idea_id => @idea, :id => @comment, :username => @test_user.name, :format => 'json', :token => @auth_token
+          delete :destroy, :idea_id => @idea, :id => @comment, :format => 'json', :token => @auth_token
           response.should be_success
         end
 
         it "destroys the comment" do
           expect {
-            delete :destroy, :idea_id => @idea, :id => @comment, :username => @test_user.name, :format => 'json', :token => @auth_token
+            delete :destroy, :idea_id => @idea, :id => @comment, :format => 'json', :token => @auth_token
           }.to change { Comment.count }.by(-1)
         end
         
@@ -280,18 +279,14 @@ describe V1::CommentsController do
       
       describe "with the wrong user" do
         
-        before do
-          @wrong_user = FactoryGirl.create(:user)
-        end
-        
         it "isn't successful" do
-          delete :destroy, :idea_id => @idea, :id => @comment, :username => @wrong_user.name, :format => 'json', :token => @auth_token
+          delete :destroy, :idea_id => @idea, :id => @comment, :format => 'json', :token => @wrong_token
           response.should_not be_success
         end
 
         it "doesn't destroy the comment" do
           expect {
-            delete :destroy, :idea_id => @idea, :id => @comment, :username => @wrong_user.name, :format => 'json', :token => @auth_token
+            delete :destroy, :idea_id => @idea, :id => @comment, :format => 'json', :token => @wrong_token
           }.not_to change { Comment.count }
         end
         
