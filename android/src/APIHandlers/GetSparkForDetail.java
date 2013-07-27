@@ -79,7 +79,6 @@ public class GetSparkForDetail {
 				Spark spark = parseData(data);
 				new decodeMultimedia(spark);
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
         }
@@ -127,12 +126,11 @@ public class GetSparkForDetail {
     	        int userID = u.getInt(ID);
     	        usersArrayList.add(userID);
     	    }*/
-    	    int[] usersArray = new int[1];
-    	    // TODO DYNAMICALLY GET THE USER!!:
-    	    usersArray[0] = 1;
-    	    /*for(int q = 0; q < usersArrayList.size(); q++){
-    	    	usersArray[q] = usersArrayList.get(q);
-    	    }*/
+    	    int[] usersArray = new int[usersJSON.length()];
+    	    for (int i = 0; i < usersJSON.length(); i++) {
+    	    	usersArray[i] = usersJSON.getJSONObject(i).getInt(ID);
+    	    }
+    	    String username = usersJSON.getJSONObject(0).getString(NAME);
     	    
     	    String[] createdAts = new String[1];
     	    createdAts[0] = createdAt;
@@ -147,9 +145,9 @@ public class GetSparkForDetail {
     	    	String commentText = c.getString(COMMENT_TEXT);
     	    	JSONObject userObj = c.getJSONObject(USER);
     	    	String userId = userObj.getString(ID);
-    	    	String username = userObj.getString(NAME);
+    	    	String commentUsername = userObj.getString(NAME);
 
-    	    	commentsArrayList.add(new Comment(Integer.valueOf(userId), commentText, username));
+    	    	commentsArrayList.add(new Comment(Integer.valueOf(userId), commentText, commentUsername));
     	    }
     	    
     	    Comment[] commentArray = new Comment[commentsArrayList.size()];
@@ -169,6 +167,7 @@ public class GetSparkForDetail {
     	    		}
     	    	}
     	    }
+    	    newSpark.setUsername(username);
     	    return newSpark;
         }
 

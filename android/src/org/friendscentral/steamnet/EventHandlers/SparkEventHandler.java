@@ -59,7 +59,7 @@ public class SparkEventHandler {
 	    	Intent intent = new Intent(context, IdeaDetailActivity.class);
 	    	//intent.putExtra(EXTRA_MESSAGE, b);
 	    	Idea i = j.getSelfIdea();
-	    	intent.putExtra("idea", i);
+	    	intent.putExtra("id", i.getId());
 	    	mainActivity.startActivityForResult(intent, DETAIL_VIEW_RETURN);
 		}
     }

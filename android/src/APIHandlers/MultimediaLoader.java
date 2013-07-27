@@ -20,6 +20,7 @@ import org.json.JSONObject;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.squareup.okhttp.OkHttpClient;
 
@@ -46,7 +47,8 @@ public class MultimediaLoader {
 		Jawn jawn;
 		Spark spark;
 		Idea idea;
-		Integer[] savedIndices = { null, null, null, null };
+		//Integer[] savedIndices = { null, null, null, null };
+		int savedIndex = -1;
 		ArrayList<String> ideaSparksJSON;
 		ArrayList<Integer> unloadedThumbs;
 		boolean edited = false;
@@ -84,6 +86,10 @@ public class MultimediaLoader {
 			} else if (jawn.getType() == 'I') {
 				final String SPARKS = "sparks";
 				final String ID = "id";
+				final String CONTENT_TYPE = "content_type";
+				final String SPARK_TYPE = "spark_type";
+				final String CONTENT = "content";
+				final String FILE = "file";
 				
 				idea = jawn.getSelfIdea();
 				unloadedThumbs = new ArrayList<Integer>();
@@ -93,45 +99,63 @@ public class MultimediaLoader {
 				try {
 					JSONObject fullIdeaJSON = new JSONObject(get(new URL(fullIdeaUrl)));
 					JSONArray sparkArray = fullIdeaJSON.getJSONArray(SPARKS);
-					int[] sparkIds = new int[sparkArray.length()];
+					Spark[] sparks = new Spark[sparkArray.length()];
 					for (int i = 0; i < sparkArray.length(); i++) {
-						JSONObject specificSpark = (JSONObject) sparkArray.get(i);
-						sparkIds[i] = specificSpark.getInt(ID);
+						JSONObject sparkJSON = sparkArray.getJSONObject(i); 
+						int sparkId = sparkJSON.getInt(ID);
+						String content = sparkJSON.getString(CONTENT);
+						char sparkType = sparkJSON.getString(SPARK_TYPE).charAt(0);
+						char contentType = sparkJSON.getString(CONTENT_TYPE).charAt(0);
+						Spark newSpark = new Spark(sparkId, sparkType, contentType, content);
+						
+						if (sparkJSON.has(FILE)) {
+							String file = sparkJSON.getString(FILE);
+							newSpark.setCloudLink(file);
+						}
+						
+						sparks[i] = newSpark;
 					}
-					idea.setIds(sparkIds);
-					idea.setBitmaps(new Bitmap[sparkIds.length]);
+					idea.setSparks(sparks);
 					
 					int index = 0;
-					for (int sparkId : idea.getIds()) {
+					for (Spark spark : idea.getSparks()) {
 						for (int i = 0; i < jAdapter.getJawns().length; i++) {
 							Spark compareSpark = jAdapter.getJawns()[i].getSelfSpark(); 
 							if (compareSpark != null) {
-								if (compareSpark.getId() == sparkId) {
+								if (compareSpark.getId() == spark.getId()) {
 									if (compareSpark.getBitmap() != null) {
-										idea.setBitmap(compareSpark.getBitmap(), index);
+										spark.setBitmap(compareSpark.getBitmap());
+										idea.setSpark(index, spark);
+										edited = true;
+										break;
 									} else {
-										savedIndices[index] = i;
+										savedIndex = i;
 									}
-									break;
 								}
 							}
 						}
-						index++;
-					}
-					
-					index = 0;
-					for (Bitmap bitmap : idea.getBitmaps()) {
-						if (bitmap == null) {
-							if (unloadedThumbs.size() < 4) {
-								unloadedThumbs.add(index);
-								String url = "http://steamnet.herokuapp.com/api/v1/sparks/"+idea.getIds()[index]+".json";
+						if (spark.getBitmap() == null && spark.getContentType() != 'T' && spark.getContentType() != 'A') {
+							if (spark.getCloudLink() != null) {
 								try {
-									ideaSparksJSON.add(get(new URL(url)));
+									String url = spark.getCloudLink();
+									InputStream is = (InputStream) new URL(url).getContent();
+									Bitmap bitmap = BitmapFactory.decodeStream(is);
+									float aspectRatio = ((float) bitmap.getWidth()) / ((float) bitmap.getHeight());
+									Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, (int) (aspectRatio * 160), 160, true);
+									spark.setBitmap(scaledBitmap);
+									
+									idea.setSpark(index, spark);
+									edited = true;
+									
+									if (savedIndex != -1) {
+										Spark savedSpark = (Spark) jAdapter.getJawns()[savedIndex];
+										jAdapter.setJawn(savedIndex, savedSpark);
+									}
 								} catch (MalformedURLException e) {
 									e.printStackTrace();
 								} catch (IOException e) {
 									e.printStackTrace();
-								}	
+								}
 							}
 						}
 						index++;
@@ -148,12 +172,14 @@ public class MultimediaLoader {
 		}
 		
 		protected void onPostExecute(InputStream is) {
-			if (edited) {
+			if (edited && spark != null) {
 				mLoader.setJawn(position, spark);
+			} else if (edited && idea != null) {
+				mLoader.setJawn(position, idea);
 			}
-			if (ideaSparksJSON != null && jawn.getType() == 'I') {
-				new IdeaThumbLoader(idea, position, unloadedThumbs, ideaSparksJSON, jAdapter, indexgrid, savedIndices);
-			}
+			//if (ideaSparksJSON != null && jawn.getType() == 'I') {
+				//new IdeaThumbLoader(idea, position, unloadedThumbs, ideaSparksJSON, jAdapter, indexgrid, savedIndices);
+			//}
 			if (position + 1 < jAdapter.getJawns().length) {
 				mLoader.loadMultimedia(position + 1);
 			}
@@ -182,9 +208,10 @@ public class MultimediaLoader {
         }
 	}
 	
-	public void setJawn(int pos, Spark spark) {
-		jAdapter.setJawn(pos, spark);
-		indexgrid.setJawns(jAdapter.getJawns());
+	public void setJawn(int pos, Jawn jawn) {
+		jAdapter.setJawn(pos, jawn);
+		if (indexgrid != null) 
+			indexgrid.setJawns(jAdapter.getJawns());
 		
 		jAdapter.notifyDataSetChanged();
 	}

@@ -108,6 +108,7 @@ public class Spark extends Jawn implements Serializable {
 		contentType = ct;
 		content = c;
 		createdAts = ca;
+		userIds = new int[0];
 	}
 	/**
 	 * 
@@ -118,6 +119,7 @@ public class Spark extends Jawn implements Serializable {
 		contentType = ct;
 		content = c;
 		firstCreatedAt = ca;
+		userIds = new int[0];
 	}
 	/**
 	 * (int, char, char, String)
@@ -131,6 +133,7 @@ public class Spark extends Jawn implements Serializable {
 		sparkType = st;
 		contentType = ct;
 		content = c;
+		userIds = new int[0];
 	}
 	/**
 	 * @param char - sparkType
@@ -141,14 +144,13 @@ public class Spark extends Jawn implements Serializable {
 		sparkType = st;
 		contentType = ct;
 		content = c;
+		userIds = new int[0];
 	}
-	
 	/**
 	 * @param char - sparkType
 	 * @param char - contentType
 	 * @param String - content
 	 * @param String - userId
-	 * @param String - tagsString
 	 */
 	public Spark(char st, char ct, String c, String id, String t){
 		sparkType = st;
@@ -158,7 +160,22 @@ public class Spark extends Jawn implements Serializable {
 		userIds[0] = Integer.valueOf(id);
 		firstUser = id;
 		tagsString = t;
-		tags = t.split(", ");
+		tags = tagsString.split(", ");
+	}
+	
+	/**
+	 * @param char - sparkType
+	 * @param char - contentType
+	 * @param String - content
+	 * @param String - userId
+	 */
+	public Spark(char st, char ct, String c, String id){
+		sparkType = st;
+		contentType = ct;
+		content = c;
+		userIds = new int[1];
+		userIds[0] = Integer.valueOf(id);
+		firstUser = id;
 	}
 	
 	/**
@@ -170,6 +187,7 @@ public class Spark extends Jawn implements Serializable {
 		sparkType = " ".charAt(0);
 		contentType = " ".charAt(0);
 		content = " ";
+		userIds = new int[0];
 	}
 	
 	public Spark getSelfSpark(){
@@ -232,16 +250,24 @@ public class Spark extends Jawn implements Serializable {
 	 * 
 	 * @return The first User - Presumably the first person to Spark the Spark
 	 */
-	public String getUser(){
+	public String getUsername(){
 		return firstUser;
+	}
+	
+	public void setUsername(String u) {
+		firstUser = u;
 	}
 	
 	/**
 	 * 
 	 * @return The entire Users[]
 	 */
-	public int[] getUsers(){
+	public int[] getUserIds(){
 		return userIds;
+	}
+	
+	public void setUserIds(int[] u) {
+		userIds = u;
 	}
 	
 	public String getDate(){

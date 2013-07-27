@@ -85,4 +85,7 @@ public class IndexGrid {
 		return context;
 	}
 	
+	public GridView getGridView() {
+		return gridview;
+	}
 }

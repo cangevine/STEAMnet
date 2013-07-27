@@ -110,7 +110,11 @@ public class GetXJawns {
 					mainActivity.setSparkEventHandlers();
 					mainActivity.setScrollListener();
 				}
-				new MultimediaLoader(indexGrid, a);
+				Log.v("Thread count:", String.valueOf(Thread.activeCount()));
+				new LoadMultimediaInBackground(indexGrid);
+				Log.v("Thread count:", String.valueOf(Thread.activeCount()));
+				new LoadUsersInBackground(indexGrid);
+				Log.v("Thread count:", String.valueOf(Thread.activeCount()));
 				//new decodeMultimedia();
 			} catch (JSONException e) {
 				e.printStackTrace();
@@ -168,7 +172,6 @@ public class GetXJawns {
     	        	    	if (j.has(FILE)) {
     	        	    		if (j.getString(FILE) != null) {
 	    	        	    		String url = j.getString(FILE);
-	    	        	    		Log.v("!!!!!!URL!!!!!!!", url);
 	    	        	    		newSpark.setCloudLink(url);
     	        	    		}
     	        	    	}
@@ -273,5 +276,31 @@ public class GetXJawns {
           }
 	    
 	 	}
+	
+	class LoadMultimediaInBackground extends AsyncTask<IndexGrid, Void, Void> {
+		
+		public LoadMultimediaInBackground(IndexGrid indexGrid) {
+			this.execute(indexGrid);
+		}
+		
+		@Override
+		protected Void doInBackground(IndexGrid... i) {
+			new MultimediaLoader(i[0], i[0].getAdapter());
+			return null;
+		}
+	}
+	
+	class LoadUsersInBackground extends AsyncTask<IndexGrid, Void, Void> {
+		
+		public LoadUsersInBackground(IndexGrid indexGrid) {
+			this.execute(indexGrid);
+		}
+		
+		@Override
+		protected Void doInBackground(IndexGrid... i) {
+			new UserLoader(i[0], i[0].getAdapter());
+			return null;
+		}
+	}
 
 }

@@ -9,15 +9,17 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import org.friendscentral.steamnet.STEAMnetApplication;
+import org.friendscentral.steamnet.CommentAdapter;
+import org.friendscentral.steamnet.BaseClasses.Comment;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.squareup.okhttp.OkHttpClient;
 
 public class PostComment{
-	
+	ProgressDialog dialog;
 	int commentableId;
 	char commentableTypeChar;
 	String commentableType;
@@ -25,14 +27,16 @@ public class PostComment{
 	String username;
 	int userID;
 	String token;
+	CommentAdapter commentAdapter;
 	
-	public PostComment(int id, char t, String c, int userID, String u, String tok) {
+	public PostComment(int id, char t, String c, int userID, String u, String tok, CommentAdapter ca) {
 		commentableId = id;
 		commentableTypeChar = t;
 		commentText = c;
 		commentableType = "";
 		username = u;
 		token = tok;
+		commentAdapter = ca;
 		
 		OkHTTPTask task = new OkHTTPTask();
 		if(t == 'S'){
@@ -40,6 +44,9 @@ public class PostComment{
 		} else if (t == 'I'){
 			commentableType = "ideas";
 		}
+		dialog = new ProgressDialog(commentAdapter.getContext());
+		dialog.setMessage("Posting comment...");
+		dialog.show();
 		task.execute("http://steamnet.herokuapp.com/api/v1/"+commentableType+"/"+commentableId+"/comments.json");
 	}
 	
@@ -62,7 +69,6 @@ public class PostComment{
 	        	 * LOOK! ITS RIGHT THERE!
 	        	 */
 	        	
-	        	// TODO Do database work to decipher the username
 	        	
 	        	String postData = "&comment[comment_text]="+commentText+"&username="+username+"&token="+token;
 	        	Log.v(TAG, postData);
@@ -79,15 +85,13 @@ public class PostComment{
 	    }
 	
 	    protected void onPostExecute(String data) {
-	    	/*
-	    	Log.d(TAG, "=> "+data);
-	    	try {
-				Spark newSpark = parseData(data);
-				indexGrid.addJawn(newSpark);
-			} catch (JSONException e) {
-				e.printStackTrace();
+			Comment newComment = new Comment(userID, commentText, username);
+			commentAdapter.addComment(newComment);
+			if (commentAdapter.getComments()[0].getUserId() == 0) {
+				commentAdapter.removeComment(0);
 			}
-			*/
+			commentAdapter.notifyDataSetChanged();
+			dialog.dismiss();
 	    }
 	    
 	    
