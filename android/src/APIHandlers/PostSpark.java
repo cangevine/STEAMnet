@@ -108,20 +108,10 @@ public class PostSpark {
 	        	 * LOOK! ITS RIGHT THERE!
 	        	 */
 	        	
-	        	// TODO: REMOVE THIS
-	        	user = "max";
 
 	        	String data = "";
-	        	//if (content_type != 'T') {
-	        		Log.v("PostSpark", "Submitting multimedia");
-	        		data = postMultimedia(urls[0]);
-	        	//} else {
-	        		//Log.v("PostSpark", "Submitting plain data");
-	        		//String postData = "&spark[spark_type]="+spark_type+"&spark[content_type]="+content_type+"&spark[content]="+content+"&username="+user+"&tags="+tagsString;
-		        	//Log.v(TAG, postData);
-	        		//data = post(new URL(urls[0]), postData.getBytes());
-	        	//}
-	        	Log.v("PostSpark - Data being passed to parser:", data);
+        		Log.v("PostSpark", "Submitting multimedia");
+        		data = postMultimedia(urls[0]);
 	        	return data;
 	        	
 	        } catch (Exception e) {
@@ -136,6 +126,7 @@ public class PostSpark {
 	    	try {
 				Spark newSpark = parseData(data);
 				indexGrid.addJawn(newSpark);
+				new MultimediaLoader(indexGrid, adapter);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -152,6 +143,7 @@ public class PostSpark {
         	final String USERS = "users";
         	final String USER = "user";
         	final String USERNAME = "name";
+        	final String FILE = "file";
         	// Creating JSON Parser instance
         	JSONParser jParser = new JSONParser();
         	 
@@ -192,7 +184,10 @@ public class PostSpark {
         	    createdAts[0] = createdAt;
         	    
 				Spark newSpark = new Spark(Integer.parseInt(id), sparkType.charAt(0), contentType.charAt(0), content, createdAts, usersArray, firstUser);
-				Log.v("TEST", newSpark.toString());
+				if (json.has(FILE)) {
+        	    	String cloudUrl = json.getString(FILE);
+        	    	newSpark.setCloudLink(cloudUrl);
+        	    }
 				return newSpark;
         	} catch (JSONException e) {
         	    e.printStackTrace();

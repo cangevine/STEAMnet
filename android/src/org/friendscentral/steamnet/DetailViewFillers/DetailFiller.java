@@ -32,6 +32,8 @@ public abstract class DetailFiller {
 	String createdAt;
 	String contentType;
 	Comment[] comments;
+	String username;
+	int[] userIds;
 	
 	public DetailFiller(Spark s, String ct, LinearLayout l, Context c) {
 		Log.v("DetailFiller called", "Using the polymorphic detail filler! Celebrate!");
@@ -47,6 +49,8 @@ public abstract class DetailFiller {
 		createdAt = spark.getCreatedAt();
 		contentType = ct;
 		comments = spark.getComments();
+		username = spark.getUsername();
+		userIds = spark.getUserIds();
 		
 		if(createdAt == null){
 			createdAt = "Date unknown";
@@ -63,6 +67,8 @@ public abstract class DetailFiller {
 			((SparkDetailActivity) context).findViewById(R.id.complete_spark_data).setBackgroundResource(R.drawable.spark_what_if_bg);
 		}
 		
+		((TextView) ((SparkDetailActivity) context).findViewById(R.id.spark_user_name)).setText(username);
+		((TextView) ((SparkDetailActivity) context).findViewById(R.id.TimestampTextView)).setText(createdAt);
 		fillSparkTypes();
 		//fillTags();
 		fillComments();
@@ -113,16 +119,10 @@ public abstract class DetailFiller {
 		}
 		if (sna.getUsername() != null) {
 			String username = sna.getUsername();
-			new PostComment(id, "S".charAt(0), content, userID, username, sna.getToken());
-			
 			ListView commentSection = (ListView) (((SparkDetailActivity) context).findViewById(R.id.spark_social_section)).findViewById(R.id.CommentList);
 			CommentAdapter c = (CommentAdapter) commentSection.getAdapter();
-			Comment newComment = new Comment(userID, content, username);
-			c.addComment(newComment);
-			if (c.getComments()[0].getUserId() == 0) {
-				c.removeComment(0);
-			}
-			c.notifyDataSetChanged();
+			new PostComment(id, "S".charAt(0), content, userID, username, sna.getToken(), c);
+
 			editText.setText("");
 		} else {
 			Toast.makeText(context, "Please log in to submit a comment", Toast.LENGTH_SHORT).show();
