@@ -33,6 +33,11 @@ class Spark < ActiveRecord::Base
   
   before_validation :hash_content
   
+  def self.random(seed)
+    self.connection.execute "select setseed(#{seed})"
+    return self.order("RANDOM()")
+  end
+  
   def duplicate?
     return (self.errors.to_hash.length == 1) && (self.errors.to_hash.keys[0] == :content_hash)
   end
