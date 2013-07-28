@@ -73,7 +73,7 @@
         android:orientation="horizontal" >
 
         <RadioButton
-            android:id="@+id/radio0"
+            android:id="@+id/recentJawnsRadio"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -83,13 +83,12 @@
             android:text="@string/filter_settings_sort_options_timestamp" />
 
         <RadioButton
-            android:id="@+id/radio1"
+            android:id="@+id/randomJawnsRadio"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="filterSettingsFunction"
             android:tag="randomizeJawns"
-            android:hint="@string/filter_settings_sort_options_random"
             android:text="@string/filter_settings_sort_options_random" />
 
     </RadioGroup>

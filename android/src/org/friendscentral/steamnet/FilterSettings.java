@@ -4,6 +4,7 @@ import org.friendscentral.steamnet.Activities.MainActivity;
 
 import APIHandlers.GetXIdeas;
 import APIHandlers.GetXJawns;
+import APIHandlers.GetXRandomJawns;
 import APIHandlers.GetXSparks;
 import android.content.Context;
 import android.util.Log;
@@ -109,17 +110,6 @@ public class FilterSettings {
 	}
 	
 	public void randomizeJawns() {
-		String className = indexgrid.getAdapter().getClass().getName(); 
-		// TODO Conditional throws an error if it's NOT  the JawnAdapter
-		if (className.equals("org.friendscentral.steamnet.JawnAdapter")) {
-			JawnAdapter ja = indexgrid.getAdapter();
-			ja.shuffleJawns(indexgrid.getJawns());
-			ja.notifyDataSetChanged();
-			indexgrid.setJawns(ja.getJawns());
-			
-			//Not necessary but might be:
-			//sparkEventHandler.clearEventHandlers();
-			//sparkEventHandler.initializeIndexGridLayout();
-		}
+		new GetXRandomJawns(50, gridview, indexgrid, context, sparkBox.isChecked(), ideaBox.isChecked());
 	}
 }

@@ -8,13 +8,19 @@ import java.io.InputStream;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.util.Log;
 
+@SuppressWarnings("rawtypes")
 public class STEAMnetApplication extends Application {
 	private String userToken;
 	private String username;
 	private String userId;
 	boolean readOnlyMode;
+	AsyncTask currentTask;
+	AsyncTask mCurrentTask;
+	AsyncTask uCurrentTask;
+	Double seedNum = 2.0;
 	
 	@Override
 	public void onCreate() {
@@ -124,5 +130,37 @@ public class STEAMnetApplication extends Application {
 		setUserId("");
 		setUsername("");
 		setToken("");
+	}
+	
+	public void setSeedNum(Double d) {
+		seedNum = d;
+	}
+	
+	public Double getSeedNum() {
+		return seedNum;
+	}
+	
+	public void setCurrentTask(AsyncTask a) {
+		currentTask = a;
+	}
+	
+	public AsyncTask getCurrentTask() {
+		return currentTask;
+	}
+	
+	public void setCurrentMultimediaTask(AsyncTask a) {
+		mCurrentTask = a;
+	}
+	
+	public AsyncTask getCurrentMultimediaTask() {
+		return mCurrentTask;
+	}
+	
+	public void setCurrentUserTask(AsyncTask a) {
+		uCurrentTask = a;
+	}
+	
+	public AsyncTask getCurrentUserTask() {
+		return uCurrentTask;
 	}
 }

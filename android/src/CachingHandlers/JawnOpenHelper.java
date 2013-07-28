@@ -19,17 +19,16 @@ public class JawnOpenHelper extends SQLiteOpenHelper {
 	//Fields that apply to both Sparks and Ideas:
 	public static final String JAWN_TYPE = "jawn_type";
 	public static final String CREATED_AT = "created_at";
+	public static final String JAWN_ID = "jawn_id";
 	//public static final String USERNAME = "firstUser"; /* Might be problematic, needs to be updated after loadUsers() */
 	
 	//Fields only applicable to Sparks:
-	public static final String SPARK_ID = "spark_id";
 	public static final String SPARK_TYPE = "spark_type";
 	public static final String SPARK_CONTENT_TYPE = "content_type";
 	public static final String CONTENT = "content";
 	public static final String FILE = "file";
 	
 	//Fields only applicable to Ideas:
-	public static final String IDEA_ID = "idea_id";
 	public static final String DESCRIPTION = "description";
 	
 	//Database creation SQL statement:
@@ -37,12 +36,11 @@ public class JawnOpenHelper extends SQLiteOpenHelper {
 			+ COLUMN_ID + " integer primary key autoincrement, " 
 			+ JAWN_TYPE + " text not null, " 
 			+ CREATED_AT + " text, "
-			+ SPARK_ID + " text, "
+			+ JAWN_ID + " integer, "
 			+ SPARK_TYPE + " text, "
 			+ SPARK_CONTENT_TYPE + " text, "
 			+ CONTENT + " text, "
 			+ FILE + " text, "
-			+ IDEA_ID + " text, "
 			+ DESCRIPTION + " text"
 			+ ");";
 

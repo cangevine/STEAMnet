@@ -12,15 +12,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 public class JawnsDataSource {
 	//Database fields
 	private SQLiteDatabase database;
 	private JawnOpenHelper dbHelper;
 	private String[] allColumns = { JawnOpenHelper.COLUMN_ID,
-		JawnOpenHelper.JAWN_TYPE, JawnOpenHelper.CREATED_AT, JawnOpenHelper.SPARK_ID, JawnOpenHelper.SPARK_TYPE, 
-		JawnOpenHelper.SPARK_CONTENT_TYPE, JawnOpenHelper.CONTENT, JawnOpenHelper.FILE, JawnOpenHelper.IDEA_ID, JawnOpenHelper.DESCRIPTION };
+		JawnOpenHelper.JAWN_TYPE, JawnOpenHelper.CREATED_AT, JawnOpenHelper.JAWN_ID, JawnOpenHelper.SPARK_TYPE, 
+		JawnOpenHelper.SPARK_CONTENT_TYPE, JawnOpenHelper.CONTENT, JawnOpenHelper.FILE, JawnOpenHelper.DESCRIPTION };
 	
 	public JawnsDataSource(Context context) {
 		dbHelper = new JawnOpenHelper(context);
@@ -50,7 +49,7 @@ public class JawnsDataSource {
 	    if (jawn.getType() == 'S') {
 	    	Spark spark = jawn.getSelfSpark();
 	    	values.put(JawnOpenHelper.CREATED_AT, spark.getCreatedAt());
-	    	values.put(JawnOpenHelper.SPARK_ID, String.valueOf(spark.getId()));
+	    	values.put(JawnOpenHelper.JAWN_ID, spark.getId());
 	    	values.put(JawnOpenHelper.SPARK_TYPE, String.valueOf(spark.getSparkType()));
 	    	values.put(JawnOpenHelper.SPARK_CONTENT_TYPE, String.valueOf(spark.getContentType()));
 	    	values.put(JawnOpenHelper.CONTENT, spark.getContent());
@@ -59,18 +58,16 @@ public class JawnsDataSource {
 	    	else
 	    		values.put(JawnOpenHelper.FILE, "");
 	    	
-	    	values.put(JawnOpenHelper.IDEA_ID, "");
 	    	values.put(JawnOpenHelper.DESCRIPTION, "");
 	    } else if (jawn.getType() == 'I') {
 	    	Idea idea = jawn.getSelfIdea();
 	    	values.put(JawnOpenHelper.CREATED_AT, "");
-	    	values.put(JawnOpenHelper.SPARK_ID, "");
+	    	values.put(JawnOpenHelper.JAWN_ID, idea.getId());
 	    	values.put(JawnOpenHelper.SPARK_TYPE, "");
 	    	values.put(JawnOpenHelper.SPARK_CONTENT_TYPE, "");
 	    	values.put(JawnOpenHelper.CONTENT, "");
 	    	values.put(JawnOpenHelper.FILE, "");
 	    	
-	    	values.put(JawnOpenHelper.IDEA_ID, String.valueOf(idea.getId()));
 	    	values.put(JawnOpenHelper.DESCRIPTION, idea.getDescription());
 	    }
 	    database.insert(JawnOpenHelper.TABLE_JAWNS, null, values);
@@ -101,7 +98,7 @@ public class JawnsDataSource {
 	public Jawn cursorToJawn(Cursor cursor) {
 		char jawnType = cursor.getString(1).charAt(0);
 		if (jawnType == 'S') {
-			Spark newSpark = new Spark(Integer.parseInt(cursor.getString(3)), cursor.getString(4).charAt(0), cursor.getString(5).charAt(0), cursor.getString(6), cursor.getString(2));
+			Spark newSpark = new Spark(cursor.getInt(3), cursor.getString(4).charAt(0), cursor.getString(5).charAt(0), cursor.getString(6), cursor.getString(2));
 		    if (newSpark.getContentType() != 'T') {
 		    	if (!cursor.getString(7).equals("")) {
     	    		newSpark.setCloudLink(cursor.getString(7));
@@ -109,7 +106,7 @@ public class JawnsDataSource {
 		    }
 		    return newSpark;
 		} else if (jawnType == 'I') {
-			Idea newIdea = new Idea(Integer.parseInt(cursor.getString(8)), cursor.getString(9), cursor.getString(2));
+			Idea newIdea = new Idea(cursor.getInt(3), cursor.getString(8), cursor.getString(2));
 			return newIdea;
 		}
 		return null;

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import org.friendscentral.steamnet.IndexGrid;
 import org.friendscentral.steamnet.JawnAdapter;
+import org.friendscentral.steamnet.STEAMnetApplication;
 import org.friendscentral.steamnet.BaseClasses.Idea;
 import org.friendscentral.steamnet.BaseClasses.Jawn;
 import org.friendscentral.steamnet.BaseClasses.Spark;
@@ -20,24 +21,37 @@ import org.json.JSONObject;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.squareup.okhttp.OkHttpClient;
 
 public class MultimediaLoader {
 	IndexGrid indexgrid;
 	JawnAdapter jAdapter;
+	STEAMnetApplication sna;
+	boolean snaExists;
+	
+	public MultimediaLoader(IndexGrid i, JawnAdapter j, STEAMnetApplication s) {
+		indexgrid = i;
+		jAdapter = j;
+		sna = s;
+		snaExists = true;
+		
+		loadMultimedia(0);
+	}
 	
 	public MultimediaLoader(IndexGrid i, JawnAdapter j) {
 		indexgrid = i;
 		jAdapter = j;
+		snaExists = false;
 		
 		loadMultimedia(0);
 	}
 	
 	public void loadMultimedia(int pos) {
 		if (pos < jAdapter.getJawns().length) {
-			new MultimediaHelper(pos, MultimediaLoader.this);
+			MultimediaHelper m = new MultimediaHelper(pos, MultimediaLoader.this);
+			if (snaExists)
+				sna.setCurrentMultimediaTask(m);
 		}
 	}
 	

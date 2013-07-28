@@ -79,7 +79,6 @@ public class GetXIdeas {
         	Log.v("REPORT", "WE ARE EXECUTING THE REQUEST IN THE BACKGROUND, SIR!");
             try {
             	return get(new URL(urls[0]));
-            	
             } catch (Exception e) {
                 this.exception = e;
                 Log.e(TAG, "Exception: "+e);
