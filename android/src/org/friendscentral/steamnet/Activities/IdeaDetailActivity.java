@@ -116,11 +116,20 @@ public class IdeaDetailActivity extends Activity {
 			
 			String[] tags = idea.getTags();
 			for (String tag : tags) {
-				TextView t = new TextView(this);
-				LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LayoutParams.FILL_PARENT, 1f); 
-				t.setLayoutParams(params);
+				final Button t = new Button(this);
 				t.setText(tag);
 				t.setGravity(Gravity.CENTER_HORIZONTAL);
+				
+				t.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						STEAMnetApplication sna = (STEAMnetApplication) IdeaDetailActivity.this.getApplicationContext();
+						sna.setSavedTag((String) t.getText());
+						Intent intent = new Intent(IdeaDetailActivity.this, MainActivity.class);
+				    	IdeaDetailActivity.this.startActivityForResult(intent, 0);
+					}
+				});
+				
 				tagsHolder.addView(t);
 			}
 		}
