@@ -43,7 +43,7 @@ public class Spark extends Jawn implements Serializable {
 	 * 
 	 * Just setting everything in the creator, since after we grab it you should never need to edit it
 	 */
-	public Spark(int i, char st, char ct, String c, String[] ca, String fca, int[] u, String fu, Comment[] coms){
+	public Spark(int i, char st, char ct, String[] t, String c, String[] ca, String fca, int[] u, String fu, Comment[] coms){
 		id = i;
 		sparkType = st;
 		contentType = ct;
@@ -53,6 +53,7 @@ public class Spark extends Jawn implements Serializable {
 		userIds = u;
 		firstUser = fu;
 		comments = coms;
+		tags = t;
 	}
 	/**
 	 * @param (id, char, char, String, String)

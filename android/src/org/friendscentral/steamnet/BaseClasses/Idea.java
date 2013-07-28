@@ -15,6 +15,7 @@ public class Idea extends Jawn implements Serializable{
 	int id;
 	String description;
 	String[] tags;
+	String tagsString;
 	int[] sparkIds;
 	String firstUser;
 	int userId;
@@ -95,7 +96,7 @@ public class Idea extends Jawn implements Serializable{
 		}
 	}
 	
-	public Idea(int i, String d, String t, Spark[] s, String fu, String fca, Comment[] c){
+	public Idea(int i, String d, String[] t, Spark[] s, String fu, String fca, Comment[] c){
 		id = i;
 		description = d;
 		sparks = s;
@@ -103,19 +104,15 @@ public class Idea extends Jawn implements Serializable{
 		firstCreatedAt = fca;
 		comments = c;
 		
-		ArrayList<String> tagsArrayList = new ArrayList<String>();
-		while(true){
-			if(t.indexOf(",") == -1){
-				tagsArrayList.add(t);
-				break;
-			} else {
-				tagsArrayList.add(t.substring(0, t.indexOf(",")));
-				t = t.substring((t.indexOf(",") + 1));
+		tags = t;
+		tagsString = "";
+		int index = 0;
+		for (String tag : tags) {
+			tagsString += tag;
+			if (index < tags.length - 1) {
+				tagsString += ", ";
 			}
-		}
-		tags = new String[tagsArrayList.size()];
-		for(int q = 0; q < tagsArrayList.size(); q++){
-			tags[q] = tagsArrayList.get(q);
+			index++;
 		}
 	}
 	

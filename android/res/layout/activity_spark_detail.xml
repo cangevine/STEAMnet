@@ -98,6 +98,23 @@
             </LinearLayout>
 
         </LinearLayout>
+        
+        <LinearLayout
+           android:id="@+id/SparkDescAndTags"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal"
+           android:padding="10px" >
+            
+           <TextView
+               android:id="@+id/tags_header"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:textStyle="bold"
+               android:text="Tags:"
+               />
+
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/TextData"
@@ -166,16 +183,16 @@
                 android:layout_height="50dp"
                 android:text="---DESCRIPTION---" />
             
+            <WebView
+                android:id="@+id/video_data_webview"
+                android:layout_width="580dp"
+                android:layout_height="335dp" />
+            
             <Button
                 android:id="@+id/video_data_launch_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Open in YouTube app" />
-            
-            <WebView
-                android:id="@+id/video_data_webview"
-                android:layout_width="580dp"
-                android:layout_height="335dp" />
             
         </LinearLayout>
         

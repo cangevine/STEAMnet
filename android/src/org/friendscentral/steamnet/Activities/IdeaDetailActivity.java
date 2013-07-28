@@ -2,8 +2,6 @@ package org.friendscentral.steamnet.Activities;
 
 import org.friendscentral.steamnet.CommentAdapter;
 import org.friendscentral.steamnet.IdeaDetailAdapter;
-import org.friendscentral.steamnet.IndexGrid;
-import org.friendscentral.steamnet.JawnAdapter;
 import org.friendscentral.steamnet.R;
 import org.friendscentral.steamnet.STEAMnetApplication;
 import org.friendscentral.steamnet.SpinnerAdapter;
@@ -13,22 +11,23 @@ import org.friendscentral.steamnet.BaseClasses.Jawn;
 import org.friendscentral.steamnet.BaseClasses.Spark;
 
 import APIHandlers.GetIdeaForDetail;
-import APIHandlers.GetSpark;
-import APIHandlers.MultimediaLoader;
 import APIHandlers.PostComment;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,8 +50,6 @@ public class IdeaDetailActivity extends Activity {
 	TextView titleTextView;
 	TextView dateTextView;
 	TextView userTextView;
-	TextView descriptionTextView;
-	TextView tagsTextView;
 	
 	GridView gridView;
 	IdeaDetailAdapter adapter;
@@ -67,8 +64,6 @@ public class IdeaDetailActivity extends Activity {
 		titleTextView = (TextView) findViewById(R.id.IdeaTitleTextView);
 		dateTextView = (TextView) findViewById(R.id.TimestampTextView);
 		userTextView = (TextView) findViewById(R.id.idea_user_name);
-		descriptionTextView = (TextView) findViewById(R.id.IdeaDescription);
-		tagsTextView = (TextView) findViewById(R.id.IdeaTags);
 		
 		//Fixes autofocus problem:
         findViewById(R.id.DummyFocusCommentSection).setFocusableInTouchMode(true);
@@ -95,6 +90,7 @@ public class IdeaDetailActivity extends Activity {
 		
 		initializeIndexGridLayout();
 		fillComments();
+		fillTags();
 	}
 	
 	public void initializeIndexGridLayout() {
@@ -113,6 +109,22 @@ public class IdeaDetailActivity extends Activity {
             }
         });
     }
+	
+	public void fillTags() {
+		if (idea.getTags() != null) {
+			LinearLayout tagsHolder = (LinearLayout) findViewById(R.id.IdeaDescAndTags);
+			
+			String[] tags = idea.getTags();
+			for (String tag : tags) {
+				TextView t = new TextView(this);
+				LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LayoutParams.FILL_PARENT, 1f); 
+				t.setLayoutParams(params);
+				t.setText(tag);
+				t.setGravity(Gravity.CENTER_HORIZONTAL);
+				tagsHolder.addView(t);
+			}
+		}
+	}
 	
 	public void fillComments() {
 		ListView commentSection = (ListView) IdeaDetailActivity.this.findViewById(R.id.CommentList);

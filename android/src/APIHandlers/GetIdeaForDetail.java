@@ -107,7 +107,11 @@ public class GetIdeaForDetail {
     	    // Getting Idea parameters
     		int id = json.getInt(ID);
 	        String description = json.getString(DESCRIPTION);
-	        String tags = json.getString(TAGS);
+	        JSONArray tagsJSON = json.getJSONArray(TAGS);
+	        String[] tags = new String[tagsJSON.length()];
+	        for (int i = 0; i < tagsJSON.length(); i++) {
+	        	tags[i] = tagsJSON.getString(i);
+	        }
 	        
 	        //Getting Array of Sparks
     	    JSONArray sparksJSON = json.getJSONArray(SPARKS);
@@ -128,7 +132,7 @@ public class GetIdeaForDetail {
     	        	newSpark.setCloudLink(fileUrl);
     	        }
     	        sparks[i] = newSpark;
-    	   }
+    	    }
     	    //Getting Array of Users
     	    JSONObject firstUserJSON = json.getJSONObject(USER);
     	    String firstUser = firstUserJSON.getString(NAME);

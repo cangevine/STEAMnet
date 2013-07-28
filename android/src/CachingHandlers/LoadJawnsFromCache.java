@@ -1,10 +1,12 @@
-package APIHandlers;
+package CachingHandlers;
 
 import org.friendscentral.steamnet.IndexGrid;
 import org.friendscentral.steamnet.JawnAdapter;
+import org.friendscentral.steamnet.Activities.MainActivity;
 import org.friendscentral.steamnet.BaseClasses.Jawn;
 
-import CachingHandlers.JawnsDataSource;
+import APIHandlers.MultimediaLoader;
+import APIHandlers.UserLoader;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -13,11 +15,13 @@ public class LoadJawnsFromCache {
 	JawnsDataSource datasource;
 	IndexGrid indexgrid;
 	Context context;
+	MainActivity mainActivity;
 	
 	public LoadJawnsFromCache(JawnsDataSource d, IndexGrid ig, Context c) {
 		datasource = d;
 		indexgrid = ig;
 		context = c;
+		mainActivity = (MainActivity) context;
 		
 		new CacheLoader().execute();
 	}
@@ -29,22 +33,15 @@ public class LoadJawnsFromCache {
 		protected String doInBackground(Void... arg0) {
 			Jawn[] cachedJawns = datasource.getAllJawns();
 			
-			/*for (Jawn cachedJawn : cachedJawns) {
-				Log.v("Jawn content::", cachedJawn.toString());
-			}*/
-			Log.v("Amount of jawns:", ""+cachedJawns.length);
-			
-			Log.v("CacheLoader", "executed");
-			
 			//Cut cached Jawns down to just 50, if needed
-			/*int jawnAmount = Math.min(cachedJawns.length, 50);
+			int jawnAmount = Math.min(cachedJawns.length, 50);
 			if (jawnAmount == 50) {
 				Jawn[] newJawns = new Jawn[50];
 				for (int i = 0; i < 50; i++) {
 					newJawns[i] = cachedJawns[i];
 				}
 				cachedJawns = newJawns;
-			}*/
+			}
 			
 			jawnsFromCache = cachedJawns;
 			return "";
@@ -55,6 +52,10 @@ public class LoadJawnsFromCache {
 			
 			indexgrid.setAdapter(new JawnAdapter(context, jawnsFromCache, 200));
 			indexgrid.setJawns(indexgrid.getAdapter().getJawns());
+			if (mainActivity != null) {
+				mainActivity.setSparkEventHandlers();
+				mainActivity.setScrollListener();
+			}
 			new MultimediaLoader(indexgrid, indexgrid.getAdapter());
 			new UserLoader(indexgrid, indexgrid.getAdapter());
 		}

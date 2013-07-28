@@ -4,10 +4,10 @@ import org.friendscentral.steamnet.BaseClasses.Jawn;
 import org.friendscentral.steamnet.EventHandlers.EndlessScroller;
 
 import APIHandlers.GetXJawns;
-import APIHandlers.LoadJawnsFromCache;
 import APIHandlers.MultimediaLoader;
 import APIHandlers.UserLoader;
 import CachingHandlers.JawnsDataSource;
+import CachingHandlers.LoadJawnsFromCache;
 import android.content.Context;
 import android.util.Log;
 import android.widget.GridView;

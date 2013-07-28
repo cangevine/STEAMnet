@@ -8,10 +8,13 @@ import org.friendscentral.steamnet.BaseClasses.Comment;
 import org.friendscentral.steamnet.BaseClasses.Spark;
 
 import APIHandlers.PostComment;
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -34,6 +37,7 @@ public abstract class DetailFiller {
 	Comment[] comments;
 	String username;
 	int[] userIds;
+	String[] tags;
 	
 	public DetailFiller(Spark s, String ct, LinearLayout l, Context c) {
 		Log.v("DetailFiller called", "Using the polymorphic detail filler! Celebrate!");
@@ -51,6 +55,7 @@ public abstract class DetailFiller {
 		comments = spark.getComments();
 		username = spark.getUsername();
 		userIds = spark.getUserIds();
+		tags = spark.getTags();
 		
 		if(createdAt == null){
 			createdAt = "Date unknown";
@@ -70,7 +75,7 @@ public abstract class DetailFiller {
 		((TextView) ((SparkDetailActivity) context).findViewById(R.id.spark_user_name)).setText(username);
 		((TextView) ((SparkDetailActivity) context).findViewById(R.id.TimestampTextView)).setText(createdAt);
 		fillSparkTypes();
-		//fillTags();
+		fillTags();
 		fillComments();
 	}
 	
@@ -79,22 +84,20 @@ public abstract class DetailFiller {
 		sparkTypeView.setText(sparkType + " - " + contentType);
 	}
 	
-	/*public void fillTags() {
-		TextView sparkTags = (TextView) findViewById(R.id.TagsTextView);
-		
-		String tagString = "Tags: ";
+	public void fillTags() {
 		if (tags != null) {
-			for (int i = 0; i < tags.length; i++) {
-				tagString += tags[i];
-				if (i != tags.length - 1) {
-					tagString += ", ";
-				}
+			LinearLayout tagsHolder = (LinearLayout) ((Activity) context).findViewById(R.id.SparkDescAndTags);
+			
+			for (String tag : tags) {
+				TextView t = new TextView(context);
+				LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LayoutParams.FILL_PARENT, 1f); 
+				t.setLayoutParams(params);
+				t.setText(tag);
+				t.setGravity(Gravity.CENTER_HORIZONTAL);
+				tagsHolder.addView(t);
 			}
-		} else {
-			tagString = "No tags";
 		}
-		sparkTags.setText(tagString);
-	}*/
+	}
 	
 	public void fillComments() {
 		ListView commentSection = (ListView) ((SparkDetailActivity) context).findViewById(R.id.CommentList);
