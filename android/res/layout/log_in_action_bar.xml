@@ -10,16 +10,37 @@
         android:id="@+id/activity_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="8"
+        android:layout_weight="3"
         android:text="STEAMnet"
         android:textSize="20dp"
         android:textStyle="bold" />
+    
+    <TextView 
+        android:id="@+id/tag_info"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:textSize="20dp"
+        android:visibility="invisible" />
+    
+    <Button 
+        android:id="@+id/tag_back_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:text="Back"
+        android:visibility="invisible"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:tag="revertTagSearch" />
     
     <TextView 
         android:id="@+id/log_in_info"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="2"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
         android:text="Currently browsing anonymously"
         />
     

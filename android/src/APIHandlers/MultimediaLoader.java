@@ -158,10 +158,12 @@ public class MultimediaLoader {
 									Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, (int) (aspectRatio * 160), 160, true);
 									spark.setBitmap(scaledBitmap);
 									
-									idea.setSpark(index, spark);
-									edited = true;
+									if (jAdapter.getJawns().length > 0) {
+										idea.setSpark(index, spark);
+										edited = true;
+									}
 									
-									if (savedIndex != -1) {
+									if (savedIndex != -1 && savedIndex < jAdapter.getJawns().length) {
 										Spark savedSpark = (Spark) jAdapter.getJawns()[savedIndex];
 										jAdapter.setJawn(savedIndex, savedSpark);
 									}

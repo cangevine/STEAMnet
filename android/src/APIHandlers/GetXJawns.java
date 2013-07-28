@@ -57,16 +57,19 @@ public class GetXJawns {
 		if (activity.getClass().getName().equals("org.friendscentral.steamnet.Activities.MainActivity")) {
 			mainActivity = (MainActivity) activity;
 		}
-
-		i.getAdapter().setJawns(new Jawn[0]);
-		g.setAdapter(new SpinnerAdapter(context, 16));
 		
 		sna = (STEAMnetApplication) context.getApplicationContext();
 		if (sna.getCurrentTask() != null) {
 			sna.getCurrentTask().cancel(true);
-			sna.getCurrentMultimediaTask().cancel(true);
-			sna.getCurrentUserTask().cancel(true);
+			if (sna.getCurrentMultimediaTask() != null)
+				sna.getCurrentMultimediaTask().cancel(true);
+			if (sna.getCurrentUserTask() != null)
+				sna.getCurrentUserTask().cancel(true);
 		}
+		
+		i.getAdapter().setJawns(new Jawn[0]);
+		g.setAdapter(new SpinnerAdapter(context, 16));
+		
 		OkHTTPTask task = new OkHTTPTask(g, i);
 		task.execute("http://steamnet.herokuapp.com/api/v1/jawns.json?limit="+lim+"&lite=true");
 		sna.setCurrentTask(task);

@@ -505,7 +505,8 @@ public class JawnAdapter extends BaseAdapter {
     }
 
     public int getCount() {
-        return jawns.length + 1;
+        //return jawns.length + 1;
+    	return jawns.length;
     }
 
     public Jawn getItem(int position) {
