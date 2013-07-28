@@ -3,6 +3,7 @@ package org.friendscentral.steamnet.DetailViewFillers;
 import org.friendscentral.steamnet.CommentAdapter;
 import org.friendscentral.steamnet.R;
 import org.friendscentral.steamnet.STEAMnetApplication;
+import org.friendscentral.steamnet.Activities.MainActivity;
 import org.friendscentral.steamnet.Activities.SparkDetailActivity;
 import org.friendscentral.steamnet.BaseClasses.Comment;
 import org.friendscentral.steamnet.BaseClasses.Spark;
@@ -10,6 +11,7 @@ import org.friendscentral.steamnet.BaseClasses.Spark;
 import APIHandlers.PostComment;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -89,11 +91,20 @@ public abstract class DetailFiller {
 			LinearLayout tagsHolder = (LinearLayout) ((Activity) context).findViewById(R.id.SparkDescAndTags);
 			
 			for (String tag : tags) {
-				TextView t = new TextView(context);
-				LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LayoutParams.FILL_PARENT, 1f); 
-				t.setLayoutParams(params);
+				final Button t = new Button(context);
 				t.setText(tag);
 				t.setGravity(Gravity.CENTER_HORIZONTAL);
+				
+				t.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						STEAMnetApplication sna = (STEAMnetApplication) context.getApplicationContext();
+						sna.setSavedTag((String) t.getText());
+						Intent intent = new Intent(context, MainActivity.class);
+				    	((Activity) context).startActivityForResult(intent, 0);
+					}
+				});
+				
 				tagsHolder.addView(t);
 			}
 		}

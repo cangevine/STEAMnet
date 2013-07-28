@@ -4,13 +4,19 @@ import org.friendscentral.steamnet.BaseClasses.Jawn;
 import org.friendscentral.steamnet.EventHandlers.EndlessScroller;
 
 import APIHandlers.GetXJawns;
-import APIHandlers.MultimediaLoader;
-import APIHandlers.UserLoader;
+import APIHandlers.GetXJawnsByTag;
 import CachingHandlers.JawnsDataSource;
 import CachingHandlers.LoadJawnsFromCache;
+import android.app.ActionBar;
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.GridView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 // TODO Remove class
 /**
@@ -36,13 +42,35 @@ public class IndexGrid {
     	datasource = d;
     	
     	if (!isIdeaDetailActivity) {
-    		if (datasource.getAllJawns() != null && datasource.getAllJawns().length > 0) {
-    			Log.v("IndexGrid init function", "Loading Jawns from cache");
-    			new LoadJawnsFromCache(datasource, IndexGrid.this, context);
+    		STEAMnetApplication sna = (STEAMnetApplication) context.getApplicationContext();
+    		if (sna.getSavedTag() != null) {
+    			new GetXJawnsByTag(50, gridview, IndexGrid.this, context, sna.getSavedTag());
+    			
+    			/*ActionBar ab = ((Activity) context).getActionBar();
+				LinearLayout customLayout = (LinearLayout) ab.getCustomView();
+				TextView header = (TextView) customLayout.findViewById(R.id.tag_info);
+				header.setVisibility(View.VISIBLE);
+				header.setText("Searching for \""+sna.getSavedTag()+"\"");
+				
+				Button backButton = (Button) customLayout.findViewById(R.id.tag_back_button);
+				backButton.setVisibility(View.VISIBLE);
+				backButton.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						((Activity) context).finish();
+					}
+				});*/
+				
+				sna.setSavedTag(null);
     		} else {
-    			Log.v("IndexGrid init function", "Loading Jawns from web");
-    			gridview.setAdapter(new SpinnerAdapter(context, 16));
-    			new GetXJawns(50, gridview, this, context);
+	    		if (datasource.getAllJawns() != null && datasource.getAllJawns().length > 0) {
+	    			Log.v("IndexGrid init function", "Loading Jawns from cache");
+	    			new LoadJawnsFromCache(datasource, IndexGrid.this, context);
+	    		} else {
+	    			Log.v("IndexGrid init function", "Loading Jawns from web");
+	    			gridview.setAdapter(new SpinnerAdapter(context, 16));
+	    			new GetXJawns(50, gridview, this, context);
+	    		}
     		}
     	}
 	}

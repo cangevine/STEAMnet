@@ -66,8 +66,12 @@ public class GetXJawnsByTag {
 			mainActivity = (MainActivity) activity;
 		}
 		
-		savedJawns = i.getAdapter().getJawns();
-		savedAdapter = i.getAdapter();
+		boolean isActivityForResult = (i.getAdapter() == null);
+		
+		if (!isActivityForResult) {
+			savedJawns = i.getAdapter().getJawns();
+			savedAdapter = i.getAdapter();
+		}
 		
 		sna = (STEAMnetApplication) context.getApplicationContext();
 		Double randomSeed = Math.random();
@@ -83,8 +87,10 @@ public class GetXJawnsByTag {
 				sna.getCurrentUserTask().cancel(true);
 		}
 		
-		i.getAdapter().setJawns(new Jawn[0]);
-		g.setAdapter(new SpinnerAdapter(context, 16));
+		if (!isActivityForResult) {
+			i.getAdapter().setJawns(new Jawn[0]);
+			g.setAdapter(new SpinnerAdapter(context, 16));
+		}
 		
 		OkHTTPTask task = new OkHTTPTask(g, i);
 		task.execute(url);

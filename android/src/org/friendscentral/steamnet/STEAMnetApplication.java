@@ -20,7 +20,8 @@ public class STEAMnetApplication extends Application {
 	AsyncTask currentTask;
 	AsyncTask mCurrentTask;
 	AsyncTask uCurrentTask;
-	Double seedNum = 2.0;
+	double seedNum = 2.0;
+	String savedTag;
 	
 	@Override
 	public void onCreate() {
@@ -132,11 +133,11 @@ public class STEAMnetApplication extends Application {
 		setToken("");
 	}
 	
-	public void setSeedNum(Double d) {
+	public void setSeedNum(double d) {
 		seedNum = d;
 	}
 	
-	public Double getSeedNum() {
+	public double getSeedNum() {
 		return seedNum;
 	}
 	
@@ -162,5 +163,13 @@ public class STEAMnetApplication extends Application {
 	
 	public AsyncTask getCurrentUserTask() {
 		return uCurrentTask;
+	}
+	
+	public String getSavedTag() {
+		return savedTag;
+	}
+	
+	public void setSavedTag(String s) {
+		savedTag = s;
 	}
 }

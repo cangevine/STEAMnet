@@ -132,7 +132,6 @@ public class PostSpark {
 	    }
 	    
 	    Spark parseData(String data) throws JSONException {
-			Log.v("TEST", "BEGINNING TO PARSE DATA");
         	final String ID = "id";
         	final String SPARK_TYPE = "spark_type";
         	final String CONTENT_TYPE = "content_type";

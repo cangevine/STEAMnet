@@ -35,14 +35,16 @@
          <LinearLayout
             android:id="@+id/idea_grid_thumb_1"
             android:layout_width="120dp"
-            android:layout_height="100dp">
+            android:layout_height="100dp"
+            android:orientation="vertical">
 	        
 	    </LinearLayout>
 
          <FrameLayout
              android:id="@+id/idea_grid_thumb_2"
             android:layout_width="35dp"
-            android:layout_height="100dp"
+            android:layout_height="97dp"
+            android:paddingTop="3dp"
             android:foreground="@drawable/single_idea_shadow">
 	        
 	    </FrameLayout>
@@ -50,7 +52,8 @@
          <FrameLayout
             android:id="@+id/idea_grid_thumb_3"
             android:layout_width="35dp"
-            android:layout_height="100dp"
+            android:layout_height="94dp"
+            android:paddingTop="6dp"
             android:foreground="@drawable/single_idea_shadow">
 	        
 	    </FrameLayout>
