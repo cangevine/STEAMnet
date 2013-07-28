@@ -1,5 +1,6 @@
 package org.friendscentral.steamnet;
 
+import org.friendscentral.steamnet.Activities.MainActivity;
 import org.friendscentral.steamnet.BaseClasses.Jawn;
 import org.friendscentral.steamnet.EventHandlers.EndlessScroller;
 
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 // TODO Remove class
 /**
@@ -45,6 +47,8 @@ public class IndexGrid {
     		STEAMnetApplication sna = (STEAMnetApplication) context.getApplicationContext();
     		if (sna.getSavedTag() != null) {
     			new GetXJawnsByTag(50, gridview, IndexGrid.this, context, sna.getSavedTag());
+    			
+    			Toast.makeText(context, "Results for \""+sna.getSavedTag()+"\"", Toast.LENGTH_LONG).show();
     			
     			/*ActionBar ab = ((Activity) context).getActionBar();
 				LinearLayout customLayout = (LinearLayout) ab.getCustomView();
