@@ -3,6 +3,7 @@ package org.friendscentral.steamnet.DetailViewFillers;
 import org.friendscentral.steamnet.CommentAdapter;
 import org.friendscentral.steamnet.R;
 import org.friendscentral.steamnet.STEAMnetApplication;
+import org.friendscentral.steamnet.Activities.IdeaDetailActivity;
 import org.friendscentral.steamnet.Activities.MainActivity;
 import org.friendscentral.steamnet.Activities.SparkDetailActivity;
 import org.friendscentral.steamnet.BaseClasses.Comment;
@@ -107,6 +108,21 @@ public abstract class DetailFiller {
 				
 				tagsHolder.addView(t);
 			}
+			final Button t = new Button(context);
+			t.setText("Find similar Sparks and Ideas");
+			t.setGravity(Gravity.CENTER_HORIZONTAL);
+			
+			t.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					STEAMnetApplication sna = (STEAMnetApplication) context.getApplicationContext();
+					sna.setSavedTags(spark.getTags());
+					Intent intent = new Intent(context, MainActivity.class);
+			    	((Activity) context).startActivityForResult(intent, 0);
+				}
+			});
+			
+			tagsHolder.addView(t);
 		}
 	}
 	
