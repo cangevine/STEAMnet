@@ -51,7 +51,7 @@ public class AddXIdeas {
 		
 		Log.v("REPORT", "GET X IDEAS IS BEGGINING, SIR!");
 		OkHTTPTask task = new OkHTTPTask(g, i);
-		task.execute("http://steamnet.herokuapp.com/api/v1/ideas.json?limit="+(limit+currentTotal));
+		task.execute("http://steamnet.herokuapp.com/api/v1/jawns.json?lite=true&limit="+limit+"&offset="+currentTotal+"&filter=ideas");
 	}
 	
 	class OkHTTPTask extends AsyncTask<String, Void, String> {
@@ -96,9 +96,9 @@ public class AddXIdeas {
 					a.addAtPosition(jawns[i], a.getJawns().length);
 				}
 				a.notifyDataSetChanged();
-				new MultimediaLoader(indexGrid, a);
 				indexGrid.setJawns(a.getJawns());
 				endlessScroller.doneRefreshing();
+				new MultimediaLoader(indexGrid, a);
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -138,65 +138,14 @@ public class AddXIdeas {
         	Log.v("LENGTH", Integer.toString(ideasJSON.length()));
         	try {        	     
         		for(int i = 0; i < ideasJSON.length(); i++){// Storing each json item in variable
-        			JSONObject json = ideasJSON.getJSONObject(i);
-        			// Getting Idea parameters
-            		int id = json.getInt(ID);
-        	        String description = json.getString(DESCRIPTION);
-        	        //String tags = j.getString(TAGS);
-        	        
-        	        //Getting Array of Sparks
-            	    JSONArray sparksJSON = json.getJSONArray(SPARKS);
-            	    Log.v("STUFF", sparksJSON.toString()); 
-            	    Log.v("ideasJSON Length", Integer.toString(sparksJSON.length()));
-            	    // looping through All Sparks
-            	    ArrayList<Integer> sparkIdArrayList = new ArrayList<Integer>();
-            	    for(int c = 0; c < sparksJSON.length(); c++){
-            	        JSONObject s = sparksJSON.getJSONObject(c);
-            	        // Storing each json item in variable
-            	        int sparkId = s.getInt(ID);
-            	        sparkIdArrayList.add(sparkId);
-            	    }
-            	    
-            	    Log.v("YOMAMA", sparkIdArrayList.toString());
-            	    int[] sparkIdArray = new int[sparkIdArrayList.size()];
-            	    
-            	    for(int w = 0; w < sparkIdArrayList.size(); w++){
-            	    	sparkIdArray[w] = sparkIdArrayList.get(w);
-            	    }
-            	    
-            	    String firstUser = "";
-            	    
-            	    //int userId = json.getInt(USER_ID);
-            	    int[] userIds = new int[10];
-            	    userIds[0] = 1;
-            	    
-            	    JSONArray commentsJSON = json.getJSONArray(COMMENTS);
-	        	    
-	        	    ArrayList<Comment> commentsArrayList = new ArrayList<Comment>();
-	        	    for(int k = 0; k < commentsJSON.length(); k++){
-	        	    	JSONObject c = commentsJSON.getJSONObject(k);
-	        	    	String commentText = c.getString(COMMENT_TEXT);
-	        	    	JSONObject userObj = c.getJSONObject(USER);
-	        	    	String userId = userObj.getString(ID);
-	        	    	String username = userObj.getString(NAME);
+        			JSONObject j = (JSONObject) ideasJSON.get(i);
+        			
+        			int id = j.getInt(ID);
+        	        String description = j.getString(DESCRIPTION);
+            	    String createdAt = j.getString(CREATED_AT);
 
-	        	    	commentsArrayList.add(new Comment(Integer.valueOf(userId), commentText, username));
-	        	    }
-	        	    
-	        	    Comment[] commentArray = new Comment[commentsArrayList.size()];
-	        	    for(int w = 0; w < commentsArrayList.size(); w++){
-	        	    	commentArray[w] = commentsArrayList.get(w);
-	        	    }
-            	    
-            	    String createdAt = json.getString(CREATED_AT);
-            	    
-            	    String[] tags = new String[10];
-            	    
-            	    
-            	    jawnArrayList.add(new Idea(id, description, tags, sparkIdArray, userIds, user, createdAt, commentArray));
-            	    
+            	    jawnArrayList.add(new Idea(id, description, createdAt));
         		}
-        	    Log.v("ARRAY", jawnArrayList.toString());
         	    Jawn[] jawnArray = new Jawn[jawnArrayList.size()];
         	    for(int i = 0; i < jawnArrayList.size(); i++){
         	    	jawnArray[i] = jawnArrayList.get(i);

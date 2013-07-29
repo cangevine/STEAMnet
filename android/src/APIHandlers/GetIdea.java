@@ -117,20 +117,13 @@ public class GetIdea {
         	    }
         	    
         	    String firstUser = "";
+        	    int userId = 0;
         	    //Getting Array of Users
         	    JSONArray usersJSON = json.getJSONArray(USERS);
         	    
-        	    //looping through all Users
-        	    int[] userIds = new int[10];
-        	    int count = 0;
-        	    for(int q = 0; q < usersJSON.length(); q++){
-        	    	JSONObject u = usersJSON.getJSONObject(q);
-        	    	if(count == 0){
-        	    		firstUser = u.getString(USERNAME);
-        	    		count++;
-        	    	}
-        	    	userIds[q] = u.getInt(ID);
-        	    }
+        	    firstUser = usersJSON.getJSONObject(0).getString(USERNAME);
+        	    userId = usersJSON.getJSONObject(0).getInt(ID);
+        	    
         	    
         	    //Getting Array of Created Ats
         	    JSONArray createdAtsJSON = json.getJSONArray(CREATED_ATS);
@@ -150,7 +143,7 @@ public class GetIdea {
         	        createdAts[i] = createdAt;
         	    }
         	    
-        	Idea newIdea = new Idea(id, description, tags, sparkIds, userIds, firstUser, createdAts, firstCreatedAt);
+        	Idea newIdea = new Idea(id, description, tags, sparkIds, userId, firstUser, createdAts, firstCreatedAt);
         	/*
         	 * PUT SOME FUNCTION HERE TO PASS newIdea BACK TO THE MAIN THREAD
         	 */

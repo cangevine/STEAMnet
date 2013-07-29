@@ -54,7 +54,7 @@ public class GetXSparks {
 		
 		Log.v("REPORT", "GET X SPARKS IS BEGGINING, SIR!");
 		OkHTTPTask task = new OkHTTPTask(g, i);
-		task.execute("http://steamnet.herokuapp.com/api/v1/sparks.json?limit="+lim);
+		task.execute("http://steamnet.herokuapp.com/api/v1/jawns.json?limit="+lim+"&lite=true&filter=sparks");
 		
 	}
 	
@@ -98,7 +98,7 @@ public class GetXSparks {
 				JawnAdapter a = new JawnAdapter(gridView.getContext(), sparks, 200);
 				Log.v("REPORT", "WE HAVE ACCESSED THE JAWNADAPTER AND ARE PROCEEDING AS PLANNED, SIR!");
 				indexGrid.setAdapter(a);
-				indexGrid.setJawns(sparks);
+				indexGrid.setJawnsWithCaching(sparks);
 				if (mainActivity != null) {
 					mainActivity.setSparkEventHandlers();
 					mainActivity.setScrollListener();
@@ -137,71 +137,25 @@ public class GetXSparks {
         	Log.v("LENGTH", Integer.toString(sparks.length()));
         	try {        	     
         		for(int i = 0; i < sparks.length(); i++){// Storing each json item in variable
-        			JSONObject json = sparks.getJSONObject(i);
-					String id = json.getString(ID);
-					String sparkType = json.getString(SPARK_TYPE);
-					String contentType = json.getString(CONTENT_TYPE);
-					String content = json.getString(CONTENT);
-					String createdAt = json.getString(CREATED_AT);
+        			JSONObject j = sparks.getJSONObject(i);
+        			String id = j.getString(ID);
+					String sparkType = j.getString(SPARK_TYPE);
+					String contentType = j.getString(CONTENT_TYPE);
+					String content = j.getString(CONTENT);
+					String createdAt = j.getString(CREATED_AT);
 					String firstUser = "";
-					//Getting Array of Users
-	        	    JSONArray usersJSON = json.getJSONArray(USERS);
-	        	     
-	        	    // looping through All Users
-	        	    //ArrayList<Integer> usersArrayList = new ArrayList<Integer>();
-	        	    //int count = 0;
-	        	    /*for(int q = 0; q < usersJSON.length(); q++){
-	        	        JSONObject u = usersJSON.getJSONObject(q);
-	        	        // Storing each json item in variable
-	        	        if(count == 0){
-	        	        	count++;
-	        	        	firstUser = u.getString(USERNAME);
-	        	        }
-	        	        int userID = u.getInt(ID);
-	        	        usersArrayList.add(userID);
-	        	    }*/
-	        	    int[] usersArray = new int[1];
-	        	    usersArray[0] = 1;
-	        	    /*for(int q = 0; q < usersArrayList.size(); q++){
-	        	    	usersArray[q] = usersArrayList.get(q);
-	        	    }*/
-	        	    
-	        	    String[] createdAts = new String[1];
-	        	    createdAts[0] = createdAt;
-	        	    //******************
-	        	    
-	        	    
-	        	    JSONArray commentsJSON = json.getJSONArray(COMMENTS);
-	        	    
-	        	    ArrayList<Comment> commentsArrayList = new ArrayList<Comment>();
-	        	    for(int k = 0; k < commentsJSON.length(); k++){
-	        	    	JSONObject c = commentsJSON.getJSONObject(k);
-	        	    	String commentText = c.getString(COMMENT_TEXT);
-	        	    	JSONObject userObj = c.getJSONObject(USER);
-	        	    	String userId = userObj.getString(ID);
-	        	    	String username = userObj.getString(NAME);
 
-	        	    	commentsArrayList.add(new Comment(Integer.valueOf(userId), commentText, username));
-	        	    }
-	        	    
-	        	    Comment[] commentArray = new Comment[commentsArrayList.size()];
-	        	    for(int j = 0; j < commentsArrayList.size(); j++){
-	        	    	commentArray[j] = commentsArrayList.get(j);
-	        	    }
-	        	    
-	        	    
-	        	    //*****************************************
-	        	    Spark newSpark = new Spark(Integer.parseInt(id), sparkType.charAt(0), contentType.charAt(0), content, createdAts, createdAts[0], usersArray, "max", commentArray);
+	        	    Spark newSpark = new Spark(Integer.parseInt(id), sparkType.charAt(0), contentType.charAt(0), content, createdAt);
 	        	    if (contentType.charAt(0) != 'T') {
-	        	    	if (json.has(FILE)) {
-	        	    		if (json.getString(FILE) != null) {
-    	        	    		String url = json.getString(FILE);
+	        	    	if (j.has(FILE)) {
+	        	    		if (j.getString(FILE) != null) {
+    	        	    		String url = j.getString(FILE);
     	        	    		Log.v("!!!!!!URL!!!!!!!", url);
     	        	    		newSpark.setCloudLink(url);
 	        	    		}
 	        	    	}
 	        	    }
-					sparkArrayList.add(newSpark);
+        	        sparkArrayList.add(newSpark);
         		}
         	    Log.v("ARRAY", sparkArrayList.toString());
         	    Spark[] sparkArray = new Spark[sparkArrayList.size()];

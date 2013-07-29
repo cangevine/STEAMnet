@@ -14,6 +14,7 @@ import org.friendscentral.steamnet.SparkSubmitters.AudioSubmitter;
 import org.friendscentral.steamnet.SparkSubmitters.PictureSubmitter;
 import org.friendscentral.steamnet.SparkWizardFragments.SparkTypeChooser;
 
+import CachingHandlers.JawnsDataSource;
 import android.app.ActionBar;
 import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
@@ -52,6 +53,8 @@ public class MainActivity extends Activity {
     GridView gridView;
     IndexGrid indexGrid;
     FilterSettings filterSettings;
+    
+    JawnsDataSource jawnsDataSource;
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,10 +90,13 @@ public class MainActivity extends Activity {
     }
     
     public void initializeIndexGridLayout() {
+    	jawnsDataSource = new JawnsDataSource(this);
+    	jawnsDataSource.open();
+    	
     	final View indexGridLayout = findViewById(R.id.IndexGrid);
     	gridView = (GridView) indexGridLayout.findViewById(R.id.SparkGrid);
     	indexGrid = new IndexGrid();
-    	indexGrid.initIndexGrid(gridView, MainActivity.this, false);
+    	indexGrid.initIndexGrid(gridView, MainActivity.this, jawnsDataSource, false);
     }
     
     public void initIdeaBucket() {
@@ -275,10 +281,7 @@ public class MainActivity extends Activity {
 	
 	public void logOut() {
 		STEAMnetApplication sna = (STEAMnetApplication) getApplication();
-		sna.setToken(null);
-		sna.setUserId(null);
-		sna.setUsername(null);
-		sna.setReadOnlyMode(true);
+		sna.logOut();
 		ActionBar actionBar = getActionBar();
     	actionBar.setCustomView(R.layout.log_in_action_bar);
     	actionBar.getCustomView().findViewById(R.id.log_in_button).setOnClickListener(new OnClickListener() {
@@ -287,5 +290,17 @@ public class MainActivity extends Activity {
 				logIn();
 			}
     	});
+	}
+	
+	@Override
+	protected void onResume() {
+	    jawnsDataSource.open();
+	    super.onResume();
+	}
+
+	@Override
+	protected void onPause() {
+	    jawnsDataSource.close();
+	    super.onPause();
 	}
 }

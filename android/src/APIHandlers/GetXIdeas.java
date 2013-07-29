@@ -54,7 +54,7 @@ public class GetXIdeas {
 		
 		Log.v("REPORT", "GET X IDEAS IS BEGGINING, SIR!");
 		OkHTTPTask task = new OkHTTPTask(g, i);
-		task.execute("http://steamnet.herokuapp.com/api/v1/ideas.json?limit="+lim);
+		task.execute("http://steamnet.herokuapp.com/api/v1/jawns.json?limit="+lim+"&lite=true&filter=ideas");
 	}
 	
 	class OkHTTPTask extends AsyncTask<String, Void, String> {
@@ -79,7 +79,6 @@ public class GetXIdeas {
         	Log.v("REPORT", "WE ARE EXECUTING THE REQUEST IN THE BACKGROUND, SIR!");
             try {
             	return get(new URL(urls[0]));
-            	
             } catch (Exception e) {
                 this.exception = e;
                 Log.e(TAG, "Exception: "+e);
@@ -97,7 +96,7 @@ public class GetXIdeas {
 				JawnAdapter a = new JawnAdapter(gridView.getContext(), ideas, 200);
 				Log.v("REPORT", "WE HAVE ACCESSED THE JAWNADAPTER AND ARE PROCEEDING AS PLANNED, SIR!");
 				indexGrid.setAdapter(a);
-				indexGrid.setJawns(ideas);
+				indexGrid.setJawnsWithCaching(ideas);
 				if (mainActivity != null) {
 					mainActivity.setSparkEventHandlers();
 					mainActivity.setScrollListener();
@@ -141,65 +140,14 @@ public class GetXIdeas {
         	Log.v("LENGTH", Integer.toString(ideasJSON.length()));
         	try {        	     
         		for(int i = 0; i < ideasJSON.length(); i++){// Storing each json item in variable
-        			JSONObject json = ideasJSON.getJSONObject(i);
-        			// Getting Idea parameters
-            		int id = json.getInt(ID);
-        	        String description = json.getString(DESCRIPTION);
-        	        //String tags = j.getString(TAGS);
-        	        
-        	        //Getting Array of Sparks
-            	    JSONArray sparksJSON = json.getJSONArray(SPARKS);
-            	    Log.v("STUFF", sparksJSON.toString()); 
-            	    Log.v("ideasJSON Length", Integer.toString(sparksJSON.length()));
-            	    // looping through All Sparks
-            	    ArrayList<Integer> sparkIdArrayList = new ArrayList<Integer>();
-            	    for(int c = 0; c < sparksJSON.length(); c++){
-            	        JSONObject s = sparksJSON.getJSONObject(c);
-            	        // Storing each json item in variable
-            	        int sparkId = s.getInt(ID);
-            	        sparkIdArrayList.add(sparkId);
-            	    }
-            	    
-            	    Log.v("YOMAMA", sparkIdArrayList.toString());
-            	    int[] sparkIdArray = new int[sparkIdArrayList.size()];
-            	    
-            	    for(int w = 0; w < sparkIdArrayList.size(); w++){
-            	    	sparkIdArray[w] = sparkIdArrayList.get(w);
-            	    }
-            	    
-            	    String firstUser = "";
-            	    
-            	    //int userId = json.getInt(USER_ID);
-            	    int[] userIds = new int[10];
-            	    userIds[0] = 1;
-            	    
-            	    JSONArray commentsJSON = json.getJSONArray(COMMENTS);
-	        	    
-            	    ArrayList<Comment> commentsArrayList = new ArrayList<Comment>();
-	        	    for(int k = 0; k < commentsJSON.length(); k++){
-	        	    	JSONObject c = commentsJSON.getJSONObject(k);
-	        	    	String commentText = c.getString(COMMENT_TEXT);
-	        	    	JSONObject userObj = c.getJSONObject(USER);
-	        	    	String userId = userObj.getString(ID);
-	        	    	String username = userObj.getString(NAME);
+        			JSONObject j = (JSONObject) ideasJSON.get(i);
+        			
+        			int id = j.getInt(ID);
+        	        String description = j.getString(DESCRIPTION);
+            	    String createdAt = j.getString(CREATED_AT);
 
-	        	    	commentsArrayList.add(new Comment(Integer.valueOf(userId), commentText, username));
-	        	    }
-	        	    
-	        	    Comment[] commentArray = new Comment[commentsArrayList.size()];
-	        	    for(int w = 0; w < commentsArrayList.size(); w++){
-	        	    	commentArray[w] = commentsArrayList.get(w);
-	        	    }
-            	    
-            	    String createdAt = json.getString(CREATED_AT);
-            	    
-            	    String[] tags = new String[10];
-            	    
-            	    
-            	    jawnArrayList.add(new Idea(id, description, tags, sparkIdArray, userIds, user, createdAt, commentArray));
-            	    
+            	    jawnArrayList.add(new Idea(id, description, createdAt));
         		}
-        	    Log.v("ARRAY", jawnArrayList.toString());
         	    Jawn[] jawnArray = new Jawn[jawnArrayList.size()];
         	    for(int i = 0; i < jawnArrayList.size(); i++){
         	    	jawnArray[i] = jawnArrayList.get(i);

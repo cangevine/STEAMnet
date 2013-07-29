@@ -1,5 +1,7 @@
 package org.friendscentral.steamnet.Activities;
 
+import java.lang.reflect.InvocationTargetException;
+
 import org.friendscentral.steamnet.R;
 import org.friendscentral.steamnet.STEAMnetApplication;
 import org.friendscentral.steamnet.BaseClasses.Spark;
@@ -20,6 +22,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -112,10 +115,7 @@ public class SparkDetailActivity extends Activity {
 	
 	public void logOut() {
 		STEAMnetApplication sna = (STEAMnetApplication) getApplication();
-		sna.setToken(null);
-		sna.setUserId(null);
-		sna.setUsername(null);
-		sna.setReadOnlyMode(true);
+		sna.logOut();
 		ActionBar actionBar = getActionBar();
     	actionBar.setCustomView(R.layout.log_in_action_bar);
     	actionBar.getCustomView().findViewById(R.id.log_in_button).setOnClickListener(new OnClickListener() {
@@ -153,6 +153,23 @@ public class SparkDetailActivity extends Activity {
 		if (filler != null && spark.getContentType() == 'A') {
 			if (((AudioFiller) filler).getAudioStreamer() != null) {
 				((AudioFiller) filler).getAudioStreamer().stop();
+			}
+		} if (filler != null && spark.getContentType() == 'V') {
+			WebView video = ((VideoFiller) filler).getEmbededVideo();
+			try {
+				Class.forName("android.webkit.WebView")
+				    .getMethod("onPause", (Class[]) null)
+				     	.invoke(video, (Object[]) null);
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
+			} catch (NoSuchMethodException e) {
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
 			}
 		}
 	}

@@ -3,7 +3,8 @@
     android:id="@+id/filterSettingsLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:padding="8dp" >
     
     <LinearLayout 
         android:layout_width="fill_parent"
@@ -51,14 +52,34 @@
 
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/editText1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/filter_settings_search_hashtag_hint" >
-    </EditText>
-
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        
+        <EditText
+	        android:id="@+id/tag_search_edit_text"
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="3"
+	        android:ems="10"
+	        android:hint="search by a tag" >
+	    </EditText>
+	    
+	    <Button
+	        android:id="@+id/tag_search_button"
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:text="Search"
+	        android:enabled="false"
+	        >
+	    </Button>
+        
+        
+    </LinearLayout>
+    
+    
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
@@ -69,31 +90,27 @@
     <RadioGroup
         android:id="@+id/radioGroup1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
 
         <RadioButton
-            android:id="@+id/radio0"
-            android:layout_width="wrap_content"
+            android:id="@+id/recentJawnsRadio"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:onClick="filterSettingsFunction"
             android:tag="sortRecent"
             android:checked="true"
             android:text="@string/filter_settings_sort_options_timestamp" />
 
         <RadioButton
-            android:id="@+id/radio1"
-            android:layout_width="wrap_content"
+            android:id="@+id/randomJawnsRadio"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:onClick="filterSettingsFunction"
             android:tag="randomizeJawns"
-            android:hint="@string/filter_settings_sort_options_random"
             android:text="@string/filter_settings_sort_options_random" />
-
-        <RadioButton
-            android:id="@+id/radio2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/filter_settings_sort_options_relevant" />
 
     </RadioGroup>
 
