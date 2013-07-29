@@ -85,20 +85,22 @@ public class UserLoader {
 					try {
 						JSONObject sparkObj = new JSONObject(get(new URL(sparkUrl)));
 						JSONArray sparkUsers = sparkObj.getJSONArray(USERS);
-						if (sparkUsers.getJSONObject(0) != null) {
-							JSONObject firstUserObj = sparkUsers.getJSONObject(0);
-							spark.setUsername(firstUserObj.getString(NAME));
-							
-							ArrayList<Integer> userIds = new ArrayList<Integer>(sparkUsers.length());
-							for (int i = 0; i < sparkUsers.length(); i++) {
-								userIds.add(sparkUsers.getJSONObject(i).getInt(ID));
+						if (sparkUsers.length() > 0) {
+							if (sparkUsers.getJSONObject(0) != null) {
+								JSONObject firstUserObj = sparkUsers.getJSONObject(0);
+								spark.setUsername(firstUserObj.getString(NAME));
+								
+								ArrayList<Integer> userIds = new ArrayList<Integer>(sparkUsers.length());
+								for (int i = 0; i < sparkUsers.length(); i++) {
+									userIds.add(sparkUsers.getJSONObject(i).getInt(ID));
+								}
+								int[] userIdsArray = new int[userIds.size()];
+								for (int i = 0; i < userIds.size(); i++) {
+									userIdsArray[i] = userIds.get(i);
+								}
+								spark.setUserIds(userIdsArray);
+								edited = true;
 							}
-							int[] userIdsArray = new int[userIds.size()];
-							for (int i = 0; i < userIds.size(); i++) {
-								userIdsArray[i] = userIds.get(i);
-							}
-							spark.setUserIds(userIdsArray);
-							edited = true;
 						}
 					} catch (MalformedURLException e) {
 						e.printStackTrace();

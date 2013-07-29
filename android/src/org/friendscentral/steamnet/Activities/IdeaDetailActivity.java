@@ -132,6 +132,21 @@ public class IdeaDetailActivity extends Activity {
 				
 				tagsHolder.addView(t);
 			}
+			final Button t = new Button(this);
+			t.setText("Find similar Sparks and Ideas");
+			t.setGravity(Gravity.CENTER_HORIZONTAL);
+			
+			t.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					STEAMnetApplication sna = (STEAMnetApplication) IdeaDetailActivity.this.getApplicationContext();
+					sna.setSavedTags(idea.getTags());
+					Intent intent = new Intent(IdeaDetailActivity.this, MainActivity.class);
+			    	IdeaDetailActivity.this.startActivityForResult(intent, 0);
+				}
+			});
+			
+			tagsHolder.addView(t);
 		}
 	}
 	

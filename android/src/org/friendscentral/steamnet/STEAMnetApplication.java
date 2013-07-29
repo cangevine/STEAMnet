@@ -22,6 +22,7 @@ public class STEAMnetApplication extends Application {
 	AsyncTask uCurrentTask;
 	double seedNum = 2.0;
 	String savedTag;
+	String[] savedTags;
 	
 	@Override
 	public void onCreate() {
@@ -144,7 +145,6 @@ public class STEAMnetApplication extends Application {
 	public void setCurrentTask(AsyncTask a) {
 		currentTask = a;
 	}
-	
 	public AsyncTask getCurrentTask() {
 		return currentTask;
 	}
@@ -152,7 +152,6 @@ public class STEAMnetApplication extends Application {
 	public void setCurrentMultimediaTask(AsyncTask a) {
 		mCurrentTask = a;
 	}
-	
 	public AsyncTask getCurrentMultimediaTask() {
 		return mCurrentTask;
 	}
@@ -160,7 +159,6 @@ public class STEAMnetApplication extends Application {
 	public void setCurrentUserTask(AsyncTask a) {
 		uCurrentTask = a;
 	}
-	
 	public AsyncTask getCurrentUserTask() {
 		return uCurrentTask;
 	}
@@ -168,8 +166,14 @@ public class STEAMnetApplication extends Application {
 	public String getSavedTag() {
 		return savedTag;
 	}
-	
 	public void setSavedTag(String s) {
 		savedTag = s;
+	}
+	
+	public String[] getSavedTags() {
+		return savedTags;
+	}
+	public void setSavedTags(String[] s) {
+		savedTags = s;
 	}
 }

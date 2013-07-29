@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import org.friendscentral.steamnet.IndexGrid;
 import org.friendscentral.steamnet.JawnAdapter;
@@ -37,7 +38,7 @@ import com.squareup.okhttp.OkHttpClient;
  * @author aqeelphillips
  * 
  */
-public class GetXJawnsByTag {
+public class GetXSimilarJawns {
 	char spark_type;
 	char content_type;
 	String content;
@@ -47,7 +48,8 @@ public class GetXJawnsByTag {
 	Context context;
 	Activity activity;
 	MainActivity mainActivity;
-	Jawn[] jawns;
+	
+	int limit;
 	
 	Jawn[] savedJawns;
 	JawnAdapter savedAdapter;
@@ -58,24 +60,23 @@ public class GetXJawnsByTag {
 	 * @param int X - returns the first X sparks (by createdAt)
 	 */
 	
-	public GetXJawnsByTag(int lim, GridView g, IndexGrid i, Context c, String tag) {
-		Log.v("GetXJawns", "called");
+	public GetXSimilarJawns(int lim, GridView g, IndexGrid i, Context c, String[] tags) {
+		Log.v("GetXSimilarJawns", "called");
 		context = c;
 		activity = (Activity) context;
 		if (activity.getClass().getName().equals("org.friendscentral.steamnet.Activities.MainActivity")) {
 			mainActivity = (MainActivity) activity;
 		}
 		
-		boolean isActivityForResult = (i.getAdapter() == null);
-		
-		if (!isActivityForResult) {
-			savedJawns = i.getAdapter().getJawns();
-			savedAdapter = i.getAdapter();
+		String[] urls = new String[tags.length];
+		int index = 0;
+		for (String tag : tags) {
+			String url = "http://steamnet.herokuapp.com/api/v1/tags/"+tag+".json?limit="+lim+"&lite=true";
+			urls[index] = url;
+			index++;
 		}
 		
-		String url = "http://steamnet.herokuapp.com/api/v1/tags/"+tag+".json?limit="+lim+"&lite=true";
-		Log.v("Tag fetch url:", url);
-		
+		sna = (STEAMnetApplication) context.getApplicationContext();
 		if (sna.getCurrentTask() != null) {
 			sna.getCurrentTask().cancel(true);
 			if (sna.getCurrentMultimediaTask() != null)
@@ -84,37 +85,47 @@ public class GetXJawnsByTag {
 				sna.getCurrentUserTask().cancel(true);
 		}
 		
-		if (!isActivityForResult) {
-			i.getAdapter().setJawns(new Jawn[0]);
-			g.setAdapter(new SpinnerAdapter(context, 16));
-		}
+		limit = lim;
 		
-		OkHTTPTask task = new OkHTTPTask(g, i);
-		task.execute(url);
+		OkHTTPTask task = new OkHTTPTask(g, i, urls);
+		task.execute();
 		sna.setCurrentTask(task);
 	}
 	
-	class OkHTTPTask extends AsyncTask<String, Void, String> {
+	class OkHTTPTask extends AsyncTask<String, Void, String[]> {
 		
 		String TAG = "RetreiveDataTask";
 		
 		OkHttpClient client;
 		GridView gridView;
 		IndexGrid indexGrid;
+		String[] urls;
 		
-		public OkHTTPTask(GridView g, IndexGrid i){
+		public OkHTTPTask(GridView g, IndexGrid i, String[] u){
 			client = new OkHttpClient();
 			gridView = g;
 			indexGrid = i;
+			urls = u;
 		}
         
 		
 		@SuppressWarnings("unused")
 		private Exception exception;
         
-        protected String doInBackground(String... urls) {
+        protected String[] doInBackground(String... s) {
             try {
-            	return get(new URL(urls[0]));
+            	ArrayList<String> dataList = new ArrayList<String>(urls.length);
+            	for (String url : urls) {
+            		dataList.add(get(new URL(url)));
+            	}
+            	
+            	String[] dataArr = new String[dataList.size()];
+            	int index = 0;
+            	for (String data : dataList) {
+            		dataArr[index] = data;
+            		index++;
+            	}
+            	return dataArr;
             } catch (Exception e) {
                 this.exception = e;
                 Log.e(TAG, "Exception: "+e);
@@ -122,25 +133,46 @@ public class GetXJawnsByTag {
             }
         }
 
-        protected void onPostExecute(String data) {
+        @SuppressWarnings("unused")
+		protected void onPostExecute(String[] data) {
         	try {
-				jawns = parseData(data);
-				if (jawns != null) {
-					JawnAdapter a = new JawnAdapter(gridView.getContext(), jawns, 200);
+        		//Get ALL jawns
+        		ArrayList<Jawn> rawJawns = new ArrayList<Jawn>();
+        		int index = 0;
+        		for (String json : data) {
+        			Jawn[] parsedData = parseData(json);
+        			for (Jawn jawn : parsedData)
+        				rawJawns.add(jawn);
+        			index++;
+        		}
+        		
+        		// Remove blanks and duplicates 
+        		ArrayList<Jawn> jawns = new ArrayList<Jawn>();
+        		for (int i = 0; i < rawJawns.size(); i++) {
+					if (rawJawns.get(i) != null) {
+						Jawn newJawn = rawJawns.get(i);
+						//Verify that it's not in the List already:
+						if (!checkForJawnInArray(newJawn, jawns)) {
+							jawns.add(newJawn);
+						}
+					}
+        		}
+        		
+        		//And randomize the list:
+        		Collections.shuffle(jawns);
+        		
+        		//Turn ArrayList to Array
+        		Jawn[] completeJawnArr = new Jawn[jawns.size()];
+        		for (int i = 0; i < jawns.size(); i++) {
+        			completeJawnArr[i] = jawns.get(i);
+        		}
+        		
+				if (completeJawnArr != null) {
+					JawnAdapter a = new JawnAdapter(gridView.getContext(), completeJawnArr, 200);
 					indexGrid.setAdapter(a);
-					indexGrid.setJawns(jawns);
+					indexGrid.setJawns(completeJawnArr);
 				} else {
-					Toast.makeText(context, "No matches found for that tag", Toast.LENGTH_LONG).show();
-					//View v = new View(context);
-					//v.setTag("revertTagSearch");
-					//mainActivity.filterSettingsFunction(v);
-					indexGrid.setAdapter(savedAdapter);
-					indexGrid.setJawns(savedJawns);
-					
-					ActionBar ab = mainActivity.getActionBar();
-					ViewGroup vg = (ViewGroup) ab.getCustomView();
-					vg.findViewById(R.id.tag_back_button).setVisibility(View.INVISIBLE);
-					vg.findViewById(R.id.tag_info).setVisibility(View.INVISIBLE);
+					Toast.makeText(context, "No matches found for those tags", Toast.LENGTH_LONG).show();
 				}
 				
 				if (mainActivity != null) {
@@ -152,6 +184,21 @@ public class GetXJawnsByTag {
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
+        }
+        
+        boolean checkForJawnInArray(Jawn jawn, ArrayList<Jawn> jawnsArr) {
+        	for (Jawn compareJawn : jawnsArr) {
+        		if (compareJawn.getType() == 'S' && jawn.getType() == 'S') {
+        			if (((Spark) compareJawn).getId() == ((Spark) jawn).getId()) {
+        				return true;
+        			}
+        		} else if (compareJawn.getType() == 'I' && jawn.getType() == 'I') {
+        			if (((Idea) compareJawn).getId() == ((Idea) jawn).getId()) {
+        				return true;
+        			}
+        		}
+        	}
+        	return false;
         }
         
         //PARSE DATA

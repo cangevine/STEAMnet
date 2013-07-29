@@ -1,23 +1,16 @@
 package org.friendscentral.steamnet;
 
-import org.friendscentral.steamnet.Activities.MainActivity;
 import org.friendscentral.steamnet.BaseClasses.Jawn;
 import org.friendscentral.steamnet.EventHandlers.EndlessScroller;
 
 import APIHandlers.GetXJawns;
 import APIHandlers.GetXJawnsByTag;
+import APIHandlers.GetXSimilarJawns;
 import CachingHandlers.JawnsDataSource;
 import CachingHandlers.LoadJawnsFromCache;
-import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.GridView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 // TODO Remove class
@@ -66,6 +59,10 @@ public class IndexGrid {
 				});*/
 				
 				sna.setSavedTag(null);
+    		} else if (sna.getSavedTags() != null) {	
+				new GetXSimilarJawns(50, gridview, IndexGrid.this, context, sna.getSavedTags());
+				Toast.makeText(context, "Results for similar Sparks and Ideas", Toast.LENGTH_LONG).show();
+    			sna.setSavedTags(null);
     		} else {
 	    		if (datasource.getAllJawns() != null && datasource.getAllJawns().length > 0) {
 	    			Log.v("IndexGrid init function", "Loading Jawns from cache");
