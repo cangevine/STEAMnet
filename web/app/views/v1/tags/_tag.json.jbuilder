@@ -1,3 +1,5 @@
+lite = params["lite"] == "true"
+
 json.(tag, :tag_text)
 
 json.jawns tag.jawns do |jawn|
@@ -5,9 +7,9 @@ json.jawns tag.jawns do |jawn|
   
   case type
   when "spark"
-    json.partial! 'v1/sparks/spark', spark: jawn
+    json.partial! 'v1/sparks/spark', spark: jawn, lite: lite
   when "idea"
-    json.partial! 'v1/ideas/idea', idea: jawn
+    json.partial! 'v1/ideas/idea', idea: jawn, lite: lite
   end
   
   json.jawn_type type
