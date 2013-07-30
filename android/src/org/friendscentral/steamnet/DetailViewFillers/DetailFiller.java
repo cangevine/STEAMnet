@@ -3,15 +3,21 @@ package org.friendscentral.steamnet.DetailViewFillers;
 import org.friendscentral.steamnet.CommentAdapter;
 import org.friendscentral.steamnet.R;
 import org.friendscentral.steamnet.STEAMnetApplication;
+import org.friendscentral.steamnet.Activities.IdeaDetailActivity;
+import org.friendscentral.steamnet.Activities.MainActivity;
 import org.friendscentral.steamnet.Activities.SparkDetailActivity;
 import org.friendscentral.steamnet.BaseClasses.Comment;
 import org.friendscentral.steamnet.BaseClasses.Spark;
 
 import APIHandlers.PostComment;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -32,6 +38,9 @@ public abstract class DetailFiller {
 	String createdAt;
 	String contentType;
 	Comment[] comments;
+	String username;
+	int[] userIds;
+	String[] tags;
 	
 	public DetailFiller(Spark s, String ct, LinearLayout l, Context c) {
 		Log.v("DetailFiller called", "Using the polymorphic detail filler! Celebrate!");
@@ -47,6 +56,9 @@ public abstract class DetailFiller {
 		createdAt = spark.getCreatedAt();
 		contentType = ct;
 		comments = spark.getComments();
+		username = spark.getUsername();
+		userIds = spark.getUserIds();
+		tags = spark.getTags();
 		
 		if(createdAt == null){
 			createdAt = "Date unknown";
@@ -63,8 +75,10 @@ public abstract class DetailFiller {
 			((SparkDetailActivity) context).findViewById(R.id.complete_spark_data).setBackgroundResource(R.drawable.spark_what_if_bg);
 		}
 		
+		((TextView) ((SparkDetailActivity) context).findViewById(R.id.spark_user_name)).setText(username);
+		((TextView) ((SparkDetailActivity) context).findViewById(R.id.TimestampTextView)).setText(createdAt);
 		fillSparkTypes();
-		//fillTags();
+		fillTags();
 		fillComments();
 	}
 	
@@ -73,22 +87,44 @@ public abstract class DetailFiller {
 		sparkTypeView.setText(sparkType + " - " + contentType);
 	}
 	
-	/*public void fillTags() {
-		TextView sparkTags = (TextView) findViewById(R.id.TagsTextView);
-		
-		String tagString = "Tags: ";
+	public void fillTags() {
 		if (tags != null) {
-			for (int i = 0; i < tags.length; i++) {
-				tagString += tags[i];
-				if (i != tags.length - 1) {
-					tagString += ", ";
-				}
+			LinearLayout tagsHolder = (LinearLayout) ((Activity) context).findViewById(R.id.SparkDescAndTags);
+			
+			for (String tag : tags) {
+				final Button t = new Button(context);
+				t.setText(tag);
+				t.setGravity(Gravity.CENTER_HORIZONTAL);
+				
+				t.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						STEAMnetApplication sna = (STEAMnetApplication) context.getApplicationContext();
+						sna.setSavedTag((String) t.getText());
+						Intent intent = new Intent(context, MainActivity.class);
+				    	((Activity) context).startActivityForResult(intent, 0);
+					}
+				});
+				
+				tagsHolder.addView(t);
 			}
-		} else {
-			tagString = "No tags";
+			final Button t = new Button(context);
+			t.setText("Find similar Sparks and Ideas");
+			t.setGravity(Gravity.CENTER_HORIZONTAL);
+			
+			t.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					STEAMnetApplication sna = (STEAMnetApplication) context.getApplicationContext();
+					sna.setSavedTags(spark.getTags());
+					Intent intent = new Intent(context, MainActivity.class);
+			    	((Activity) context).startActivityForResult(intent, 0);
+				}
+			});
+			
+			tagsHolder.addView(t);
 		}
-		sparkTags.setText(tagString);
-	}*/
+	}
 	
 	public void fillComments() {
 		ListView commentSection = (ListView) ((SparkDetailActivity) context).findViewById(R.id.CommentList);
@@ -108,21 +144,13 @@ public abstract class DetailFiller {
 		
 		int userID = 0;
 		STEAMnetApplication sna = (STEAMnetApplication) ((SparkDetailActivity) context).getApplication();
-		if (sna.getUserId() != null) {
+		if (!sna.getReadOnlyMode()) {
 			userID = Integer.valueOf(sna.getUserId());
-		}
-		if (sna.getUsername() != null) {
 			String username = sna.getUsername();
-			new PostComment(id, "S".charAt(0), content, userID, username, sna.getToken());
-			
 			ListView commentSection = (ListView) (((SparkDetailActivity) context).findViewById(R.id.spark_social_section)).findViewById(R.id.CommentList);
 			CommentAdapter c = (CommentAdapter) commentSection.getAdapter();
-			Comment newComment = new Comment(userID, content, username);
-			c.addComment(newComment);
-			if (c.getComments()[0].getUserId() == 0) {
-				c.removeComment(0);
-			}
-			c.notifyDataSetChanged();
+			new PostComment(id, "S".charAt(0), content, userID, username, sna.getToken(), c);
+
 			editText.setText("");
 		} else {
 			Toast.makeText(context, "Please log in to submit a comment", Toast.LENGTH_SHORT).show();

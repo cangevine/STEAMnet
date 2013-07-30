@@ -179,36 +179,39 @@ public class IdeaBucket {
 				}
 				
 				STEAMnetApplication sna = (STEAMnetApplication) ((MainActivity) context).getApplication();
-				String userId = "0";
-				if (sna.getUserId() != null) {
-					userId = sna.getUserId();
+				if (!sna.getReadOnlyMode()) {
+					String userId = "0";
+					if (sna.getUserId() != null || !sna.getUserId().equals("")) {
+						userId = sna.getUserId();
+					}
+					String username = "Anonymous";
+					if (sna.getUsername() != null || !sna.getUsername().equals("")) {
+						username = sna.getUsername();
+					}
+					String token = "";
+					if (sna.getToken() != null || !sna.getToken().equals("")) {
+						token = sna.getToken();
+					}
+					
+					new PostIdea(description, s, tags.split(", "), userId, username, token);
+					
+					sparks.clear();
+					imageViews[0].setImageResource(0);
+					imageViews[1].setImageResource(0);
+					imageViews[2].setImageResource(0);
+					imageViews[3].setImageResource(0);
+					descriptionEditText.setText("");
+					tagsEditText.setText("");
+					submitFrag.setVisibility(View.GONE);
+					bucketFrag.setVisibility(View.VISIBLE);
+					updateWeights(2,4,2);
+					
+					Button ignite = (Button) mainLayout.findViewById(R.id.ignite_button);
+					ignite.setEnabled(false);
+				} else {
+					Toast.makeText(context, "Please log in to submit an Idea", Toast.LENGTH_LONG).show();
 				}
-				String username = "Anonymous";
-				if (sna.getUsername() != null) {
-					username = sna.getUsername();
-				}
-				String token = "";
-				if (sna.getToken() != null) {
-					token = sna.getToken();
-				}
-				
-				new PostIdea(description, s, tags.split(", "), userId, username, token);
-				
-				sparks.clear();
-				imageViews[0].setImageResource(0);
-				imageViews[1].setImageResource(0);
-				imageViews[2].setImageResource(0);
-				imageViews[3].setImageResource(0);
-				descriptionEditText.setText("");
-				tagsEditText.setText("");
-				submitFrag.setVisibility(View.GONE);
-				bucketFrag.setVisibility(View.VISIBLE);
-				updateWeights(2,4,2);
-				
-				Button ignite = (Button) mainLayout.findViewById(R.id.ignite_button);
-				ignite.setEnabled(false);
 			}
-			
 		});
 	}
 	

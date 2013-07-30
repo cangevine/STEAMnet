@@ -83,7 +83,7 @@ public class PostIdea {
 	        	
 	        	//String postData = "&spark[spark_type]="+spark_type+"&spark[content_type]="+content_type+"&spark[content]="+content+"&username="+user+"&tags="+tagsString;
 	        	//String postData = "&idea[description]="+description+"&tags="+tagsString+"&sparks="+sparksString+"&username="+user+"&token"+token;
-	        	String postData = "&idea[description]="+description+"&tags="+tagsString+"&sparks="+sparksString+"&username="+user+"&token="+token;
+	        	String postData = "&idea[description]="+description+"&tags="+tagsString.toLowerCase()+"&sparks="+sparksString+"&username="+user+"&token="+token;
 	        	Log.v(TAG, postData);
 	        		        	
 	        	return post(new URL(urls[0]), postData.getBytes());

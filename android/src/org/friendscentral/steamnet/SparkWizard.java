@@ -72,10 +72,12 @@ public class SparkWizard {
 		if (s != null) {
 			STEAMnetApplication sna = (STEAMnetApplication) mainActivity.getApplication();
 			String token = "";
-			if (sna.getToken() != null) {
+			String username = "";
+			if (!sna.getReadOnlyMode()) {
 				token = sna.getToken();
+				username = sna.getUsername();
 			}
-			PostSpark task = new PostSpark(s, g, i, token, mainActivity);
+			PostSpark task = new PostSpark(s, g, i, username, token, mainActivity);
 			revertWizard(v);
 		}
 	}

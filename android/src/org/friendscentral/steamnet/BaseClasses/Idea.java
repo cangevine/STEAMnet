@@ -3,6 +3,8 @@ package org.friendscentral.steamnet.BaseClasses;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import android.graphics.Bitmap;
+
 /**
  * 
  * @author sambeckley
@@ -13,12 +15,15 @@ public class Idea extends Jawn implements Serializable{
 	int id;
 	String description;
 	String[] tags;
+	String tagsString;
 	int[] sparkIds;
 	String firstUser;
-	int[] userIds;
+	int userId;
 	String[] createdAts;
 	String firstCreatedAt;
 	Comment[] comments;
+	Bitmap[] sparkThumbs;
+	Spark[] sparks;
 	
 	/**
 	 * @param (int, String, String[], int[], int[], String)
@@ -29,12 +34,12 @@ public class Idea extends Jawn implements Serializable{
 	 * @param int[] - user IDs
 	 * @param String - firstUser
 	 */
-	public Idea(int i, String d, String[] t, int[] s, int[] u, String fu, String fca, Comment[] c) {
+	public Idea(int i, String d, String[] t, int[] s, int u, String fu, String fca, Comment[] c) {
 		id = i;
 		description = d;
 		tags = t;
 		sparkIds = s;
-		userIds = u;
+		userId = u;
 		firstUser = fu;
 		firstCreatedAt = fca;
 		comments = c;
@@ -66,11 +71,11 @@ public class Idea extends Jawn implements Serializable{
 	 * @param String - username
 	 * @param String[] - created ats
 	 */
-	public Idea(int i, String d, String t, int[] s, int[] u, String fu, String[] ca, String fca){
+	public Idea(int i, String d, String t, int[] s, int u, String fu, String[] ca, String fca){
 		id = i;
 		description = d;
 		sparkIds = s;
-		userIds = u;
+		userId = u;
 		firstUser = fu;
 		createdAts = ca;
 		firstCreatedAt = fca;
@@ -89,6 +94,35 @@ public class Idea extends Jawn implements Serializable{
 		for(int q = 0; q < tagsArrayList.size(); q++){
 			tags[q] = tagsArrayList.get(q);
 		}
+	}
+	
+	public Idea(int i, String d, String[] t, Spark[] s, String fu, String fca, Comment[] c){
+		id = i;
+		description = d;
+		sparks = s;
+		firstUser = fu;
+		firstCreatedAt = fca;
+		comments = c;
+		
+		tags = t;
+		tagsString = "";
+		int index = 0;
+		for (String tag : tags) {
+			tagsString += tag;
+			if (index < tags.length - 1) {
+				tagsString += ", ";
+			}
+			index++;
+		}
+	}
+	
+	/**
+	 * 
+	 */
+	public Idea(int i, String d, String ca) {
+		id = i;
+		description = d;
+		firstCreatedAt = ca;
 	}
 	
 	/**
@@ -164,16 +198,28 @@ public class Idea extends Jawn implements Serializable{
 	 * 
 	 * @return The ID of the first user (presumably the first person to create the idea)
 	 */
-	public int getUser(){
-		return userIds[0];
+	public String getUsername(){
+		return firstUser;
 	}
 	
-	public int[] getUsers(){
-		return userIds;
+	public void setUsername(String u) {
+		firstUser = u;
+	}
+	
+	public int getUserId(){
+		return userId;
+	}
+	
+	public void setUserId(int u) {
+		userId = u;
 	}
 	
 	public void setTags(String[] s){
 		tags = s;
+	}
+	
+	public int[] getIds() {
+		return sparkIds;
 	}
 	
 	public void setIds(int[] i){
@@ -194,5 +240,51 @@ public class Idea extends Jawn implements Serializable{
 	
 	public Comment[] getComments() {
 		return comments;
+	}
+	
+	/*public Bitmap[] getBitmaps() {
+		return sparkThumbs;
+	}
+	
+	public Bitmap getBitmap(int i) {
+		if (i < sparkThumbs.length) { 
+			return sparkThumbs[i];
+		}
+		return null;
+	}
+	
+	public void setBitmaps(Bitmap[] b) {
+		sparkThumbs = b;
+	}
+	
+	public void setBitmap(Bitmap b, int i) {
+		if (i < sparkThumbs.length) { 
+			sparkThumbs[i] = b;
+		}
+	}*/
+	
+	public void setSparks(Spark[] s) {
+		sparks = s;
+	}
+	
+	public void setSpark(int pos, Spark s) {
+		if (sparks != null) {
+			if (pos < sparks.length) {
+				sparks[pos] = s;
+			}
+		}
+	}
+	
+	public Spark[] getSparks() {
+		return sparks;
+	}
+	
+	public Spark getSpark(int pos) {
+		if (sparks != null) {
+			if (pos < sparks.length) {
+				return sparks[pos];
+			}
+		}
+		return null;
 	}
 }

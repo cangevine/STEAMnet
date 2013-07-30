@@ -9,51 +9,80 @@ import java.util.ArrayList;
 
 import org.friendscentral.steamnet.IndexGrid;
 import org.friendscentral.steamnet.JawnAdapter;
-import org.friendscentral.steamnet.BaseClasses.Comment;
+import org.friendscentral.steamnet.STEAMnetApplication;
+import org.friendscentral.steamnet.SpinnerAdapter;
+import org.friendscentral.steamnet.Activities.MainActivity;
 import org.friendscentral.steamnet.BaseClasses.Idea;
 import org.friendscentral.steamnet.BaseClasses.Jawn;
 import org.friendscentral.steamnet.BaseClasses.Spark;
-import org.friendscentral.steamnet.EventHandlers.EndlessScroller;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.GridView;
 
-import com.json.parsers.JSONParser;
 import com.squareup.okhttp.OkHttpClient;
 
 /**
- * @author SamBeckley
+ * @author aqeelphillips
  * 
  */
-public class AddXJawns {
+public class GetXRandomJawns {
 	char spark_type;
 	char content_type;
 	String content;
 	String user;
 	String[] tags;
 	String tagsString;
-	int currentTotal;
-	int limit;
+	Context context;
+	Activity activity;
+	MainActivity mainActivity;
+	Jawn[] jawns;
 	
-	EndlessScroller endlessScroller;
+	STEAMnetApplication sna;
 	
 	/** 
 	 * @param int X - returns the first X sparks (by createdAt)
 	 */
 	
-	public AddXJawns(int lim, GridView g, IndexGrid i, int curTotal, EndlessScroller es) {
-		currentTotal = curTotal;
-		limit = lim;
-		endlessScroller = es;
+	public GetXRandomJawns(int lim, GridView g, IndexGrid i, Context c, boolean sparks, boolean ideas) {
+		Log.v("GetXJawns", "called");
+		context = c;
+		activity = (Activity) context;
+		if (activity.getClass().getName().equals("org.friendscentral.steamnet.Activities.MainActivity")) {
+			mainActivity = (MainActivity) activity;
+		}
 		
-		Log.v("REPORT", "THE TASK IS BEGGINING, SIR!");
+		sna = (STEAMnetApplication) context.getApplicationContext();
+		Double randomSeed = Math.random();
+		sna.setSeedNum(randomSeed);
+		String url = "http://steamnet.herokuapp.com/api/v1/jawns.json?limit="+lim+"&lite=true&seed="+randomSeed;
+		Log.v("RandomJawn fetch url:", url);
+		
+		if (sparks && !ideas) {
+			url += "&filter=sparks";
+		} else if (!sparks && ideas) {
+			url += "&filter=ideas";
+		}
+
+		if (sna.getCurrentTask() != null) {
+			sna.getCurrentTask().cancel(true);
+			if (sna.getCurrentMultimediaTask() != null)
+				sna.getCurrentMultimediaTask().cancel(true);
+			if (sna.getCurrentUserTask() != null)
+				sna.getCurrentUserTask().cancel(true);
+		}
+		
+		i.getAdapter().setJawns(new Jawn[0]);
+		g.setAdapter(new SpinnerAdapter(context, 16));
+		
 		OkHTTPTask task = new OkHTTPTask(g, i);
-		task.execute("http://steamnet.herokuapp.com/api/v1/jawns.json?limit="+lim+"&offset="+curTotal+"&lite=true");
-		
+		task.execute(url);
+		sna.setCurrentTask(task);
 	}
 	
 	class OkHTTPTask extends AsyncTask<String, Void, String> {
@@ -71,7 +100,7 @@ public class AddXJawns {
 		}
         
 		
-        @SuppressWarnings("unused")
+		@SuppressWarnings("unused")
 		private Exception exception;
         
         protected String doInBackground(String... urls) {
@@ -87,80 +116,59 @@ public class AddXJawns {
         }
 
         protected void onPostExecute(String data) {
-        	Log.v("REPORT", "JAAAAAAAAAAAWN");
-        	Log.v("REPORT", "WE HAVE MOVED INTO THE POST EXECUTE PHASE, SIR!");
-        	Log.d(TAG, "=> "+data);
         	try {
-        		Log.v("REPORT", "WE WILL BEGIN TO PARSE THE DATA, SIR!");
-				Jawn[] jawns = parseData(data);
-				Log.v("JAWNS", Integer.toString(jawns.length));
-				JawnAdapter a = indexGrid.getAdapter();
-				Log.v("REPORT", "WE HAVE ACCESSED THE JAWNADAPTER AND ARE PROCEEDING AS PLANNED, SIR!");
-				for (int i = limit; i < jawns.length; i++) {
-					a.addAtPosition(jawns[i], a.getJawns().length);
+				jawns = parseData(data);
+				JawnAdapter a = new JawnAdapter(gridView.getContext(), jawns, 200);
+				indexGrid.setAdapter(a);
+				indexGrid.setJawns(jawns);
+				if (mainActivity != null) {
+					mainActivity.setSparkEventHandlers();
+					mainActivity.setScrollListener();
 				}
-				a.notifyDataSetChanged();
-				indexGrid.setJawns(a.getJawns());
-				new MultimediaLoader(indexGrid, a);
-				endlessScroller.doneRefreshing();
+				Log.v("Thread count:", String.valueOf(Thread.activeCount()));
+				new LoadMultimediaInBackground(indexGrid);
+				Log.v("Thread count:", String.valueOf(Thread.activeCount()));
+				new LoadUsersInBackground(indexGrid);
+				Log.v("Thread count:", String.valueOf(Thread.activeCount()));
+				//new decodeMultimedia();
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
         }
         
         //PARSE DATA
         
-		@SuppressWarnings("unused")
 		Jawn[] parseData(String data) throws JSONException {
-			Log.v("REPORT", "WE ARE PARSING THE DATA, SIR!");
 			final String JAWN_TYPE = "jawn_type";
 			final String ID = "id";
         	final String SPARK_TYPE = "spark_type";
         	final String CONTENT_TYPE = "content_type";
         	final String CONTENT = "content";
         	final String CREATED_AT = "created_at";
-        	final String CREATED_ATS = "created_ats";
-        	final String UPDATED_AT = "updated_at";
-        	final String USERS = "users";
-        	final String USER = "user";
-        	final String USERNAME = "name";
         	final String DESCRIPTION = "description";
-        	final String TAGS = "tags";
-        	final String SPARKS = "sparks";
-        	final String COMMENTS = "comments";
-        	final String COMMENT_TEXT = "comment_text";
-        	final String NAME = "name";
         	final String FILE = "file";
         	
-        	// Creating JSON Parser instance
-        	JSONParser jParser = new JSONParser();
-        	 
         	// getting JSON string from URL
         	JSONArray jawns = new JSONArray(data);
         	
         	ArrayList<Jawn> jawnArrayList = new ArrayList<Jawn>();
         	
         	try {        	     
-        	    // looping through All Jawns
         	    for (int i = 0; i < jawns.length(); i++) {
         	        JSONObject j = jawns.getJSONObject(i);
         	        
-        	        //checking to see if the Jawn is a Spark or an Idea
         	        if(j.getString(JAWN_TYPE).equals("spark")){
     					String id = j.getString(ID);
     					String sparkType = j.getString(SPARK_TYPE);
     					String contentType = j.getString(CONTENT_TYPE);
     					String content = j.getString(CONTENT);
     					String createdAt = j.getString(CREATED_AT);
-    					String firstUser = "";
 
     	        	    Spark newSpark = new Spark(Integer.parseInt(id), sparkType.charAt(0), contentType.charAt(0), content, createdAt);
     	        	    if (contentType.charAt(0) != 'T') {
     	        	    	if (j.has(FILE)) {
     	        	    		if (j.getString(FILE) != null) {
 	    	        	    		String url = j.getString(FILE);
-	    	        	    		Log.v("!!!!!!URL!!!!!!!", url);
 	    	        	    		newSpark.setCloudLink(url);
     	        	    		}
     	        	    	}
@@ -169,7 +177,6 @@ public class AddXJawns {
 	        	        
         	        } else if (j.getString(JAWN_TYPE).equals("idea")) {
         	        	
-        	        	// Getting Idea parameters
                 		int id = j.getInt(ID);
             	        String description = j.getString(DESCRIPTION);
                 	    String createdAt = j.getString(CREATED_AT);
@@ -211,6 +218,32 @@ public class AddXJawns {
             return out.toByteArray();
           }
 	    
-	 }
+	 	}
+	
+	class LoadMultimediaInBackground extends AsyncTask<IndexGrid, Void, Void> {
+		
+		public LoadMultimediaInBackground(IndexGrid indexGrid) {
+			this.execute(indexGrid);
+		}
+		
+		@Override
+		protected Void doInBackground(IndexGrid... i) {
+			new MultimediaLoader(i[0], i[0].getAdapter(), sna);
+			return null;
+		}
+	}
+	
+	class LoadUsersInBackground extends AsyncTask<IndexGrid, Void, Void> {
+		
+		public LoadUsersInBackground(IndexGrid indexGrid) {
+			this.execute(indexGrid);
+		}
+		
+		@Override
+		protected Void doInBackground(IndexGrid... i) {
+			new UserLoader(i[0], i[0].getAdapter(), sna);
+			return null;
+		}
+	}
 
 }

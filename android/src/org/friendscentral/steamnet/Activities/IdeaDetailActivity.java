@@ -1,8 +1,7 @@
 package org.friendscentral.steamnet.Activities;
 
 import org.friendscentral.steamnet.CommentAdapter;
-import org.friendscentral.steamnet.IndexGrid;
-import org.friendscentral.steamnet.JawnAdapter;
+import org.friendscentral.steamnet.IdeaDetailAdapter;
 import org.friendscentral.steamnet.R;
 import org.friendscentral.steamnet.STEAMnetApplication;
 import org.friendscentral.steamnet.SpinnerAdapter;
@@ -11,21 +10,24 @@ import org.friendscentral.steamnet.BaseClasses.Idea;
 import org.friendscentral.steamnet.BaseClasses.Jawn;
 import org.friendscentral.steamnet.BaseClasses.Spark;
 
-import APIHandlers.GetSpark;
+import APIHandlers.GetIdeaForDetail;
 import APIHandlers.PostComment;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,20 +43,24 @@ public class IdeaDetailActivity extends Activity {
 	int userID;
 	String user;
 	Comment[] comments;
+	String[] tags;
+	String description;
+	Spark[] sparks;
 	
 	TextView titleTextView;
 	TextView dateTextView;
 	TextView userTextView;
 	
 	GridView gridView;
-	IndexGrid indexGrid;
-	JawnAdapter adapter;
-	
+	IdeaDetailAdapter adapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_idea_detail);
+		Intent intent = getIntent();
+		int ideaId = intent.getExtras().getInt("id");
+		
 		titleTextView = (TextView) findViewById(R.id.IdeaTitleTextView);
 		dateTextView = (TextView) findViewById(R.id.TimestampTextView);
 		userTextView = (TextView) findViewById(R.id.idea_user_name);
@@ -63,23 +69,28 @@ public class IdeaDetailActivity extends Activity {
         findViewById(R.id.DummyFocusCommentSection).setFocusableInTouchMode(true);
         findViewById(R.id.DummyFocusCommentSection).requestFocus();
 		
-		Intent intent = getIntent();
-		idea = (Idea) intent.getSerializableExtra("idea");
+		new GetIdeaForDetail(ideaId, this);
+	}
+	
+	public void initialize(Idea i) {
+		idea = i;
 		id = idea.getId();
 		//title = idea.getTitle();
-		sparkIds = idea.getSparkIds();
+		sparks = idea.getSparks();
 		date = idea.getCreatedAt();
-		userID = idea.getUser();
+		user = idea.getUsername();
 		comments = idea.getComments();
-		// TODO get user from ID
-		user = "--an unknown user--";
-		
-		//titleTextView.setText(title);
+		description = idea.getDescription();
+		tags = idea.getTags();
+
+		titleTextView.setText(description);
 		dateTextView.setText(date);
 		userTextView.setText(user);
+		//descriptionTextView.setText(description);
 		
 		initializeIndexGridLayout();
 		fillComments();
+		fillTags();
 	}
 	
 	public void initializeIndexGridLayout() {
@@ -89,24 +100,55 @@ public class IdeaDetailActivity extends Activity {
     	//initial spinners:
     	gridView.setAdapter(new SpinnerAdapter(this, 4));
     	
-    	indexGrid = new IndexGrid();
-    	indexGrid.initIndexGrid(gridView, this, true);
-    	adapter = new JawnAdapter(this, new Jawn[0], sparkIds.length);
-    	indexGrid.setAdapter(adapter);
-    	indexGrid.setJawns(adapter.getJawns());
-    	
-    	for (int i = 0; i < sparkIds.length; i++) {
-    		 new GetSpark(sparkIds[i], gridView, indexGrid);
-    	}
-    	
-    	adapter.notifyDataSetChanged();
+    	adapter = new IdeaDetailAdapter(this, sparks);
+    	gridView.setAdapter(adapter);
     	
     	gridView.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                openDetailView(indexGrid.getJawnAt(position)); //NEED POLYMORPHIC openDetailView
+                openDetailView(adapter.getJawnAt(position)); //NEED POLYMORPHIC openDetailView
             }
         });
     }
+	
+	public void fillTags() {
+		if (idea.getTags() != null) {
+			LinearLayout tagsHolder = (LinearLayout) findViewById(R.id.IdeaDescAndTags);
+			
+			String[] tags = idea.getTags();
+			for (String tag : tags) {
+				final Button t = new Button(this);
+				t.setText(tag);
+				t.setGravity(Gravity.CENTER_HORIZONTAL);
+				
+				t.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						STEAMnetApplication sna = (STEAMnetApplication) IdeaDetailActivity.this.getApplicationContext();
+						sna.setSavedTag((String) t.getText());
+						Intent intent = new Intent(IdeaDetailActivity.this, MainActivity.class);
+				    	IdeaDetailActivity.this.startActivityForResult(intent, 0);
+					}
+				});
+				
+				tagsHolder.addView(t);
+			}
+			final Button t = new Button(this);
+			t.setText("Find similar Sparks and Ideas");
+			t.setGravity(Gravity.CENTER_HORIZONTAL);
+			
+			t.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					STEAMnetApplication sna = (STEAMnetApplication) IdeaDetailActivity.this.getApplicationContext();
+					sna.setSavedTags(idea.getTags());
+					Intent intent = new Intent(IdeaDetailActivity.this, MainActivity.class);
+			    	IdeaDetailActivity.this.startActivityForResult(intent, 0);
+				}
+			});
+			
+			tagsHolder.addView(t);
+		}
+	}
 	
 	public void fillComments() {
 		ListView commentSection = (ListView) IdeaDetailActivity.this.findViewById(R.id.CommentList);
@@ -122,26 +164,17 @@ public class IdeaDetailActivity extends Activity {
 	public void submitComment(View v) {
 		EditText editText = (EditText) findViewById(R.id.CommentEditText);
 		String content = editText.getText().toString();
-		editText.setText("");
 		findViewById(R.id.DummyFocusCommentSection).requestFocus();
 		
 		int userID = 0;
 		STEAMnetApplication sna = (STEAMnetApplication) getApplication();
-		if (sna.getUserId() != null) {
+		if (!sna.getReadOnlyMode()) {
 			userID = Integer.valueOf(sna.getUserId());
-		}
-		if (sna.getUsername() != null) {
 			String username = sna.getUsername();
-			new PostComment(id, "S".charAt(0), content, userID, username, sna.getToken());
-			
-			ListView commentSection = (ListView) IdeaDetailActivity.this.findViewById(R.id.spark_social_section).findViewById(R.id.CommentList);
+			ListView commentSection = (ListView) findViewById(R.id.CommentList);
 			CommentAdapter c = (CommentAdapter) commentSection.getAdapter();
-			Comment newComment = new Comment(userID, content, username);
-			c.addComment(newComment);
-			if (c.getComments()[0].getUserId() == 0) {
-				c.removeComment(0);
-			}
-			c.notifyDataSetChanged();
+			new PostComment(id, 'I', content, userID, username, sna.getToken(), c);
+			
 			editText.setText("");
 		} else {
 			Toast.makeText(this, "Please log in to submit a comment", Toast.LENGTH_SHORT).show();
@@ -151,8 +184,8 @@ public class IdeaDetailActivity extends Activity {
 	public void openDetailView(Jawn j) {
 	    Intent intent = new Intent(this, SparkDetailActivity.class);
 	    //intent.putExtra(EXTRA_MESSAGE, b);
-	    Spark s = j.getSelfSpark();
-	    intent.putExtra("spark", s);
+	    int id = ((Spark) j).getId();
+	    intent.putExtra("id", id);
 	    this.startActivity(intent);
     }
 
@@ -194,10 +227,7 @@ public class IdeaDetailActivity extends Activity {
 	
 	public void logOut() {
 		STEAMnetApplication sna = (STEAMnetApplication) getApplication();
-		sna.setToken(null);
-		sna.setUserId(null);
-		sna.setUsername(null);
-		sna.setReadOnlyMode(true);
+		sna.logOut();
 		ActionBar actionBar = getActionBar();
     	actionBar.setCustomView(R.layout.log_in_action_bar);
     	actionBar.getCustomView().findViewById(R.id.log_in_button).setOnClickListener(new OnClickListener() {

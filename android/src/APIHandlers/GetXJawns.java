@@ -1,19 +1,17 @@
 package APIHandlers;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
 import org.friendscentral.steamnet.IndexGrid;
 import org.friendscentral.steamnet.JawnAdapter;
+import org.friendscentral.steamnet.STEAMnetApplication;
+import org.friendscentral.steamnet.SpinnerAdapter;
 import org.friendscentral.steamnet.Activities.MainActivity;
-import org.friendscentral.steamnet.BaseClasses.Comment;
 import org.friendscentral.steamnet.BaseClasses.Idea;
 import org.friendscentral.steamnet.BaseClasses.Jawn;
 import org.friendscentral.steamnet.BaseClasses.Spark;
@@ -23,9 +21,6 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.GridView;
@@ -35,7 +30,7 @@ import com.squareup.okhttp.OkHttpClient;
 
 /**
  * @author SamBeckley
- * 
+ * @author AqeelPhillips
  */
 public class GetXJawns {
 	char spark_type;
@@ -49,6 +44,8 @@ public class GetXJawns {
 	MainActivity mainActivity;
 	Jawn[] jawns;
 	
+	STEAMnetApplication sna;
+	
 	/** 
 	 * @param int X - returns the first X sparks (by createdAt)
 	 */
@@ -61,13 +58,24 @@ public class GetXJawns {
 			mainActivity = (MainActivity) activity;
 		}
 		
-		OkHTTPTask task = new OkHTTPTask(g, i);
-		task.execute("http://steamnet.herokuapp.com/api/v1/jawns.json?limit="+lim);
+		sna = (STEAMnetApplication) context.getApplicationContext();
+		if (sna.getCurrentTask() != null) {
+			sna.getCurrentTask().cancel(true);
+			if (sna.getCurrentMultimediaTask() != null)
+				sna.getCurrentMultimediaTask().cancel(true);
+			if (sna.getCurrentUserTask() != null)
+				sna.getCurrentUserTask().cancel(true);
+		}
 		
+		i.getAdapter().setJawns(new Jawn[0]);
+		g.setAdapter(new SpinnerAdapter(context, 16));
+		
+		OkHTTPTask task = new OkHTTPTask(g, i);
+		task.execute("http://steamnet.herokuapp.com/api/v1/jawns.json?limit="+lim+"&lite=true");
+		sna.setCurrentTask(task);
 	}
 	
 	class OkHTTPTask extends AsyncTask<String, Void, String> {
-		
 		String TAG = "RetreiveDataTask";
 		
 		OkHttpClient client;
@@ -97,20 +105,18 @@ public class GetXJawns {
         }
 
         protected void onPostExecute(String data) {
-        	Log.v("REPORT", "JAAAAAAAAAAAWN");
-        	Log.v("REPORT", "WE HAVE MOVED INTO THE POST EXECUTE PHASE, SIR!");
         	try {
-        		Log.v("REPORT", "WE WILL BEGIN TO PARSE THE DATA, SIR!");
 				jawns = parseData(data);
 				JawnAdapter a = new JawnAdapter(gridView.getContext(), jawns, 200);
-				Log.v("REPORT", "WE HAVE ACCESSED THE JAWNADAPTER AND ARE PROCEEDING AS PLANNED, SIR!");
 				indexGrid.setAdapter(a);
-				indexGrid.setJawns(jawns);
+				indexGrid.setJawnsWithCaching(jawns);
 				if (mainActivity != null) {
 					mainActivity.setSparkEventHandlers();
 					mainActivity.setScrollListener();
 				}
-				new MultimediaLoader(indexGrid, a);
+				new LoadMultimediaInBackground(indexGrid);
+				new LoadUsersInBackground(indexGrid);
+				
 				//new decodeMultimedia();
 			} catch (JSONException e) {
 				e.printStackTrace();
@@ -151,7 +157,7 @@ public class GetXJawns {
         	
         	try {        	     
         	    // looping through All Jawns
-        	    for(int i = 0; i < jawns.length(); i++){
+        	    for (int i = 0; i < jawns.length(); i++) {
         	        JSONObject j = jawns.getJSONObject(i);
         	        
         	        //checking to see if the Jawn is a Spark or an Idea
@@ -161,36 +167,9 @@ public class GetXJawns {
     					String contentType = j.getString(CONTENT_TYPE);
     					String content = j.getString(CONTENT);
     					String createdAt = j.getString(CREATED_AT);
-    					String firstUser = "";    	        	     
-    	        	    
-    					
-    					// TODO This is NOT dynamic:
-    	        	    int[] usersArray = new int[1];
-    	        	    usersArray[0] = 1;
-    	        	    
-    	        	    
-    	        	    JSONArray commentsJSON = j.getJSONArray(COMMENTS);
-    	        	    
-    	        	    ArrayList<Comment> commentsArrayList = new ArrayList<Comment>();
-    	        	    for(int k = 0; k < commentsJSON.length(); k++){
-    	        	    	JSONObject c = commentsJSON.getJSONObject(k);
-    	        	    	String commentText = c.getString(COMMENT_TEXT);
-    	        	    	JSONObject userObj = c.getJSONObject(USER);
-    	        	    	String userId = userObj.getString(ID);
-    	        	    	String username = userObj.getString(NAME);
+    					String firstUser = "";
 
-    	        	    	commentsArrayList.add(new Comment(Integer.valueOf(userId), commentText, username));
-    	        	    }
-    	        	    
-    	        	    Comment[] commentArray = new Comment[commentsArrayList.size()];
-    	        	    for(int w = 0; w < commentsArrayList.size(); w++){
-    	        	    	commentArray[w] = commentsArrayList.get(w);
-    	        	    }
-    	        	    
-    	        	    String[] createdAts = new String[1];
-    	        	    createdAts[0] = createdAt;
-    	        	    
-    	        	    Spark newSpark = new Spark(Integer.parseInt(id), sparkType.charAt(0), contentType.charAt(0), content, createdAts, createdAts[0], usersArray, "max", commentArray);
+    	        	    Spark newSpark = new Spark(Integer.parseInt(id), sparkType.charAt(0), contentType.charAt(0), content, createdAt);
     	        	    if (contentType.charAt(0) != 'T') {
     	        	    	if (j.has(FILE)) {
     	        	    		if (j.getString(FILE) != null) {
@@ -206,56 +185,9 @@ public class GetXJawns {
         	        	// Getting Idea parameters
                 		int id = j.getInt(ID);
             	        String description = j.getString(DESCRIPTION);
-            	        //String tags = j.getString(TAGS);
-            	        
-            	        //Getting Array of Sparks
-                	    JSONArray sparksJSON = j.getJSONArray(SPARKS);
-                	     
-                	    // looping through All Sparks
-                	    ArrayList<Integer> sparkIdArrayList = new ArrayList<Integer>();
-                	    for(int c = 0; c < sparksJSON.length(); c++){
-                	        JSONObject s = sparksJSON.getJSONObject(c);
-                	        // Storing each json item in variable
-                	        int sparkId = s.getInt(ID);
-                	        sparkIdArrayList.add(sparkId);
-                	    }
-                	    
-                	    int[] sparkIdArray = new int[sparkIdArrayList.size()];
-                	    
-                	    for(int w = 0; w < sparkIdArrayList.size(); w++){
-                	    	sparkIdArray[w] = sparkIdArrayList.get(w);
-                	    }
-                	    
-                	    String firstUser = "";
-                	    
-                	    int[] userIds = new int[10];
-                	    userIds[0] = 1;
-                	   
-                	    
-                	    JSONArray commentsJSON = j.getJSONArray(COMMENTS);
-    	        	    
-                	    ArrayList<Comment> commentsArrayList = new ArrayList<Comment>();
-    	        	    for(int k = 0; k < commentsJSON.length(); k++){
-    	        	    	JSONObject c = commentsJSON.getJSONObject(k);
-    	        	    	String commentText = c.getString(COMMENT_TEXT);
-    	        	    	JSONObject userObj = c.getJSONObject(USER);
-    	        	    	String userId = userObj.getString(ID);
-    	        	    	String username = userObj.getString(NAME);
-
-    	        	    	commentsArrayList.add(new Comment(Integer.valueOf(userId), commentText, username));
-    	        	    }
-    	        	    
-    	        	    Comment[] commentArray = new Comment[commentsArrayList.size()];
-    	        	    for(int w = 0; w < commentsArrayList.size(); w++){
-    	        	    	commentArray[w] = commentsArrayList.get(w);
-    	        	    }
-                	    
                 	    String createdAt = j.getString(CREATED_AT);
-                	    
-                	    String[] tags = new String[10];
-                	    
-                	    
-                	    jawnArrayList.add(new Idea(id, description, tags, sparkIdArray, userIds, user, createdAt, commentArray));
+
+                	    jawnArrayList.add(new Idea(id, description, createdAt));
                 	    
         	        }
         	    }
@@ -346,5 +278,31 @@ public class GetXJawns {
           }
 	    
 	 	}
+	
+	class LoadMultimediaInBackground extends AsyncTask<IndexGrid, Void, Void> {
+		
+		public LoadMultimediaInBackground(IndexGrid indexGrid) {
+			this.execute(indexGrid);
+		}
+		
+		@Override
+		protected Void doInBackground(IndexGrid... i) {
+			new MultimediaLoader(i[0], i[0].getAdapter(), sna);
+			return null;
+		}
+	}
+	
+	class LoadUsersInBackground extends AsyncTask<IndexGrid, Void, Void> {
+		
+		public LoadUsersInBackground(IndexGrid indexGrid) {
+			this.execute(indexGrid);
+		}
+		
+		@Override
+		protected Void doInBackground(IndexGrid... i) {
+			new UserLoader(i[0], i[0].getAdapter(), sna);
+			return null;
+		}
+	}
 
 }

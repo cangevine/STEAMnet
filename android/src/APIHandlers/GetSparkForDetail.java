@@ -79,7 +79,6 @@ public class GetSparkForDetail {
 				Spark spark = parseData(data);
 				new decodeMultimedia(spark);
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
         }
@@ -100,6 +99,7 @@ public class GetSparkForDetail {
         	final String COMMENT_TEXT = "comment_text";
         	final String NAME = "name";
         	final String FILE = "file";
+        	final String TAGS = "tags";
         	// Creating JSON Parser instance
         	JSONParser jParser = new JSONParser();
         	
@@ -111,28 +111,21 @@ public class GetSparkForDetail {
 			String content = json.getString(CONTENT);
 			String createdAt = json.getString(CREATED_AT);
 			String firstUser = "";
+			
+			JSONArray tagsJSON = json.getJSONArray(TAGS);
+			String[] tags = new String[tagsJSON.length()];
+			for (int i = 0; i < tagsJSON.length(); i++) {
+				tags[i] = tagsJSON.getString(i);
+			}
+			
 			//Getting Array of Users
     	    JSONArray usersJSON = json.getJSONArray(USERS);
 	        	     
-    	    // looping through All Users
-    	    //ArrayList<Integer> usersArrayList = new ArrayList<Integer>();
-    	    //int count = 0;
-    	    /*for(int q = 0; q < usersJSON.length(); q++){
-    	        JSONObject u = usersJSON.getJSONObject(q);
-    	        // Storing each json item in variable
-    	        if(count == 0){
-    	        	count++;
-    	        	firstUser = u.getString(USERNAME);
-    	        }
-    	        int userID = u.getInt(ID);
-    	        usersArrayList.add(userID);
-    	    }*/
-    	    int[] usersArray = new int[1];
-    	    // TODO DYNAMICALLY GET THE USER!!:
-    	    usersArray[0] = 1;
-    	    /*for(int q = 0; q < usersArrayList.size(); q++){
-    	    	usersArray[q] = usersArrayList.get(q);
-    	    }*/
+    	    int[] usersArray = new int[usersJSON.length()];
+    	    for (int i = 0; i < usersJSON.length(); i++) {
+    	    	usersArray[i] = usersJSON.getJSONObject(i).getInt(ID);
+    	    }
+    	    String username = usersJSON.getJSONObject(0).getString(NAME);
     	    
     	    String[] createdAts = new String[1];
     	    createdAts[0] = createdAt;
@@ -147,9 +140,9 @@ public class GetSparkForDetail {
     	    	String commentText = c.getString(COMMENT_TEXT);
     	    	JSONObject userObj = c.getJSONObject(USER);
     	    	String userId = userObj.getString(ID);
-    	    	String username = userObj.getString(NAME);
+    	    	String commentUsername = userObj.getString(NAME);
 
-    	    	commentsArrayList.add(new Comment(Integer.valueOf(userId), commentText, username));
+    	    	commentsArrayList.add(new Comment(Integer.valueOf(userId), commentText, commentUsername));
     	    }
     	    
     	    Comment[] commentArray = new Comment[commentsArrayList.size()];
@@ -159,7 +152,7 @@ public class GetSparkForDetail {
 	        	    
 	        	    
 	        	    //*****************************************
-    	    Spark newSpark = new Spark(Integer.parseInt(id), sparkType.charAt(0), contentType.charAt(0), content, createdAts, createdAts[0], usersArray, firstUser, commentArray);
+    	    Spark newSpark = new Spark(Integer.parseInt(id), sparkType.charAt(0), contentType.charAt(0), tags, content, createdAts, createdAts[0], usersArray, firstUser, commentArray);
     	    if (contentType.charAt(0) != 'T') {
     	    	if (json.has(FILE)) {
     	    		if (json.getString(FILE) != null) {
@@ -169,6 +162,7 @@ public class GetSparkForDetail {
     	    		}
     	    	}
     	    }
+    	    newSpark.setUsername(username);
     	    return newSpark;
         }
 

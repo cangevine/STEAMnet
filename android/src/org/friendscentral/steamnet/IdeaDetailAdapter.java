@@ -2,21 +2,16 @@ package org.friendscentral.steamnet;
 
 import java.util.ArrayList;
 
-import org.friendscentral.steamnet.Activities.MainActivity;
-import org.friendscentral.steamnet.BaseClasses.Idea;
 import org.friendscentral.steamnet.BaseClasses.Jawn;
 import org.friendscentral.steamnet.BaseClasses.Spark;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.GridView;
@@ -26,7 +21,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class JawnAdapter extends BaseAdapter {
+public class IdeaDetailAdapter extends BaseAdapter {
 	private Context mContext;
     private Jawn[] jawns;
     private int image_size;
@@ -38,14 +33,9 @@ public class JawnAdapter extends BaseAdapter {
      * @param Jawn[]
      * @param int - image size
      */
-    public JawnAdapter(Context c, Jawn[] j, int size) {
+    public IdeaDetailAdapter(Context c, Jawn[] j) {
         mContext = c;
-        image_size = size;
-        //initSparks(s);
-        //multimediaLoaded = new ArrayList<Boolean>(j.length);
-        for (int i = 0; i < j.length; i++) {
-        	//multimediaLoaded.add(i, false);
-        }
+        image_size = 200;
         jawns = j;
     }
 
@@ -55,7 +45,7 @@ public class JawnAdapter extends BaseAdapter {
     	final int SPARK_INFO_ID = 4;
 		
     	RelativeLayout v = new RelativeLayout(mContext);
-    	GridView.LayoutParams r = new GridView.LayoutParams(232, 270);
+    	GridView.LayoutParams r = new GridView.LayoutParams(232, 235);
     	v.setLayoutParams(r);
     	v.setPadding(8, 0, 8, 8);
     	v.setGravity(Gravity.CENTER);
@@ -154,8 +144,6 @@ public class JawnAdapter extends BaseAdapter {
 		    		 * String audioTitle = soundcloudAPI.getTrackTitle();
 		    		 * headerTitle.setText("Audio: "+audioTitle, 0, Math.min(audioTitle.length(), 100);
 		    		 */
-		    		String audioTitle = spark.getContent();
-		    		
 		    		FrameLayout frameLayout = new FrameLayout(mContext);
 			        frameLayout.setLayoutParams(new FrameLayout.LayoutParams(image_size, image_size));
 			        Drawable imageSymbol = mContext.getResources().getDrawable(R.drawable.symbol_video);
@@ -280,23 +268,6 @@ public class JawnAdapter extends BaseAdapter {
 		    		//Attach content:
 			    	sparkInfo.addView(contentView);
 			    	
-			    	//Attach user info:
-			    	String user = "by ";
-			    	if (spark.getUsername() != null) {
-			    		user += spark.getUsername();
-			    	} else {
-			    		user += "an unknown user";
-			    	}
-			    	TextView userInfo = new TextView(mContext);
-			    	userInfo.setText(user);
-			    	sparkInfo.addView(userInfo);
-			    	
-			    	//Attach date info:
-			    	String date = spark.getDate();
-			    	TextView dateInfo = new TextView(mContext);
-			    	dateInfo.setText(date);
-			    	sparkInfo.addView(dateInfo);
-			    	
 			    	//Attach ribbon:
 			    	ImageView ribbon = new ImageView(mContext);
 			    	char sparkType = spark.getSparkType();
@@ -324,189 +295,13 @@ public class JawnAdapter extends BaseAdapter {
 		    		Log.v("Content Type", String.valueOf(spark.getContentType()));
 		    		v.addView(t);
 		    	}
-		    	
-	    	} else if (getJawns()[position].getType() == 'I') {
-	    		//multimediaLoaded.set(position, true);
-
-	    		Idea idea = getJawnAt(position).getSelfIdea();
-		    	View contentView = null;
-		    	LinearLayout ideaInfo = new LinearLayout(mContext);
-		    	ideaInfo.setOrientation(LinearLayout.VERTICAL);
-		    	ideaInfo.setBackgroundColor(Color.WHITE);
-		    	ideaInfo.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT));
-			    ideaInfo.setGravity(Gravity.CENTER);
-			    
-			    FrameLayout frameLayout = new FrameLayout(mContext);
-		        frameLayout.setLayoutParams(new FrameLayout.LayoutParams(image_size, image_size));
-		        frameLayout.setForegroundGravity(Gravity.CENTER);
-		        frameLayout.setBackgroundResource(R.drawable.spark_content_bg);
-		        
-		        LayoutInflater inflater = LayoutInflater.from(mContext);
-		        LinearLayout grid = null;
-		        if (idea.getSparks() != null) {
-		        	int id = -1;
-		        	if (idea.getSparks().length == 1) {
-		        		id = R.layout.idea_grid_1;
-		        	} else if (idea.getSparks().length == 2) {
-		        		id = R.layout.idea_grid_2;
-		        	} else if (idea.getSparks().length >= 3) {
-		        		id = R.layout.idea_grid_3;
-		        	}
-		        	grid = (LinearLayout) inflater.inflate(id, null);
-	        		loadSparkToIdea(idea.getSparks(), grid);
-	        		((TextView) grid.findViewById(R.id.idea_title_textview)).setText(idea.getDescription());
-					frameLayout.addView(grid);
-		        } else  {
-		        	ProgressBar pb = new ProgressBar(mContext);
-		        	pb.setPadding(50, 50, 50, 50);
-		        	frameLayout.addView(pb);
-		        }
-
-				
-		        contentView = frameLayout;
-		        
-		        //Attach content
-				ideaInfo.addView(contentView);
-				
-				//Attach user info:
-				TextView userInfo = new TextView(mContext);
-				String user = "an unknown user";
-				if (idea.getUsername() != null) {
-					user = idea.getUsername();
-				}
-				userInfo.setText("by "+user);
-				userInfo.setPadding(8, 0, 8, 0);
-				ideaInfo.addView(userInfo);
-				
-				//Attach date info:
-				String date = idea.getCreatedAt();
-				String a = "a";
-				TextView dateInfo = new TextView(mContext);
-				dateInfo.setText(date);
-				dateInfo.setPadding(8, 0, 8, 0);
-				ideaInfo.addView(dateInfo);
-				
-				ideaInfo.setBackgroundResource(R.drawable.idea_bg);
-				
-				v.addView(ideaInfo);
 	    	}
-    	} else {
-			MainActivity ma = (MainActivity) mContext;
-			if (ma.getIndexGrid() != null) {
-				if (ma.getIndexGrid().getScrollListener() != null) {
-					if (!ma.getIndexGrid().getScrollListener().hasReachedEnd()) {
-						v.addView(new ProgressBar(mContext));
-					}
-				}
-			}
     	}
     	return v;
     }
-    
-    public void loadSparkToIdea(Spark[] sparks, LinearLayout grid) {
-    	if (sparks.length == 1) {
-    		if (sparks[0] != null) {
-	    		View sparkThumb;
-	    		if (sparks[0].getContentType() != 'T') {
-					sparkThumb = new ImageView(mContext); 
-					((LinearLayout) grid.findViewById(R.id.idea_grid_thumb_1)).addView(sparkThumb);
-					if (sparks[0].getContentType() != 'A') {
-						((ImageView) sparkThumb).setImageBitmap(sparks[0].getBitmap());
-					} else {
-						((ImageView) sparkThumb).setImageResource(R.drawable.btn_blue_audio);
-					}
-					((ImageView) sparkThumb).setScaleType(ImageView.ScaleType.CENTER_CROP);
-	    		} else {
-	    			sparkThumb = new TextView(mContext);
-	    			sparkThumb.setBackgroundColor(Color.parseColor("#FFFFFF"));
-	    			((TextView) sparkThumb).setTextSize(15);
-	    			((LinearLayout) grid.findViewById(R.id.idea_grid_thumb_1)).addView(sparkThumb);
-	    			((TextView) sparkThumb).setText(sparks[0].getContent());
-	    		}
-				LayoutParams params = (LinearLayout.LayoutParams) sparkThumb.getLayoutParams();
-				params.height = 100;
-				params.width = 190;
-				sparkThumb.setLayoutParams(params);
-			}
-    	}
-    	if (sparks.length >= 2) {
-	    	if (sparks[0] != null) {
-	    		View sparkThumb;
-	    		if (sparks[0].getContentType() != 'T') {
-					sparkThumb = new ImageView(mContext); 
-					((LinearLayout) grid.findViewById(R.id.idea_grid_thumb_1)).addView(sparkThumb);
-					if (sparks[0].getContentType() != 'A') {
-						((ImageView) sparkThumb).setImageBitmap(sparks[0].getBitmap());
-					} else {
-						((ImageView) sparkThumb).setImageResource(R.drawable.btn_blue_audio);
-					}
-					((ImageView) sparkThumb).setScaleType(ImageView.ScaleType.CENTER_CROP);
-	    		} else {
-	    			sparkThumb = new TextView(mContext);
-	    			sparkThumb.setBackgroundColor(Color.parseColor("#FFFFFF"));
-	    			((TextView) sparkThumb).setTextSize(15);
-	    			((LinearLayout) grid.findViewById(R.id.idea_grid_thumb_1)).addView(sparkThumb);
-	    			((TextView) sparkThumb).setText(sparks[0].getContent());
-	    		}
-				LayoutParams params = (LinearLayout.LayoutParams) sparkThumb.getLayoutParams();
-				params.height = 100;
-				params.width = 140;
-				sparkThumb.setLayoutParams(params);
-			}
-			if (sparks[1] != null) {
-				View sparkThumb;
-				if (sparks[1].getContentType() != 'T') {
-					sparkThumb = new ImageView(mContext); 
-					if (sparks[1].getContentType() != 'A') {
-						((ImageView) sparkThumb).setImageBitmap(sparks[1].getBitmap());
-					} else {
-						((ImageView) sparkThumb).setImageResource(R.drawable.btn_blue_audio);
-					}
-					((ImageView) sparkThumb).setScaleType(ImageView.ScaleType.CENTER_CROP);
-					((FrameLayout) grid.findViewById(R.id.idea_grid_thumb_2)).addView(sparkThumb);
-	    		} else {
-	    			sparkThumb = new TextView(mContext);
-	    			sparkThumb.setBackgroundColor(Color.parseColor("#FFFFFF"));
-	    			((TextView) sparkThumb).setTextSize(15);
-	    			((FrameLayout) grid.findViewById(R.id.idea_grid_thumb_2)).addView(sparkThumb);
-	    			((TextView) sparkThumb).setText(sparks[1].getContent());
-	    		}
-				LayoutParams params = (FrameLayout.LayoutParams) sparkThumb.getLayoutParams();
-				params.height = 100;
-				params.width = 100;
-				sparkThumb.setLayoutParams(params);
-			}
-			if (sparks.length >= 3) {
-				if (sparks[2] != null) {
-					View sparkThumb;
-					if (sparks[2].getContentType() != 'T') {
-						sparkThumb = new ImageView(mContext); 
-						((FrameLayout) grid.findViewById(R.id.idea_grid_thumb_3)).addView(sparkThumb);
-						if (sparks[2].getContentType() != 'A') {
-							((ImageView) sparkThumb).setImageBitmap(sparks[2].getBitmap());
-						} else {
-							((ImageView) sparkThumb).setImageResource(R.drawable.btn_blue_audio);
-						}
-						((ImageView) sparkThumb).setScaleType(ImageView.ScaleType.CENTER_CROP);
-		    		} else {
-		    			sparkThumb = new TextView(mContext);
-		    			sparkThumb.setBackgroundColor(Color.parseColor("#FFFFFF"));
-		    			((TextView) sparkThumb).setTextSize(15);
-		    			((FrameLayout) grid.findViewById(R.id.idea_grid_thumb_3)).addView(sparkThumb);
-		    			((TextView) sparkThumb).setText(sparks[2].getContent());
-		    		}
-					LayoutParams params = (FrameLayout.LayoutParams) sparkThumb.getLayoutParams();
-					params.height = 100;
-					params.width = 100;
-					sparkThumb.setLayoutParams(params);
-				}
-			}
-    	}
-    }
 
     public int getCount() {
-        //return jawns.length + 1;
-    	return jawns.length;
+        return jawns.length;
     }
 
     public Jawn getItem(int position) {

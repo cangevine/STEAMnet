@@ -108,5 +108,9 @@ public class CommentAdapter extends BaseAdapter {
 	public Comment[] getComments() {
 		return comments;
 	}
+	
+	public Context getContext() {
+		return context;
+	}
 
 }

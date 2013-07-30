@@ -207,4 +207,7 @@ public class VideoFiller extends DetailFiller {
 		return id;
 	}
 	
+	public WebView getEmbededVideo() {
+		return video;
+	}
 }
