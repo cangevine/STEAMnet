@@ -116,8 +116,6 @@ public class RefreshXJawns {
 							break;
 					} else if (j.getType() == 'S' && firstJawn.getType() == 'S') {
 						if (((Spark) j).getId() == ((Spark) firstJawn).getId()) {
-							Log.v("RefreshXJawns", "Found matching Spark");
-							Log.v("RefreshXJawns", "Index of matching Spark: "+jawnsToAdd);
 							break;
 						}
 					}
