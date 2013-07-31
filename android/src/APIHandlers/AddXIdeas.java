@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 import org.friendscentral.steamnet.IndexGrid;
 import org.friendscentral.steamnet.JawnAdapter;
-import org.friendscentral.steamnet.BaseClasses.Comment;
 import org.friendscentral.steamnet.BaseClasses.Idea;
 import org.friendscentral.steamnet.BaseClasses.Jawn;
 import org.friendscentral.steamnet.EventHandlers.EndlessScroller;
@@ -21,6 +20,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.GridView;
 
+import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.Tracker;
 import com.json.parsers.JSONParser;
 import com.squareup.okhttp.OkHttpClient;
 
@@ -80,6 +81,8 @@ public class AddXIdeas {
             } catch (Exception e) {
                 this.exception = e;
                 Log.e(TAG, "Exception: "+e);
+                Tracker myTracker = EasyTracker.getTracker(); 
+                myTracker.sendException(e.getMessage(), false);
                 return null;
             }
         }
@@ -100,7 +103,8 @@ public class AddXIdeas {
 				endlessScroller.doneRefreshing();
 				new MultimediaLoader(indexGrid, a);
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
+				Tracker myTracker = EasyTracker.getTracker(); 
+                myTracker.sendException(e.getMessage(), false);
 				e.printStackTrace();
 			}
         }
@@ -152,6 +156,8 @@ public class AddXIdeas {
         	    }
         	    return jawnArray;
         	} catch (JSONException e) {
+        		Tracker myTracker = EasyTracker.getTracker(); 
+                myTracker.sendException(e.getMessage(), false);
         	    e.printStackTrace();
         	}
         	return null;

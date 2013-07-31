@@ -8,6 +8,8 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.Tracker;
 import com.squareup.okhttp.OkHttpClient;
 
 import android.os.AsyncTask;
@@ -92,6 +94,8 @@ public class PostIdea {
 	        } catch (Exception e) {
 	            this.exception = e;
 	            Log.e(TAG, "Exception: "+e);
+	            Tracker myTracker = EasyTracker.getTracker(); 
+                myTracker.sendException(e.getMessage(), false);
 	            return null;
 	        }
 	    }

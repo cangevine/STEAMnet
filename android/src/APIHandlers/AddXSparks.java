@@ -21,6 +21,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.GridView;
 
+import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.Tracker;
 import com.json.parsers.JSONParser;
 import com.squareup.okhttp.OkHttpClient;
 
@@ -81,6 +83,8 @@ public class AddXSparks {
             } catch (Exception e) {
                 this.exception = e;
                 Log.e(TAG, "Exception: "+e);
+                Tracker myTracker = EasyTracker.getTracker(); 
+                myTracker.sendException(e.getMessage(), false);
                 return null;
             }
         }
@@ -101,7 +105,8 @@ public class AddXSparks {
 				endlessScroller.doneRefreshing();
 				new MultimediaLoader(indexGrid, a);
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
+				Tracker myTracker = EasyTracker.getTracker(); 
+                myTracker.sendException(e.getMessage(), false);
 				e.printStackTrace();
 			}
         }
@@ -160,6 +165,8 @@ public class AddXSparks {
         	    }
         	    return sparkArray;
         	} catch (JSONException e) {
+        		Tracker myTracker = EasyTracker.getTracker(); 
+                myTracker.sendException(e.getMessage(), false);
         	    e.printStackTrace();
         	}
         	return null;
