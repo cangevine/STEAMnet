@@ -14,6 +14,8 @@ import org.friendscentral.steamnet.SparkSubmitters.AudioSubmitter;
 import org.friendscentral.steamnet.SparkSubmitters.PictureSubmitter;
 import org.friendscentral.steamnet.SparkWizardFragments.SparkTypeChooser;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
 import CachingHandlers.JawnsDataSource;
 import android.app.ActionBar;
 import android.app.ActionBar.LayoutParams;
@@ -302,5 +304,18 @@ public class MainActivity extends Activity {
 	protected void onPause() {
 	    jawnsDataSource.close();
 	    super.onPause();
+	}
+	
+	// Starting and stopping Google Analytics code:
+	@Override
+	protected void onStart() {
+		super.onStart();
+		EasyTracker.getInstance().activityStart(this);
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+		EasyTracker.getInstance().activityStop(this);
 	}
 }

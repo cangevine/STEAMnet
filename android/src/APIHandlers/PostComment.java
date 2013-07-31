@@ -16,6 +16,8 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.Tracker;
 import com.squareup.okhttp.OkHttpClient;
 
 public class PostComment{
@@ -80,6 +82,8 @@ public class PostComment{
 	        } catch (Exception e) {
 	            this.exception = e;
 	            Log.e(TAG, "Exception: "+e);
+	            Tracker myTracker = EasyTracker.getTracker(); 
+                myTracker.sendException(e.getMessage(), false);
 	            return null;
 	        }
 	    }

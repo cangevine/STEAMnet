@@ -14,6 +14,8 @@ import org.friendscentral.steamnet.BaseClasses.Idea;
 import org.friendscentral.steamnet.BaseClasses.Jawn;
 import org.friendscentral.steamnet.BaseClasses.Spark;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
 import APIHandlers.GetIdeaForDetail;
 import APIHandlers.PostComment;
 import android.app.ActionBar;
@@ -131,38 +133,45 @@ public class IdeaDetailActivity extends Activity {
 			LinearLayout tagsHolder = (LinearLayout) findViewById(R.id.IdeaDescAndTags);
 			
 			String[] tags = idea.getTags();
-			for (String tag : tags) {
+			if (tags.length > 0) {
+				for (String tag : tags) {
+					final Button t = new Button(this);
+					t.setText(tag);
+					t.setGravity(Gravity.CENTER_HORIZONTAL);
+					
+					t.setOnClickListener(new OnClickListener() {
+						@Override
+						public void onClick(View view) {
+							STEAMnetApplication sna = (STEAMnetApplication) IdeaDetailActivity.this.getApplicationContext();
+							sna.setSavedTag((String) t.getText());
+							Intent intent = new Intent(IdeaDetailActivity.this, MainActivity.class);
+					    	IdeaDetailActivity.this.startActivityForResult(intent, 0);
+						}
+					});
+					
+					tagsHolder.addView(t);
+				}
 				final Button t = new Button(this);
-				t.setText(tag);
+				t.setText("Find similar Sparks and Ideas");
 				t.setGravity(Gravity.CENTER_HORIZONTAL);
 				
 				t.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View view) {
 						STEAMnetApplication sna = (STEAMnetApplication) IdeaDetailActivity.this.getApplicationContext();
-						sna.setSavedTag((String) t.getText());
+						sna.setSavedTags(idea.getTags());
 						Intent intent = new Intent(IdeaDetailActivity.this, MainActivity.class);
 				    	IdeaDetailActivity.this.startActivityForResult(intent, 0);
 					}
 				});
 				
 				tagsHolder.addView(t);
+			} else {
+				Button t = new Button(this);
+				t.setText("No tags on this Spark");
+				t.setGravity(Gravity.CENTER_HORIZONTAL);
+				tagsHolder.addView(t);
 			}
-			final Button t = new Button(this);
-			t.setText("Find similar Sparks and Ideas");
-			t.setGravity(Gravity.CENTER_HORIZONTAL);
-			
-			t.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					STEAMnetApplication sna = (STEAMnetApplication) IdeaDetailActivity.this.getApplicationContext();
-					sna.setSavedTags(idea.getTags());
-					Intent intent = new Intent(IdeaDetailActivity.this, MainActivity.class);
-			    	IdeaDetailActivity.this.startActivityForResult(intent, 0);
-				}
-			});
-			
-			tagsHolder.addView(t);
 		}
 	}
 	
@@ -274,6 +283,19 @@ public class IdeaDetailActivity extends Activity {
 	    	}
 	    	break;
 		}
+	}
+	
+	// Starting and stopping Google Analytics code:
+	@Override
+	protected void onStart() {
+		super.onStart();
+		EasyTracker.getInstance().activityStart(this);
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+		EasyTracker.getInstance().activityStop(this);
 	}
 
 }

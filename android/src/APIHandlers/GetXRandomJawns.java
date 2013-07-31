@@ -25,6 +25,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.GridView;
 
+import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.Tracker;
 import com.squareup.okhttp.OkHttpClient;
 
 /**
@@ -111,6 +113,8 @@ public class GetXRandomJawns {
             } catch (Exception e) {
                 this.exception = e;
                 Log.e(TAG, "Exception: "+e);
+                Tracker myTracker = EasyTracker.getTracker(); 
+                myTracker.sendException(e.getMessage(), false);
                 return null;
             }
         }
@@ -132,6 +136,8 @@ public class GetXRandomJawns {
 				Log.v("Thread count:", String.valueOf(Thread.activeCount()));
 				//new decodeMultimedia();
 			} catch (JSONException e) {
+				Tracker myTracker = EasyTracker.getTracker(); 
+                myTracker.sendException(e.getMessage(), false);
 				e.printStackTrace();
 			}
         }
@@ -191,6 +197,8 @@ public class GetXRandomJawns {
         	    }
         	    return jawnArray;
         	} catch (JSONException e) {
+        		Tracker myTracker = EasyTracker.getTracker(); 
+                myTracker.sendException(e.getMessage(), false);
         	    e.printStackTrace();
         	}
         	return null;

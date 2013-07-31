@@ -22,6 +22,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 
+import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.Tracker;
 import com.squareup.okhttp.OkHttpClient;
 
 public class MultimediaLoader {
@@ -94,8 +96,12 @@ public class MultimediaLoader {
 							edited = true;
 							return null;
 						} catch (MalformedURLException e) {
+							Tracker myTracker = EasyTracker.getTracker(); 
+			                myTracker.sendException(e.getMessage(), false);
 							e.printStackTrace();
 						} catch (IOException e) {
+							Tracker myTracker = EasyTracker.getTracker(); 
+			                myTracker.sendException(e.getMessage(), false);
 							e.printStackTrace();
 						}
 					}
@@ -171,8 +177,12 @@ public class MultimediaLoader {
 										jAdapter.setJawn(savedIndex, savedSpark);
 									}
 								} catch (MalformedURLException e) {
+									Tracker myTracker = EasyTracker.getTracker(); 
+					                myTracker.sendException(e.getMessage(), false);
 									e.printStackTrace();
 								} catch (IOException e) {
+									Tracker myTracker = EasyTracker.getTracker(); 
+					                myTracker.sendException(e.getMessage(), false);
 									e.printStackTrace();
 								}
 							}
@@ -180,10 +190,16 @@ public class MultimediaLoader {
 						index++;
 					}
 				} catch (MalformedURLException e1) {
+					Tracker myTracker = EasyTracker.getTracker(); 
+	                myTracker.sendException(e1.getMessage(), false);
 					e1.printStackTrace();
 				} catch (JSONException e1) {
+					Tracker myTracker = EasyTracker.getTracker(); 
+	                myTracker.sendException(e1.getMessage(), false);
 					e1.printStackTrace();
 				} catch (IOException e1) {
+					Tracker myTracker = EasyTracker.getTracker(); 
+	                myTracker.sendException(e1.getMessage(), false);
 					e1.printStackTrace();
 				}
 			}

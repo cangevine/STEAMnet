@@ -20,6 +20,8 @@ import org.json.JSONObject;
 
 import android.os.AsyncTask;
 
+import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.Tracker;
 import com.squareup.okhttp.OkHttpClient;
 
 public class UserLoader {
@@ -106,10 +108,16 @@ public class UserLoader {
 							}
 						}
 					} catch (MalformedURLException e) {
+						Tracker myTracker = EasyTracker.getTracker(); 
+		                myTracker.sendException(e.getMessage(), false);
 						e.printStackTrace();
 					} catch (JSONException e) {
+						Tracker myTracker = EasyTracker.getTracker(); 
+		                myTracker.sendException(e.getMessage(), false);
 						e.printStackTrace();
 					} catch (IOException e) {
+						Tracker myTracker = EasyTracker.getTracker(); 
+		                myTracker.sendException(e.getMessage(), false);
 						e.printStackTrace();
 					}
 				}
@@ -125,10 +133,16 @@ public class UserLoader {
 						idea.setUserId(ideaUserJSON.getInt(ID));
 						edited = true;
 					} catch (MalformedURLException e) {
+						Tracker myTracker = EasyTracker.getTracker(); 
+		                myTracker.sendException(e.getMessage(), false);
 						e.printStackTrace();
 					} catch (JSONException e) {
+						Tracker myTracker = EasyTracker.getTracker(); 
+		                myTracker.sendException(e.getMessage(), false);
 						e.printStackTrace();
 					} catch (IOException e) {
+						Tracker myTracker = EasyTracker.getTracker(); 
+		                myTracker.sendException(e.getMessage(), false);
 						e.printStackTrace();
 					}
 				}

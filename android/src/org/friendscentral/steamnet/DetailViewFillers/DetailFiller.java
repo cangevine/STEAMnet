@@ -108,38 +108,45 @@ public abstract class DetailFiller {
 		if (tags != null) {
 			LinearLayout tagsHolder = (LinearLayout) ((Activity) context).findViewById(R.id.SparkDescAndTags);
 			
-			for (String tag : tags) {
+			if (tags.length > 0) {
+				for (String tag : tags) {
+					final Button t = new Button(context);
+					t.setText(tag);
+					t.setGravity(Gravity.CENTER_HORIZONTAL);
+					
+					t.setOnClickListener(new OnClickListener() {
+						@Override
+						public void onClick(View view) {
+							STEAMnetApplication sna = (STEAMnetApplication) context.getApplicationContext();
+							sna.setSavedTag((String) t.getText());
+							Intent intent = new Intent(context, MainActivity.class);
+					    	((Activity) context).startActivityForResult(intent, 0);
+						}
+					});
+					
+					tagsHolder.addView(t);
+				}
 				final Button t = new Button(context);
-				t.setText(tag);
+				t.setText("Find similar Sparks and Ideas");
 				t.setGravity(Gravity.CENTER_HORIZONTAL);
 				
 				t.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View view) {
 						STEAMnetApplication sna = (STEAMnetApplication) context.getApplicationContext();
-						sna.setSavedTag((String) t.getText());
+						sna.setSavedTags(spark.getTags());
 						Intent intent = new Intent(context, MainActivity.class);
 				    	((Activity) context).startActivityForResult(intent, 0);
 					}
 				});
 				
 				tagsHolder.addView(t);
+			} else {
+				Button t = new Button(context);
+				t.setText("No tags on this Spark");
+				t.setGravity(Gravity.CENTER_HORIZONTAL);
+				tagsHolder.addView(t);
 			}
-			final Button t = new Button(context);
-			t.setText("Find similar Sparks and Ideas");
-			t.setGravity(Gravity.CENTER_HORIZONTAL);
-			
-			t.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					STEAMnetApplication sna = (STEAMnetApplication) context.getApplicationContext();
-					sna.setSavedTags(spark.getTags());
-					Intent intent = new Intent(context, MainActivity.class);
-			    	((Activity) context).startActivityForResult(intent, 0);
-				}
-			});
-			
-			tagsHolder.addView(t);
 		}
 	}
 	

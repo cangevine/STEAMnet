@@ -40,6 +40,8 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.GridView;
 
+import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.Tracker;
 import com.json.parsers.JSONParser;
 import com.squareup.okhttp.OkHttpClient;
 
@@ -116,6 +118,8 @@ public class PostSpark {
 	        } catch (Exception e) {
 	            this.exception = e;
 	            Log.e(TAG, "Exception: "+e);
+	            Tracker myTracker = EasyTracker.getTracker(); 
+                myTracker.sendException(e.getMessage(), false);
 	            return null;
 	        }
 	    }
@@ -127,6 +131,8 @@ public class PostSpark {
 				indexGrid.addJawn(newSpark);
 				new MultimediaLoader(indexGrid, adapter);
 			} catch (JSONException e) {
+				Tracker myTracker = EasyTracker.getTracker(); 
+                myTracker.sendException(e.getMessage(), false);
 				e.printStackTrace();
 			}
 	    }
@@ -188,6 +194,8 @@ public class PostSpark {
         	    }
 				return newSpark;
         	} catch (JSONException e) {
+        		Tracker myTracker = EasyTracker.getTracker(); 
+                myTracker.sendException(e.getMessage(), false);
         	    e.printStackTrace();
         	}
         	return null;
@@ -354,8 +362,12 @@ public class PostSpark {
 				}
 				return readFirstLine(is);
 			} catch (ClientProtocolException e) {
+				Tracker myTracker = EasyTracker.getTracker(); 
+                myTracker.sendException(e.getMessage(), false);
 				e.printStackTrace();
 			} catch (IOException e) {
+				Tracker myTracker = EasyTracker.getTracker(); 
+                myTracker.sendException(e.getMessage(), false);
 				e.printStackTrace();
 			}
 	        if (tmpFile != null) {

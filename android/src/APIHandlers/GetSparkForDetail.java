@@ -21,6 +21,8 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.Tracker;
 import com.json.parsers.JSONParser;
 import com.squareup.okhttp.OkHttpClient;
 
@@ -69,6 +71,8 @@ public class GetSparkForDetail {
             } catch (Exception e) {
                 this.exception = e;
                 Log.e(TAG, "Exception: "+e);
+                Tracker myTracker = EasyTracker.getTracker(); 
+                myTracker.sendException(e.getMessage(), false);
                 return null;
             }
         }
@@ -79,6 +83,8 @@ public class GetSparkForDetail {
 				Spark spark = parseData(data);
 				new decodeMultimedia(spark);
 			} catch (JSONException e) {
+				Tracker myTracker = EasyTracker.getTracker(); 
+                myTracker.sendException(e.getMessage(), false);
 				e.printStackTrace();
 			}
         }
@@ -196,8 +202,12 @@ public class GetSparkForDetail {
 							boolean bitmapExists = (spark.getBitmap() != null);
 							Log.v("Bitmapexists?", String.valueOf(bitmapExists));
 						} catch (MalformedURLException e) {
+							Tracker myTracker = EasyTracker.getTracker(); 
+			                myTracker.sendException(e.getMessage(), false);
 							e.printStackTrace();
 						} catch (IOException e) {
+							Tracker myTracker = EasyTracker.getTracker(); 
+			                myTracker.sendException(e.getMessage(), false);
 							e.printStackTrace();
 						}
 					}
