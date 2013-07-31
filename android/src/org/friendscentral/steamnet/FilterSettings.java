@@ -23,6 +23,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -208,6 +210,15 @@ public class FilterSettings {
 	
 	public boolean getIdeaBoxVal() {
 		return ideaBox.isChecked();
+	}
+	
+	public int getCheckedRadioButton() {
+		RadioGroup rg = (RadioGroup) mainLayout.findViewById(R.id.sortingRadioButtons);
+		return rg.getCheckedRadioButtonId();
+	}
+	
+	public RadioButton getRecentRB() {
+		return (RadioButton) mainLayout.findViewById(R.id.recentJawnsRadio);
 	}
 	
 	public void randomizeJawns() {

@@ -8,6 +8,9 @@ import org.friendscentral.steamnet.Activities.MainActivity;
 import APIHandlers.AddXIdeas;
 import APIHandlers.AddXJawns;
 import APIHandlers.AddXSparks;
+import APIHandlers.GetXIdeas;
+import APIHandlers.GetXJawns;
+import APIHandlers.GetXSparks;
 import APIHandlers.RefreshXJawns;
 import android.app.ActionBar;
 import android.app.ListActivity;
@@ -21,7 +24,6 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class EndlessScroller extends ListActivity implements OnScrollListener {
 	FilterSettings filterSettings;
@@ -111,9 +113,7 @@ public class EndlessScroller extends ListActivity implements OnScrollListener {
 			if (!refreshable) {
 				return false;
 			}
-			//if (!gridview.getAdapter().getClass().getName().equals("org.friendscentral.steamnet.JawnAdapter")) {
-			//	Log.v("ADAPTER", "IS A JAWN ADAPTER");
-			//}
+			
 			LinearLayout customBar = (LinearLayout) actionBar.getCustomView();
 			TextView header = (TextView) customBar.findViewById(R.id.activity_name);
 			switch (motionEvent.getAction()) {
@@ -122,8 +122,18 @@ public class EndlessScroller extends ListActivity implements OnScrollListener {
 					header.setText("STEAMnet");
 					dy = motionEvent.getY();
 					if (dy - y > 250) {
-						//filterSettings.sparkBoxChange('Q');
-						new RefreshXJawns(50, gridview, indexgrid, context, filterSettings.getSparkBoxVal(), filterSettings.getIdeaBoxVal()); 
+						if (filterSettings.getCheckedRadioButton() == R.id.recentJawnsRadio)
+							new RefreshXJawns(50, gridview, indexgrid, context, filterSettings.getSparkBoxVal(), filterSettings.getIdeaBoxVal());
+						else if (filterSettings.getCheckedRadioButton() == R.id.randomJawnsRadio) {
+							boolean s = filterSettings.getSparkBoxVal(), i = filterSettings.getIdeaBoxVal();
+							filterSettings.getRecentRB().toggle();
+							if (s && i)
+								new GetXJawns(50, gridview, indexgrid, context);
+							else if (s && !i)
+								new GetXSparks(50, gridview, indexgrid, context);
+							else if (!s && i)
+								new GetXIdeas(50, gridview, indexgrid, context);
+						}
 						refreshed = true;
 					} else if (dy > y) {
 						main.getSparkEventHandler().initializeIndexGridLayout();
