@@ -1,13 +1,15 @@
 package org.friendscentral.steamnet;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.friendscentral.steamnet.Activities.MainActivity;
 import org.friendscentral.steamnet.BaseClasses.Idea;
 import org.friendscentral.steamnet.BaseClasses.Jawn;
 import org.friendscentral.steamnet.BaseClasses.Spark;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -191,18 +193,24 @@ public class JawnAdapter extends BaseAdapter {
 		    		contentView = frameLayout;
 		    		
 		    	} else if (con == "T".charAt(0)) {
+		    		FrameLayout frameLayout = new FrameLayout(mContext);
+			        frameLayout.setLayoutParams(new FrameLayout.LayoutParams(image_size, image_size));
+			        frameLayout.setBackgroundResource(R.drawable.spark_content_bg);
+			        frameLayout.setPadding(4, 4, 4, 4);
+		    		
 		    		TextView textview;
 			        textview = new TextView(mContext);
 			        textview.setLayoutParams(new FrameLayout.LayoutParams(image_size, image_size));
-			        textview.setPadding(8, 8, 8, 8);
+			        textview.setPadding(4, 4, 4, 4);
 			        textview.setTextSize(20);
-			        textview.setBackgroundResource(R.drawable.spark_content_bg);
 		    		
 		    		String content = spark.getContent();
 		    		textview.setText(content.toCharArray(), 0, Math.min(200, content.length()));
 		    		
+		    		frameLayout.addView(textview);
+		    		
 		    		//multimediaLoaded.set(position, true);
-		    		contentView = textview;
+		    		contentView = frameLayout;
 		    		
 		    	} else if (con == "C".charAt(0)) {
 		    		/*
@@ -292,10 +300,16 @@ public class JawnAdapter extends BaseAdapter {
 			    	sparkInfo.addView(userInfo);
 			    	
 			    	//Attach date info:
-			    	String date = spark.getDate();
+			    	String dateString = spark.getDate();
 			    	TextView dateInfo = new TextView(mContext);
-			    	dateInfo.setText(date);
-			    	sparkInfo.addView(dateInfo);
+					try {
+						Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(dateString);
+						String formattedDate = new SimpleDateFormat("h:ma; MMMM dd, yyyy").format(date);
+				    	dateInfo.setText(formattedDate);
+					} catch (ParseException e) {
+						dateInfo.setText("Unknown date");
+					}
+					sparkInfo.addView(dateInfo);
 			    	
 			    	//Attach ribbon:
 			    	ImageView ribbon = new ImageView(mContext);

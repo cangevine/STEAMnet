@@ -125,7 +125,10 @@ public class GetSparkForDetail {
     	    for (int i = 0; i < usersJSON.length(); i++) {
     	    	usersArray[i] = usersJSON.getJSONObject(i).getInt(ID);
     	    }
-    	    String username = usersJSON.getJSONObject(0).getString(NAME);
+    	    
+    	    String username = "";
+    	    if (usersJSON.length() > 0)
+    	    	username = usersJSON.getJSONObject(0).getString(NAME);
     	    
     	    String[] createdAts = new String[1];
     	    createdAts[0] = createdAt;

@@ -1,5 +1,9 @@
 package org.friendscentral.steamnet.Activities;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.friendscentral.steamnet.CommentAdapter;
 import org.friendscentral.steamnet.IdeaDetailAdapter;
 import org.friendscentral.steamnet.R;
@@ -84,11 +88,11 @@ public class IdeaDetailActivity extends Activity {
 		tags = idea.getTags();
 
 		titleTextView.setText(description);
-		dateTextView.setText(date);
 		userTextView.setText(user);
 		//descriptionTextView.setText(description);
 		
 		initializeIndexGridLayout();
+		fillDate();
 		fillComments();
 		fillTags();
 	}
@@ -109,6 +113,18 @@ public class IdeaDetailActivity extends Activity {
             }
         });
     }
+	
+	public void fillDate() {
+		String dateString = date;
+		String formattedDate = "";
+		try {
+			Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(dateString);
+			formattedDate = new SimpleDateFormat("h:ma; MMMM dd, yyyy").format(date);
+		} catch (ParseException e) {
+			formattedDate = "Unknown date";
+		}
+		dateTextView.setText(formattedDate);
+	}
 	
 	public void fillTags() {
 		if (idea.getTags() != null) {

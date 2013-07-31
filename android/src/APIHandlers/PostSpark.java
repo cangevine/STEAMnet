@@ -334,13 +334,15 @@ public class PostSpark {
 	        StringBody contentTypeBody = new StringBody(String.valueOf(content_type));
 	        StringBody contentBody = new StringBody(content);
 	        StringBody usernameBody = new StringBody(user);
-	        StringBody tagsBody = new StringBody(tagsString);
+	        //Formatting the tagsString:
+	        String trimmedTagsString = tagsString.trim().replace(" ", "").toLowerCase();
+	        StringBody tagsBody = new StringBody(trimmedTagsString);
 	        StringBody tokenBody = new StringBody(token);
 	        multipartEntity.addPart("spark[spark_type]", sparkTypeBody);
 	        multipartEntity.addPart("spark[content_type]", contentTypeBody);
 	        multipartEntity.addPart("spark[content]", contentBody);
 	        multipartEntity.addPart("username", usernameBody);
-	        multipartEntity.addPart("tags", tagsBody);	
+	        multipartEntity.addPart("tags", tagsBody);
 	        multipartEntity.addPart("token", tokenBody);
 	        
 	        httpPost.setEntity(multipartEntity);
