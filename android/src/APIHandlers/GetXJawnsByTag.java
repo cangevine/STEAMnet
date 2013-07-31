@@ -76,6 +76,7 @@ public class GetXJawnsByTag {
 		String url = "http://steamnet.herokuapp.com/api/v1/tags/"+tag+".json?limit="+lim+"&lite=true";
 		Log.v("Tag fetch url:", url);
 		
+		sna = (STEAMnetApplication) context.getApplicationContext();
 		if (sna.getCurrentTask() != null) {
 			sna.getCurrentTask().cancel(true);
 			if (sna.getCurrentMultimediaTask() != null)

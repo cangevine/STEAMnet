@@ -123,7 +123,7 @@ public class EndlessScroller extends ListActivity implements OnScrollListener {
 					dy = motionEvent.getY();
 					if (dy - y > 250) {
 						//filterSettings.sparkBoxChange('Q');
-						new RefreshXJawns(16, gridview, indexgrid, context, filterSettings.getSparkBoxVal(), filterSettings.getIdeaBoxVal()); 
+						new RefreshXJawns(50, gridview, indexgrid, context, filterSettings.getSparkBoxVal(), filterSettings.getIdeaBoxVal()); 
 						refreshed = true;
 					} else if (dy > y) {
 						main.getSparkEventHandler().initializeIndexGridLayout();

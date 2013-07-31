@@ -61,6 +61,7 @@ public class RefreshXJawns {
 		jDapter = i.getAdapter();
 		context = c;
 		limit = lim;
+		Log.v("RefreshXJawns:", "Limit executing: "+limit);
 		
 		sparks = s;
 		ideas = is;
@@ -76,6 +77,10 @@ public class RefreshXJawns {
 		public JawnFetcher(int o) {
 			offset = o;
 			String url = "http://steamnet.herokuapp.com/api/v1/jawns.json?limit="+limit+"&offset="+offset+"&lite=true";
+			
+			if (offset == 0) 
+				url = "http://steamnet.herokuapp.com/api/v1/jawns.json?limit="+limit+"&lite=true";
+			
 			if (sparks && !ideas) {
 				url += "&filter=sparks";
 				Toast.makeText(context, "Retrieving new Sparks", Toast.LENGTH_LONG).show();
@@ -100,9 +105,8 @@ public class RefreshXJawns {
 		}
 		
 		protected void onPostExecute(String jsonString) {
-			Jawn[] parsedJawns;
 			try {
-				parsedJawns = parseData(jsonString);
+				Jawn[] parsedJawns = parseData(jsonString);
 				Jawn firstJawn = jDapter.getJawnAt(0);
 				
 				int jawnsToAdd = 0;
@@ -111,16 +115,20 @@ public class RefreshXJawns {
 						if (((Idea) j).getId() == ((Idea) firstJawn).getId())
 							break;
 					} else if (j.getType() == 'S' && firstJawn.getType() == 'S') {
-						if (((Spark) j).getId() == ((Spark) firstJawn).getId())
+						if (((Spark) j).getId() == ((Spark) firstJawn).getId()) {
+							Log.v("RefreshXJawns", "Found matching Spark");
+							Log.v("RefreshXJawns", "Index of matching Spark: "+jawnsToAdd);
 							break;
-					} else {
-						jawnsToAdd++;
+						}
 					}
+					jawnsToAdd++;
 				}
 				
-				for (int i = 0; i < jawnsToAdd; i++)
+				for (int i = 0; i < jawnsToAdd; i++) {
 					jDapter.addAtPosition(parsedJawns[i], i);
-				indexgrid.setJawns(jDapter.getJawns());
+					Log.v("RefreshXJawns:", "Length of the Adapter's array: "+jDapter.getJawns().length);
+				}
+				indexgrid.setJawnsWithCaching(jDapter.getJawns());
 				new MultimediaLoader(indexgrid, jDapter);
 				new UserLoader(indexgrid, jDapter);
 				MainActivity ma = (MainActivity) context;
@@ -183,7 +191,8 @@ public class RefreshXJawns {
         	    for (int i = 0; i < jawns.length(); i++) {
         	        JSONObject j = jawns.getJSONObject(i);
         	        
-        	        if(j.getString(JAWN_TYPE).equals("spark")){
+        	        if (j.getString(JAWN_TYPE).equals("spark")) {
+        	        	
     					String id = j.getString(ID);
     					String sparkType = j.getString(SPARK_TYPE);
     					String contentType = j.getString(CONTENT_TYPE);
