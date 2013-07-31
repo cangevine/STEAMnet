@@ -67,8 +67,12 @@ public class GetXJawns {
 				sna.getCurrentUserTask().cancel(true);
 		}
 		
-		i.getAdapter().setJawns(new Jawn[0]);
+		if (i.getAdapter() != null)
+			i.getAdapter().setJawns(new Jawn[0]);
+		else 
+			i.setAdapter(new JawnAdapter(context, new Jawn[0], 200));
 		g.setAdapter(new SpinnerAdapter(context, 16));
+		
 		
 		OkHTTPTask task = new OkHTTPTask(g, i);
 		task.execute("http://steamnet.herokuapp.com/api/v1/jawns.json?limit="+lim+"&lite=true");
