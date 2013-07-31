@@ -27,22 +27,25 @@ public class UserLoader {
 	JawnAdapter jAdapter;
 	STEAMnetApplication sna;
 	boolean snaExists;
+	int incriment = 3;
 	
-	public UserLoader(IndexGrid i, JawnAdapter j, STEAMnetApplication s) {
-		indexgrid = i;
+	public UserLoader(IndexGrid ig, JawnAdapter j, STEAMnetApplication s) {
+		indexgrid = ig;
 		jAdapter = j;
 		sna = s;
 		snaExists = true;
 		
-		loadMultimedia(0);
+		for (int i = 0; i < incriment; i++)
+			loadMultimedia(i);
 	}
 	
-	public UserLoader(IndexGrid i, JawnAdapter j) {
-		indexgrid = i;
+	public UserLoader(IndexGrid ig, JawnAdapter j) {
+		indexgrid = ig;
 		jAdapter = j;
 		snaExists = false;
 		
-		loadMultimedia(0);
+		for (int i = 0; i < incriment; i++)
+			loadMultimedia(i);
 	}
 	
 	public void loadMultimedia(int pos) {
@@ -140,8 +143,8 @@ public class UserLoader {
 				else if (idea != null && spark == null)
 					uLoader.setJawn(position, idea);
 			}
-			if (position + 1 < jAdapter.getJawns().length) {
-				uLoader.loadMultimedia(position + 1);
+			if (position + incriment < jAdapter.getJawns().length) {
+				uLoader.loadMultimedia(position + incriment);
 			}
 		}	
 		

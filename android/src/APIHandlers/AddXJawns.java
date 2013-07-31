@@ -50,7 +50,6 @@ public class AddXJawns {
 		limit = lim;
 		endlessScroller = es;
 		
-		Log.v("REPORT", "THE TASK IS BEGGINING, SIR!");
 		OkHTTPTask task = new OkHTTPTask(g, i);
 		task.execute("http://steamnet.herokuapp.com/api/v1/jawns.json?limit="+lim+"&offset="+curTotal+"&lite=true");
 		
@@ -75,7 +74,6 @@ public class AddXJawns {
 		private Exception exception;
         
         protected String doInBackground(String... urls) {
-        	Log.v("REPORT", "WE ARE EXECUTING THE REQUEST IN THE BACKGROUND, SIR!");
             try {
             	return get(new URL(urls[0]));
             	
@@ -87,15 +85,10 @@ public class AddXJawns {
         }
 
         protected void onPostExecute(String data) {
-        	Log.v("REPORT", "JAAAAAAAAAAAWN");
-        	Log.v("REPORT", "WE HAVE MOVED INTO THE POST EXECUTE PHASE, SIR!");
         	Log.d(TAG, "=> "+data);
         	try {
-        		Log.v("REPORT", "WE WILL BEGIN TO PARSE THE DATA, SIR!");
 				Jawn[] jawns = parseData(data);
-				Log.v("JAWNS", Integer.toString(jawns.length));
 				JawnAdapter a = indexGrid.getAdapter();
-				Log.v("REPORT", "WE HAVE ACCESSED THE JAWNADAPTER AND ARE PROCEEDING AS PLANNED, SIR!");
 				for (int i = limit; i < jawns.length; i++) {
 					a.addAtPosition(jawns[i], a.getJawns().length);
 				}

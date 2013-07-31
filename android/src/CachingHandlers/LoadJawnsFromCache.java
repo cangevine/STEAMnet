@@ -6,6 +6,7 @@ import org.friendscentral.steamnet.Activities.MainActivity;
 import org.friendscentral.steamnet.BaseClasses.Jawn;
 
 import APIHandlers.MultimediaLoader;
+import APIHandlers.RefreshXJawns;
 import APIHandlers.UserLoader;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -58,6 +59,9 @@ public class LoadJawnsFromCache {
 			}
 			new MultimediaLoader(indexgrid, indexgrid.getAdapter());
 			new UserLoader(indexgrid, indexgrid.getAdapter());
+			
+			// Lazy hardcoded "true" for Sparks and Ideas
+			new RefreshXJawns(50, indexgrid.getGridView(), indexgrid, context, true, true);
 		}
 		
 	}

@@ -1,5 +1,9 @@
 package org.friendscentral.steamnet.DetailViewFillers;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.friendscentral.steamnet.CommentAdapter;
 import org.friendscentral.steamnet.R;
 import org.friendscentral.steamnet.STEAMnetApplication;
@@ -76,10 +80,23 @@ public abstract class DetailFiller {
 		}
 		
 		((TextView) ((SparkDetailActivity) context).findViewById(R.id.spark_user_name)).setText(username);
-		((TextView) ((SparkDetailActivity) context).findViewById(R.id.TimestampTextView)).setText(createdAt);
+		
+		fillDate();
 		fillSparkTypes();
 		fillTags();
 		fillComments();
+	}
+	
+	public void fillDate() {
+		String dateString = createdAt;
+		String formattedDate = "";
+		try {
+			Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(dateString);
+			formattedDate = new SimpleDateFormat("h:ma; MMMM dd, yyyy").format(date);
+		} catch (ParseException e) {
+			formattedDate = "Unknown date";
+		}
+		((TextView) ((SparkDetailActivity) context).findViewById(R.id.TimestampTextView)).setText(formattedDate);
 	}
 	
 	public void fillSparkTypes() {

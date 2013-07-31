@@ -29,22 +29,25 @@ public class MultimediaLoader {
 	JawnAdapter jAdapter;
 	STEAMnetApplication sna;
 	boolean snaExists;
+	int incriment = 3;
 	
-	public MultimediaLoader(IndexGrid i, JawnAdapter j, STEAMnetApplication s) {
-		indexgrid = i;
+	public MultimediaLoader(IndexGrid ig, JawnAdapter j, STEAMnetApplication s) {
+		indexgrid = ig;
 		jAdapter = j;
 		sna = s;
 		snaExists = true;
 		
-		loadMultimedia(0);
+		for (int i = 0; i < incriment; i++)
+			loadMultimedia(i);
 	}
 	
-	public MultimediaLoader(IndexGrid i, JawnAdapter j) {
-		indexgrid = i;
+	public MultimediaLoader(IndexGrid ig, JawnAdapter j) {
+		indexgrid = ig;
 		jAdapter = j;
 		snaExists = false;
 		
-		loadMultimedia(0);
+		for (int i = 0; i < incriment; i++)
+			loadMultimedia(i);
 	}
 	
 	public void loadMultimedia(int pos) {
@@ -196,8 +199,8 @@ public class MultimediaLoader {
 			//if (ideaSparksJSON != null && jawn.getType() == 'I') {
 				//new IdeaThumbLoader(idea, position, unloadedThumbs, ideaSparksJSON, jAdapter, indexgrid, savedIndices);
 			//}
-			if (position + 1 < jAdapter.getJawns().length) {
-				mLoader.loadMultimedia(position + 1);
+			if (position + incriment < jAdapter.getJawns().length) {
+				mLoader.loadMultimedia(position + incriment);
 			}
 		}	
 		

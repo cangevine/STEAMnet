@@ -217,10 +217,10 @@ public final class R {
         public static final int picture_form=0x7f080041;
         public static final int picture_thumbnail=0x7f080042;
         public static final int picture_upload_button=0x7f080044;
-        public static final int radioGroup1=0x7f080068;
         public static final int randomJawnsRadio=0x7f08006a;
         public static final int recentJawnsRadio=0x7f080069;
         public static final int second_image=0x7f080070;
+        public static final int sortingRadioButtons=0x7f080068;
         public static final int sparkCheckBox=0x7f080064;
         public static final int spark_social_section=0x7f08002b;
         public static final int spark_user_icon=0x7f080014;
