@@ -1,10 +1,5 @@
 package org.friendscentral.steamnet.EventHandlers;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import org.friendscentral.steamnet.FilterSettings;
 import org.friendscentral.steamnet.IndexGrid;
 import org.friendscentral.steamnet.R;
@@ -13,6 +8,7 @@ import org.friendscentral.steamnet.Activities.MainActivity;
 import APIHandlers.AddXIdeas;
 import APIHandlers.AddXJawns;
 import APIHandlers.AddXSparks;
+import APIHandlers.RefreshXJawns;
 import android.app.ActionBar;
 import android.app.ListActivity;
 import android.content.Context;
@@ -25,6 +21,7 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class EndlessScroller extends ListActivity implements OnScrollListener {
 	FilterSettings filterSettings;
@@ -125,7 +122,8 @@ public class EndlessScroller extends ListActivity implements OnScrollListener {
 					header.setText("STEAMnet");
 					dy = motionEvent.getY();
 					if (dy - y > 250) {
-						filterSettings.sparkBoxChange('Q');
+						//filterSettings.sparkBoxChange('Q');
+						new RefreshXJawns(16, gridview, indexgrid, context, filterSettings.getSparkBoxVal(), filterSettings.getIdeaBoxVal()); 
 						refreshed = true;
 					} else if (dy > y) {
 						main.getSparkEventHandler().initializeIndexGridLayout();

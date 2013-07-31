@@ -86,7 +86,8 @@ public class PostIdea {
 	        	String postData = "&idea[description]="+description+"&tags="+tagsString.toLowerCase()+"&sparks="+sparksString+"&username="+user+"&token="+token;
 	        	Log.v(TAG, postData);
 	        		        	
-	        	return post(new URL(urls[0]), postData.getBytes());
+	        	//return post(new URL(urls[0]), postData.getBytes());
+	        	return "";
 	        	
 	        } catch (Exception e) {
 	            this.exception = e;

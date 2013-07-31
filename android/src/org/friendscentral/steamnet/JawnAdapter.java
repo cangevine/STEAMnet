@@ -191,18 +191,24 @@ public class JawnAdapter extends BaseAdapter {
 		    		contentView = frameLayout;
 		    		
 		    	} else if (con == "T".charAt(0)) {
+		    		FrameLayout frameLayout = new FrameLayout(mContext);
+			        frameLayout.setLayoutParams(new FrameLayout.LayoutParams(image_size, image_size));
+			        frameLayout.setBackgroundResource(R.drawable.spark_content_bg);
+			        frameLayout.setPadding(4, 4, 4, 4);
+		    		
 		    		TextView textview;
 			        textview = new TextView(mContext);
 			        textview.setLayoutParams(new FrameLayout.LayoutParams(image_size, image_size));
-			        textview.setPadding(8, 8, 8, 8);
+			        textview.setPadding(4, 4, 4, 4);
 			        textview.setTextSize(20);
-			        textview.setBackgroundResource(R.drawable.spark_content_bg);
 		    		
 		    		String content = spark.getContent();
 		    		textview.setText(content.toCharArray(), 0, Math.min(200, content.length()));
 		    		
+		    		frameLayout.addView(textview);
+		    		
 		    		//multimediaLoaded.set(position, true);
-		    		contentView = textview;
+		    		contentView = frameLayout;
 		    		
 		    	} else if (con == "C".charAt(0)) {
 		    		/*
