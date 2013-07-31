@@ -17,6 +17,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.Tracker;
 import com.json.parsers.JSONParser;
 import com.squareup.okhttp.OkHttpClient;
 
@@ -84,6 +86,8 @@ public class GetXSparks {
             } catch (Exception e) {
                 this.exception = e;
                 Log.e(TAG, "Exception: "+e);
+                Tracker myTracker = EasyTracker.getTracker(); 
+                myTracker.sendException(e.getMessage(), false);
                 return null;
             }
         }
@@ -105,7 +109,8 @@ public class GetXSparks {
 				}
 				new MultimediaLoader(indexGrid, a);
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
+				Tracker myTracker = EasyTracker.getTracker(); 
+                myTracker.sendException(e.getMessage(), false);
 				e.printStackTrace();
 			}
         }
@@ -164,6 +169,8 @@ public class GetXSparks {
         	    }
         	    return sparkArray;
         	} catch (JSONException e) {
+        		Tracker myTracker = EasyTracker.getTracker(); 
+                myTracker.sendException(e.getMessage(), false);
         	    e.printStackTrace();
         	}
         	return null;

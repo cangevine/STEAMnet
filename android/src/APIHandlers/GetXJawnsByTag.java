@@ -31,6 +31,8 @@ import android.widget.GridView;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.Tracker;
 import com.squareup.okhttp.OkHttpClient;
 
 /**
@@ -119,6 +121,8 @@ public class GetXJawnsByTag {
             } catch (Exception e) {
                 this.exception = e;
                 Log.e(TAG, "Exception: "+e);
+                Tracker myTracker = EasyTracker.getTracker(); 
+                myTracker.sendException(e.getMessage(), false);
                 return null;
             }
         }
@@ -151,6 +155,8 @@ public class GetXJawnsByTag {
 				new LoadMultimediaInBackground(indexGrid);
 				new LoadUsersInBackground(indexGrid);
 			} catch (JSONException e) {
+				Tracker myTracker = EasyTracker.getTracker(); 
+                myTracker.sendException(e.getMessage(), false);
 				e.printStackTrace();
 			}
         }
@@ -216,6 +222,8 @@ public class GetXJawnsByTag {
             	    return jawnArray;
         		}
         	} catch (JSONException e) {
+        		Tracker myTracker = EasyTracker.getTracker(); 
+                myTracker.sendException(e.getMessage(), false);
         	    e.printStackTrace();
         	}
         	return null;
@@ -230,6 +238,8 @@ public class GetXJawnsByTag {
 				byte[] response = readFully(in);
 				return new String(response, "UTF-8");
           	} catch (IOException e) {
+          		Tracker myTracker = EasyTracker.getTracker(); 
+                myTracker.sendException(e.getMessage(), false);
 				return "";
 			} finally {
           		if (in != null)

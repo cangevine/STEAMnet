@@ -16,6 +16,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.Tracker;
 import com.json.parsers.JSONParser;
 import com.squareup.okhttp.OkHttpClient;
 
@@ -69,6 +71,8 @@ public class GetIdeaForDetail {
             } catch (Exception e) {
                 this.exception = e;
                 Log.e(TAG, "Exception: "+e);
+                Tracker myTracker = EasyTracker.getTracker(); 
+                myTracker.sendException(e.getMessage(), false);
             }
             return null;
         }
@@ -78,7 +82,7 @@ public class GetIdeaForDetail {
 			dialog.dismiss();
 			ideaDetailActivity.initialize(idea);
         }
-		@SuppressWarnings("unused")
+        
 		Idea parseData(String data) throws JSONException {
         	//Ideas
 			final String ID = "id";
@@ -91,15 +95,10 @@ public class GetIdeaForDetail {
         	final String CONTENT_TYPE = "content_type";
         	final String CONTENT = "content";
         	final String CREATED_AT = "created_at";
-        	final String CREATED_ATS = "created_ats";
-        	final String USERS = "users";
-        	final String USERNAME = "name";
         	final String COMMENTS = "comments";
         	final String COMMENT_TEXT = "comment_text";
         	final String NAME = "name";
         	final String FILE = "file";
-        	// Creating JSON Parser instance
-        	JSONParser jParser = new JSONParser();
         	 
         	// getting JSON string from URL
         	JSONObject json = new JSONObject(data);
@@ -165,8 +164,12 @@ public class GetIdeaForDetail {
 						Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, (int) (aspectRatio * 200), 200, true);
 						return scaledBitmap;
 					} catch (MalformedURLException e) {
+						Tracker myTracker = EasyTracker.getTracker(); 
+		                myTracker.sendException(e.getMessage(), false);
 						e.printStackTrace();
 					} catch (IOException e) {
+						Tracker myTracker = EasyTracker.getTracker(); 
+		                myTracker.sendException(e.getMessage(), false);
 						e.printStackTrace();
 					}
 				}

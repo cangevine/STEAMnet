@@ -13,6 +13,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.Tracker;
 import com.json.parsers.JSONParser;
 import com.squareup.okhttp.OkHttpClient;
 
@@ -55,6 +57,8 @@ public class GetIdea {
 	        } catch (Exception e) {
 	            this.exception = e;
 	            Log.e(TAG, "Exception: "+e);
+	            Tracker myTracker = EasyTracker.getTracker(); 
+                myTracker.sendException(e.getMessage(), false);
 	            return null;
 	        }
 	    }
@@ -66,7 +70,8 @@ public class GetIdea {
         		Log.v("TEST", "GONNA PARSE ME SOME DATA");
 				parseData(data);
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
+				Tracker myTracker = EasyTracker.getTracker(); 
+                myTracker.sendException(e.getMessage(), false);
 				e.printStackTrace();
 			}
 	    }

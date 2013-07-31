@@ -25,6 +25,8 @@ import android.util.Log;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.Tracker;
 import com.squareup.okhttp.OkHttpClient;
 
 /**
@@ -97,8 +99,12 @@ public class RefreshXJawns {
 			try {
 				return get(new URL(urls[0]));
 			} catch (MalformedURLException e) {
+				Tracker myTracker = EasyTracker.getTracker(); 
+                myTracker.sendException(e.getMessage(), false);
 				e.printStackTrace();
 			} catch (IOException e) {
+				Tracker myTracker = EasyTracker.getTracker(); 
+                myTracker.sendException(e.getMessage(), false);
 				e.printStackTrace();
 			}
 			return null;
@@ -145,6 +151,8 @@ public class RefreshXJawns {
 					Log.v("RefreshXJawns", "Finished refreshing!");
 				}
 			} catch (JSONException e) {
+				Tracker myTracker = EasyTracker.getTracker(); 
+                myTracker.sendException(e.getMessage(), false);
 				e.printStackTrace();
 			}
 		}
@@ -224,6 +232,8 @@ public class RefreshXJawns {
         	    }
         	    return jawnArray;
         	} catch (JSONException e) {
+        		Tracker myTracker = EasyTracker.getTracker(); 
+                myTracker.sendException(e.getMessage(), false);
         	    e.printStackTrace();
         	}
         	return null;
