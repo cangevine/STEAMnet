@@ -18,8 +18,15 @@
 @property (nonatomic, retain) NSString * content;
 @property (nonatomic, retain) NSString * contentType;
 @property (nonatomic, retain) NSString * sparkType;
+@property (nonatomic, retain) NSString * fileURL;
 @property (nonatomic, retain) NSSet *ideas;
 @property (nonatomic, retain) NSSet *users;
+
+@property (nonatomic, retain) UIImage *cachedImage;
+
++ (UIColor *)colorForSparkType:(NSString *)sparkType;
++ (UIColor *)colorForContentType:(NSString *)contentType;
+
 @end
 
 @interface Spark (CoreDataGeneratedAccessors)

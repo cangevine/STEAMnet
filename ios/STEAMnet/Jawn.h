@@ -14,6 +14,7 @@
 @interface Jawn : NSManagedObject
 
 @property (nonatomic, retain) NSDate * createdDate;
+@property (nonatomic, retain) NSDate *cacheUpdated;
 @property (nonatomic, retain) NSNumber * remoteId;
 @property (nonatomic, retain) NSSet *tags;
 @property (nonatomic, retain) NSSet *comments;
@@ -24,6 +25,7 @@
 + (BOOL)jawnExistsWithRemoteId:(NSNumber *)remoteId;
 + (NSArray *)savedRemoteIds;
 + (void)deleteJawnsWithRemoteIds:(NSArray *)remoteIds;
++ (Jawn *)jawnWithRemoteId:(NSNumber *)remoteId;
 
 - (NSURL *)dataURL;
 

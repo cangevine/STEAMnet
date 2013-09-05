@@ -16,6 +16,7 @@
 @property (nonatomic, retain) NSString * text;
 @property (nonatomic, retain) NSNumber * remoteId;
 @property (nonatomic, retain) NSDate * createdDate;
+@property (nonatomic, retain) NSDate *cacheUpdated;
 @property (nonatomic, retain) Jawn *jawn;
 @property (nonatomic, retain) User *user;
 

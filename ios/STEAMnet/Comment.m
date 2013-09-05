@@ -16,6 +16,7 @@
 @dynamic text;
 @dynamic remoteId;
 @dynamic createdDate;
+@dynamic cacheUpdated;
 @dynamic jawn;
 @dynamic user;
 

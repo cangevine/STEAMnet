@@ -15,6 +15,7 @@
 
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSSet *jawns;
+@property (nonatomic, retain) NSDate *cacheUpdated;
 @end
 
 @interface Tag (CoreDataGeneratedAccessors)

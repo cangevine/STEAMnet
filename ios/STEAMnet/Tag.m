@@ -12,6 +12,7 @@
 @implementation Tag
 
 @dynamic name;
+@dynamic cacheUpdated;
 @dynamic jawns;
 
 @end

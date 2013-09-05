@@ -54,7 +54,8 @@
     [self.refreshControl addTarget:self action:@selector(fetchData) forControlEvents:UIControlEventValueChanged];
     [self.collectionView addSubview:self.refreshControl];
     
-    self.collectionView.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0];
+//    self.collectionView.backgroundColor = [UIColor colorWithRed:0.75 green:0.75 blue:0.75 alpha:1.0];
+    self.collectionView.backgroundColor = [UIColor blackColor];
     
     self.title = @"STEAMnet";
     
@@ -89,17 +90,17 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(130, 130);
+    return CGSizeMake(145, 145);
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
-    return UIEdgeInsetsMake(20, 20, 20, 20);
+    return UIEdgeInsetsMake(10, 10, 10, 10);
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
 {
-    return 20;
+    return 10;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section {
@@ -157,25 +158,46 @@
         if ([jawnDict[@"jawn_type"] isEqualToString:@"spark"]) {
             [sparksToDelete removeObject:jawnDict[@"id"]];
             
-            if (![Spark jawnExistsWithRemoteId:jawnDict[@"id"]]) {
+            Spark *spark;
+            
+            if ([Spark jawnExistsWithRemoteId:jawnDict[@"id"]]) {
+                spark = (Spark *)[Spark jawnWithRemoteId:jawnDict[@"id"]];
+            } else {
                 // Only create a new spark if it doesn't already exist
-                Spark *spark = [NSEntityDescription insertNewObjectForEntityForName:@"Spark" inManagedObjectContext:self.managedObjectContext];
+                spark = [NSEntityDescription insertNewObjectForEntityForName:@"Spark" inManagedObjectContext:self.managedObjectContext];
+                
                 spark.remoteId = jawnDict[@"id"];
-                spark.sparkType = jawnDict[@"spark_type"];
-                spark.contentType = jawnDict[@"content_type"];
-                spark.content = jawnDict[@"content"];
                 spark.createdDate = [NSDate dateWithISO8601String:jawnDict[@"created_at"]];
             }
+            
+            if (jawnDict[@"file"]) {
+                spark.fileURL = jawnDict[@"file"];
+            } else {
+                spark.fileURL = @"";
+            }
+            spark.sparkType = jawnDict[@"spark_type"];
+            spark.contentType = jawnDict[@"content_type"];
+            spark.content = jawnDict[@"content"];
+            
+            spark.cacheUpdated = [NSDate date];
         } else if ([jawnDict[@"jawn_type"] isEqualToString:@"idea"]) {
             [ideasToDelete removeObject:jawnDict[@"id"]];
             
-            if (![Idea jawnExistsWithRemoteId:jawnDict[@"id"]]) {
+            Idea *idea;
+            
+            if ([Idea jawnExistsWithRemoteId:jawnDict[@"id"]]) {
+                idea = (Idea *)[Idea jawnWithRemoteId:jawnDict[@"id"]];
+            } else {
                 // Only create a new idea if it doesn't already exist
-                Idea *idea = [NSEntityDescription insertNewObjectForEntityForName:@"Idea" inManagedObjectContext:self.managedObjectContext];
+                idea = [NSEntityDescription insertNewObjectForEntityForName:@"Idea" inManagedObjectContext:self.managedObjectContext];
+                
                 idea.remoteId = jawnDict[@"id"];
-                idea.descriptionText = jawnDict[@"description"];
                 idea.createdDate = [NSDate dateWithISO8601String:jawnDict[@"created_at"]];
             }
+            
+            idea.descriptionText = jawnDict[@"description"];
+            
+            idea.cacheUpdated = [NSDate date];
         }
     }
     

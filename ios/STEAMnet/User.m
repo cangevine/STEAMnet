@@ -15,6 +15,7 @@
 @dynamic remoteId;
 @dynamic createdDate;
 @dynamic updatedDate;
+@dynamic cacheUpdated;
 @dynamic comments;
 @dynamic ideas;
 @dynamic sparks;
