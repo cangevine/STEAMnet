@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3383" systemVersion="12E55" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Comment" representedClassName="Comment" syncable="YES">
+        <attribute name="cacheUpdated" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>
         <attribute name="createdDate" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>
         <attribute name="remoteId" attributeType="Integer 16" defaultValueString="0" indexed="YES" syncable="YES"/>
         <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
@@ -13,6 +14,7 @@
         <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="ideas" inverseEntity="User" syncable="YES"/>
     </entity>
     <entity name="Jawn" representedClassName="Jawn" isAbstract="YES" syncable="YES">
+        <attribute name="cacheUpdated" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>
         <attribute name="createdDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="remoteId" attributeType="Integer 16" defaultValueString="0" indexed="YES" syncable="YES"/>
         <relationship name="comments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Comment" inverseName="jawn" inverseEntity="Comment" syncable="YES"/>
@@ -21,15 +23,18 @@
     <entity name="Spark" representedClassName="Spark" parentEntity="Jawn" syncable="YES">
         <attribute name="content" attributeType="String" syncable="YES"/>
         <attribute name="contentType" attributeType="String" syncable="YES"/>
+        <attribute name="fileURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sparkType" attributeType="String" syncable="YES"/>
         <relationship name="ideas" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Idea" inverseName="sparks" inverseEntity="Idea" syncable="YES"/>
         <relationship name="users" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="sparks" inverseEntity="User" syncable="YES"/>
     </entity>
     <entity name="Tag" representedClassName="Tag" syncable="YES">
+        <attribute name="cacheUpdated" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>
         <attribute name="name" attributeType="String" indexed="YES" syncable="YES"/>
         <relationship name="jawns" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Jawn" inverseName="tags" inverseEntity="Jawn" syncable="YES"/>
     </entity>
     <entity name="User" representedClassName="User" syncable="YES">
+        <attribute name="cacheUpdated" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>
         <attribute name="createdDate" attributeType="Date" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="remoteId" attributeType="Integer 16" defaultValueString="0" indexed="YES" syncable="YES"/>

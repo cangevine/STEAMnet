@@ -24,7 +24,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor orangeColor];
+        self.backgroundColor = [UIColor darkGrayColor];
         self.info = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, 100, 100)];
         [self addSubview:self.info];
     }
