@@ -1,5 +1,5 @@
 .container {margin: 0 auto;
-	width: 75%;
+	width: 80%;
 	}
 .clearfix { overflow: auto;  }
 header {text-align:center;
@@ -7,30 +7,35 @@ header {text-align:center;
 	color: #FF2200;
 	padding: 10px;
 	}
+h1 {margin: 0px;
+	padding: 0px;
+	color: white;
+	font-size: 45px;}
+.phrase {margin-bottom: 10px;
+	padding: 0px;}
 
-.sparks, .comments, .ideas, .groups {border-style: none;
-	border-color: red;
-	border-width: 3px;
+.sparks, .comments, .ideas, .groups {border-top-style: solid;
+	border-color: #2E3192;
+	border-width: 4px;
 	padding: 5px;
 	margin: 5px;
 	}
-.sparks {font-family: 'Belleza', sans-serif;}
-.sparks h2 {color: red;}
-.ideas {font-family: 'Marcellus', serif;
-	font-size: 18px;}
-.ideas h2 {color: #FF8811;}
-.comments {font-family: 'Buenard', serif;
-	font-size: 18px;}
-.comments h2 {color: #33DD00;}
-.groups {font-family: 'Didact Gothic', sans-serif;}
-.groups h2 {color: blue;}
-h1 {font-family: 'Oxygen', sans-serif;}
-.phrase {font-family: 'Orbitron', sans-serif;}
 
-body {background-image:url(../images/bg/gradient_background.jpg);
-background-repeat:repeat;
-background-attachment:fixed;
-background-position:center;}
+.sparks h2 {color: red;}
+
+.ideas h2 {color: #FF8811;}
+
+.comments h2 {color: #33DD00;}
+
+.groups h2 {color: blue;}
+
+p {line-height: 125%;}
+
+body {background-color: white;
+	font-family: 'Belleza', sans-serif;
+	color: black;}
+img {margin: 10px;}
+
 
 .col {padding-top:20px;
 	padding-bottom:10px;
@@ -63,6 +68,10 @@ background-position:center;}
 	margin-right:auto;
 	width:80%;}
 .colr p {display:block;
+	margin-left:auto;
+	margin-right:auto;
+	width:80%;}
+.col ul {display:block;
 	margin-left:auto;
 	margin-right:auto;
 	width:80%;}
