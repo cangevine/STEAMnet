@@ -10,7 +10,9 @@ header {text-align:center;
 h1 {margin: 0px;
 	padding: 0px;
 	color: white;
-	font-size: 45px;}
+	font-size: 45px;
+	font-family: veranda;
+	font-weight: normal;}
 .phrase {margin-bottom: 10px;
 	padding: 0px;}
 
