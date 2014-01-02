@@ -1,0 +1,77 @@
+.container {margin: 0 auto;
+	width: 80%;
+	}
+.clearfix { overflow: auto;  }
+header {text-align:center;
+	clear: both;
+	color: #FF2200;
+	padding: 10px;
+	}
+h1 {margin: 0px;
+	padding: 0px;
+	color: white;
+	font-size: 45px;}
+.phrase {margin-bottom: 10px;
+	padding: 0px;}
+
+.sparks, .comments, .ideas, .groups {border-top-style: solid;
+	border-color: #2E3192;
+	border-width: 4px;
+	padding: 5px;
+	margin: 5px;
+	}
+
+.sparks h2 {color: red;}
+
+.ideas h2 {color: #FF8811;}
+
+.comments h2 {color: #33DD00;}
+
+.groups h2 {color: blue;}
+
+p {line-height: 125%;}
+
+body {background-color: white;
+	font-family: 'Belleza', sans-serif;
+	color: black;}
+img {margin: 10px;}
+
+
+.col {padding-top:20px;
+	padding-bottom:10px;
+	padding-left:10px;
+	float:left;
+	width:45%;
+	
+	padding: 5px;}
+
+.colr {padding-top:20px;
+	padding-bottom:10px;
+	padding-left:10px;
+	float:right;
+	width:45%;
+	
+	padding: 5px;}
+
+.col h2 {text-align: center;}
+.colr h2 {text-align: center;}
+
+.col img {display:block;
+	margin-left:auto;
+	margin-right:auto;}
+.colr img {display:block;
+	margin-left:auto;
+	margin-right:auto;}
+
+.col p {display:block;
+	margin-left:auto;
+	margin-right:auto;
+	width:80%;}
+.colr p {display:block;
+	margin-left:auto;
+	margin-right:auto;
+	width:80%;}
+.col ul {display:block;
+	margin-left:auto;
+	margin-right:auto;
+	width:80%;}
