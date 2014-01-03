@@ -1,0 +1,30 @@
+.gutter-sizer {
+	width: 2%;
+}
+
+#jawns .item {
+	width: 30%;
+	padding: 1%;
+	margin-bottom: 2%;
+}
+
+.item audio {
+	width: 100%;
+}
+
+#jawns .idea {
+	background-color: #ddd;
+}
+
+#jawns .spark.P {
+	background-color: #fcc;
+}
+#jawns .spark.P {
+	background-color: #fcc;
+}
+#jawns .spark.I {
+	background-color: #ccf;
+}
+#jawns .spark.W {
+	background-color: #cfc;
+}
