@@ -1,0 +1,17 @@
+.gutter-sizer {
+	width: 2%;
+}
+
+#jawns .item {
+	width: 16%;
+	padding: 1%;
+	margin-bottom: 2%;
+}
+
+#jawns .idea {
+	background-color: #ddd;
+}
+
+#jawns .spark {
+	background-color: #cfc;
+}
