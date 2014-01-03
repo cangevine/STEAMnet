@@ -1,8 +1,39 @@
 var app = app || {};
 
 $(function() {
-	Backbone.emulateHTTP = true;
-
+	$.fn.imagesLoaded = function( callback ){
+	  var elems = this.find( 'img' ),
+		  elems_src = [],
+		  self = this,
+		  len = elems.length;
+	 
+	  if ( !elems.length ) {
+		callback.call( this );
+		return this;
+	  }
+	 
+	  elems.one('load error', function() {
+		if ( --len === 0 ) {
+		  // Rinse and repeat.
+		  len = elems.length;
+		  elems.one( 'load error', function() {
+			if ( --len === 0 ) {
+			  callback.call( self );
+			}
+		  }).each(function() {
+			this.src = elems_src.shift();
+		  });
+		}
+	  }).each(function() {
+		elems_src.push( this.src );
+		// webkit hack from http://groups.google.com/group/jquery-dev/browse_thread/thread/eee6ab7b2da50e1f
+		// data uri bypasses webkit log warning (thx doug jones)
+		this.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+	  });
+	 
+	  return this;
+	};
+	
 	$.ajaxPrefilter( function(options, originalOptions, jqXHR) {
 		options.url = 'http://steamnet.herokuapp.com/api/v1' + options.url;
 	});
@@ -45,9 +76,11 @@ $(function() {
 					var template = _.template($("#app-view-template").html(), {jawns: jawns.models});
 					this.$el.html(template);
 
-					$("#jawns").masonry({
-						gutter: '.gutter-sizer',
-						itemSelector: '.item'
+					$("#jawns").imagesLoaded(function() {
+						$("#jawns").masonry({
+							gutter: '.gutter-sizer',
+							itemSelector: '.item'
+						});
 					});
 				}.bind(this)
 			});

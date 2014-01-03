@@ -3,9 +3,13 @@
 }
 
 #jawns .item {
-	width: 16%;
+	width: 30%;
 	padding: 1%;
 	margin-bottom: 2%;
+}
+
+.item audio {
+	width: 100%;
 }
 
 #jawns .idea {

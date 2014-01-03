@@ -18,7 +18,23 @@
 	<div class="gutter-sizer"></div>
 	<% _.each(jawns, function(jawn) { %>
 		<div class="item <%= jawn.get('jawn_type') %>">
-			<p><%= jawn.get('jawn_type') %></p>
+			<% if (jawn.get('jawn_type') == 'spark') { %>
+				<% if (jawn.get('content_type') == 'P') { %>
+					<img src="<%= jawn.get('file') %>">
+				<% } else if (jawn.get('content_type') == 'A') { %>
+					<audio controls>
+						<source src="<%= jawn.get('file') %>">
+						Your browser does not support the audio tag.
+					</audio>
+				<% } else if (jawn.get('content_type') == 'V') { %>
+					<iframe class="youtube-player" type="text/html" width="282" height="190" src="http://www.youtube.com/embed/<%= jawn.get('content').split('http://www.youtube.com/watch?v=')[1] %>" allowfullscreen frameborder="0">
+					</iframe>
+				<% } else { %>
+					<p><%= jawn.get('content') %></p>
+				<% } %>
+			<% } else if (jawn.get('jawn_type') == 'idea') { %>
+				<p><%= jawn.get('description') %></p>
+			<% } %>
 		</div>
 	<% }); %>
 </script>
