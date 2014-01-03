@@ -1,8 +1,22 @@
 class ApplicationController < ActionController::Base
   
+  before_filter :allow_cross_domain
+
   protect_from_forgery
+
+  def options
+    allow_cross_domain
+    render :text => "", :layout => false
+  end
   
   private
+
+    def allow_cross_domain
+      headers["Access-Control-Allow-Origin"] = "*";
+      headers["Access-Control-Request-Method"] = "*";
+      headers["Access-Control-Allow-Methods"] = "PUT, OPTIONS, GET, DELETE, POST"
+      headers['Access-Control-Allow-Headers'] = '*,x-requested-with,Content-Type'
+    end
     
     def authenticate
       device = Device.find_by(token: params[:token])

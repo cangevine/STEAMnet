@@ -21,6 +21,8 @@ Steamnet::Application.routes.draw do
     end
     
   end
+
+  match "*options", to: "application#options", via: :options
   
 end
 
