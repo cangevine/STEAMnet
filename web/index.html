@@ -17,7 +17,7 @@
 <script type="text/template" id="app-view-template">
 	<div class="gutter-sizer"></div>
 	<% _.each(jawns, function(jawn) { %>
-		<div class="item <%= jawn.get('jawn_type') %>">
+		<div class="item <%= jawn.get('jawn_type') %> <%= jawn.get('spark_type') %>">
 			<% if (jawn.get('jawn_type') == 'spark') { %>
 				<% if (jawn.get('content_type') == 'P') { %>
 					<img src="<%= jawn.get('file') %>">

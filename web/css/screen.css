@@ -16,6 +16,15 @@
 	background-color: #ddd;
 }
 
-#jawns .spark {
+#jawns .spark.P {
+	background-color: #fcc;
+}
+#jawns .spark.P {
+	background-color: #fcc;
+}
+#jawns .spark.I {
+	background-color: #ccf;
+}
+#jawns .spark.W {
 	background-color: #cfc;
 }
