@@ -1,0 +1,81 @@
+.container {margin: 0 auto;
+	width: 80%;
+	}
+.clearfix { overflow: auto;  }
+header {text-align:center;
+	clear: both;
+	padding: 10px;
+	}
+h1 {margin: 0px;
+	padding: 0px;
+	font-size: 45px;}
+.phrase {margin: 10px;
+	padding: 0px;
+	font-weight: bold;
+	margin: 0 auto;
+	width: 90%;
+	font-size: 20px;}
+
+.contentContainer{display: none;}
+
+.headerContainer h2{text-align: center;}
+.headerContainer h2:hover{color: #0088B2;
+	background-color: #F8F8F8;} /*this is the concept but it needs to be fixed*/
+	
+.workflow, .sparks, .comments, .ideas, .groups {border-top-style: solid;
+	border-color: #00C3FF;
+	border-width: 4px;
+	padding: 5px;
+	margin: 5px;
+	}
+
+.sparks h2, .ideas h2, .comments h2, .groups h2, .workflow h2 {color: #202020;}
+
+p {line-height: 125%;
+	font-size: 18px;}
+
+body {background-color: white;
+	font-family: 'Belleza', sans-serif;
+	color: #202020;}
+img {margin: 10px;}
+
+
+.col {padding-top:20px;
+	padding-bottom:10px;
+	padding-left:10px;
+	float:left;
+	width:45%;
+	
+	padding: 5px;}
+
+.colr {padding-top:20px;
+	padding-bottom:10px;
+	padding-left:10px;
+	float:right;
+	width:45%;
+	
+	padding: 5px;}
+	
+.col h2 {text-align: center;}
+.colr h2 {text-align: center;}
+
+.col img {display:block;
+	margin-left:auto;
+	margin-right:auto;}
+.colr img {display:block;
+	margin-left:auto;
+	margin-right:auto;}
+
+.col p {display:block;
+	margin-left:auto;
+	margin-right:auto;
+	width:80%;}
+.colr p {display:block;
+	margin-left:auto;
+	margin-right:auto;
+	width:80%;}
+.col ul {display:block;
+	margin-left:auto;
+	margin-right:auto;
+	width:80%;}
+

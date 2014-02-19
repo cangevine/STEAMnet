@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		<title>Opari</title>
+		<link rel="stylesheet" href="ope.css">
+		<script src="jquery-ui-1.10.3.custom/js/jquery-1.9.1.js"></script>
+			<script>
+			//Will (probably)clean-up later
+			$(document).ready(function(){
+				$("#workflowHeader").click(function(){
+					$("#workflowContainer").slideToggle("slow");
+				});
+				$("#sparksHeader").click(function(){
+					$("#sparksContainer").slideToggle("slow");
+				});
+				$("#ideasHeader").click(function(){
+					$("#ideasContainer").slideToggle("slow");
+				});
+				$("#commentsHeader").click(function(){
+					$("#commentsContainer").slideToggle("slow");
+				});
+				$("#groupsHeader").click(function(){
+					$("#groupsContainer").slideToggle("slow");
+				});
+			});
+			</script>
+	</head>
+
+	<body>
+		<div class="container">
+		<header>
+			<img src="images/Opari-v03big.jpg" alt="logo">
+			<h1><img src="images/big_UI.png" alt="overview"></h1>
+			<p class="phrase">Opari is a platform for collaborative ideating and creative problem solving which allows for asynchronous collaboration between users anywhere in the world. It is a place where creativity can thrive and where great inventions and solutions to problems of any size are born.  Opari is not a replacement for traditional methods of collaborative group work and discussion. Instead, it is a tool that individuals and teams can use to employ technology to enhance the collaborative process and continue existing discussions when face-to-face collaboration cannot take place.</p>
+		</header>
+		
+		
+		
+		<div class="sparks clearfix" id="sparksDiv">
+			<!--Each section is made of 2 main divs, one that contains the header and one that contains the content.  Clicking on the header div toggles the content div-->
+			<div class = "headerContainer" id="sparksHeader">
+				<h2>Freely share little bits of inspiration called Sparks</h2>
+			</div>
+			<div class="contentContainer" id="sparksContainer">
+				<div class="col" id="sparksDivText">
+					<p>We believe that ideas don’t emerge as fully formed thoughts from one person on the first try, instead, breakthroughs start with a seedling of an idea, which evolves through iteration and collaboration.</p>
+					<p>In keeping with this philosophy, Opari is built around the ability for users to freely share and develop these seedlings, called Sparks, into larger ideas. Sparks can be presented in the form of problems, questions, or any bit of inspiration that users choose to share. </p>
+					<p>Users can share their opinions on Sparks through comments and categorize them with tags.</p>
+				</div>
+				<div class="colr">
+					<img src="images/dummy_UI.png" alt="overview">
+				</div>
+			</div>
+		</div><!--close sparks-->
+
+		<div class="ideas clearfix">
+			<div class="headerContainer" id="ideasHeader">
+				<h2>Combine and iterate on Sparks to make larger Ideas</h2>
+			</div>
+			<div class="contentContainer" id="ideasContainer">
+				<div class="colr">
+					<p>An Idea is a combination of multiple Sparks, as well as their comments and tags.</p>
+					<p>With nearly infinite possibilities for Ideas made up of user-submitted Sparks, Opari is an environment where inspiration is never hard to find.  The dynamic addition of new Sparks, user comments, or the identification of new problems or solutions allow Ideas to evolve through iteration. </p>
+				</div>
+				<div class="col">
+					<img src="images/dummy_UI.png" alt="overview">
+				</div>
+			</div>
+		</div><!--ideas close-->
+
+		<div class="comments clearfix">
+			<div class="headerContainer" id="commentsHeader">
+				<h2>Turn your ideas into projects, which can be managed right here or exported to elsewhere</h2>
+			</div>
+			<div class = "contentContainer" id = "commentsContainer">
+				<div class="col">
+					<p>Projects stem from one or more Ideas as well as user comments and tags.</p>
+					<p>As a Project develops, Opari tracks its progress and helps keep groups organized and on task with tools such as to-do lists. Projects are able to evolve and change through the addition of new Ideas, Sparks, comments and tags at any time, keeping the creative process alive.</p>
+					<p>Opari will fit a project’s needs from brainstorming to project management, allowing users to track a great Idea from conception to completion, but if our project management style is not for you, projects can be exported to other project management tools such as [insert names of other options here].</p>
+				</div>
+				<div class="colr">
+					<img src="images/dummy_UI.png" alt="overview">
+				</div>	
+			</div>
+		</div><!--close comments-->
+
+		<div class="groups clearfix">
+			<div class = "headerContainer" id = "groupsHeader">
+				<h2>Idiate Together</h2>
+			</div>
+			<div class = "contentContainer" id = "groupsContainer">	
+				<div class="colr">
+					<p>With groups it can be easy to filter sparks and ideas to see only those made by your groupmates, allowing you to interact on a more personal level.  Have a hidden group to keep that genius idea a surprise till its ready.  With groups it can be easy to filter sparks and ideas to see only those made by your groupmates, allowing you to interact on a more personal level.  Have a hidden group to keep that genius idea a surprise till its ready.  ith groups it can be easy to filter sparks and ideas to see only those made by your groupmates, allowing you to interact on a more personal level.    </p>
+				</div>
+				<div class="col">
+					<img src="images/dummy_UI.png" alt="overview">
+				</div>
+			</div>
+		</div><!--close groups-->
+		
+			
+
+		</div><!--container close-->
+	</body>
+</html>
